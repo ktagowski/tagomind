@@ -28,7 +28,7 @@
 <meta name="twitter:description" content="{{ $desc }}">
 
 <script>
-  (function(){try{var q=new URLSearchParams(location.search).get('theme');var t=(q==='light'||q==='dark')?q:localStorage.getItem('tm-theme');document.documentElement.classList.toggle('dark', t ? t==='dark' : true);var P=new URLSearchParams(location.search);var ac=P.get('accent'),hue=P.get('hue');var a=hue?'custom':(ac||localStorage.getItem('tm-accent')||'blue');if(a&&a!=='mono')document.documentElement.setAttribute('data-accent',a);if(a==='custom'){var hv=hue||localStorage.getItem('tm-accent-hue');if(hv)document.documentElement.setAttribute('data-accent-hue',hv);}}catch(e){document.documentElement.classList.add('dark');}})();
+  (function(){try{var q=new URLSearchParams(location.search).get('theme');var t=(q==='light'||q==='dark')?q:localStorage.getItem('tm-theme');document.documentElement.classList.toggle('dark', t ? t==='dark' : false);var P=new URLSearchParams(location.search);var ac=P.get('accent'),hue=P.get('hue');var a=hue?'custom':(ac||localStorage.getItem('tm-accent')||'blue');if(a&&a!=='mono')document.documentElement.setAttribute('data-accent',a);if(a==='custom'){var hv=hue||localStorage.getItem('tm-accent-hue');if(hv)document.documentElement.setAttribute('data-accent-hue',hv);}}catch(e){}})();
 </script>
 {{- $plAuto := "" -}}
 {{- if eq site.Language.Lang "en" -}}{{- with index (where .AllTranslations "Language.Lang" "pl") 0 -}}{{- $plAuto = .RelPermalink -}}{{- end -}}{{- end -}}
