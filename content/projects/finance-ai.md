@@ -2,6 +2,7 @@
 title: "Finance AI"
 date: 2026-06-01
 draft: false
+logo: "img/logos/finance-ai.svg"
 icon: "trending-up"
 year: 2026
 fields: ["Applications"]

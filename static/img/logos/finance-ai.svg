@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
+  <!-- Finance AI: ascending market curve as a node graph, rising toward the AI spark -->
+  <circle cx="24" cy="24" r="22" fill="oklch(0.55 0.13 162)" fill-opacity="0.1"/>
+  <g stroke="oklch(0.55 0.13 162)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <!-- axes -->
+    <path d="M10 12v24h28"/>
+    <!-- curve through nodes -->
+    <path d="M14 30l8-6 7 3 8-9"/>
+  </g>
+  <!-- graph nodes -->
+  <g fill="oklch(0.55 0.13 162)">
+    <circle cx="14" cy="30" r="2.5"/>
+    <circle cx="22" cy="24" r="2.5"/>
+    <circle cx="29" cy="27" r="2.5"/>
+    <circle cx="37" cy="18" r="2.5"/>
+  </g>
+  <!-- AI spark (family accent, matches AI-Tax) -->
+  <circle cx="38" cy="10" r="4" fill="oklch(0.75 0.15 85)" stroke="oklch(0.55 0.13 162)" stroke-width="1.5"/>
+  <path d="M38 8v4M36 10h4" stroke="oklch(0.55 0.13 162)" stroke-width="1.5" stroke-linecap="round"/>
+</svg>

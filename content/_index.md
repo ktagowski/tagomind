@@ -45,7 +45,7 @@ applications:
     page: "finance-ai"
     full: "Applied finance intelligence"
     summary: "An applied finance-AI project in active development, building out the team and the system."
-    icon: "trending-up"
+    logo: "img/logos/finance-ai.svg"
     role: "Founder & Lead"
     status: "Ongoing"
     url: "https://odysai.pl"
