@@ -1,0 +1,17 @@
+{{ define "main" }}
+<div class="workspace">
+  <div class="page-head fx-rise">
+    <h1>{{ .Title }}</h1>
+    {{ with .Params.lead }}<p class="lead">{{ . }}</p>{{ end }}
+  </div>
+  {{ with .Content }}<div class="prose-ink mt-6">{{ . }}</div>{{ end }}
+  <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    {{ range .Pages }}
+      <a class="panel p-5 transition hover:-translate-y-0.5 hover:border-border-strong" href="{{ .RelPermalink }}">
+        <h2 class="font-display text-lg font-semibold">{{ .Title }}</h2>
+        <p class="mt-1 text-sm text-muted-foreground clamp-2">{{ .Summary }}</p>
+      </a>
+    {{ end }}
+  </div>
+</div>
+{{ end }}

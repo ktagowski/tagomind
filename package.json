@@ -1,0 +1,15 @@
+{
+  "name": "tagomind",
+  "version": "1.0.0",
+  "description": "TagoMind — personal/commercial site for Kamil Tagowski, PhD (Hugo + Tailwind v4).",
+  "private": true,
+  "scripts": {
+    "dev": "hugo server",
+    "build": "hugo --gc --minify"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.1.0",
+    "@tailwindcss/typography": "^0.5.16",
+    "tailwindcss": "^4.1.0"
+  }
+}

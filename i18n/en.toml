@@ -1,0 +1,140 @@
+# English UI strings
+[nav_home]
+other = "Home"
+[nav_projects]
+other = "Projects"
+[nav_publications]
+other = "Publications"
+[nav_about]
+other = "About"
+[nav_services]
+other = "Services"
+
+[lets_talk]
+other = "Let's talk"
+[explore_projects]
+other = "Explore projects"
+[all_projects]
+other = "All projects"
+[all_publications]
+other = "All publications"
+[start_conversation]
+other = "Start a conversation"
+[book_consultation]
+other = "Book a consultation"
+[see_services]
+other = "See services"
+
+[available]
+other = "Open for consulting work"
+[selected_work]
+other = "Selected work"
+[focus_areas]
+other = "Focus areas"
+[fields_of_interest]
+other = "Fields of interest"
+[peer_reviewed]
+other = "Peer-reviewed"
+[recent_publications]
+other = "Recent publications"
+[work_with_me]
+other = "Collaborate with me"
+[services_teaser_title]
+other = "Bring me a hard problem in language, graphs, or documents."
+[services_teaser_lead]
+other = "Consulting and hands-on engineering, from a quick advisory call to a production system your team can own."
+
+[hero_work_label]
+other = "Recent work"
+
+[applications_title]
+other = "What I build"
+[applications_sub]
+other = "Products I build, and team projects I lead."
+[status_live]
+other = "Live"
+[status_upcoming]
+other = "Upcoming"
+[status_ongoing]
+other = "Ongoing"
+[coming_soon]
+other = "Coming soon"
+[open_app]
+other = "Open"
+
+[fields_sub]
+other = "The problems I work on, and the tools I reach for."
+[pubs_sub]
+other = "Peer-reviewed work in NLP and graph representation learning."
+
+[the_explorer]
+other = "The Explorer"
+[search_placeholder]
+other = "Search projects, tech, venues…"
+[sort_featured]
+other = "Featured"
+[sort_newest]
+other = "Newest first"
+[sort_oldest]
+other = "Oldest first"
+[sort_impact]
+other = "By impact"
+[sort_az]
+other = "A–Z"
+[clear]
+other = "Clear"
+[grid_view]
+other = "Grid view"
+[list_view]
+other = "List view"
+[no_match_title]
+other = "No projects match"
+[no_match_body]
+other = "Try removing a filter or clearing your search."
+[projects_forms]
+other = "project|projects|projects"
+[projects_count]
+one = "{{ .Count }} project"
+other = "{{ .Count }} projects"
+
+[role_label]
+other = "Role"
+[year_label]
+other = "Year"
+[venue_label]
+other = "Venue"
+[impact_label]
+other = "Impact"
+[stack_label]
+other = "Stack"
+[previous]
+other = "Previous"
+[next]
+other = "Next"
+
+[about_label]
+other = "About"
+[what_i_do]
+other = "What I do"
+[expertise]
+other = "Expertise"
+[path_label]
+other = "Path"
+[trajectory]
+other = "Trajectory"
+
+[engagement]
+other = "Engagement"
+[how_we_work]
+other = "How we work"
+[cta_title]
+other = "Have a problem worth solving?"
+[cta_lead]
+other = "Tell me about your data, your users, and your constraints. I'll tell you straight where AI helps and where it doesn't."
+
+[built_with]
+other = "Built with Hugo"
+[e404_title]
+other = "Lost in the graph"
+[e404_body]
+other = "This node doesn't exist, or it migrated to another cluster."

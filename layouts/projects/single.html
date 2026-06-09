@@ -1,0 +1,73 @@
+{{ define "main" }}
+{{ $l := .Params.links }}
+{{ $fields := .Params.fields | default slice }}
+{{ $primary := index $fields 0 | default "" }}
+{{ $color := "" }}
+{{ range hugo.Data.fields }}{{ if eq .label $primary }}{{ $color = .color }}{{ end }}{{ end }}
+<article class="workspace">
+  <a class="link-arrow mb-6 inline-flex" href="{{ "/projects/" | relLangURL }}">
+    <span class="rotate-180">{{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</span> {{ i18n "all_projects" }}
+  </a>
+
+  <div class="grid gap-10 lg:grid-cols-[minmax(0,1fr)_17rem]">
+    <div class="min-w-0">
+      <div class="page-head fx-rise">
+        <span class="logo-tile">
+          {{ with .Params.logo }}<img src="{{ . | relURL }}" alt="{{ $.Title }} logo">
+          {{ else }}{{ partial "project-logo.html" (dict "title" $.Title "color" (or $color "oklch(0.65 0.215 287)") "class" "size-full") }}{{ end }}
+        </span>
+        <div class="flex flex-wrap items-center gap-2">
+          {{ with .Params.venue }}<span class="badge badge-venue">{{ . }}</span>{{ end }}
+          {{ with .Params.status }}<span class="badge badge-status">{{ . }}</span>{{ end }}
+          {{ range .Params.fields }}<span class="tag">{{ . }}</span>{{ end }}
+        </div>
+        <h1>{{ .Title }}</h1>
+        {{ with .Params.summary }}<p class="lead">{{ . }}</p>{{ end }}
+      </div>
+
+      {{ with $l }}
+      <div class="mt-6 flex flex-wrap items-center gap-2.5">
+        {{ with .paper }}<a class="btn btn-sm btn-primary" href="{{ . }}" target="_blank" rel="noopener">{{ partial "icon.html" (dict "name" "paper" "class" "size-4") }} Paper</a>{{ end }}
+        {{ with .repo }}<a class="btn btn-sm" href="{{ . }}" target="_blank" rel="noopener">{{ partial "icon.html" (dict "name" "code" "class" "size-4") }} Code</a>{{ end }}
+        {{ with .demo }}<a class="btn btn-sm" href="{{ . }}" target="_blank" rel="noopener">{{ partial "icon.html" (dict "name" "play" "class" "size-4") }} Demo</a>{{ end }}
+        {{ with .dataset }}<a class="btn btn-sm" href="{{ . }}" target="_blank" rel="noopener">{{ partial "icon.html" (dict "name" "dataset" "class" "size-4") }} Dataset</a>{{ end }}
+        {{ with .site }}<a class="btn btn-sm" href="{{ . }}" target="_blank" rel="noopener">{{ partial "icon.html" (dict "name" "globe" "class" "size-4") }} Website</a>{{ end }}
+      </div>
+      {{ end }}
+
+      <div class="prose-ink mt-9 fx-scroll-soft">
+        {{ .Content }}
+      </div>
+    </div>
+
+    <aside class="flex flex-col gap-4 lg:sticky lg:top-20 lg:self-start">
+      <div class="panel flex flex-col divide-y divide-border">
+        {{ with .Params.role }}<div class="p-4"><div class="text-[11px] uppercase tracking-wider text-subtle">{{ i18n "role_label" }}</div><div class="mt-1 text-sm">{{ . }}</div></div>{{ end }}
+        {{ with .Params.year }}<div class="p-4"><div class="text-[11px] uppercase tracking-wider text-subtle">{{ i18n "year_label" }}</div><div class="num mt-1 text-sm">{{ . }}{{ with $.Params.yearEnd }}–{{ . }}{{ end }}</div></div>{{ end }}
+        {{ with .Params.venue }}<div class="p-4"><div class="text-[11px] uppercase tracking-wider text-subtle">{{ i18n "venue_label" }}</div><div class="mt-1 text-sm">{{ . }}</div></div>{{ end }}
+        {{ with .Params.tech }}
+        <div class="p-4">
+          <div class="text-[11px] uppercase tracking-wider text-subtle">{{ i18n "stack_label" }}</div>
+          <div class="mt-2 flex flex-wrap gap-1.5">{{ range . }}<span class="tag">{{ . }}</span>{{ end }}</div>
+        </div>
+        {{ end }}
+      </div>
+    </aside>
+  </div>
+
+  <nav class="mt-14 grid gap-3 border-t border-border pt-6 sm:grid-cols-2">
+    {{ with .PrevInSection }}
+      <a class="panel group flex flex-col gap-1 p-4 transition hover:border-border-strong" href="{{ .RelPermalink }}">
+        <span class="text-xs text-subtle">{{ i18n "previous" }}</span>
+        <span class="font-display font-medium">{{ .Title }}</span>
+      </a>
+    {{ else }}<span></span>{{ end }}
+    {{ with .NextInSection }}
+      <a class="panel group flex flex-col items-end gap-1 p-4 text-right transition hover:border-border-strong" href="{{ .RelPermalink }}">
+        <span class="text-xs text-subtle">{{ i18n "next" }}</span>
+        <span class="font-display font-medium">{{ .Title }}</span>
+      </a>
+    {{ end }}
+  </nav>
+</article>
+{{ end }}

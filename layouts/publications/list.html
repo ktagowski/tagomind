@@ -1,0 +1,46 @@
+{{ define "main" }}
+{{ $typeAccents := dict "Conference" "oklch(0.62 0.13 255)" "Workshop" "oklch(0.6 0.15 300)" "Journal" "oklch(0.6 0.1 168)" "Datasets & Benchmarks" "oklch(0.63 0.13 32)" }}
+<div class="workspace">
+  <div class="page-head fx-rise">
+    <span class="eyebrow">{{ partial "icon.html" (dict "name" "paper" "class" "size-3.5") }} {{ i18n "peer_reviewed" }}</span>
+    <h1>{{ .Title }}</h1>
+    {{ with .Params.lead }}<p class="lead">{{ . }}</p>{{ end }}
+  </div>
+
+  {{ with .Content }}<div class="prose-ink mt-6">{{ . }}</div>{{ end }}
+
+  <div class="mt-8 flex flex-col gap-4">
+    {{ range hugo.Data.publications }}
+      {{ $acc := or (index $typeAccents .type) "var(--brand)" }}
+      <article class="panel pub-row p-6 fx-scroll-soft" style="--field: {{ $acc | safeCSS }}">
+        <div class="mb-2 flex flex-wrap items-center gap-2">
+          {{ with .venue }}<span class="badge badge-venue">{{ . }}</span>{{ end }}
+          {{ with .type }}<span class="badge badge-type" data-type="{{ . | lower | replaceRE "[^a-z0-9]+" "-" }}">{{ . }}</span>{{ end }}
+          <span class="num ml-auto text-sm text-subtle">{{ .year }}</span>
+        </div>
+        <h2 class="font-display text-lg font-semibold leading-snug">{{ .title }}</h2>
+        <p class="mt-1.5 text-sm text-muted-foreground">{{ .authors | safeHTML }}</p>
+        {{ with .summary }}<p class="mt-3 max-w-3xl text-sm">{{ . }}</p>{{ end }}
+        <div class="mt-4 flex flex-wrap items-center gap-2">
+          {{ with .links }}
+          {{ with .pdf }}<a class="btn btn-sm" href="{{ . }}" target="_blank" rel="noopener">{{ partial "icon.html" (dict "name" "paper" "class" "size-4") }} PDF</a>{{ end }}
+          {{ with .code }}<a class="btn btn-sm" href="{{ . }}" target="_blank" rel="noopener">{{ partial "icon.html" (dict "name" "code" "class" "size-4") }} Code</a>{{ end }}
+          {{ with .dataset }}<a class="btn btn-sm" href="{{ . }}" target="_blank" rel="noopener">{{ partial "icon.html" (dict "name" "dataset" "class" "size-4") }} Dataset</a>{{ end }}
+          {{ with .leaderboard }}<a class="btn btn-sm" href="{{ . }}" target="_blank" rel="noopener">{{ partial "icon.html" (dict "name" "globe" "class" "size-4") }} Leaderboard</a>{{ end }}
+          {{ with .doi }}<a class="btn btn-sm" href="{{ . }}" target="_blank" rel="noopener">{{ partial "icon.html" (dict "name" "external" "class" "size-4") }} DOI</a>{{ end }}
+          {{ end }}
+          {{ with .bibtex }}<button type="button" class="btn btn-sm" data-bibtex-toggle aria-expanded="false">{{ partial "icon.html" (dict "name" "quote" "class" "size-4") }} BibTeX</button>{{ end }}
+        </div>
+        {{ with .bibtex }}
+        <div class="bibtex-block mt-3" hidden>
+          <button type="button" class="bibtex-copy" data-bibtex-copy>{{ partial "icon.html" (dict "name" "code" "class" "size-3.5") }} <span>Copy</span></button>
+          <pre class="bibtex-pre"><code>{{ . }}</code></pre>
+        </div>
+        {{ end }}
+      </article>
+    {{ else }}
+      <div class="panel p-12 text-center text-muted-foreground">·</div>
+    {{ end }}
+  </div>
+</div>
+{{ end }}

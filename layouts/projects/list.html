@@ -1,0 +1,59 @@
+{{ define "main" }}
+<div class="workspace" id="explorer">
+  <div class="page-head fx-rise">
+    <span class="eyebrow">{{ partial "icon.html" (dict "name" "folder" "class" "size-3.5") }} {{ i18n "the_explorer" }}</span>
+    <h1>{{ .Title }}</h1>
+    {{ with .Params.lead }}<p class="lead">{{ . }}</p>{{ end }}
+  </div>
+
+  <!-- toolbar -->
+  <div class="toolbar mt-7">
+    <label class="search">
+      {{ partial "icon.html" (dict "name" "search" "class" "size-[1.05rem]") }}
+      <input id="explorer-search" class="input" type="search" placeholder="{{ i18n "search_placeholder" }}" autocomplete="off" aria-label="{{ i18n "search_placeholder" }}">
+    </label>
+    <label class="sr-only" for="explorer-sort">{{ i18n "sort_newest" }}</label>
+    <select id="explorer-sort" class="select" aria-label="{{ i18n "sort_newest" }}">
+      <option value="year_desc">{{ i18n "sort_newest" }}</option>
+      <option value="year_asc">{{ i18n "sort_oldest" }}</option>
+      <option value="az">{{ i18n "sort_az" }}</option>
+    </select>
+    <div class="segmented" role="group" aria-label="View mode">
+      <button type="button" data-view="grid" aria-pressed="true" aria-label="{{ i18n "grid_view" }}">{{ partial "icon.html" (dict "name" "grid" "class" "size-[1.05rem]") }}</button>
+      <button type="button" data-view="list" aria-pressed="false" aria-label="{{ i18n "list_view" }}">{{ partial "icon.html" (dict "name" "list" "class" "size-[1.05rem]") }}</button>
+    </div>
+  </div>
+
+  <!-- field chips -->
+  <div class="mt-4 flex flex-wrap items-center gap-2">
+    {{ range hugo.Data.fields }}
+      <button type="button" class="chip" data-filter-field data-field="{{ .label }}" data-label="{{ .label }}" aria-pressed="false" style="--field: {{ .color | safeCSS }}">
+        <span class="dot"></span>{{ .label }}
+      </button>
+    {{ end }}
+  </div>
+
+  <!-- status row -->
+  <div class="mt-5 flex flex-wrap items-center gap-2">
+    <span id="explorer-count" class="num text-sm text-muted-foreground" data-forms="{{ i18n "projects_forms" }}"></span>
+    <div id="explorer-pills" class="flex flex-wrap gap-1.5"></div>
+    <button id="explorer-clear" type="button" class="btn btn-ghost btn-sm ml-auto" hidden>
+      {{ partial "icon.html" (dict "name" "x" "class" "size-4") }} {{ i18n "clear" }}
+    </button>
+  </div>
+
+  <!-- grid -->
+  <div id="explorer-grid" class="explorer-grid mt-5">
+    {{ range (sort .Pages "Params.year" "desc") }}
+      {{ partial "project-card.html" . }}
+    {{ end }}
+  </div>
+
+  <!-- empty -->
+  <div id="explorer-empty" class="panel mt-5 flex flex-col items-center gap-2 p-12 text-center" hidden>
+    {{ partial "icon.html" (dict "name" "search" "class" "size-7 text-subtle") }}
+    <p class="font-display text-lg font-semibold">{{ i18n "no_match_title" }}</p>
+    <p class="text-sm text-muted-foreground">{{ i18n "no_match_body" }}</p>
+  </div>
+</div>
+{{ end }}

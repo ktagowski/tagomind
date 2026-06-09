@@ -1,0 +1,7 @@
+{{- $size := .size | default "size-[1.05rem]" -}}
+{{- range site.Params.socials -}}
+  {{- if .tentative }}{{ continue }}{{ end -}}
+  <a class="icon-btn" href="{{ .url }}" aria-label="{{ .name }}"{{ if hasPrefix .url "http" }} target="_blank" rel="me noopener"{{ end }}>
+    {{ partial "icon.html" (dict "name" .icon "class" $size) }}
+  </a>
+{{- end -}}

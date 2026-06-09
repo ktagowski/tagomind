@@ -1,0 +1,20 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "{{ site.Params.author }}",
+  "jobTitle": "{{ site.Params.role }}",
+  "description": "{{ site.Params.description }}",
+  "affiliation": { "@type": "Organization", "name": "{{ site.Params.affiliation }}" },
+  "url": "{{ site.BaseURL }}",
+  "email": "{{ site.Params.email }}",
+  "sameAs": [
+    {{- $first := true -}}
+    {{- range site.Params.socials -}}
+      {{- if hasPrefix .url "http" -}}
+        {{- if not $first }}, {{ end -}}"{{ .url }}"{{- $first = false -}}
+      {{- end -}}
+    {{- end -}}
+  ]
+}
+</script>

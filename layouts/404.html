@@ -1,0 +1,11 @@
+{{ define "main" }}
+<div class="workspace flex min-h-[62vh] flex-col items-center justify-center text-center">
+  <span class="eyebrow">{{ partial "icon.html" (dict "name" "spark-dot" "class" "size-3.5") }} Error 404</span>
+  <h1 class="mt-3 text-5xl sm:text-6xl">{{ i18n "e404_title" }}</h1>
+  <p class="lead mt-4 max-w-md">{{ i18n "e404_body" }}</p>
+  <div class="mt-7 flex flex-wrap justify-center gap-3">
+    <a class="btn btn-primary" href="{{ "/" | relLangURL }}">{{ partial "icon.html" (dict "name" "home" "class" "size-4") }} {{ i18n "nav_home" }}</a>
+    <a class="btn" href="{{ "/projects/" | relLangURL }}">{{ i18n "explore_projects" }} {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</a>
+  </div>
+</div>
+{{ end }}

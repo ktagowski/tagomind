@@ -1,0 +1,168 @@
+{{ define "main" }}
+{{ $projects := where site.RegularPages "Section" "projects" }}
+{{ $hero := .Params.hero }}
+
+<!-- ───────────────── Hero ───────────────── -->
+<section class="workspace flex min-h-[min(82vh,42rem)] flex-col items-center justify-center text-center !pt-12 !pb-16">
+  <div class="fx-rise mb-6 flex items-center justify-center gap-3">
+    {{ with site.Params.avatar }}<img src="{{ . | relURL }}" alt="{{ site.Params.author }}" loading="eager" class="size-12 rounded-full object-cover">{{ end }}
+    {{ with $hero.eyebrow }}<span class="eyebrow">{{ . }}</span>{{ end }}
+  </div>
+  <h1 class="fx-rise text-[clamp(2.7rem,6.8vw,5.9rem)] font-extrabold leading-[1.0] tracking-[-0.052em]" style="animation-delay:.06s">
+    {{ $hero.headlineA | default "Intelligence redefined." }}{{ with $hero.headlineB }}<br class="hidden sm:block"> {{ . }}{{ end }}
+  </h1>
+  <p class="lead fx-rise mx-auto mt-6 max-w-2xl text-balance" style="animation-delay:.14s">{{ $hero.lead | default site.Params.tagline }}</p>
+  {{ with $hero.proof }}
+  <div class="hero-proof fx-rise" style="animation-delay:.18s" aria-live="polite">
+    <span class="hero-proof-dot" aria-hidden="true"></span>
+    <span class="hero-proof-track">
+      {{ range $i, $p := . }}<span class="hero-proof-item{{ if eq $i 0 }} is-active{{ end }}">{{ $p }}</span>{{ end }}
+    </span>
+  </div>
+  {{ end }}
+  <div class="fx-rise mt-8 flex flex-wrap items-center justify-center gap-3" style="animation-delay:.24s">
+    <a class="btn btn-primary" href="{{ "/projects/" | relLangURL }}">{{ i18n "explore_projects" }}</a>
+    <a class="btn btn-outline" href="mailto:{{ site.Params.email }}">{{ partial "icon.html" (dict "name" "mail" "class" "size-[1.05rem]") }} {{ i18n "lets_talk" }}</a>
+  </div>
+</section>
+
+<!-- ───────────────── Applications (featured, 2nd) ───────────────── -->
+{{ with .Params.applications }}
+<section class="workspace">
+  <div class="fx-scroll-soft flex items-end justify-between gap-4">
+    <div>
+      <span class="eyebrow">{{ partial "icon.html" (dict "name" "folder" "class" "size-3.5") }} {{ i18n "selected_work" }}</span>
+      <h2 class="mt-2 text-4xl sm:text-5xl">{{ i18n "applications_title" }}</h2>
+      <p class="mt-3 max-w-lg text-muted-foreground">{{ i18n "applications_sub" }}</p>
+    </div>
+    <a class="link-arrow" href="{{ "/projects/" | relLangURL }}">{{ i18n "all_projects" }} {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</a>
+  </div>
+  <div class="mt-9 grid gap-6 lg:grid-cols-2">
+    {{ range . }}
+    {{ $app := . }}
+    {{ $ext := and $app.url (hasPrefix $app.url "http") }}
+    {{ $detail := "" }}{{ with $app.page }}{{ $detail = printf "/projects/%s/" . | relLangURL }}{{ end }}
+    {{ $accents := dict "Flat Explorer" "oklch(0.6 0.13 250)" "AI-Tax" "oklch(0.56 0.19 272)" "TACTYC" "oklch(0.63 0.12 200)" "Finance AI" "oklch(0.64 0.11 158)" }}
+    {{ $accent := or (index $accents $app.title) "var(--brand)" }}
+    <article class="app-card panel fx-scroll-soft{{ if eq $app.status "Upcoming" }} is-upcoming{{ end }}{{ if $detail }} is-clickable{{ end }}" style="--app-accent: {{ $accent | safeCSS }}">
+      <span class="app-glow" aria-hidden="true"></span>
+      {{ if $detail }}<a class="app-cover" href="{{ $detail }}" aria-label="{{ $app.title }}"></a>{{ end }}
+      <div class="app-head">
+        <span class="app-logo logo-tile">
+          {{ with $app.logo }}<img src="{{ . | relURL }}" alt="{{ $app.title }} logo" loading="lazy">
+          {{ else }}<span class="grid size-full place-items-center" style="background:linear-gradient(150deg,color-mix(in oklch,var(--app-accent, var(--brand)) 32%,transparent),color-mix(in oklch,var(--app-accent, var(--brand)) 9%,transparent));color:var(--app-accent, var(--brand))">{{ partial "icon.html" (dict "name" ($app.icon | default "spark-dot") "class" "size-7") }}</span>{{ end }}
+        </span>
+        <div class="min-w-0 flex-1">
+          <div class="flex flex-wrap items-center gap-2.5">
+            <h3 class="app-title">{{ $app.title }}</h3>
+            {{ if eq $app.status "Live" }}<span class="badge badge-live">{{ i18n "status_live" }}</span>
+            {{ else if eq $app.status "Ongoing" }}<span class="badge badge-ongoing">{{ i18n "status_ongoing" }}</span>
+            {{ else }}<span class="badge">{{ i18n "status_upcoming" }}</span>{{ end }}
+            {{ if and $app.ongoing (ne $app.status "Ongoing") }}<span class="badge badge-ongoing">{{ i18n "status_ongoing" }}</span>{{ end }}
+          </div>
+          {{ with $app.full }}<p class="app-tagline">{{ . }}</p>{{ end }}
+        </div>
+      </div>
+      <p class="app-summary">{{ $app.summary }}</p>
+      <div class="app-cta">
+        {{ if $app.url }}
+          <a class="btn btn-primary btn-sm" href="{{ cond $ext $app.url ($app.url | relLangURL) }}"{{ if $ext }} target="_blank" rel="noopener"{{ end }}>{{ $app.cta | default (i18n "open_app") }} {{ partial "icon.html" (dict "name" (cond $ext "arrow-up-right" "arrow-right") "class" "size-4") }}</a>
+        {{ else }}
+          <span class="app-soon">{{ partial "icon.html" (dict "name" "spark-dot" "class" "size-3") }} {{ i18n "coming_soon" }}</span>
+        {{ end }}
+        {{ with $app.role }}<span class="app-role">{{ partial "icon.html" (dict "name" "user" "class" "size-3.5") }} {{ . }}</span>{{ end }}
+      </div>
+    </article>
+    {{ end }}
+  </div>
+</section>
+{{ end }}
+
+<!-- ───────────────── Fields of interest ───────────────── -->
+<section class="workspace">
+  <div class="fx-scroll-soft">
+    <span class="eyebrow">{{ partial "icon.html" (dict "name" "spark-dot" "class" "size-3.5") }} {{ i18n "focus_areas" }}</span>
+    <h2 class="mt-2 text-4xl sm:text-5xl">{{ i18n "fields_of_interest" }}</h2>
+    <p class="mt-3 max-w-lg text-muted-foreground">{{ i18n "fields_sub" }}</p>
+  </div>
+  <div class="fx-scroll mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    {{ range hugo.Data.fields }}
+      {{ $count := len (where $projects "Params.fields" "intersect" (slice .label)) }}
+      {{ if gt $count 0 }}
+      <a href="{{ "/projects/" | relLangURL }}?fields={{ .label | urlquery }}" class="field-tile panel group flex items-center gap-3.5 p-5 transition hover:-translate-y-0.5" style="--field: {{ .color | safeCSS }}">
+        <span class="grid size-11 flex-none place-items-center rounded-xl transition-transform group-hover:scale-105" style="background:color-mix(in oklch,var(--field) 16%,transparent);color:var(--field)">
+          {{ partial "icon.html" (dict "name" (.icon | default "spark-dot") "class" "size-5") }}
+        </span>
+        <span class="min-w-0">
+          <span class="block font-semibold tracking-[-0.01em]">{{ .label }}</span>
+          <span class="block text-xs text-subtle num">{{ i18n "projects_count" $count }}</span>
+        </span>
+      </a>
+      {{ end }}
+    {{ end }}
+  </div>
+</section>
+
+<!-- ───────────────── Publications teaser ───────────────── -->
+{{ with hugo.Data.publications }}
+<section class="workspace">
+  <div class="fx-scroll-soft flex flex-wrap items-end justify-between gap-4">
+    <div>
+      <span class="eyebrow">{{ partial "icon.html" (dict "name" "paper" "class" "size-3.5") }} {{ i18n "peer_reviewed" }}</span>
+      <h2 class="mt-2 text-4xl sm:text-5xl">{{ i18n "recent_publications" }}</h2>
+      <p class="mt-3 max-w-md text-muted-foreground">{{ i18n "pubs_sub" }}</p>
+    </div>
+    <div class="flex items-center gap-2">
+      <button type="button" class="icon-btn" data-pub-prev aria-label="Previous"><span class="inline-flex rotate-180">{{ partial "icon.html" (dict "name" "arrow-right" "class" "size-[1.05rem]") }}</span></button>
+      <button type="button" class="icon-btn" data-pub-next aria-label="Next">{{ partial "icon.html" (dict "name" "arrow-right" "class" "size-[1.05rem]") }}</button>
+      <a class="link-arrow ml-2" href="{{ "/publications/" | relLangURL }}">{{ i18n "all_publications" }} {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</a>
+    </div>
+  </div>
+  {{ $typeAccents := dict "Conference" "oklch(0.62 0.13 255)" "Workshop" "oklch(0.6 0.15 300)" "Journal" "oklch(0.6 0.1 168)" "Datasets & Benchmarks" "oklch(0.63 0.13 32)" }}
+  <div class="pub-slider fx-scroll mt-8" id="pub-slider">
+    {{ range . }}
+      {{ $acc := or (index $typeAccents .type) "var(--brand)" }}
+      <article class="pub-card" style="--field: {{ $acc | safeCSS }}">
+        <div class="mb-3 flex items-start justify-between gap-2">
+          <div class="flex flex-wrap items-center gap-1.5">
+            {{ with .venue }}<span class="badge badge-venue">{{ . }}</span>{{ end }}
+            {{ with .type }}<span class="badge badge-type" data-type="{{ . | lower | replaceRE "[^a-z0-9]+" "-" }}">{{ . }}</span>{{ end }}
+          </div>
+          <span class="num shrink-0 pt-0.5 text-sm text-subtle">{{ .year }}</span>
+        </div>
+        <h3 class="text-lg font-semibold leading-snug">{{ .title }}</h3>
+        <p class="mt-2.5 text-sm text-muted-foreground clamp-2">{{ .authors | safeHTML }}</p>
+        {{ with .summary }}<p class="mt-2 text-sm text-subtle clamp-3">{{ . }}</p>{{ end }}
+        {{ with .links }}{{ with .pdf }}<a class="link-arrow mt-auto pt-4" href="{{ . }}" target="_blank" rel="noopener">PDF {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-4") }}</a>{{ end }}{{ end }}
+      </article>
+    {{ end }}
+  </div>
+</section>
+{{ end }}
+
+<!-- ───────────────── Services teaser ───────────────── -->
+<section class="workspace">
+  <div class="panel fx-scroll relative overflow-hidden p-7 sm:p-10">
+    <span class="absolute inset-0 bg-spotlight"></span>
+    <div class="relative">
+      <span class="eyebrow">{{ partial "icon.html" (dict "name" "briefcase" "class" "size-3.5") }} {{ i18n "work_with_me" }}</span>
+      <h2 class="mt-2 max-w-2xl text-4xl sm:text-5xl">{{ i18n "services_teaser_title" }}</h2>
+      <p class="lead mt-3">{{ i18n "services_teaser_lead" }}</p>
+      <div class="mt-7 grid gap-5 sm:grid-cols-3">
+        {{ range .Params.services }}
+          <div class="panel p-6">
+            <span class="grid size-11 place-items-center rounded-xl" style="background:color-mix(in oklch,var(--brand) 16%,transparent);color:var(--brand)">{{ partial "icon.html" (dict "name" (.icon | default "sparkle") "class" "size-5") }}</span>
+            <h3 class="mt-4 font-display font-semibold">{{ .title }}</h3>
+            <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">{{ .summary }}</p>
+          </div>
+        {{ end }}
+      </div>
+      <div class="mt-7 flex flex-wrap items-center gap-x-5 gap-y-3">
+        {{ with site.Params.booking }}<a class="btn btn-primary" href="{{ . }}" target="_blank" rel="noopener">{{ partial "icon.html" (dict "name" "calendar" "class" "size-4") }} {{ i18n "book_consultation" }}</a>{{ end }}
+        <a class="btn" href="mailto:{{ site.Params.email }}">{{ partial "icon.html" (dict "name" "mail" "class" "size-4") }} {{ i18n "start_conversation" }}</a>
+        <a class="link-arrow" href="{{ "/services/" | relLangURL }}">{{ i18n "see_services" }} {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</a>
+      </div>
+    </div>
+  </div>
+</section>
+{{ end }}

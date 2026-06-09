@@ -1,0 +1,17 @@
+{{- $page := .page -}}
+{{- $variant := .variant | default "drawer" -}}
+{{- $links := slice
+  (dict "key" "nav_home" "url" "/" "icon" "home")
+  (dict "key" "nav_projects" "url" "/projects/" "icon" "folder")
+  (dict "key" "nav_publications" "url" "/publications/" "icon" "paper")
+  (dict "key" "nav_about" "url" "/about/" "icon" "user")
+  (dict "key" "nav_services" "url" "/services/" "icon" "briefcase")
+-}}
+{{- range $links -}}
+  {{- $u := .url | relLangURL -}}
+  {{- $active := or (eq $page.RelPermalink $u) (and (ne .url "/") (hasPrefix $page.RelPermalink $u)) -}}
+  <a class="nav-link{{ if $active }} is-active{{ end }}" href="{{ $u }}"{{ if $active }} aria-current="page"{{ end }}>
+    {{ if ne $variant "top" }}{{ partial "icon.html" (dict "name" .icon "class" "size-[1.05rem]") }}{{ end }}
+    <span>{{ i18n .key }}</span>
+  </a>
+{{- end -}}

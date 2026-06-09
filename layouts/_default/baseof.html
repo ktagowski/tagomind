@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="{{ site.Language.Lang }}" class="dark">
+<head>
+  {{ partial "head.html" . }}
+</head>
+<body>
+  <a href="#main" class="sr-only focus:not-sr-only">Skip to content</a>
+  <div class="scroll-progress" aria-hidden="true"><span></span></div>
+  {{ if .IsHome }}<canvas id="graph-bg" class="graph-bg" aria-hidden="true"></canvas>{{ end }}
+  <div class="grain" aria-hidden="true"></div>
+  {{ partial "mobile-nav.html" . }}
+  {{ partial "topbar.html" . }}
+  <main id="main">
+    {{ block "main" . }}{{ end }}
+  </main>
+  {{ partial "footer.html" . }}
+  {{ partial "scripts.html" . }}
+</body>
+</html>

@@ -1,0 +1,142 @@
+# Polskie napisy interfejsu
+[nav_home]
+other = "Start"
+[nav_projects]
+other = "Projekty"
+[nav_publications]
+other = "Publikacje"
+[nav_about]
+other = "O mnie"
+[nav_services]
+other = "Usługi"
+
+[lets_talk]
+other = "Porozmawiajmy"
+[explore_projects]
+other = "Przeglądaj projekty"
+[all_projects]
+other = "Wszystkie projekty"
+[all_publications]
+other = "Wszystkie publikacje"
+[start_conversation]
+other = "Rozpocznij rozmowę"
+[book_consultation]
+other = "Umów konsultację"
+[see_services]
+other = "Zobacz usługi"
+
+[available]
+other = "Dostępny do konsultacji"
+[selected_work]
+other = "Wybrane prace"
+[focus_areas]
+other = "Obszary specjalizacji"
+[fields_of_interest]
+other = "Obszary zainteresowań"
+[peer_reviewed]
+other = "Recenzowane"
+[recent_publications]
+other = "Najnowsze publikacje"
+[work_with_me]
+other = "Współpracujmy"
+[services_teaser_title]
+other = "Przynieś mi trudny problem z języka, grafów lub dokumentów."
+[services_teaser_lead]
+other = "Doradztwo i praktyczna inżynieria, od krótkiej konsultacji po produkcyjny system, który Twój zespół może przejąć."
+
+[hero_work_label]
+other = "Ostatnie prace"
+
+[applications_title]
+other = "Co buduję"
+[applications_sub]
+other = "Produkty, które buduję, i zespołowe projekty, które prowadzę."
+[status_live]
+other = "Dostępne"
+[status_upcoming]
+other = "Wkrótce"
+[status_ongoing]
+other = "W toku"
+[coming_soon]
+other = "Wkrótce"
+[open_app]
+other = "Otwórz"
+
+[fields_sub]
+other = "Problemy, którymi się zajmuję, i narzędzia, po które sięgam."
+[pubs_sub]
+other = "Recenzowane prace z NLP i uczenia reprezentacji grafowych."
+
+[the_explorer]
+other = "Eksplorator"
+[search_placeholder]
+other = "Szukaj projektów, technologii, konferencji…"
+[sort_featured]
+other = "Wyróżnione"
+[sort_newest]
+other = "Najnowsze"
+[sort_oldest]
+other = "Najstarsze"
+[sort_impact]
+other = "Wg wpływu"
+[sort_az]
+other = "A–Z"
+[clear]
+other = "Wyczyść"
+[grid_view]
+other = "Widok siatki"
+[list_view]
+other = "Widok listy"
+[no_match_title]
+other = "Brak pasujących projektów"
+[no_match_body]
+other = "Usuń filtr lub wyczyść wyszukiwanie."
+[projects_forms]
+other = "projekt|projekty|projektów"
+[projects_count]
+one = "{{ .Count }} projekt"
+few = "{{ .Count }} projekty"
+many = "{{ .Count }} projektów"
+other = "{{ .Count }} projektu"
+
+[role_label]
+other = "Rola"
+[year_label]
+other = "Rok"
+[venue_label]
+other = "Konferencja"
+[impact_label]
+other = "Wpływ"
+[stack_label]
+other = "Technologie"
+[previous]
+other = "Poprzedni"
+[next]
+other = "Następny"
+
+[about_label]
+other = "O mnie"
+[what_i_do]
+other = "Czym się zajmuję"
+[expertise]
+other = "Kompetencje"
+[path_label]
+other = "Droga"
+[trajectory]
+other = "Ścieżka"
+
+[engagement]
+other = "Współpraca"
+[how_we_work]
+other = "Jak pracujemy"
+[cta_title]
+other = "Masz problem wart rozwiązania?"
+[cta_lead]
+other = "Opowiedz mi o swoich danych, użytkownikach i ograniczeniach. Powiem Ci szczerze, gdzie AI się sprawdza, a gdzie nie."
+
+[built_with]
+other = "Zbudowano w Hugo"
+[e404_title]
+other = "Zgubiony w grafie"
+[e404_body]
+other = "Ten węzeł nie istnieje, albo przeniósł się do innego klastra."

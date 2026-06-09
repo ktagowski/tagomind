@@ -1,0 +1,95 @@
+baseURL: "https://ktagowski.github.io/tagomind/"
+defaultContentLanguage: "en"
+defaultContentLanguageInSubdir: false
+title: "TagoMind · Kamil Tagowski, PhD"
+enableRobotsTXT: true
+enableGitInfo: false
+enableEmoji: true
+
+# --- Tailwind CSS v4 asset pipeline (css.TailwindCSS reads hugo_stats.json) ---
+build:
+  buildStats:
+    enable: true
+  cachebusters:
+    - source: 'assets/notwatching/hugo_stats\.json'
+      target: 'css'
+    - source: '(postcss|tailwind)\.config\.js'
+      target: 'css'
+module:
+  mounts:
+    - source: assets
+      target: assets
+    - source: hugo_stats.json
+      target: assets/notwatching/hugo_stats.json
+      disableWatch: true
+
+# Field-of-interest taxonomy drives the Explorer filter chips + card accents.
+taxonomies:
+  field: fields
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+  highlight:
+    noClasses: false
+    style: github-dark
+  tableOfContents:
+    startLevel: 2
+    endLevel: 3
+
+sitemap:
+  changefreq: weekly
+  priority: 0.5
+
+# Fields are consumed only as filter chips inside the Explorer, not as own pages.
+disableKinds:
+  - taxonomy
+  - term
+
+# --- Shared params (language overrides below) ---
+params:
+  brand: "TagoMind"
+  author: "Kamil Tagowski"
+  authorTitle: "PhD"
+  role: "Postdoctoral Researcher & AI Engineer"
+  email: "kamil.tagowski@tagomind.com"
+  booking: "https://calendar.app.google/mvQcy3JLLyvBQ3VG9"
+  affiliation: "Department of Artificial Intelligence, Wrocław University of Science and Technology"
+  location: "Wrocław, Poland"
+  avatar: "img/kamil-tagowski.jpg"
+  themeColor: "#26262A"
+  socials:
+    - name: "GitHub"
+      icon: "github"
+      url: "https://github.com/ktagowski"
+    - name: "LinkedIn"
+      icon: "linkedin"
+      url: "https://www.linkedin.com/in/ktagowski/"
+    - name: "Email"
+      icon: "mail"
+      url: "mailto:kamil.tagowski@tagomind.com"
+    - name: "DBLP"
+      icon: "scholar"
+      url: "https://dblp.org/pid/225/0671.html"
+
+languages:
+  en:
+    languageName: "English"
+    languageCode: "en-US"
+    weight: 1
+    title: "TagoMind · Kamil Tagowski, PhD"
+    params:
+      tagline: "Graph representation learning & NLP, from research benchmarks to production legal-AI systems."
+      description: "Kamil Tagowski (PhD), researcher and engineer in Graph Representation Learning and NLP. Projects, publications, and AI/NLP/Legal-AI consulting."
+  pl:
+    languageName: "Polski"
+    languageCode: "pl-PL"
+    weight: 2
+    title: "TagoMind · Kamil Tagowski, PhD"
+    params:
+      role: "Adiunkt / inżynier AI"
+      affiliation: "Katedra Sztucznej Inteligencji, Politechnika Wrocławska"
+      location: "Wrocław, Polska"
+      tagline: "Uczenie reprezentacji grafowych i NLP, od benchmarków badawczych po wdrożeniowe systemy legal-AI."
+      description: "Kamil Tagowski (PhD), badacz i inżynier w obszarze uczenia reprezentacji grafowych i NLP. Projekty, publikacje oraz doradztwo AI/NLP/Legal-AI."

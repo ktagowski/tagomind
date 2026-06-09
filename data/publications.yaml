@@ -1,0 +1,120 @@
+# Peer-reviewed publications, sourced from the author's DBLP record.
+# Newest first. Authors: wrap "K. Tagowski" in <strong> for emphasis.
+# Under-review / preprint-only entries are intentionally excluded.
+- title: "Factual State Discovery Benchmark: Evaluating Fact Elicitation in Polish Tax Law"
+  authors: "M. Bystroński, <strong>K. Tagowski</strong>, D. Janiak, J. Farganus, Ł. Augustyniak, M. Kajdanowicz, T. Kajdanowicz"
+  venue: "ACL 2026 SRW"
+  type: "Conference"
+  year: 2026
+  summary: "A benchmark for conversational fact elicitation in Polish tax law: 500 official tax-interpretation narratives decomposed into 32,874 validated atomic facts, evaluated with a discovery-through-dialogue protocol. Even the best model recovers under half the facts on hard cases after 50 turns."
+  bibtex: |
+    @inproceedings{bystronski2026factual,
+      title     = {Factual State Discovery Benchmark: Evaluating Fact Elicitation in Polish Tax Law},
+      author    = {Bystro\'nski, Mateusz and Tagowski, Kamil and Janiak, Denis and Farganus, Julia and Augustyniak, {\L}ukasz and Kajdanowicz, Monika and Kajdanowicz, Tomasz},
+      booktitle = {Proceedings of the 64th Annual Meeting of the Association for Computational Linguistics: Student Research Workshop},
+      year      = {2026}
+    }
+
+- title: "Bridging AI and Law: A Scalable Multi-Agent Platform for Quantitative Legal Analytics Across Millions of Documents"
+  authors: "Ł. Augustyniak, <strong>K. Tagowski</strong>, A. Szymczak, J. Binkowski, A. Sawczyn, M. Skibiński, D. Janiak, M. Bystroński, G. Piotrowski, M. Bernaczyk, K. Kamiński, T. Kajdanowicz"
+  venue: "AILaw 2026"
+  type: "Workshop"
+  year: 2026
+  summary: "A production-scale, multi-agent platform bridging AI and legal practice, indexing 3M+ documents and 300M+ semantic vectors, with a Quantitative Legal Agent architecture for aggregation and interpretable analysis across jurisdictions."
+  links:
+    pdf: "https://openreview.net/pdf?id=hWjsyTSWrY"
+  bibtex: |
+    @inproceedings{augustyniak2026bridging,
+      title     = {Bridging AI and Law: A Scalable Multi-Agent Platform for Quantitative Legal Analytics Across Millions of Documents},
+      author    = {Augustyniak, {\L}ukasz and Tagowski, Kamil and Szymczak, Adrian and Binkowski, Jakub and Sawczyn, Albert and Skibi\'nski, Micha{\l} and Janiak, Denis and Bystro\'nski, Mateusz and Piotrowski, Grzegorz and Bernaczyk, Micha{\l} and Kami\'nski, Krzysztof and Kajdanowicz, Tomasz},
+      booktitle = {Bridge between Artificial Intelligence and Law (AILaw)},
+      year      = {2026},
+      url       = {https://openreview.net/forum?id=hWjsyTSWrY}
+    }
+
+- title: "RAFEN: Regularized Alignment Framework for Embeddings of Nodes"
+  authors: "<strong>K. Tagowski</strong>, P. Bielak, J. Binkowski, T. Kajdanowicz"
+  venue: "ICCS 2023"
+  type: "Conference"
+  year: 2023
+  summary: "A regularized framework for aligning node embeddings across snapshots of a dynamic graph, improving the stability of temporal representations."
+  links:
+    doi: "https://doi.org/10.1007/978-3-031-35995-8_25"
+    pdf: "https://arxiv.org/abs/2303.01926"
+  bibtex: |
+    @inproceedings{tagowski2023rafen,
+      title     = {{RAFEN}: Regularized Alignment Framework for Embeddings of Nodes},
+      author    = {Tagowski, Kamil and Bielak, Piotr and Binkowski, Jakub and Kajdanowicz, Tomasz},
+      booktitle = {International Conference on Computational Science (ICCS)},
+      year      = {2023},
+      doi       = {10.1007/978-3-031-35995-8_25}
+    }
+
+- title: "This is the way: designing and compiling LEPISZCZE, a comprehensive NLP benchmark for Polish"
+  authors: "Ł. Augustyniak, <strong>K. Tagowski</strong>, A. Sawczyn, D. Janiak, R. Bartusiak, A. Szymczak, A. Janz, P. Szymański, M. Wątroba, M. Morzy, T. Kajdanowicz, M. Piasecki"
+  venue: "NeurIPS 2022"
+  type: "Datasets & Benchmarks"
+  year: 2022
+  summary: "A comprehensive, reproducible benchmark for Polish NLP spanning 14 diverse tasks, with a public leaderboard and pre-computed embeddings."
+  links:
+    pdf: "https://proceedings.neurips.cc/paper_files/paper/2022/file/890b206ebb79e550f3988cb8db936f42-Paper-Datasets_and_Benchmarks.pdf"
+    leaderboard: "https://lepiszcze.clarin-pl.eu/"
+    dataset: "https://huggingface.co/clarin-pl"
+  bibtex: |
+    @inproceedings{augustyniak2022lepiszcze,
+      title     = {This is the Way: Designing and Compiling {LEPISZCZE}, a Comprehensive {NLP} Benchmark for {P}olish},
+      author    = {Augustyniak, {\L}ukasz and Tagowski, Kamil and Sawczyn, Albert and Janiak, Denis and Bartusiak, Roman and Szymczak, Adrian and Janz, Arkadiusz and Szyma\'nski, Piotr and W\k{a}troba, Marcin and Morzy, Miko{\l}aj and Kajdanowicz, Tomasz and Piasecki, Maciej},
+      booktitle = {Advances in Neural Information Processing Systems (NeurIPS), Datasets and Benchmarks Track},
+      year      = {2022}
+    }
+
+- title: "FILDNE: A Framework for Incremental Learning of Dynamic Networks Embeddings"
+  authors: "P. Bielak, <strong>K. Tagowski</strong>, M. Falkiewicz, T. Kajdanowicz, N. V. Chawla"
+  venue: "Knowledge-Based Systems"
+  type: "Journal"
+  year: 2022
+  summary: "An incremental framework that updates dynamic-network embeddings as the graph evolves, avoiding costly full retraining."
+  links:
+    doi: "https://doi.org/10.1016/j.knosys.2021.107453"
+  bibtex: |
+    @article{bielak2022fildne,
+      title   = {{FILDNE}: A Framework for Incremental Learning of Dynamic Networks Embeddings},
+      author  = {Bielak, Piotr and Tagowski, Kamil and Falkiewicz, Maciej and Kajdanowicz, Tomasz and Chawla, Nitesh V.},
+      journal = {Knowledge-Based Systems},
+      year    = {2022},
+      doi     = {10.1016/j.knosys.2021.107453}
+    }
+
+- title: "Embedding Alignment Methods in Dynamic Networks"
+  authors: "<strong>K. Tagowski</strong>, P. Bielak, T. Kajdanowicz"
+  venue: "ICCS 2021"
+  type: "Conference"
+  year: 2021
+  summary: "A study of alignment methods that keep node embeddings comparable across consecutive snapshots of a dynamic network."
+  links:
+    doi: "https://doi.org/10.1007/978-3-030-77961-0_48"
+  bibtex: |
+    @inproceedings{tagowski2021embedding,
+      title     = {Embedding Alignment Methods in Dynamic Networks},
+      author    = {Tagowski, Kamil and Bielak, Piotr and Kajdanowicz, Tomasz},
+      booktitle = {International Conference on Computational Science (ICCS)},
+      year      = {2021},
+      doi       = {10.1007/978-3-030-77961-0_48}
+    }
+
+- title: "Incremental Learning in Dynamic Networks for Node Classification"
+  authors: "T. Kajdanowicz, <strong>K. Tagowski</strong>, M. Falkiewicz, P. Kazienko"
+  venue: "ENIC 2017"
+  type: "Conference"
+  year: 2017
+  summary: "Early work on incremental node-classification methods for evolving network data."
+  links:
+    doi: "https://doi.org/10.1007/978-3-319-90312-5_9"
+  bibtex: |
+    @inproceedings{kajdanowicz2017incremental,
+      title     = {Incremental Learning in Dynamic Networks for Node Classification},
+      author    = {Kajdanowicz, Tomasz and Tagowski, Kamil and Falkiewicz, Maciej and Kazienko, Przemys{\l}aw},
+      booktitle = {Proceedings of the ENIC Conference},
+      year      = {2017},
+      doi       = {10.1007/978-3-319-90312-5_9}
+    }

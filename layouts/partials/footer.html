@@ -1,0 +1,16 @@
+<footer class="mt-16 border-t border-border">
+  <div class="workspace flex flex-col gap-6 !py-10 sm:flex-row sm:items-center sm:justify-between">
+    <div class="flex flex-col gap-1.5">
+      <a class="wordmark" href="{{ "/" | relLangURL }}">
+        <span class="glyph">{{ partial "icon.html" (dict "name" "graph" "class" "size-4") }}</span>
+        <span>Tago<b>Mind</b></span>
+      </a>
+      <p class="text-sm text-muted-foreground">{{ site.Params.author }}, {{ site.Params.authorTitle }} · {{ site.Params.role }}.</p>
+      <p class="text-xs text-subtle">{{ site.Params.affiliation }}</p>
+    </div>
+    <div class="flex flex-col gap-3 sm:items-end">
+      <div class="flex items-center gap-1.5">{{ partial "social-links.html" (dict "size" "size-[1.05rem]") }}</div>
+      <p class="text-xs text-subtle">© {{ now.Year }} {{ site.Params.author }} · {{ i18n "built_with" }}</p>
+    </div>
+  </div>
+</footer>
