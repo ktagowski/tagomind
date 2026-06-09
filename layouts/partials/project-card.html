@@ -22,11 +22,11 @@
       <span class="card-headings">
         <h3 class="card-title">{{ $p.Title }}</h3>
         <span class="card-sub">
-          {{ with $p.Params.role }}<span>{{ . }}</span><span class="opacity-40">·</span>{{ end }}
+          {{ with $p.Params.role }}<span class="card-role">{{ . }}</span><span class="opacity-40">·</span>{{ end }}
           <span class="num">{{ $p.Params.year }}{{ with $p.Params.yearEnd }}–{{ . }}{{ end }}</span>
         </span>
       </span>
-      {{ with $p.Params.venue }}<span class="badge badge-venue">{{ . }}</span>{{ else }}{{ with $p.Params.status }}<span class="badge badge-status">{{ . }}</span>{{ end }}{{ end }}
+      {{ with $p.Params.venue }}<span class="badge badge-venue">{{ . }}</span>{{ else }}{{ with $p.Params.status }}<span class="badge{{ if eq . "Live" }} badge-live{{ else }} badge-status{{ end }}">{{ . }}</span>{{ end }}{{ end }}
     </div>
     <p class="card-summary">{{ $summary }}</p>
     <div class="card-foot">

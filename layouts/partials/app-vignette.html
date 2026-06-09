@@ -1,0 +1,35 @@
+{{- /* Animated, theme-aware product vignette. Usage:
+     {{ partial "app-vignette.html" (dict "kind" "flat-explorer") }}
+     Pure CSS animation; tokens inherit --app-accent from the card. */ -}}
+{{- $kind := .kind -}}
+{{- if eq $kind "flat-explorer" -}}
+<div class="vig vig-flat" aria-hidden="true">
+  <div class="vig-metrics">
+    <div class="vig-metric"><span class="vig-label">Indexed</span><span class="vig-num num">7</span></div>
+    <div class="vig-metric"><span class="vig-label">Pass rate</span><span class="vig-num num">100%</span></div>
+    <div class="vig-metric"><span class="vig-label">Avg score</span><span class="vig-num num">75<small>/100</small></span></div>
+  </div>
+  <div class="vig-row">
+    <span class="vig-thumb"></span>
+    <span class="vig-lines"><i style="width:58%"></i><i style="width:38%"></i></span>
+    <span class="vig-pick">AI top pick</span>
+    <span class="vig-score"><b class="num">84</b><i class="vig-bar"><b style="--w:0.84"></b></i></span>
+  </div>
+  <div class="vig-row vig-row-2">
+    <span class="vig-thumb"></span>
+    <span class="vig-lines"><i style="width:64%"></i><i style="width:30%"></i></span>
+    <span class="vig-score"><b class="num">79</b><i class="vig-bar"><b style="--w:0.79"></b></i></span>
+  </div>
+</div>
+{{- else if eq $kind "ai-tax" -}}
+<div class="vig vig-tax" aria-hidden="true">
+  <div class="vig-q">Does the R&amp;D relief cover contractor costs?</div>
+  <div class="vig-a">
+    <span class="vig-dots"><i></i><i></i><i></i></span>
+    <span class="vig-alines"><i style="width:92%"></i><i style="width:76%"></i><i style="width:58%"></i></span>
+    <div class="vig-cites">
+      <span>0114-KDIP2-1.4010</span><span>II FSK 1234/22</span><span>art. 18d CIT</span>
+    </div>
+  </div>
+</div>
+{{- end -}}

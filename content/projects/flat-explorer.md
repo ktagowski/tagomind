@@ -6,11 +6,11 @@ logo: "img/logos/flat-explorer.svg"
 year: 2026
 fields: ["Agentic AI", "Applications"]
 role: "Author"
-status: "Product"
+status: "Live"
 links:
   site: "https://flat-explorer.tagomind.com/"
 impact: 72
-featured: false
+featured: true
 summary: "AI-assisted flat hunting: scores apartment listings, summarizes visits, and compares options side by side."
 hero: ""
 ---

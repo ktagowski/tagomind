@@ -239,9 +239,15 @@
     function frame() {
       raf = (!reduceMotion && !document.hidden) ? requestAnimationFrame(frame) : null;
       t++;
+      // Self-heal: if the stylesheet landed after init (deferred CSS), the bitmap was sized
+      // off the 300×150 canvas default and CSS stretches it — giant blurry nodes and a
+      // mouse-coordinate space that no longer matches the viewport. Re-sync when it drifts.
+      if ((t & 31) === 0 && (canvas.clientWidth !== W || canvas.clientHeight !== H)) resize();
       var tx = mouse.on ? mouse.x : W * 0.5, ty = mouse.on ? mouse.y : H * 0.42;
-      mouse.px += (tx - mouse.px) * 0.045;
-      mouse.py += (ty - mouse.py) * 0.045;
+      // Snappy-but-smooth cursor follow; idle drift back to centre stays slow.
+      var ease = mouse.on ? 0.16 : 0.045;
+      mouse.px += (tx - mouse.px) * ease;
+      mouse.py += (ty - mouse.py) * ease;
       var ox = (mouse.px - W / 2), oy = (mouse.py - H / 2);
 
       ctx.clearRect(0, 0, W, H);
@@ -258,6 +264,17 @@
         if (p.y < -24) p.y = H + 24; else if (p.y > H + 24) p.y = -24;
         p.dx = p.x;
         p.dy = p.y;
+        // Magnetic lean: nodes near the cursor reach toward it. Display-only offset —
+        // the underlying positions never change, so the field can't drift or warp.
+        if (mouse.on && !reduceMotion) {
+          var mdx = mouse.px - p.x, mdy = mouse.py - p.y, md2 = mdx * mdx + mdy * mdy;
+          if (md2 < 49284 && md2 > 1) { // 222px reach
+            var md = Math.sqrt(md2);
+            var pull = (1 - md / 222) * 16 * p.z; // up to ~16px on hubs
+            p.dx = p.x + (mdx / md) * pull;
+            p.dy = p.y + (mdy / md) * pull;
+          }
+        }
       }
 
       // ── Edges: k-nearest-neighbour graph — each node links to its 2 closest (hubs to 4),
@@ -304,14 +321,14 @@
         for (n = 0; n < N; n++) {
           p = nodes[n];
           var cx = mouse.px - p.dx, cy = mouse.py - p.dy, cd2 = cx * cx + cy * cy;
-          if (cd2 > 66000) continue;
+          if (cd2 > 96100) continue;
           var cp = cn_d.length;
           while (cp > 0 && cn_d[cp - 1] > cd2) cp--;
-          if (cp < 4) { cn_d.splice(cp, 0, cd2); cn_i.splice(cp, 0, n); if (cn_d.length > 4) { cn_d.pop(); cn_i.pop(); } }
+          if (cp < 5) { cn_d.splice(cp, 0, cd2); cn_i.splice(cp, 0, n); if (cn_d.length > 5) { cn_d.pop(); cn_i.pop(); } }
         }
         for (var ci = 0; ci < cn_i.length; ci++) {
           p = nodes[cn_i[ci]];
-          var d3 = Math.sqrt(cn_d[ci]), ca = pal.cursorA * (1 - d3 / 262);
+          var d3 = Math.sqrt(cn_d[ci]), ca = pal.cursorA * (1 - d3 / 312);
           ctx.strokeStyle = "rgba(" + lr + "," + lg + "," + lb + "," + ca.toFixed(3) + ")";
           ctx.lineWidth = 1;
           ctx.beginPath(); ctx.moveTo(mouse.px, mouse.py); ctx.lineTo(p.dx, p.dy); ctx.stroke();
@@ -373,6 +390,16 @@
 
     resize();
     scrollFade();
+    // Re-measure the moment layout actually gives the canvas its real size (deferred CSS,
+    // font swaps, orientation changes) — not just on window resize events.
+    if ("ResizeObserver" in window) {
+      new ResizeObserver(function () {
+        if (canvas.clientWidth !== W || canvas.clientHeight !== H) {
+          resize();
+          if (reduceMotion) requestAnimationFrame(frame);
+        }
+      }).observe(canvas);
+    }
     if (reduceMotion) requestAnimationFrame(frame); else start();
   }
 

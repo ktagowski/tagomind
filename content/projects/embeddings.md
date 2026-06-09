@@ -6,7 +6,7 @@ logo: "img/logos/clarin-pl.png"
 year: 2022
 fields: ["NLP", "Benchmarks"]
 role: "Lead Engineer and Coordinator"
-status: "Open source"
+status: "Library"
 impact: 80
 featured: false
 summary: "Transformer-based NLP library for text classification, sequence labeling, and embeddings in Polish."

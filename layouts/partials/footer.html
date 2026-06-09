@@ -1,16 +1,47 @@
+{{- $projects := where site.RegularPages "Section" "projects" -}}
+{{- $featured := first 5 (sort (where $projects "Params.featured" true) "Params.impact" "desc") -}}
+{{- if lt (len $featured) 4 }}{{ $featured = first 5 $projects }}{{ end -}}
 <footer class="mt-16 border-t border-border">
-  <div class="workspace flex flex-col gap-6 !py-10 sm:flex-row sm:items-center sm:justify-between">
-    <div class="flex flex-col gap-1.5">
+  <div class="workspace grid gap-10 !py-12 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1fr]">
+    <div class="flex max-w-xs flex-col gap-2">
       <a class="wordmark" href="{{ "/" | relLangURL }}">
         <span class="glyph">{{ partial "icon.html" (dict "name" "graph" "class" "size-4") }}</span>
         <span>Tago<b>Mind</b></span>
       </a>
-      <p class="text-sm text-muted-foreground">{{ site.Params.author }}, {{ site.Params.authorTitle }} · {{ site.Params.role }}.</p>
-      <p class="text-xs text-subtle">{{ site.Params.affiliation }}</p>
+      <p class="mt-1 text-sm text-muted-foreground">{{ site.Params.author }}, {{ site.Params.authorTitle }} · {{ site.Params.role }}.</p>
+      <p class="text-xs leading-relaxed text-subtle">{{ site.Params.affiliation }} · {{ site.Params.location }}</p>
+      <div class="mt-2 flex items-center gap-1.5">{{ partial "social-links.html" (dict "size" "size-[1.05rem]") }}</div>
     </div>
-    <div class="flex flex-col gap-3 sm:items-end">
-      <div class="flex items-center gap-1.5">{{ partial "social-links.html" (dict "size" "size-[1.05rem]") }}</div>
+
+    <nav class="footer-col" aria-label="Site">
+      <span class="footer-head">Explore</span>
+      <a href="{{ "/" | relLangURL }}">{{ i18n "nav_home" }}</a>
+      <a href="{{ "/projects/" | relLangURL }}">{{ i18n "nav_projects" }}</a>
+      <a href="{{ "/publications/" | relLangURL }}">{{ i18n "nav_publications" }}</a>
+      <a href="{{ "/about/" | relLangURL }}">{{ i18n "nav_about" }}</a>
+      <a href="{{ "/services/" | relLangURL }}">{{ i18n "nav_services" }}</a>
+    </nav>
+
+    <nav class="footer-col" aria-label="Projects">
+      <span class="footer-head">{{ i18n "nav_projects" }}</span>
+      {{ range $featured }}
+      <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+      {{ end }}
+    </nav>
+
+    <nav class="footer-col" aria-label="Contact">
+      <span class="footer-head">{{ i18n "work_with_me" }}</span>
+      <a href="mailto:{{ site.Params.email }}">{{ i18n "start_conversation" }}</a>
+      {{ with site.Params.booking }}<a href="{{ . }}" target="_blank" rel="noopener">{{ i18n "book_consultation" }}</a>{{ end }}
+      <a href="https://odysai.pl" target="_blank" rel="noopener">OdysAI</a>
+      <a href="https://scholar.google.com/citations?user=psVLt8wAAAAJ" target="_blank" rel="noopener">Google Scholar</a>
+      <a href="https://dblp.org/pid/225/0671.html" target="_blank" rel="noopener">DBLP</a>
+    </nav>
+  </div>
+  <div class="border-t border-border">
+    <div class="workspace flex flex-wrap items-center justify-between gap-3 !py-5">
       <p class="text-xs text-subtle">© {{ now.Year }} {{ site.Params.author }} · {{ i18n "built_with" }}</p>
+      <p class="text-xs text-subtle">{{ site.Params.email }}</p>
     </div>
   </div>
 </footer>

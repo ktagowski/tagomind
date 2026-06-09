@@ -3,28 +3,45 @@
 {{ $hero := .Params.hero }}
 
 <!-- ───────────────── Hero ───────────────── -->
-<section class="workspace flex min-h-[min(82vh,42rem)] flex-col items-center justify-center text-center !pt-12 !pb-16">
-  <div class="fx-rise mb-6 flex items-center justify-center gap-3">
+<section class="workspace relative flex min-h-[min(76vh,40rem)] flex-col items-center justify-center text-center !pt-12 !pb-16">
+  <span class="hero-halo" aria-hidden="true"></span>
+  <div class="fx-hero mb-6 flex items-center justify-center gap-3">
     {{ with site.Params.avatar }}<img src="{{ . | relURL }}" alt="{{ site.Params.author }}" loading="eager" class="size-12 rounded-full object-cover">{{ end }}
     {{ with $hero.eyebrow }}<span class="eyebrow">{{ . }}</span>{{ end }}
   </div>
-  <h1 class="fx-rise text-[clamp(2.7rem,6.8vw,5.9rem)] font-extrabold leading-[1.0] tracking-[-0.052em]" style="animation-delay:.06s">
-    {{ $hero.headlineA | default "Intelligence redefined." }}{{ with $hero.headlineB }}<br class="hidden sm:block"> {{ . }}{{ end }}
+  <h1 class="fx-hero text-[clamp(2.8rem,6.6vw,5.7rem)] leading-[1.02]" style="animation-delay:.08s">
+    {{ $hero.headlineA | default "Intelligence redefined." | safeHTML }}{{ with $hero.headlineB }}<br class="hidden sm:block"> {{ . | safeHTML }}{{ end }}
   </h1>
-  <p class="lead fx-rise mx-auto mt-6 max-w-2xl text-balance" style="animation-delay:.14s">{{ $hero.lead | default site.Params.tagline }}</p>
+  <p class="lead fx-hero mx-auto mt-6 max-w-2xl text-balance" style="animation-delay:.2s">{{ $hero.lead | default site.Params.tagline }}</p>
   {{ with $hero.proof }}
-  <div class="hero-proof fx-rise" style="animation-delay:.18s" aria-live="polite">
+  <div class="hero-proof fx-hero" style="animation-delay:.32s" aria-live="polite">
     <span class="hero-proof-dot" aria-hidden="true"></span>
     <span class="hero-proof-track">
       {{ range $i, $p := . }}<span class="hero-proof-item{{ if eq $i 0 }} is-active{{ end }}">{{ $p }}</span>{{ end }}
     </span>
   </div>
   {{ end }}
-  <div class="fx-rise mt-8 flex flex-wrap items-center justify-center gap-3" style="animation-delay:.24s">
+  <div class="fx-hero mt-8 flex flex-wrap items-center justify-center gap-3" style="animation-delay:.42s">
     <a class="btn btn-primary" href="{{ "/projects/" | relLangURL }}">{{ i18n "explore_projects" }}</a>
     <a class="btn btn-outline" href="mailto:{{ site.Params.email }}">{{ partial "icon.html" (dict "name" "mail" "class" "size-[1.05rem]") }} {{ i18n "lets_talk" }}</a>
   </div>
 </section>
+
+<!-- ───────────────── Affiliations (credibility band) ───────────────── -->
+{{ with hugo.Data.groups }}
+<section class="workspace !py-0">
+  <div class="affil-band fx-hero" style="animation-delay:.55s">
+    {{ range . }}
+    {{ $inner := printf `<span class="affil-org">%s</span><span class="affil-role">%s</span>` (or .short .org) (or .shortRole .role) }}
+    {{ if .url }}
+    <a class="affil-item" href="{{ .url | relLangURL }}"{{ if hasPrefix .url "http" }} target="_blank" rel="noopener"{{ end }}>{{ $inner | safeHTML }}</a>
+    {{ else }}
+    <div class="affil-item">{{ $inner | safeHTML }}</div>
+    {{ end }}
+    {{ end }}
+  </div>
+</section>
+{{ end }}
 
 <!-- ───────────────── Applications (featured, 2nd) ───────────────── -->
 {{ with .Params.applications }}
@@ -47,6 +64,16 @@
     <article class="app-card panel fx-scroll-soft{{ if eq $app.status "Upcoming" }} is-upcoming{{ end }}{{ if $detail }} is-clickable{{ end }}" style="--app-accent: {{ $accent | safeCSS }}">
       <span class="app-glow" aria-hidden="true"></span>
       {{ if $detail }}<a class="app-cover" href="{{ $detail }}" aria-label="{{ $app.title }}"></a>{{ end }}
+      {{ if or $app.vignette $app.shot }}
+      <div class="app-media" aria-hidden="true">
+        <div class="app-media-bar"><i></i><i></i><i></i>{{ with $app.url }}<span class="app-media-url">{{ replaceRE `^https?://` "" . | strings.TrimSuffix "/" }}</span>{{ end }}</div>
+        {{ if $app.vignette }}
+        {{ partial "app-vignette.html" (dict "kind" $app.vignette) }}
+        {{ else }}
+        <img src="{{ $app.shot | relURL }}" alt="" loading="lazy">
+        {{ end }}
+      </div>
+      {{ end }}
       <div class="app-head">
         <span class="app-logo logo-tile">
           {{ with $app.logo }}<img src="{{ . | relURL }}" alt="{{ $app.title }} logo" loading="lazy">
@@ -78,25 +105,15 @@
 </section>
 {{ end }}
 
-<!-- ───────────────── Fields of interest ───────────────── -->
-<section class="workspace">
-  <div class="fx-scroll-soft">
-    <span class="eyebrow">{{ partial "icon.html" (dict "name" "spark-dot" "class" "size-3.5") }} {{ i18n "focus_areas" }}</span>
-    <h2 class="mt-2 text-4xl sm:text-5xl">{{ i18n "fields_of_interest" }}</h2>
-    <p class="mt-3 max-w-lg text-muted-foreground">{{ i18n "fields_sub" }}</p>
-  </div>
-  <div class="fx-scroll mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+<!-- ───────────────── Fields of interest (slim editorial band) ───────────────── -->
+<section class="workspace !py-0">
+  <div class="fields-band fx-scroll-soft">
+    <span class="fields-band-label">{{ i18n "fields_of_interest" }}</span>
     {{ range hugo.Data.fields }}
       {{ $count := len (where $projects "Params.fields" "intersect" (slice .label)) }}
       {{ if gt $count 0 }}
-      <a href="{{ "/projects/" | relLangURL }}?fields={{ .label | urlquery }}" class="field-tile panel group flex items-center gap-3.5 p-5 transition hover:-translate-y-0.5" style="--field: {{ .color | safeCSS }}">
-        <span class="grid size-11 flex-none place-items-center rounded-xl transition-transform group-hover:scale-105" style="background:color-mix(in oklch,var(--field) 16%,transparent);color:var(--field)">
-          {{ partial "icon.html" (dict "name" (.icon | default "spark-dot") "class" "size-5") }}
-        </span>
-        <span class="min-w-0">
-          <span class="block font-semibold tracking-[-0.01em]">{{ .label }}</span>
-          <span class="block text-xs text-subtle num">{{ i18n "projects_count" $count }}</span>
-        </span>
+      <a href="{{ "/projects/" | relLangURL }}?fields={{ .label | urlquery }}" class="field-pill" style="--field: {{ .color | safeCSS }}">
+        <span class="dot" aria-hidden="true"></span>{{ .label }}<span class="num">{{ $count }}</span>
       </a>
       {{ end }}
     {{ end }}
@@ -112,15 +129,13 @@
       <h2 class="mt-2 text-4xl sm:text-5xl">{{ i18n "recent_publications" }}</h2>
       <p class="mt-3 max-w-md text-muted-foreground">{{ i18n "pubs_sub" }}</p>
     </div>
-    <div class="flex items-center gap-2">
-      <button type="button" class="icon-btn" data-pub-prev aria-label="Previous"><span class="inline-flex rotate-180">{{ partial "icon.html" (dict "name" "arrow-right" "class" "size-[1.05rem]") }}</span></button>
-      <button type="button" class="icon-btn" data-pub-next aria-label="Next">{{ partial "icon.html" (dict "name" "arrow-right" "class" "size-[1.05rem]") }}</button>
-      <a class="link-arrow ml-2" href="{{ "/publications/" | relLangURL }}">{{ i18n "all_publications" }} {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</a>
-    </div>
+    <a class="link-arrow" href="{{ "/publications/" | relLangURL }}">{{ i18n "all_publications" }} {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</a>
   </div>
   {{ $typeAccents := dict "Conference" "oklch(0.62 0.13 255)" "Workshop" "oklch(0.6 0.15 300)" "Journal" "oklch(0.6 0.1 168)" "Datasets & Benchmarks" "oklch(0.63 0.13 32)" }}
-  <div class="pub-slider fx-scroll mt-8" id="pub-slider">
-    {{ range . }}
+  {{/* Featured = significance, not recency: the NeurIPS benchmark outranks a newer ICCS paper. */}}
+  {{ $featured := where . "featured" true }}
+  <div class="fx-scroll mt-8 grid gap-4 lg:grid-cols-3">
+    {{ range first 3 (cond (gt (len $featured) 0) $featured .) }}
       {{ $acc := or (index $typeAccents .type) "var(--brand)" }}
       <article class="pub-card" style="--field: {{ $acc | safeCSS }}">
         <div class="mb-3 flex items-start justify-between gap-2">

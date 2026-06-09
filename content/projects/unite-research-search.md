@@ -5,7 +5,7 @@ draft: false
 year: 2026
 fields: ["NLP", "Graph ML", "Applications"]
 role: "Consultant"
-status: "Live system"
+status: "Live"
 impact: 85
 featured: true
 summary: "Semantic search and visualization platform for 200k+ researcher profiles across 9 European universities."

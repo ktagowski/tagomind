@@ -5,6 +5,7 @@
   authors: "M. Bystroński, <strong>K. Tagowski</strong>, D. Janiak, J. Farganus, Ł. Augustyniak, M. Kajdanowicz, T. Kajdanowicz"
   venue: "ACL 2026 SRW"
   type: "Conference"
+  featured: true
   year: 2026
   summary: "A benchmark for conversational fact elicitation in Polish tax law: 500 official tax-interpretation narratives decomposed into 32,874 validated atomic facts, evaluated with a discovery-through-dialogue protocol. Even the best model recovers under half the facts on hard cases after 50 turns."
   bibtex: |
@@ -19,6 +20,7 @@
   authors: "Ł. Augustyniak, <strong>K. Tagowski</strong>, A. Szymczak, J. Binkowski, A. Sawczyn, M. Skibiński, D. Janiak, M. Bystroński, G. Piotrowski, M. Bernaczyk, K. Kamiński, T. Kajdanowicz"
   venue: "AILaw 2026"
   type: "Workshop"
+  featured: true
   year: 2026
   summary: "A production-scale, multi-agent platform bridging AI and legal practice, indexing 3M+ documents and 300M+ semantic vectors, with a Quantitative Legal Agent architecture for aggregation and interpretable analysis across jurisdictions."
   links:
@@ -54,6 +56,7 @@
   authors: "Ł. Augustyniak, <strong>K. Tagowski</strong>, A. Sawczyn, D. Janiak, R. Bartusiak, A. Szymczak, A. Janz, P. Szymański, M. Wątroba, M. Morzy, T. Kajdanowicz, M. Piasecki"
   venue: "NeurIPS 2022"
   type: "Datasets & Benchmarks"
+  featured: true
   year: 2022
   summary: "A comprehensive, reproducible benchmark for Polish NLP spanning 14 diverse tasks, with a public leaderboard and pre-computed embeddings."
   links:

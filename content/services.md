@@ -41,7 +41,7 @@ offerings:
       - "Reproducible evaluation of agent quality"
   - title: "Finance AI"
     icon: "trending-up"
-    summary: "Applied finance intelligence over financial data and documents — the AI-in-Finance track I lead at OdysAI."
+    summary: "Applied finance intelligence over financial data and documents — the AI-in-Finance section I coordinate at OdysAI."
     bullets:
       - "Document and statement understanding"
       - "Retrieval and reasoning for finance"

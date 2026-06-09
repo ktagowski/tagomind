@@ -5,8 +5,8 @@ draft: false
 icon: "trending-up"
 year: 2026
 fields: ["Applications"]
-role: "Coordinator & Co-author"
-status: "Ongoing"
+role: "Founder & Lead"
+status: "Active"
 summary: "Applied finance intelligence: an applied finance-AI project in active development, building out the team and the system."
 links:
   site: "https://odysai.pl"

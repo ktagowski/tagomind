@@ -29,12 +29,12 @@
   <section class="mt-14">
     <span class="eyebrow">{{ partial "icon.html" (dict "name" "graph" "class" "size-3.5") }} {{ i18n "engagement" }}</span>
     <h2 class="mt-2 text-2xl sm:text-3xl">{{ i18n "how_we_work" }}</h2>
-    <div class="mt-6 grid gap-4 sm:grid-cols-3">
+    <div class="mt-7 grid gap-x-10 gap-y-6 sm:grid-cols-3">
       {{ range . }}
-        <div class="panel p-5">
-          <span class="num font-display text-3xl font-bold text-brand">{{ .step }}</span>
-          <h3 class="mt-2 font-display font-semibold">{{ .title }}</h3>
-          <p class="mt-1 text-sm text-muted-foreground">{{ .summary }}</p>
+        <div class="border-t border-border pt-5">
+          <span class="num font-display text-3xl italic font-[480] text-brand">{{ .step }}</span>
+          <h3 class="mt-2.5">{{ .title }}</h3>
+          <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">{{ .summary }}</p>
         </div>
       {{ end }}
     </div>

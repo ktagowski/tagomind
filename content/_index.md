@@ -4,10 +4,10 @@ description: "Kamil Tagowski (PhD), researcher and engineer in graph representat
 hero:
   eyebrow: "Kamil Tagowski · PhD"
   role: "PhD · NLP, Vision & Graph ML"
-  headlineA: "Connecting research and practice."
+  headlineA: "Connecting research <em>and practice</em>."
   lead: "Peer-reviewed work in NLP, graph ML, and document AI, put to use in real systems."
   proof:
-    - "Published at ACL, NeurIPS, ICCS, and AILaw 2026."
+    - "Published at ACL, NeurIPS, and AILaw 2026."
     - "Leading legal & finance AI teams at Wrocław Tech and OdysAI."
     - "Open benchmarks and datasets for Polish NLP."
   focus: ["Applied NLP", "Agentic AI", "Computer Vision", "Graph ML", "Benchmarks", "Legal AI", "Finance AI"]
@@ -17,6 +17,7 @@ applications:
     page: "flat-explorer"
     summary: "Scores apartment listings, summarizes visits, and compares options side by side."
     logo: "img/logos/flat-explorer.svg"
+    vignette: "flat-explorer"
     role: "Author"
     status: "Live"
     ongoing: true
@@ -27,6 +28,7 @@ applications:
     page: "ai-tax"
     summary: "Search, retrieval, and reasoning over large corpora of Polish legal and tax documents, built for the people who work with them daily."
     logo: "img/logos/ai-tax.svg"
+    vignette: "ai-tax"
     role: "Research Coordinator & AI Engineer"
     status: "Ongoing"
     url: "https://ai4tax.pl"
@@ -44,7 +46,7 @@ applications:
     full: "Applied finance intelligence"
     summary: "An applied finance-AI project in active development, building out the team and the system."
     icon: "trending-up"
-    role: "Coordinator & Co-author"
+    role: "Founder & Lead"
     status: "Ongoing"
     url: "https://odysai.pl"
     cta: "OdysAI"
@@ -66,5 +68,5 @@ services:
     summary: "Multi-agent pipelines that plan, retrieve, and act on your data, with human-in-the-loop control."
   - title: "Finance AI"
     icon: "trending-up"
-    summary: "Applied finance intelligence: turning financial data and documents into decisions you can audit — the track I lead at OdysAI."
+    summary: "Applied finance intelligence: turning financial data and documents into decisions you can audit — the section I coordinate at OdysAI."
 ---
