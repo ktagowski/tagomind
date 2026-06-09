@@ -38,15 +38,19 @@ timeline:
     place: "UNITE! European university alliance"
     summary: "Semantic search over hundreds of thousands of researcher profiles across nine universities."
   - year: "Now"
+    title: "AI-in-Finance track lead"
+    place: "OdysAI · applied-AI research group"
+    summary: "Leading the finance track at OdysAI, building out the team and an applied finance-AI system."
+  - year: "Now"
     title: "Postdoc & AI Engineer"
     place: "Wrocław University of Science and Technology"
-    summary: "Graph ML and NLP for document understanding, with one foot in research and one in production."
+    summary: "Graph ML and NLP for document understanding, in research and in production."
 ---
 
 I work at the seam between research and engineering. My academic background is in **graph representation learning** and **natural language processing**, and my day-to-day is building systems that take those ideas out of papers and into tools people rely on.
 
 That has meant co-authoring **LEPISZCZE**, a NeurIPS 2022 benchmark that standardized how Polish language models are evaluated, and it has meant shipping production **legal and tax AI** platforms that index millions of documents and serve working researchers. I care about the unglamorous parts that decide whether a model is actually useful: clean datasets, honest evaluation, and software that does not fall over.
 
-More recently that work has grown to include **vision and generative models**: vision-language systems that read imagery and generative models that create it, like an AI pipeline for generating and editing game maps.
+More recently that work has grown to include **vision and generative models**: vision-language systems that read imagery and generative models that create it, like an AI pipeline for generating and editing game maps. I am also a member of [OdysAI](https://odysai.pl), an applied-AI research group at Wrocław Tech, where I lead the **AI-in-Finance** track.
 
-If you are working on something at the intersection of language, graphs, vision, and real-world documents, I would like to hear about it.
+If you are working on a problem that involves language, graphs, vision, or real-world documents, I would like to hear about it.

@@ -19,7 +19,7 @@ AI-Tax is a production platform for Polish **tax law** and the legal documents a
 
 ## What it does
 
-It turns millions of Polish tax interpretations and court judgments into answers: semantic search, conversational chat with citations, and structured extraction. The agentic layer, built on LangGraph, generates and refines extraction schemas through a multi-agent workflow with human-in-the-loop feedback, rather than one-shot prompting.
+It turns millions of Polish tax interpretations and court judgments into answers: semantic search, conversational chat with citations, and structured extraction. The agentic layer, built on LangGraph, generates and refines extraction schemas through a multi-agent workflow with human-in-the-loop feedback.
 
 ## My role
 

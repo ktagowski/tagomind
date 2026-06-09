@@ -597,9 +597,6 @@
     // Screenshot / no-motion mode: freeze load + scroll animations at their final frame.
     if (reduceMotion || /[?&]still=1/.test(location.search)) document.documentElement.classList.add("is-still");
     if (/[?&]fxdemo=1/.test(location.search)) { var _c = document.querySelectorAll(".js-card"); if (_c[1]) _c[1].classList.add("is-hover"); }
-    // Remember the language the visitor is currently viewing (their de-facto choice),
-    // so the first-visit locale auto-redirect won't override it afterwards.
-    try { localStorage.setItem("tm-lang", document.documentElement.lang || "en"); } catch (e) {}
     initTheme();
     initAccent();
     initNav();

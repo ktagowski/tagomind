@@ -8,7 +8,7 @@ hero:
   lead: "Peer-reviewed work in NLP, graph ML, and document AI, put to use in real systems."
   proof:
     - "Published at ACL, NeurIPS, ICCS, and AILaw 2026."
-    - "Leading a team building legal & finance AI."
+    - "Leading legal & finance AI teams at Wrocław Tech and OdysAI."
     - "Open benchmarks and datasets for Polish NLP."
   focus: ["Applied NLP", "Agentic AI", "Computer Vision", "Graph ML", "Benchmarks", "Legal AI", "Finance AI"]
 applications:
@@ -66,5 +66,5 @@ services:
     summary: "Multi-agent pipelines that plan, retrieve, and act on your data, with human-in-the-loop control."
   - title: "Finance AI"
     icon: "trending-up"
-    summary: "Applied finance intelligence: turning financial data and documents into decisions you can audit."
+    summary: "Applied finance intelligence: turning financial data and documents into decisions you can audit — the track I lead at OdysAI."
 ---

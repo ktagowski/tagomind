@@ -12,4 +12,4 @@ links:
   site: "https://odysai.pl"
 ---
 
-**More details soon.** Finance AI is in active development, building out the team and the system — pursued within [OdysAI](https://odysai.pl), an applied-AI research group at Wrocław Tech.
+**More details soon.** Finance AI is in active development, building out the team and the system — pursued within [OdysAI](https://odysai.pl), an applied-AI research group at Wrocław Tech, where I lead the AI-in-Finance track.

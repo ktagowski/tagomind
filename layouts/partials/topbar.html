@@ -6,7 +6,6 @@
     </a>
     <nav class="nav-row" aria-label="Primary">{{ partial "nav-links.html" (dict "page" . "variant" "top") }}</nav>
     <div class="topbar-controls">
-      {{ partial "lang-switch.html" . }}
       <button class="icon-btn" data-theme-toggle aria-label="Toggle theme" aria-pressed="false">
         <span class="hidden dark:inline">{{ partial "icon.html" (dict "name" "sun" "class" "size-5") }}</span>
         <span class="inline dark:hidden">{{ partial "icon.html" (dict "name" "moon" "class" "size-5") }}</span>

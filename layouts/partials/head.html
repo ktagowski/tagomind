@@ -6,14 +6,6 @@
 <title>{{ $title }}</title>
 <meta name="description" content="{{ $desc }}">
 <link rel="canonical" href="{{ .Permalink }}">
-{{- if gt (len .AllTranslations) 1 }}
-{{- range .AllTranslations }}
-<link rel="alternate" hreflang="{{ .Language.Lang }}" href="{{ .Permalink }}">
-{{- end }}
-{{- with index (where .AllTranslations "Language.Lang" "en") 0 }}
-<link rel="alternate" hreflang="x-default" href="{{ .Permalink }}">
-{{- end }}
-{{- end }}
 <meta name="author" content="{{ site.Params.author }}">
 <meta name="theme-color" content="{{ site.Params.themeColor }}">
 
@@ -30,13 +22,6 @@
 <script>
   (function(){try{var q=new URLSearchParams(location.search).get('theme');var t=(q==='light'||q==='dark')?q:localStorage.getItem('tm-theme');document.documentElement.classList.toggle('dark', t ? t==='dark' : false);var P=new URLSearchParams(location.search);var ac=P.get('accent'),hue=P.get('hue');var a=hue?'custom':(ac||localStorage.getItem('tm-accent')||'blue');if(a&&a!=='mono')document.documentElement.setAttribute('data-accent',a);if(a==='custom'){var hv=hue||localStorage.getItem('tm-accent-hue');if(hv)document.documentElement.setAttribute('data-accent-hue',hv);}}catch(e){}})();
 </script>
-{{- $plAuto := "" -}}
-{{- if eq site.Language.Lang "en" -}}{{- with index (where .AllTranslations "Language.Lang" "pl") 0 -}}{{- $plAuto = .RelPermalink -}}{{- end -}}{{- end -}}
-{{ with $plAuto }}<script>
-  /* First visit only: honor the browser locale (Polish → /pl/). User's manual choice (tm-lang) wins. */
-  (function(){try{if(localStorage.getItem('tm-lang'))return;var nl=(navigator.languages&&navigator.languages[0])||navigator.language||'';if(/^pl/i.test(nl))location.replace('{{ . }}');}catch(e){}})();
-</script>{{ end }}
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">

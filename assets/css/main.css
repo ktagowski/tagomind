@@ -242,16 +242,6 @@
     box-shadow: 0 0 10px var(--brand);
   }
 
-  /* Language switch */
-  .lang-switch { display: inline-flex; border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; }
-  .lang-switch a {
-    display: grid; place-items: center; height: 2.25rem; padding-inline: 0.5rem;
-    font-family: var(--font-mono); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;
-    color: var(--muted-foreground);
-  }
-  .lang-switch a:hover { color: var(--foreground); background: color-mix(in oklch, var(--foreground) 6%, transparent); }
-  .lang-switch a[aria-current="true"] { background: color-mix(in oklch, var(--brand) 18%, transparent); color: var(--foreground); }
-
   /* Accent color switcher */
   .accent-switch { position: relative; }
   .accent-menu {

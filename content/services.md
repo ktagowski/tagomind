@@ -1,8 +1,8 @@
 ---
 title: "Work with me"
 layout: "services"
-description: "AI, NLP, and graph-learning consulting and engineering by Kamil Tagowski, PhD: retrieval systems, evaluation, and production pipelines that hold up."
-lead: "You bring the data — text, documents, graphs, or images — and I turn it into AI that ships: retrieval, agents, vision, and rigorous evaluation, with an honest read on what's worth building and what isn't."
+description: "AI, NLP, and graph-learning consulting and engineering by Kamil Tagowski, PhD: retrieval systems, agents, and rigorous evaluation on real data."
+lead: "Bring your data, whether text, documents, graphs, or images. I design and build the retrieval, agents, vision, and evaluation that turn it into a working system."
 offerings:
   - title: "Applied NLP & LLM systems"
     icon: "sparkle"
@@ -34,14 +34,14 @@ offerings:
       - "Human-in-the-loop review tooling"
   - title: "Agentic AI systems"
     icon: "compass"
-    summary: "Multi-agent workflows that plan, retrieve, and act — not one-shot prompts."
+    summary: "Multi-agent workflows that plan, retrieve, and act across multi-step tasks."
     bullets:
       - "Tool-using, multi-step agent pipelines"
       - "Schema and extraction generation"
       - "Reproducible evaluation of agent quality"
   - title: "Finance AI"
     icon: "trending-up"
-    summary: "Applied finance intelligence over financial data and documents."
+    summary: "Applied finance intelligence over financial data and documents — the AI-in-Finance track I lead at OdysAI."
     bullets:
       - "Document and statement understanding"
       - "Retrieval and reasoning for finance"

@@ -1,6 +1,5 @@
 baseURL: "https://tagomind.com/"
-defaultContentLanguage: "en"
-defaultContentLanguageInSubdir: false
+languageCode: "en-US"
 title: "TagoMind · Kamil Tagowski, PhD"
 enableRobotsTXT: true
 enableGitInfo: false
@@ -47,7 +46,6 @@ disableKinds:
   - taxonomy
   - term
 
-# --- Shared params (language overrides below) ---
 params:
   brand: "TagoMind"
   author: "Kamil Tagowski"
@@ -59,6 +57,8 @@ params:
   location: "Wrocław, Poland"
   avatar: "img/kamil-tagowski.jpg"
   themeColor: "#26262A"
+  tagline: "Graph representation learning & NLP, from research benchmarks to production legal-AI systems."
+  description: "Kamil Tagowski (PhD), researcher and engineer in Graph Representation Learning and NLP. Projects, publications, and AI/NLP/Legal-AI consulting."
   socials:
     - name: "GitHub"
       icon: "github"
@@ -72,24 +72,3 @@ params:
     - name: "DBLP"
       icon: "scholar"
       url: "https://dblp.org/pid/225/0671.html"
-
-languages:
-  en:
-    languageName: "English"
-    languageCode: "en-US"
-    weight: 1
-    title: "TagoMind · Kamil Tagowski, PhD"
-    params:
-      tagline: "Graph representation learning & NLP, from research benchmarks to production legal-AI systems."
-      description: "Kamil Tagowski (PhD), researcher and engineer in Graph Representation Learning and NLP. Projects, publications, and AI/NLP/Legal-AI consulting."
-  pl:
-    languageName: "Polski"
-    languageCode: "pl-PL"
-    weight: 2
-    title: "TagoMind · Kamil Tagowski, PhD"
-    params:
-      role: "Adiunkt / inżynier AI"
-      affiliation: "Katedra Sztucznej Inteligencji, Politechnika Wrocławska"
-      location: "Wrocław, Polska"
-      tagline: "Uczenie reprezentacji grafowych i NLP, od benchmarków badawczych po wdrożeniowe systemy legal-AI."
-      description: "Kamil Tagowski (PhD), badacz i inżynier w obszarze uczenia reprezentacji grafowych i NLP. Projekty, publikacje oraz doradztwo AI/NLP/Legal-AI."

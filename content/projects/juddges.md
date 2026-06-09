@@ -17,11 +17,11 @@ links:
   site: "https://pwr-ai.github.io/JuDDGES/"
 ---
 
-JuDDGES (Judicial Decision Data Gathering, Encoding, and Sharing) is an EU-funded collaborative platform designed to advance empirical legal research by making judicial decisions analyzable across different legal systems. The project analyzes criminal court records from Poland and England & Wales, using NLP and human-in-the-loop techniques to extract structured data across jurisdictions.
+JuDDGES (Judicial Decision Data Gathering, Encoding, and Sharing) is an EU-funded collaborative platform that makes judicial decisions analyzable across different legal systems for empirical legal research. The project analyzes criminal court records from Poland and England & Wales, using NLP and human-in-the-loop techniques to extract structured data across jurisdictions.
 
 ## What it is
 
-The platform overcomes key barriers to legal research: language barriers, format inconsistencies, and resource constraints. Core capabilities include:
+The platform removes the usual obstacles to cross-jurisdiction legal research: language, inconsistent formats, and limited resources. Core capabilities include:
 
 - **Data harmonization**: Standardized encoding of criminal court records across jurisdictions
 - **Information extraction**: LLM-based and fine-tuned model pipelines to extract facts, sentencing info, and judicial reasoning from raw judgments
