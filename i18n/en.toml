@@ -21,7 +21,9 @@ other = "All publications"
 [start_conversation]
 other = "Start a conversation"
 [book_consultation]
-other = "Book a consultation"
+other = "Book an intro call"
+[intro_call_note]
+other = "30 minutes · tell me about your data and constraints"
 [see_services]
 other = "See services"
 

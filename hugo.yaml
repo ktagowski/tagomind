@@ -56,6 +56,7 @@ params:
   affiliation: "Department of Artificial Intelligence, Wrocław University of Science and Technology"
   location: "Wrocław, Poland"
   avatar: "img/kamil-tagowski.jpg"
+  avatarSmall: "img/kamil-tagowski-96.webp"
   themeColor: "#26262A"
   tagline: "Graph representation learning & NLP, from research benchmarks to production legal-AI systems."
   description: "Kamil Tagowski (PhD), researcher and engineer in Graph Representation Learning and NLP. Projects, publications, and AI/NLP/Legal-AI consulting."

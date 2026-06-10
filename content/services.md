@@ -1,51 +1,36 @@
 ---
 title: "Work with me"
 layout: "services"
-description: "AI, NLP, and graph-learning consulting and engineering by Kamil Tagowski, PhD: retrieval systems, agents, and rigorous evaluation on real data."
-lead: "Bring your data, whether text, documents, graphs, or images. I design and build the retrieval, agents, vision, and evaluation that turn it into a working system."
-offerings:
+description: "AI consulting and engineering by Kamil Tagowski, PhD: Legal & Tax AI and applied NLP/LLM systems, with shipped production systems behind every offer."
+lead: "Consulting and hands-on engineering, focused on two areas, both backed by systems running in production."
+niches:
+  - title: "Legal & Tax AI"
+    icon: "briefcase"
+    summary: "Search, understanding, and reasoning over large legal, tax, and administrative corpora, from domain retrieval to agentic extraction."
+    bullets:
+      - "Domain-specific retrieval, Q&A, and chat with citations"
+      - "Large-scale document pipelines and structured extraction"
+      - "Human-in-the-loop review tooling"
+    story:
+      label: "AI-Tax"
+      text: "I coordinate research and engineering on AI-Tax, a live Polish legal-AI platform. I strengthened how the team does research and ships: AI search, chat with citations, and agentic extraction over 3M+ documents and 300M+ semantic vectors. The work is published at ACL 2026 and AILaw 2026."
+      link: "/projects/ai-tax/"
   - title: "Applied NLP & LLM systems"
     icon: "sparkle"
-    summary: "Retrieval-augmented generation, extraction, classification, and agents on top of your real data."
+    summary: "Retrieval-augmented generation, extraction, classification, and agents on your real data, with evaluation you can trust."
     bullets:
-      - "RAG and semantic search over documents"
+      - "RAG and hybrid semantic search over messy real-world text"
       - "Information extraction and structuring"
-      - "Evaluation harnesses and guardrails"
-  - title: "Computer Vision & Generative AI"
-    icon: "image"
-    summary: "Vision-language and generative models that read and synthesize visual content."
-    bullets:
-      - "Vision-language understanding of documents and scenes"
-      - "Generative image editing and synthesis"
-      - "Layout- and tile-level processing pipelines"
-  - title: "Graph & representation learning"
-    icon: "graph"
-    summary: "Embeddings and graph models for entities, documents, and the relationships between them."
-    bullets:
-      - "Entity and document embeddings"
-      - "Recommendation and discovery systems"
-      - "Knowledge-graph construction"
-  - title: "Legal & tax AI"
-    icon: "briefcase"
-    summary: "Search, understanding, and reasoning over large legal, tax, and administrative corpora."
-    bullets:
-      - "Domain-specific retrieval and Q&A"
-      - "Large-scale document pipelines"
-      - "Human-in-the-loop review tooling"
-  - title: "Agentic AI systems"
-    icon: "compass"
-    summary: "Multi-agent workflows that plan, retrieve, and act across multi-step tasks."
-    bullets:
-      - "Tool-using, multi-step agent pipelines"
-      - "Schema and extraction generation"
-      - "Reproducible evaluation of agent quality"
-  - title: "Finance AI"
-    icon: "trending-up"
-    summary: "Applied finance intelligence over financial data and documents — the AI-in-Finance section I coordinate at OdysAI."
-    bullets:
-      - "Document and statement understanding"
-      - "Retrieval and reasoning for finance"
-      - "Auditable, evaluated outputs"
+      - "Evaluation harnesses, guardrails, and agent workflows"
+    story:
+      label: "Flat Explorer"
+      text: "I built and shipped Flat Explorer end to end: an AI flat-hunting product where LLM agents score listings against your criteria, summarize visits, and compare options side by side. It is live today, built on the Claude API with LangGraph, FastAPI, and Next.js."
+      link: "/projects/flat-explorer/"
+also:
+  - "Computer Vision & Generative AI: vision-language and generative pipelines, from documents to game maps"
+  - "Graph & representation learning: embeddings, recommendation, knowledge graphs"
+  - "Agentic AI systems: tool-using, multi-step agent workflows with reproducible evaluation"
+  - "Finance AI: applied finance intelligence, through the research group I founded at Wrocław Tech"
 process:
   - step: "01"
     title: "Scope"

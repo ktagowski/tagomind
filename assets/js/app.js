@@ -309,10 +309,25 @@
         var ea = nodes[edges[ei][0]], eb = nodes[edges[ei][1]];
         var gx = ea.dx - eb.dx, gy = ea.dy - eb.dy, gd = Math.sqrt(gx * gx + gy * gy);
         var al = pal.lineA * (1 - gd / TH * 0.62);
+        // Edges near the cursor light up — the network "wakes" where you point.
+        if (mouse.on) {
+          var emx = (ea.dx + eb.dx) * 0.5 - mouse.px, emy = (ea.dy + eb.dy) * 0.5 - mouse.py;
+          var ed2 = emx * emx + emy * emy;
+          if (ed2 < 90000) al += (1 - Math.sqrt(ed2) / 300) * 0.16;
+        }
         if (al < 0.012) continue;
         ctx.strokeStyle = "rgba(" + lr + "," + lg + "," + lb + "," + al.toFixed(3) + ")";
         ctx.lineWidth = 0.55 + 0.5 * ((ea.z + eb.z) * 0.5);
         ctx.beginPath(); ctx.moveTo(ea.dx, ea.dy); ctx.lineTo(eb.dx, eb.dy); ctx.stroke();
+      }
+
+      // ── Cursor light: a soft glow travels with the pointer through the network ──
+      if (mouse.on && !reduceMotion) {
+        ctx.globalCompositeOperation = blend;
+        ctx.globalAlpha = blend === "lighter" ? 0.11 : 0.08;
+        ctx.drawImage(sprPulse, mouse.px - 95, mouse.py - 95, 190, 190);
+        ctx.globalAlpha = 1;
+        ctx.globalCompositeOperation = "source-over";
       }
 
       // ── Cursor: link only to its few nearest nodes (a focus, not a fan) ──
@@ -352,20 +367,25 @@
       }
       ctx.globalAlpha = 1;
 
-      // ── Nodes: soft glow + crisp core, gentle breathing ──
+      // ── Nodes: soft glow + crisp core, gentle breathing; brighten near the cursor ──
       for (var k = 0; k < nodes.length; k++) {
         p = nodes[k];
         var zz = Math.min(1, p.z);
         var breathe = 0.72 + 0.28 * Math.sin(t * 0.02 + p.ph);
-        var coreA = pal.nodeA * zz * breathe;
-        var gs = 3.0 + p.z * 1.3;
+        var prox = 0;
+        if (mouse.on) {
+          var qx = mouse.px - p.dx, qy = mouse.py - p.dy, qd2 = qx * qx + qy * qy;
+          if (qd2 < 49284) prox = 1 - Math.sqrt(qd2) / 222;
+        }
+        var coreA = Math.min(1, pal.nodeA * zz * breathe * (1 + prox * 0.7));
+        var gs = 3.0 + p.z * 1.3 + prox * 2.4;
         ctx.globalCompositeOperation = blend;
         ctx.globalAlpha = coreA * 0.4;
         ctx.drawImage(sprNode, p.dx - gs / 2, p.dy - gs / 2, gs, gs);
         ctx.globalAlpha = 1;
         ctx.globalCompositeOperation = "source-over";
         ctx.fillStyle = "rgba(" + pal.node[0] + "," + pal.node[1] + "," + pal.node[2] + "," + coreA.toFixed(3) + ")";
-        ctx.beginPath(); ctx.arc(p.dx, p.dy, 0.75 + p.z * 0.55, 0, 6.2832); ctx.fill();
+        ctx.beginPath(); ctx.arc(p.dx, p.dy, 0.75 + p.z * 0.55 + prox * 0.7, 0, 6.2832); ctx.fill();
       }
       ctx.globalCompositeOperation = "source-over";
     }
@@ -579,7 +599,7 @@
           if (s.classList && (s.classList.contains("fx-scroll") || s.classList.contains("fx-scroll-soft"))) k++;
         }
       }
-      e.style.transitionDelay = Math.min(idx, 6) * 70 + "ms";
+      e.style.transitionDelay = Math.min(idx, 4) * 45 + "ms";
     });
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {

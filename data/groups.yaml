@@ -1,17 +1,13 @@
 # Research groups / affiliations — single source for the home credibility band,
 # the About "Research groups" section, and anywhere else roles are shown.
+# Positioning: Finance AI is the primary group identity; OdysAI is its parent.
 - org: "Wrocław University of Science and Technology"
   short: "Wrocław Tech"
   unit: "Department of Artificial Intelligence"
   role: "Postdoctoral Researcher & AI Engineer"
-- org: "OdysAI"
-  short: "OdysAI"
-  unit: "Applied-AI research group · Wrocław Tech"
-  role: "AI-in-Finance Section Coordinator"
-  url: "https://odysai.pl"
 - org: "Finance AI"
   short: "Finance AI"
-  unit: "Research group within OdysAI · Wrocław Tech"
+  unit: "Research group at Wrocław Tech · part of OdysAI"
   role: "Founder & Lead"
   shortRole: "Founder & Lead · research group at Wrocław Tech"
   url: "/projects/finance-ai/"

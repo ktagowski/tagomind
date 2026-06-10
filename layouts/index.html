@@ -3,34 +3,34 @@
 {{ $hero := .Params.hero }}
 
 <!-- ───────────────── Hero ───────────────── -->
-<section class="workspace relative flex min-h-[min(76vh,40rem)] flex-col items-center justify-center text-center !pt-12 !pb-16">
+<section class="workspace relative flex min-h-[min(68vh,36rem)] flex-col items-center justify-center text-center !pt-12 !pb-8">
   <span class="hero-halo" aria-hidden="true"></span>
   <div class="fx-hero mb-6 flex items-center justify-center gap-3">
-    {{ with site.Params.avatar }}<img src="{{ . | relURL }}" alt="{{ site.Params.author }}" loading="eager" class="size-12 rounded-full object-cover">{{ end }}
+    {{ with or site.Params.avatarSmall site.Params.avatar }}<img src="{{ . | relURL }}" alt="{{ site.Params.author }}" loading="eager" width="96" height="96" class="size-12 rounded-full object-cover">{{ end }}
     {{ with $hero.eyebrow }}<span class="eyebrow">{{ . }}</span>{{ end }}
   </div>
-  <h1 class="fx-hero text-[clamp(2.8rem,6.6vw,5.7rem)] leading-[1.02]" style="animation-delay:.08s">
+  <h1 class="fx-hero text-[clamp(2.8rem,6.6vw,5.7rem)] leading-[1.02]" style="animation-delay:.05s">
     {{ $hero.headlineA | default "Intelligence redefined." | safeHTML }}{{ with $hero.headlineB }}<br class="hidden sm:block"> {{ . | safeHTML }}{{ end }}
   </h1>
-  <p class="lead fx-hero mx-auto mt-6 max-w-2xl text-balance" style="animation-delay:.2s">{{ $hero.lead | default site.Params.tagline }}</p>
+  <p class="lead fx-hero mx-auto mt-6 max-w-2xl text-balance" style="animation-delay:.12s">{{ $hero.lead | default site.Params.tagline }}</p>
   {{ with $hero.proof }}
-  <div class="hero-proof fx-hero" style="animation-delay:.32s" aria-live="polite">
+  <div class="hero-proof fx-hero" style="animation-delay:.2s" aria-live="polite">
     <span class="hero-proof-dot" aria-hidden="true"></span>
     <span class="hero-proof-track">
       {{ range $i, $p := . }}<span class="hero-proof-item{{ if eq $i 0 }} is-active{{ end }}">{{ $p }}</span>{{ end }}
     </span>
   </div>
   {{ end }}
-  <div class="fx-hero mt-8 flex flex-wrap items-center justify-center gap-3" style="animation-delay:.42s">
-    <a class="btn btn-primary" href="{{ "/projects/" | relLangURL }}">{{ i18n "explore_projects" }}</a>
-    <a class="btn btn-outline" href="mailto:{{ site.Params.email }}">{{ partial "icon.html" (dict "name" "mail" "class" "size-[1.05rem]") }} {{ i18n "lets_talk" }}</a>
+  <div class="fx-hero mt-8 flex flex-wrap items-center justify-center gap-3" style="animation-delay:.2s">
+    {{ with site.Params.booking }}<a class="btn btn-primary" href="{{ . }}" target="_blank" rel="noopener">{{ partial "icon.html" (dict "name" "calendar" "class" "size-[1.05rem]") }} {{ i18n "book_consultation" }}</a>{{ end }}
+    <a class="btn btn-outline" href="{{ "/projects/" | relLangURL }}">{{ i18n "explore_projects" }}</a>
   </div>
 </section>
 
 <!-- ───────────────── Affiliations (credibility band) ───────────────── -->
 {{ with hugo.Data.groups }}
 <section class="workspace !py-0">
-  <div class="affil-band fx-hero" style="animation-delay:.55s">
+  <div class="affil-band fx-hero" style="animation-delay:.28s">
     {{ range . }}
     {{ $inner := printf `<span class="affil-org">%s</span><span class="affil-role">%s</span>` (or .short .org) (or .shortRole .role) }}
     {{ if .url }}
@@ -155,6 +155,15 @@
 </section>
 {{ end }}
 
+<!-- ───────────────── Why (mission pull-quote) ───────────────── -->
+{{ with .Params.why }}
+<section class="workspace !py-0">
+  <div class="why-band fx-scroll-soft">
+    <p class="why-quote">{{ . | safeHTML }}</p>
+  </div>
+</section>
+{{ end }}
+
 <!-- ───────────────── Services teaser ───────────────── -->
 <section class="workspace">
   <div class="panel fx-scroll relative overflow-hidden p-7 sm:p-10">
@@ -163,12 +172,13 @@
       <span class="eyebrow">{{ partial "icon.html" (dict "name" "briefcase" "class" "size-3.5") }} {{ i18n "work_with_me" }}</span>
       <h2 class="mt-2 max-w-2xl text-4xl sm:text-5xl">{{ i18n "services_teaser_title" }}</h2>
       <p class="lead mt-3">{{ i18n "services_teaser_lead" }}</p>
-      <div class="mt-7 grid gap-5 sm:grid-cols-3">
+      <div class="mt-7 grid gap-5 sm:grid-cols-2">
         {{ range .Params.services }}
           <div class="panel p-6">
             <span class="grid size-11 place-items-center rounded-xl" style="background:color-mix(in oklch,var(--brand) 16%,transparent);color:var(--brand)">{{ partial "icon.html" (dict "name" (.icon | default "sparkle") "class" "size-5") }}</span>
-            <h3 class="mt-4 font-display font-semibold">{{ .title }}</h3>
+            <h3 class="mt-4 text-lg">{{ .title }}</h3>
             <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">{{ .summary }}</p>
+            {{ with .proof }}<p class="num mt-3.5 border-t border-border pt-3 font-mono text-xs text-subtle">{{ . }}</p>{{ end }}
           </div>
         {{ end }}
       </div>
@@ -177,6 +187,7 @@
         <a class="btn" href="mailto:{{ site.Params.email }}">{{ partial "icon.html" (dict "name" "mail" "class" "size-4") }} {{ i18n "start_conversation" }}</a>
         <a class="link-arrow" href="{{ "/services/" | relLangURL }}">{{ i18n "see_services" }} {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</a>
       </div>
+      <p class="num mt-3 font-mono text-xs text-subtle">{{ i18n "intro_call_note" }}</p>
     </div>
   </div>
 </section>

@@ -1,6 +1,7 @@
 {{ define "main" }}
 <div class="workspace">
-  <section class="grid items-start gap-8 lg:grid-cols-[1fr_1.9fr]">
+  {{/* Portrait column capped at 13rem: the 460px source must never upscale on retina. */}}
+  <section class="grid items-start gap-8 lg:grid-cols-[13rem_1fr]">
     <div class="panel overflow-hidden fx-rise">
       <div class="relative aspect-[4/5]">
         <span class="absolute inset-0 bg-grid opacity-50"></span>
@@ -13,7 +14,7 @@
       <h1 class="mt-3">{{ site.Params.author }}, {{ site.Params.authorTitle }}</h1>
       <p class="lead mt-3">{{ site.Params.role }}</p>
       <p class="mt-1 text-sm text-subtle">{{ site.Params.affiliation }} · {{ site.Params.location }}</p>
-      <p class="mt-1.5 text-sm text-subtle"><a class="font-medium text-muted-foreground underline decoration-1 underline-offset-2 transition-colors hover:text-foreground" href="https://odysai.pl" target="_blank" rel="noopener">OdysAI</a> — AI-in-Finance Section Coordinator · Founder & Lead of the Finance AI research group.</p>
+      <p class="mt-1.5 text-sm text-subtle">Founder &amp; Lead of <a class="font-medium text-muted-foreground underline decoration-1 underline-offset-2 transition-colors hover:text-foreground" href="{{ "/projects/finance-ai/" | relLangURL }}">Finance AI</a>, a research group at Wrocław Tech, within <a class="font-medium text-muted-foreground underline decoration-1 underline-offset-2 transition-colors hover:text-foreground" href="https://odysai.pl" target="_blank" rel="noopener">OdysAI</a>.</p>
       <div class="prose-ink mt-6">{{ .Content }}</div>
       <div class="mt-7 flex flex-wrap gap-3">
         <a class="btn btn-primary" href="mailto:{{ site.Params.email }}">{{ partial "icon.html" (dict "name" "mail" "class" "size-4") }} {{ site.Params.email }}</a>

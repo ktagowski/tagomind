@@ -1,7 +1,7 @@
 {{- $projects := where site.RegularPages "Section" "projects" -}}
 {{- $featured := first 5 (sort (where $projects "Params.featured" true) "Params.impact" "desc") -}}
 {{- if lt (len $featured) 4 }}{{ $featured = first 5 $projects }}{{ end -}}
-<footer class="mt-16 border-t border-border">
+<footer class="site-footer mt-16">
   <div class="workspace grid gap-10 !py-12 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1fr]">
     <div class="flex max-w-xs flex-col gap-2">
       <a class="wordmark" href="{{ "/" | relLangURL }}">
@@ -31,8 +31,8 @@
 
     <nav class="footer-col" aria-label="Contact">
       <span class="footer-head">{{ i18n "work_with_me" }}</span>
-      <a href="mailto:{{ site.Params.email }}">{{ i18n "start_conversation" }}</a>
       {{ with site.Params.booking }}<a href="{{ . }}" target="_blank" rel="noopener">{{ i18n "book_consultation" }}</a>{{ end }}
+      <a href="{{ "/projects/finance-ai/" | relLangURL }}">Finance AI</a>
       <a href="https://odysai.pl" target="_blank" rel="noopener">OdysAI</a>
       <a href="https://scholar.google.com/citations?user=psVLt8wAAAAJ" target="_blank" rel="noopener">Google Scholar</a>
       <a href="https://dblp.org/pid/225/0671.html" target="_blank" rel="noopener">DBLP</a>
