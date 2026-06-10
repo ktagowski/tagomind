@@ -30,7 +30,7 @@
     </div>
     <p class="card-summary">{{ $summary }}</p>
     <div class="card-foot">
-      <span class="tags">{{ range first 3 $fields }}<span class="tag">{{ . }}</span>{{ end }}</span>
+      <span class="tags">{{ range $f := first 3 $fields }}{{ $tc := "" }}{{ range hugo.Data.fields }}{{ if eq .label $f }}{{ $tc = .color }}{{ end }}{{ end }}<span class="tag"{{ with $tc }} style="--field: {{ . | safeCSS }}"{{ end }}><span class="tag-dot" aria-hidden="true"></span>{{ $f }}</span>{{ end }}</span>
       {{ with $p.Params.links }}{{ if .repo }}<span class="card-link">{{ partial "icon.html" (dict "name" "code" "class" "size-3.5") }} repo</span>{{ end }}{{ end }}
     </div>
   </div>

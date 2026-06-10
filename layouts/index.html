@@ -54,8 +54,10 @@
     </div>
     <a class="link-arrow" href="{{ "/projects/" | relLangURL }}">{{ i18n "all_projects" }} {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</a>
   </div>
+  {{ $featuredApps := slice }}{{ $restApps := slice }}
+  {{ range . }}{{ if or .vignette .shot }}{{ $featuredApps = $featuredApps | append . }}{{ else }}{{ $restApps = $restApps | append . }}{{ end }}{{ end }}
   <div class="mt-9 grid gap-6 lg:grid-cols-2">
-    {{ range . }}
+    {{ range $featuredApps }}
     {{ $app := . }}
     {{ $ext := and $app.url (hasPrefix $app.url "http") }}
     {{ $detail := "" }}{{ with $app.page }}{{ $detail = printf "/projects/%s/" . | relLangURL }}{{ end }}
@@ -102,6 +104,32 @@
     </article>
     {{ end }}
   </div>
+
+  {{ with $restApps }}
+  <div class="panel hero-work fx-scroll-soft mt-6">
+    <div class="hero-work-list">
+      {{ range . }}
+      {{ $accents := dict "Flat Explorer" "oklch(0.6 0.13 250)" "AI-Tax" "oklch(0.56 0.19 272)" "TACTYC" "oklch(0.63 0.12 200)" "Finance AI" "oklch(0.64 0.11 158)" }}
+      {{ $accent := or (index $accents .title) "var(--brand)" }}
+      {{ $detail := "" }}{{ with .page }}{{ $detail = printf "/projects/%s/" . | relLangURL }}{{ end }}
+      <a class="hero-work-row" href="{{ $detail }}">
+        <span class="hero-work-logo logo-tile">
+          {{ with .logo }}<img src="{{ . | relURL }}" alt="" loading="lazy">
+          {{ else }}<span class="grid size-full place-items-center" style="background:linear-gradient(150deg,color-mix(in oklch,{{ $accent | safeCSS }} 32%,transparent),color-mix(in oklch,{{ $accent | safeCSS }} 9%,transparent));color:{{ $accent | safeCSS }}">{{ partial "icon.html" (dict "name" (.icon | default "spark-dot") "class" "size-5") }}</span>{{ end }}
+        </span>
+        <span class="hero-work-main">
+          <span class="hero-work-titlerow">
+            <span class="hero-work-title">{{ .title }}</span>
+            {{ if eq .status "Live" }}<span class="badge badge-live">{{ i18n "status_live" }}</span>{{ else }}<span class="badge badge-ongoing">{{ i18n "status_ongoing" }}</span>{{ end }}
+          </span>
+          <span class="hero-work-sub">{{ .summary }}</span>
+        </span>
+        {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4 hero-work-arrow") }}
+      </a>
+      {{ end }}
+    </div>
+  </div>
+  {{ end }}
 </section>
 {{ end }}
 

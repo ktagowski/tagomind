@@ -8,7 +8,7 @@ year: 2026
 fields: ["Applications"]
 role: "Founder & Lead"
 status: "Active"
-summary: "Applied finance intelligence: an applied finance-AI project in active development, building out the team and the system."
+summary: "An applied finance-AI research group in active development, building out the team and the system."
 links:
   site: "https://odysai.pl"
 ---

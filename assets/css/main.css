@@ -384,6 +384,7 @@
   .chip .dot { width: 0.5rem; height: 0.5rem; border-radius: 999px; background: var(--field, var(--brand)); transition: box-shadow .15s; }
   .chip[aria-pressed="true"] .dot { box-shadow: 0 0 7px -1px var(--field, var(--brand)); }
 
+  .tag-dot { width: 0.38rem; height: 0.38rem; border-radius: 999px; background: var(--field, var(--subtle)); flex: none; }
   .tag {
     display: inline-flex; align-items: center; gap: 0.3rem;
     padding: 0.18rem 0.5rem;
@@ -870,8 +871,8 @@
     .affil-item + .affil-item { border-left: 0; border-top: 1px solid var(--border); padding-top: 1rem; }
   }
 
-  /* Fields band — slim editorial strip between hairlines (replaces the tile-grid section) */
-  .fields-band { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem 0.55rem; border-block: 1px solid var(--border); padding-block: 1.35rem; }
+  /* Fields strip — quiet centered pill row (no hairlines; the page keeps two band patterns) */
+  .fields-band { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.6rem 0.55rem; padding-block: 0.25rem; }
   .fields-band-label { margin-right: 0.9rem; font-family: var(--font-mono); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; color: var(--subtle); }
   .field-pill {
     display: inline-flex; align-items: center; gap: 0.45rem;
