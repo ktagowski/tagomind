@@ -3,7 +3,7 @@
 {{ $hero := .Params.hero }}
 
 <!-- ───────────────── Hero ───────────────── -->
-<section class="workspace relative flex min-h-[min(68vh,36rem)] flex-col items-center justify-center text-center !pt-12 !pb-8">
+<section class="workspace relative overflow-x-clip flex min-h-[min(68vh,36rem)] flex-col items-center justify-center text-center !pt-12 !pb-8">
   <span class="hero-halo" aria-hidden="true"></span>
   <div class="fx-hero mb-6 flex items-center justify-center gap-3">
     {{ with or site.Params.avatarSmall site.Params.avatar }}<img src="{{ . | relURL }}" alt="{{ site.Params.author }}" loading="eager" width="96" height="96" class="size-12 rounded-full object-cover">{{ end }}
@@ -14,7 +14,7 @@
   </h1>
   <p class="lead fx-hero mx-auto mt-6 max-w-2xl text-balance" style="animation-delay:.12s">{{ $hero.lead | default site.Params.tagline }}</p>
   {{ with $hero.proof }}
-  <div class="hero-proof fx-hero" style="animation-delay:.2s" aria-live="polite">
+  <div class="hero-proof fx-hero" style="animation-delay:.2s">
     <span class="hero-proof-dot" aria-hidden="true"></span>
     <span class="hero-proof-track">
       {{ range $i, $p := . }}<span class="hero-proof-item{{ if eq $i 0 }} is-active{{ end }}">{{ $p }}</span>{{ end }}
@@ -78,7 +78,7 @@
       {{ end }}
       <div class="app-head">
         <span class="app-logo logo-tile">
-          {{ with $app.logo }}<img src="{{ . | relURL }}" alt="{{ $app.title }} logo" loading="lazy">
+          {{ with $app.logo }}<img src="{{ . | relURL }}" alt="{{ $app.title }} logo" loading="lazy" width="56" height="56">
           {{ else }}<span class="grid size-full place-items-center" style="background:linear-gradient(150deg,color-mix(in oklch,var(--app-accent, var(--brand)) 32%,transparent),color-mix(in oklch,var(--app-accent, var(--brand)) 9%,transparent));color:var(--app-accent, var(--brand))">{{ partial "icon.html" (dict "name" ($app.icon | default "spark-dot") "class" "size-7") }}</span>{{ end }}
         </span>
         <div class="min-w-0 flex-1">
@@ -114,7 +114,7 @@
       {{ $detail := "" }}{{ with .page }}{{ $detail = printf "/projects/%s/" . | relLangURL }}{{ end }}
       <a class="hero-work-row" href="{{ $detail }}">
         <span class="hero-work-logo logo-tile">
-          {{ with .logo }}<img src="{{ . | relURL }}" alt="" loading="lazy">
+          {{ with .logo }}<img src="{{ . | relURL }}" alt="" loading="lazy" width="40" height="40">
           {{ else }}<span class="grid size-full place-items-center" style="background:linear-gradient(150deg,color-mix(in oklch,{{ $accent | safeCSS }} 32%,transparent),color-mix(in oklch,{{ $accent | safeCSS }} 9%,transparent));color:{{ $accent | safeCSS }}">{{ partial "icon.html" (dict "name" (.icon | default "spark-dot") "class" "size-5") }}</span>{{ end }}
         </span>
         <span class="hero-work-main">

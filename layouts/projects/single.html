@@ -13,7 +13,7 @@
     <div class="min-w-0">
       <div class="page-head fx-rise">
         <span class="logo-tile">
-          {{ with .Params.logo }}<img src="{{ . | relURL }}" alt="{{ $.Title }} logo">
+          {{ with .Params.logo }}<img src="{{ . | relURL }}" alt="{{ $.Title }} logo" width="64" height="64">
           {{ else }}{{ partial "project-logo.html" (dict "title" $.Title "color" (or $color "oklch(0.65 0.215 287)") "class" "size-full") }}{{ end }}
         </span>
         <div class="flex flex-wrap items-center gap-2">

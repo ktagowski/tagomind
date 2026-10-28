@@ -10,7 +10,8 @@
 {{ with site.Params.googleSiteVerification }}<meta name="google-site-verification" content="{{ . }}">{{ end }}
 {{ with site.Params.bingSiteVerification }}<meta name="msvalidate.01" content="{{ . }}">{{ end }}
 <meta name="author" content="{{ site.Params.author }}">
-<meta name="theme-color" content="{{ site.Params.themeColor }}">
+<meta name="theme-color" content="#FAFAFB" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="{{ site.Params.themeColor }}" media="(prefers-color-scheme: dark)">
 
 <meta property="og:type" content="{{ cond $isHome "website" "article" }}">
 <meta property="og:site_name" content="{{ site.Title }}">

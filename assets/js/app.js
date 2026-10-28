@@ -581,6 +581,16 @@
   }
 
   /* ─────────────────── Scroll reveal + progress bar ─────────────── */
+  /* Product vignettes: loop a few times, then settle on the finished state (decorative motion should end). */
+  function initVignetteSettle() {
+    var vigs = document.querySelectorAll(".vig");
+    if (!vigs.length) return;
+    var still = /[?&]still=1/.test(location.search);
+    var settle = function () { vigs.forEach(function (v) { v.classList.add("is-settled"); }); };
+    if (reduceMotion || still) { settle(); return; }
+    setTimeout(settle, 3 * 9000); // three cycles of the longest loop (9s)
+  }
+
   function initReveal() {
     var els = Array.prototype.slice.call(document.querySelectorAll(".fx-scroll, .fx-scroll-soft"));
     if (!els.length) return;
@@ -649,6 +659,7 @@
     initNav();
     initGraph();
     initReveal();
+    initVignetteSettle();
     initScrollProgress();
     initExplorer();
     initPubSlider();
