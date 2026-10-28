@@ -582,15 +582,6 @@
 
   /* ─────────────────── Scroll reveal + progress bar ─────────────── */
   /* Product vignettes: loop a few times, then settle on the finished state (decorative motion should end). */
-  function initVignetteSettle() {
-    var vigs = document.querySelectorAll(".vig");
-    if (!vigs.length) return;
-    var still = /[?&]still=1/.test(location.search);
-    var settle = function () { vigs.forEach(function (v) { v.classList.add("is-settled"); }); };
-    if (reduceMotion || still) { settle(); return; }
-    setTimeout(settle, 3 * 9000); // three cycles of the longest loop (9s)
-  }
-
   function initReveal() {
     var els = Array.prototype.slice.call(document.querySelectorAll(".fx-scroll, .fx-scroll-soft"));
     if (!els.length) return;
@@ -633,20 +624,6 @@
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
     update();
-  }
-
-  /* ─────────────────── Publications slider nav ──────────────────── */
-  function initPubSlider() {
-    var s = document.getElementById("pub-slider");
-    if (!s) return;
-    function step(dir) {
-      var card = s.querySelector(".pub-card");
-      var w = card ? card.offsetWidth + 16 : 340;
-      s.scrollBy({ left: dir * w, behavior: "smooth" });
-    }
-    var p = document.querySelector("[data-pub-prev]"), n = document.querySelector("[data-pub-next]");
-    if (p) p.addEventListener("click", function () { step(-1); });
-    if (n) n.addEventListener("click", function () { step(1); });
   }
 
   function initPracticeSlider() {
@@ -699,13 +676,12 @@
     update();
   }
 
-  /* Scroll-linked project depth and research reading focus, without moving text. */
+  /* Scroll-linked reading focus on the research directions, without moving text. */
   function initScrollScenes() {
     if (reduceMotion || /[?&]still=1/.test(location.search)) return;
     var research = document.querySelector(".home-research");
     var rows = Array.prototype.slice.call(document.querySelectorAll(".home-research-row"));
-    var previews = Array.prototype.slice.call(document.querySelectorAll(".practice-capture"));
-    if (!rows.length && !previews.length) return;
+    if (!rows.length) return;
     var framePending = false;
     function clamp(value) { return Math.max(0, Math.min(1, value)); }
     function update() {
@@ -726,21 +702,12 @@
         var rect = research.getBoundingClientRect();
         research.style.setProperty("--research-read", clamp((height * .6 - rect.top) / Math.max(1, rect.height)).toFixed(3));
       }
-      // Narrow screens keep the screenshot still; desktop gets at most 12px of depth.
-      previews.forEach(function (preview) {
-        var rect = preview.getBoundingClientRect();
-        if (rect.bottom < 0 || rect.top > height || rect.right < 0 || rect.left > window.innerWidth) return;
-        var offset = window.innerWidth >= 768 ? Math.max(-12, Math.min(12, (rect.top + rect.height / 2 - height / 2) * -.035)) : 0;
-        preview.style.setProperty("--preview-y", offset.toFixed(1) + "px");
-      });
     }
     function schedule() {
       if (!framePending) { framePending = true; requestAnimationFrame(update); }
     }
     window.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("resize", schedule);
-    var slider = document.getElementById("practice-slider");
-    if (slider) slider.addEventListener("scroll", schedule, { passive: true });
     update();
   }
 
@@ -754,13 +721,10 @@
     initNav();
     initGraph();
     initReveal();
-    initVignetteSettle();
     initScrollProgress();
     initExplorer();
-    initPubSlider();
     initPracticeSlider();
     initScrollScenes();
-    initHeroProof();
     initBibtex();
   });
 
@@ -790,24 +754,4 @@
     });
   }
 
-  /* ───────── Hero proof line — calm crossfade through real accomplishments ───────── */
-  function initHeroProof() {
-    var track = document.querySelector(".hero-proof-track");
-    if (!track) return;
-    var items = track.querySelectorAll(".hero-proof-item");
-    if (items.length < 2) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    var i = 0, paused = false;
-    var host = track.closest(".hero-proof");
-    if (host) {
-      host.addEventListener("mouseenter", function () { paused = true; });
-      host.addEventListener("mouseleave", function () { paused = false; });
-    }
-    setInterval(function () {
-      if (paused || document.hidden) return;
-      items[i].classList.remove("is-active");
-      i = (i + 1) % items.length;
-      items[i].classList.add("is-active");
-    }, 3800);
-  }
 })();

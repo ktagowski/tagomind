@@ -20,8 +20,8 @@
     </div>
     <div class="research-cards">
       {{ range $i, $direction := .Params.directions }}
-      <article class="research-card research-card-{{ $i }} fx-scroll-soft">
-        <div class="research-card-top"><span class="num">{{ printf "%02d" (add $i 1) }}</span><span>{{ .label }}</span></div>
+      <article class="research-card research-card-{{ $i }}">
+        <div class="research-card-top"><span>{{ .label }}</span></div>
         <div class="research-visual" aria-hidden="true">
           {{ if eq $i 0 }}
           <div class="discovery-visual"><i></i><i></i><i></i><span>?</span><i></i></div>
@@ -47,7 +47,7 @@
     <a class="link-arrow" href="{{ "/publications/" | relURL }}">All publications {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</a>
   </div>
 
-  <section id="collaborate" class="research-collaborate fx-scroll-soft" aria-labelledby="collaborate-title">
+  <section id="collaborate" class="research-collaborate" aria-labelledby="collaborate-title">
     <div class="research-collaborate-copy">
       <span class="eyebrow">Let's work together</span>
       <h2 id="collaborate-title">A real problem.<br><em>A practical next step.</em></h2>
@@ -56,7 +56,7 @@
     </div>
     <div class="research-contact-note">
       <span class="eyebrow">Start with three things</span>
-      <ol><li><span>01</span>The problem you need solved</li><li><span>02</span>Your data and constraints</li><li><span>03</span>What success looks like</li></ol>
+      <ol><li>The problem you need solved</li><li>Your data and constraints</li><li>What success looks like</li></ol>
       <p>For research partnerships, institutional arrangements are also possible.</p>
     </div>
   </section>
