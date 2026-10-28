@@ -1,6 +1,6 @@
 # TagoMind
 
-Personal site of **Kamil Tagowski, PhD** — projects, publications, and AI/NLP/Legal-AI consulting. Live at [tagomind.com](https://tagomind.com).
+Personal site of **Kamil Tagowski, PhD** — research, collaboration, projects, publications, and AI consulting. Live at [tagomind.com](https://tagomind.com).
 
 Built with [Hugo](https://gohugo.io) (extended) and [Tailwind CSS v4](https://tailwindcss.com), no JS framework — a single vanilla `app.js` drives the theme toggle, the project Explorer, and the hero graph canvas.
 
@@ -22,7 +22,8 @@ Append `?still=1` to any page URL to freeze all animations at their end state (u
 
 ```
 content/
-  _index.md            # homepage: hero, featured apps (vignettes), services
+  _index.md            # homepage: research identity, directions, secondary applications
+  research.md          # research interests and collaboration contact
   about.md             # bio, expertise, timeline
   services.md          # offerings + engagement process
   projects/*.md        # one page per project (role, status, fields, tech)

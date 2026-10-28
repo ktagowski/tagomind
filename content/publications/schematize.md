@@ -8,6 +8,18 @@ description: "Schematize (EMNLP 2026 System Demonstrations): an agentic system t
 lead: "Empirical legal research starts with a schema: which fields to pull out of thousands of rulings. Schematize makes an LLM agent team design, criticize, and ground that schema against real documents, with the legal expert in the loop, before any large-scale extraction begins."
 ---
 
+## Problem
+
+Legal researchers need extraction schemas that capture their intent and can be populated from real rulings. Designing those schemas is an expertise-heavy bottleneck.
+
+## Key finding
+
+Across seven tested model backbones, Schematize achieved the best or second-best expert-question coverage; on four, it surpassed average coverage between the experts themselves. The study evaluates legal research problems, so transfer to other domains remains a research question.
+
+## Resources
+
+[Paper](https://aclanthology.org/2026.emnlp-demos.66/) · [Code](https://github.com/pwr-ai/schematize) · [Documentation](https://pwr-ai.github.io/schematize/) · [Poster](/papers/schematize-emnlp2026-poster.pdf) · [Demo video](/papers/schematize-emnlp2026-demo.mp4)
+
 ## Abstract
 
 Empirical legal research often relies on turning research questions into structured data extracted from large collections of rulings and judgments. Designing the extraction schema and then extracting the data remain a manual, expertise-heavy bottleneck. We present schematize, an open-source multi-agent system that interactively turns a researcher's problem statement into a validated extraction schema that can later be used for autonomous extraction. Schematize couples (i) a clarification dialogue that elicits implicit expert intent, (ii) iterative schema generation, (iii) data-grounded refinement that tests the schema against documents, and (iv) chat-based post-editing. We evaluated the system with human legal professionals, introducing our novel methodology, and schematize achieves top performance in most of tested configurations. While the system is designed to be domain-agnostic and applicable to any document collection, we tailor and evaluate it on legal research problems. We release schematize as a pip-installable Python package with full documentation.

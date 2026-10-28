@@ -5,10 +5,18 @@ date: 2026-06-01
 draft: false
 icon: "compass"
 year: 2026
-fields: ["Applications"]
+fields: ["Computer Vision", "Generative AI"]
 role: "Coordinator & Co-author"
 status: "Active"
 summary: "Toss A Coin to A Cartographer. AI that generates and edits game maps: vision-language models read the terrain tile by tile, generative models redraw it."
 ---
 
-**Coming soon.** TACTYC is an active project. A full write-up is on the way.
+TACTYC (Toss A Coin to A Cartographer) is an active research project on AI for generating and editing game maps.
+
+## Research focus
+
+The work connects vision-language models that read terrain tile by tile with generative models that redraw it, studying map understanding, generation, and editing.
+
+## My role
+
+Coordinator and co-author of the research project.

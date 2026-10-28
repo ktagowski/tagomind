@@ -15,7 +15,7 @@
       <article class="panel pub-row p-6 fx-scroll-soft" style="--field: {{ $acc | safeCSS }}">
         <div class="mb-2 flex flex-wrap items-center gap-2">
           {{ with .venue }}<span class="badge badge-venue">{{ . }}</span>{{ end }}
-          {{ with .type }}<span class="badge badge-type" data-type="{{ . | lower | replaceRE "[^a-z0-9]+" "-" }}">{{ . }}</span>{{ end }}
+          {{ with .type }}<span class="badge badge-type" data-type="{{ . | lower | replaceRE "[^a-z0-9]+" "-" }}">{{ partial "pub-type-label.html" . }}</span>{{ end }}
           <span class="num ml-auto text-sm text-subtle">{{ .year }}</span>
         </div>
         {{ $pg := site.GetPage (printf "/publications/%s" .slug) }}

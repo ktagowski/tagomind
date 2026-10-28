@@ -23,7 +23,16 @@ AI-Tax is a production platform for Polish **tax law** and the legal documents a
 
 It turns millions of Polish tax interpretations and court judgments into answers: semantic search, conversational chat with citations, and structured extraction. The agentic layer, built on LangGraph, generates and refines extraction schemas through a multi-agent workflow with human-in-the-loop feedback.
 
-## My role
+## Scale and research evidence
+
+The platform paper reports **3M+ documents and 300M+ semantic vectors**. These are measures of corpus and infrastructure scale, rather than evidence of answer quality or model accuracy.
+
+- [FSDBench](/publications/fsdbench/) evaluates conversational fact elicitation in Polish tax law. Even the best tested model recovered under half the facts on hard cases after 50 turns, identifying a concrete limitation and research opportunity.
+- [Bridging AI and Law](/publications/bridging-ai-and-law/) describes the large-scale multi-agent platform and its approach to quantitative legal analytics.
+
+AI-Tax is institutional research and engineering work at Wrocław University of Science and Technology. My responsibilities below describe my contribution to that collaborative project.
+
+## My contribution
 
 As Research Coordinator & AI Engineer, I'm one of the lead authors on AI-Tax.
 

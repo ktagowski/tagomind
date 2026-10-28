@@ -2,18 +2,18 @@
 {{- $variant := .variant | default "drawer" -}}
 {{- $links := slice
   (dict "key" "nav_home" "url" "/" "icon" "home")
-  (dict "key" "nav_projects" "url" "/projects/" "icon" "folder")
+  (dict "key" "nav_research" "url" "/research/" "icon" "graph")
   (dict "key" "nav_publications" "url" "/publications/" "icon" "paper")
+  (dict "key" "nav_projects" "url" "/projects/" "icon" "folder")
   (dict "key" "nav_about" "url" "/about/" "icon" "user")
-  (dict "key" "nav_services" "url" "/services/" "icon" "briefcase")
 -}}
 {{- /* Notes only shows once the first post is published (drafts do not count). */ -}}
 {{- if gt (len (where hugo.Sites.Default.RegularPages "Section" "notes")) 0 -}}
   {{- $links = $links | append (dict "key" "nav_notes" "url" "/notes/" "icon" "paper") -}}
 {{- end -}}
 {{- range $links -}}
-  {{- /* Only Services exists in Polish, so it alone stays language-aware; the rest point at the English pages. */ -}}
-  {{- $u := cond (eq .url "/services/") (.url | relLangURL) (.url | relURL) -}}
+  {{- /* Primary destinations are English; translated Services stays in the footer. */ -}}
+  {{- $u := .url | relURL -}}
   {{- $active := or (eq $page.RelPermalink $u) (and (ne .url "/") (hasPrefix $page.RelPermalink $u)) -}}
   <a class="nav-link{{ if $active }} is-active{{ end }}" href="{{ $u }}"{{ if $active }} aria-current="page"{{ end }}>
     {{ if ne $variant "top" }}{{ partial "icon.html" (dict "name" .icon "class" "size-[1.05rem]") }}{{ end }}

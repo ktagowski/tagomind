@@ -196,3 +196,8 @@ other = "Site"
 other = "Contact"
 [footer_explore]
 other = "Explore"
+
+[nav_research]
+other = "Research"
+[research_collaborate]
+other = "Collaborate"

@@ -4,11 +4,11 @@
 - title: "Schematize: An Agentic System for Generating and Refining Information-Extraction Schemas for Legal Research"
   slug: "schematize"
   authors: "A. Sawczyn, J. Binkowski, <strong>K. Tagowski</strong>, Ł. Augustyniak, B. Kaczmarek-Templin, T. Kajdanowicz"
-  venue: "EMNLP 2026 Demo"
+  venue: "EMNLP 2026"
   type: "Demo"
   featured: true
   year: 2026
-  summary: "An open-source multi-agent system that turns a researcher's problem statement into a validated information-extraction schema: a clarification dialogue elicits expert intent, criteria-based and data-grounded loops refine the schema against real rulings, and a chat lets the expert post-edit it. Evaluated with legal professionals via an expert-question coverage protocol, and released as a pip-installable Python package."
+  summary: "Agent-assisted schema design for legal research, evaluated through expert-question coverage. Best or second-best coverage across seven tested model backbones, with open code and documentation."
   links:
     pdf: "https://aclanthology.org/2026.emnlp-demos.66.pdf"
     arxiv: "https://arxiv.org/abs/2609.22209"
@@ -102,7 +102,7 @@
   type: "Datasets & Benchmarks"
   featured: true
   year: 2022
-  summary: "A comprehensive, reproducible benchmark for Polish NLP spanning 14 diverse tasks, with a public leaderboard and pre-computed embeddings."
+  summary: "A reproducible Polish NLP benchmark whose first run compared five models across 13 task-dataset pairs, with data versioning, model tracking, and a public leaderboard."
   links:
     pdf: "https://proceedings.neurips.cc/paper_files/paper/2022/file/890b206ebb79e550f3988cb8db936f42-Paper-Datasets_and_Benchmarks.pdf"
     arxiv: "https://arxiv.org/abs/2211.13112"

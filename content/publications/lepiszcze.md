@@ -8,6 +8,18 @@ description: "One-page summary of LEPISZCZE (NeurIPS 2022 Datasets and Benchmark
 lead: "Polish had a GLUE-style benchmark, but not one broad or reproducible enough to measure real progress. LEPISZCZE adds thirteen task-dataset pairs, eight of them new, with versioned data and tracked models, and documents the lessons as a blueprint for other low-resource languages."
 ---
 
+## Problem
+
+Progress in Polish NLP requires evaluation across varied tasks with reproducible data and model comparisons.
+
+## Key finding
+
+The first benchmark run compared five Polish language models across 13 task-dataset pairs, including eight newly released datasets. Data versioning and model tracking support reproducible extensions, and the paper records lessons for other low-resource languages.
+
+## Resources
+
+[Paper](https://proceedings.neurips.cc/paper_files/paper/2022/file/890b206ebb79e550f3988cb8db936f42-Paper-Datasets_and_Benchmarks.pdf) · [Leaderboard](https://lepiszcze.clarin-pl.eu/) · [Datasets and embeddings](https://huggingface.co/clarin-pl) · [Project](/projects/lepiszcze/)
+
 ## Abstract
 
 The availability of compute and data to train larger and larger language models increases the demand for robust methods of benchmarking the true progress of LM training. Recent years witnessed significant progress in standardized benchmarking for English. Benchmarks such as GLUE, SuperGLUE, or KILT have become de facto standard tools to compare large language models. Following the trend to replicate GLUE for other languages, the KLEJ benchmark has been released for Polish. In this paper, we evaluate the progress in benchmarking for low-resourced languages. We note that only a handful of languages have such comprehensive benchmarks. We also note the gap in the number of tasks being evaluated by benchmarks for resource-rich English/Chinese and the rest of the world. In this paper, we introduce LEPISZCZE (the Polish word for glew, the Middle English predecessor of glue), a new, comprehensive benchmark for Polish NLP with a large variety of tasks and high-quality operationalization of the benchmark. We design LEPISZCZE with flexibility in mind. Including new models, datasets, and tasks is as simple as possible while still offering data versioning and model tracking. In the first run of the benchmark, we test 13 experiments (task and dataset pairs) based on the five most recent LMs for Polish. We use five datasets from the Polish benchmark and add eight novel datasets. As the paper's main contribution, apart from LEPISZCZE, we provide insights and experiences learned while creating the benchmark for Polish as the blueprint to design similar benchmarks for other low-resourced languages.

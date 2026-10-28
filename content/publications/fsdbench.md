@@ -8,6 +8,18 @@ description: "One-page summary of the Factual State Discovery Benchmark (ACL 202
 lead: "A tax authority cannot rule until it knows the whole situation. FSDBench measures whether a language model can discover those facts by asking questions, and shows that even strong models leave half of the hard cases uncovered after fifty turns."
 ---
 
+## Problem
+
+A tax assistant needs a complete factual account before it can reason about a case. FSDBench asks whether language models can discover those facts through dialogue.
+
+## Key finding
+
+On 500 official tax-interpretation narratives containing 32,874 atomic facts, the best of four tested models recovered 77% of facts on easy cases and under 49% on hard cases after 50 turns. The results expose a gap in conversational fact elicitation in this domain.
+
+## Resources
+
+[Paper](https://aclanthology.org/2026.acl-srw.114/) · [Related AI-Tax project](/projects/ai-tax/)
+
 ## Abstract
 
 Before a tax authority can issue a ruling, it must receive a complete description of the taxpayer's situation, yet no benchmark measures whether language models can systematically elicit all relevant facts through dialogue. We introduce FSDBench (Factual State Discovery Benchmark), in which a discovery agent questions a simulated taxpayer grounded in a real tax document. The dataset comprises 500 narratives from official Polish tax interpretations, decomposed into 32,874 atomic facts with validated supported precision (97.6%), atomicity (93.8%), and sentence coverage (96.0%). Experiments with four models show that even the best system recovers only 77% of facts on easy samples and under 49% on hard samples after 50 turns. These findings establish conversational fact elicitation as a challenging open problem requiring retrieval-augmented and adaptive questioning strategies.

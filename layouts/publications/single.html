@@ -13,7 +13,7 @@
       <div class="page-head fx-rise">
         <div class="flex flex-wrap items-center gap-2">
           {{ with $pub.venue }}<span class="badge badge-venue">{{ . }}</span>{{ end }}
-          {{ with $pub.type }}<span class="badge badge-type" data-type="{{ . | lower | replaceRE "[^a-z0-9]+" "-" }}">{{ . }}</span>{{ end }}
+          {{ with $pub.type }}<span class="badge badge-type" data-type="{{ . | lower | replaceRE "[^a-z0-9]+" "-" }}">{{ partial "pub-type-label.html" . }}</span>{{ end }}
           {{ with $pub.year }}<span class="num text-sm text-subtle">{{ . }}</span>{{ end }}
         </div>
         <h1 class="pub-page-title">{{ or $pub.title .Title }}</h1>
@@ -40,7 +40,7 @@
     <aside class="flex flex-col gap-4 lg:sticky lg:top-20 lg:self-start">
       <div class="panel flex flex-col divide-y divide-border">
         {{ with $pub.venue }}<div class="p-4"><div class="text-[11px] uppercase tracking-wider text-subtle">{{ i18n "venue_label" }}</div><div class="mt-1 text-sm">{{ . }}</div></div>{{ end }}
-        {{ with $pub.type }}<div class="p-4"><div class="text-[11px] uppercase tracking-wider text-subtle">{{ i18n "type_label" }}</div><div class="mt-1 text-sm">{{ . }}</div></div>{{ end }}
+        {{ with $pub.type }}<div class="p-4"><div class="text-[11px] uppercase tracking-wider text-subtle">{{ i18n "type_label" }}</div><div class="mt-1 text-sm">{{ partial "pub-type-label.html" . }}</div></div>{{ end }}
         {{ with $pub.year }}<div class="p-4"><div class="text-[11px] uppercase tracking-wider text-subtle">{{ i18n "year_label" }}</div><div class="num mt-1 text-sm">{{ . }}</div></div>{{ end }}
         {{ with .Params.project }}{{ with site.GetPage (printf "/projects/%s" .) }}
         <div class="p-4">

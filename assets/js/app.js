@@ -649,6 +649,101 @@
     if (n) n.addEventListener("click", function () { step(1); });
   }
 
+  function initPracticeSlider() {
+    var slider = document.getElementById("practice-slider");
+    if (!slider) return;
+    var prev = document.querySelector("[data-practice-prev]");
+    var next = document.querySelector("[data-practice-next]");
+    function update() {
+      if (prev) prev.disabled = slider.scrollLeft <= 4;
+      if (next) next.disabled = slider.scrollLeft + slider.clientWidth >= slider.scrollWidth - 2;
+      var progress = slider.parentNode.querySelector(".practice-scroll-progress > span");
+      var distance = slider.scrollWidth - slider.clientWidth;
+      if (progress) progress.style.transform = "scaleX(" + (distance > 0 ? Math.min(1, slider.scrollLeft / distance) : 1) + ")";
+    }
+    function step(direction) {
+      var card = slider.querySelector(".practice-card");
+      if (!card) return;
+      slider.scrollBy({ left: direction * (card.getBoundingClientRect().width + 16), behavior: reduceMotion ? "instant" : "smooth" });
+    }
+    if (prev) prev.addEventListener("click", function () { step(-1); });
+    if (next) next.addEventListener("click", function () { step(1); });
+    slider.addEventListener("scroll", update, { passive: true });
+    // One wheel gesture advances one project; release page scrolling at either end.
+    var wheelUntil = 0, wheelDirection = 0, wheelDistance = 0;
+    slider.addEventListener("wheel", function (event) {
+      if (event.ctrlKey || event.metaKey || event.shiftKey || Math.abs(event.deltaX) >= Math.abs(event.deltaY)) return;
+      var direction = event.deltaY > 0 ? 1 : -1;
+      var now = performance.now();
+      if (direction === wheelDirection && now < wheelUntil) {
+        event.preventDefault();
+        return;
+      }
+      var atStart = slider.scrollLeft <= 4;
+      var atEnd = slider.scrollLeft + slider.clientWidth >= slider.scrollWidth - 2;
+      if ((direction < 0 && atStart) || (direction > 0 && atEnd)) {
+        wheelDistance = 0;
+        return;
+      }
+      event.preventDefault();
+      if (direction !== wheelDirection) wheelDistance = 0;
+      wheelDirection = direction;
+      var unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? slider.clientWidth : 1;
+      wheelDistance += Math.abs(event.deltaY) * unit;
+      if (wheelDistance < 20) return;
+      wheelDistance = 0;
+      wheelUntil = now + (reduceMotion ? 250 : 650);
+      step(direction);
+    }, { passive: false });
+    window.addEventListener("resize", update);
+    update();
+  }
+
+  /* Scroll-linked project depth and research reading focus, without moving text. */
+  function initScrollScenes() {
+    if (reduceMotion || /[?&]still=1/.test(location.search)) return;
+    var research = document.querySelector(".home-research");
+    var rows = Array.prototype.slice.call(document.querySelectorAll(".home-research-row"));
+    var previews = Array.prototype.slice.call(document.querySelectorAll(".practice-capture"));
+    if (!rows.length && !previews.length) return;
+    var framePending = false;
+    function clamp(value) { return Math.max(0, Math.min(1, value)); }
+    function update() {
+      framePending = false;
+      var height = window.innerHeight;
+      var nearest = null, nearestDistance = Infinity;
+      rows.forEach(function (row) {
+        var rect = row.getBoundingClientRect();
+        var progress = clamp((height * .85 - rect.top) / Math.min(rect.height + height * .25, height * .6));
+        row.style.setProperty("--row-read", progress.toFixed(3));
+        var distance = Math.abs(rect.top + rect.height / 2 - height * .52);
+        if (rect.bottom > 80 && rect.top < height * .9 && distance < nearestDistance) {
+          nearest = row; nearestDistance = distance;
+        }
+      });
+      rows.forEach(function (row) { row.classList.toggle("is-reading", row === nearest); });
+      if (research) {
+        var rect = research.getBoundingClientRect();
+        research.style.setProperty("--research-read", clamp((height * .6 - rect.top) / Math.max(1, rect.height)).toFixed(3));
+      }
+      // Narrow screens keep the screenshot still; desktop gets at most 12px of depth.
+      previews.forEach(function (preview) {
+        var rect = preview.getBoundingClientRect();
+        if (rect.bottom < 0 || rect.top > height || rect.right < 0 || rect.left > window.innerWidth) return;
+        var offset = window.innerWidth >= 768 ? Math.max(-12, Math.min(12, (rect.top + rect.height / 2 - height / 2) * -.035)) : 0;
+        preview.style.setProperty("--preview-y", offset.toFixed(1) + "px");
+      });
+    }
+    function schedule() {
+      if (!framePending) { framePending = true; requestAnimationFrame(update); }
+    }
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
+    var slider = document.getElementById("practice-slider");
+    if (slider) slider.addEventListener("scroll", schedule, { passive: true });
+    update();
+  }
+
   /* ─────────────────────────── boot ─────────────────────────────── */
   ready(function () {
     // Screenshot / no-motion mode: freeze load + scroll animations at their final frame.
@@ -663,6 +758,8 @@
     initScrollProgress();
     initExplorer();
     initPubSlider();
+    initPracticeSlider();
+    initScrollScenes();
     initHeroProof();
     initBibtex();
   });

@@ -10,9 +10,9 @@
         <span class="hidden dark:inline">{{ partial "icon.html" (dict "name" "sun" "class" "size-5") }}</span>
         <span class="inline dark:hidden">{{ partial "icon.html" (dict "name" "moon" "class" "size-5") }}</span>
       </button>
-      {{ with site.Params.booking }}<a class="btn btn-sm btn-primary hidden sm:inline-flex" href="{{ . }}" target="_blank" rel="noopener">
-        {{ partial "icon.html" (dict "name" "calendar" "class" "size-4") }}<span class="hidden md:inline">{{ i18n "book_consultation" }}</span>
-      </a>{{ end }}
+      <a class="btn btn-sm btn-primary hidden sm:inline-flex" href="{{ "/research/#collaborate" | relURL }}">
+        {{ partial "icon.html" (dict "name" "mail" "class" "size-4") }}<span class="hidden md:inline">{{ i18n "research_collaborate" }}</span>
+      </a>
       <button class="icon-btn lg:hidden" data-nav-toggle aria-label="{{ i18n "aria_open_menu" }}" aria-expanded="false" aria-controls="mobile-nav">
         {{ partial "icon.html" (dict "name" "menu" "class" "size-5") }}
       </button>

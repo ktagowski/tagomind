@@ -90,3 +90,8 @@ other = "Strona"
 other = "Kontakt"
 [footer_explore]
 other = "Nawigacja"
+
+[nav_research]
+other = "Badania"
+[research_collaborate]
+other = "Współpraca"
