@@ -66,10 +66,10 @@
 
   <nav class="pager" aria-label="{{ i18n "nav_projects" }}">
     {{ with .PrevInSection }}
-      <a class="pager-tile" href="{{ .RelPermalink }}"><small>{{ i18n "previous" }}</small><strong>{{ .Title }}</strong></a>
-    {{ else }}<span></span>{{ end }}
+      <a class="pager-tile" href="{{ .RelPermalink }}"><small>{{ partial "icon.html" (dict "name" "arrow-right" "class" "rotate-180") }} {{ i18n "previous" }}</small><strong>{{ .Title }}</strong></a>
+    {{ end }}
     {{ with .NextInSection }}
-      <a class="pager-tile is-next" href="{{ .RelPermalink }}"><small>{{ i18n "next" }}</small><strong>{{ .Title }}</strong></a>
+      <a class="pager-tile is-next" href="{{ .RelPermalink }}"><small>{{ i18n "next" }} {{ partial "icon.html" (dict "name" "arrow-right" "class" "") }}</small><strong>{{ .Title }}</strong></a>
     {{ end }}
   </nav>
 </article>
