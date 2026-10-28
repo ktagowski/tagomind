@@ -177,7 +177,7 @@
         <h3 class="text-lg font-semibold leading-snug">{{ with $pg }}<a class="pub-title-link" href="{{ .RelPermalink }}">{{ $pub.title }}</a>{{ else }}{{ .title }}{{ end }}</h3>
         <p class="mt-2.5 text-sm text-muted-foreground clamp-2">{{ .authors | safeHTML }}</p>
         {{ with .summary }}<p class="mt-2 text-sm text-subtle clamp-3">{{ . }}</p>{{ end }}
-        {{ with .links }}{{ with .pdf }}<a class="link-arrow mt-auto pt-4" href="{{ . | relURL }}" target="_blank" rel="noopener">PDF {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-4") }}</a>{{ end }}{{ end }}
+        {{ with $pg }}<a class="link-arrow mt-auto pt-4" href="{{ .RelPermalink }}">{{ i18n "read_summary" }} {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</a>{{ else }}{{ with .links }}{{ with .pdf }}<a class="link-arrow mt-auto pt-4" href="{{ . | relURL }}" target="_blank" rel="noopener">PDF {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-4") }}</a>{{ end }}{{ end }}{{ end }}
       </article>
     {{ end }}
   </div>
