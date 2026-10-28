@@ -3,27 +3,21 @@ title: "Research & collaboration"
 layout: "research"
 seoTitle: "Research & collaboration · Kamil Tagowski, PhD"
 date: 2026-10-28
-description: "Research interests in fact elicitation, agentic extraction and robust evaluation, grounded in NLP, graph learning and deployed legal AI."
-lead: "I study how AI discovers missing facts, structures knowledge, and works reliably with complex information."
-directions:
-  - label: "Information discovery"
-    title: "Ask better questions."
-    question: "How can agents uncover the facts they need, instead of reasoning with an incomplete picture?"
-    links:
-      - label: "FSDBench"
-        url: "/publications/fsdbench/"
-  - label: "Knowledge structuring"
-    title: "Turn intent into structure."
-    question: "How can extraction schemas capture expert intent and hold up against real documents?"
-    links:
-      - label: "Schematize"
-        url: "/publications/schematize/"
-  - label: "Evaluation & deployment"
-    title: "Find where systems fail."
-    question: "How can we measure progress and expose failures under real-world constraints?"
-    links:
-      - label: "LEPISZCZE"
-        url: "/publications/lepiszcze/"
-      - label: "AI-Tax"
-        url: "/projects/ai-tax/"
+description: "Research in language and agents, generative vision, and graph representation learning. Selected papers, the Schematize demo, and TACTYC."
+lead: "NLP, graph learning, and generative vision—from research to deployed systems."
+areas:
+  - id: "language"
+    label: "Language & agents"
+    title: "Information discovery & extraction"
+    summary: "Finding missing facts, turning expert intent into extraction schemas, and evaluating what language models can actually do."
+    works: ["schematize", "fsdbench", "lepiszcze"]
+  - id: "vision"
+    label: "Vision & generation"
+    title: "Understanding and editing game maps"
+    summary: "TACTYC connects vision-language models that read terrain with generative models that redraw it."
+  - id: "graphs"
+    label: "Graph learning"
+    title: "Representations that evolve with the graph"
+    summary: "Learning node representations that stay comparable as networks change, without starting over at every snapshot."
+    works: ["rafen", "fildne"]
 ---

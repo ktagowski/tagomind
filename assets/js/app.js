@@ -672,13 +672,31 @@
     var next = document.querySelector("[data-practice-next]");
     var cards = Array.prototype.slice.call(slider.querySelectorAll(".practice-card"));
     if (!cards.length) return;
-    var progress = slider.parentNode.querySelector(".practice-scroll-progress > span");
-    // Fine pointers: the slider is overflow:clip (not a scroll box), so no trackpad gesture can latch onto it and
-    // vertical scrolling always reaches the page. Cards move by `translate` driven by --slide.
-    // Touch: native horizontal scrolling with snap, tracked through scrollLeft.
+    var N = cards.length, last = N - 1;
+    var progress = document.querySelector(".practice-scroll-progress > span");
+    var pin = document.querySelector(".practice-pin");
+    var topbar = document.querySelector(".topbar");
+    var still = /[?&]still=1/.test(location.search);
+    // Three modes:
+    //  pinned  – tall mouse/trackpad screens: the section sticks and page scrolling slides the projects across.
+    //  stepped – mouse/trackpad otherwise (reduced motion, short screens): arrows, keys and sideways swipes flip cards.
+    //  touch   – native horizontal scrolling with snap.
+    // In the first two the slider is overflow:clip (never a scroll box), so trackpad gestures always reach the page.
     var fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-    var index = 0;
+    var tall = window.matchMedia("(min-height: 700px)");
+    var pinned = false, index = 0;
 
+    function setMode() {
+      pinned = fine && tall.matches && !reduceMotion && !still && !!pin;
+      document.documentElement.classList.toggle("pin-on", pinned);
+      if (pin) pin.style.setProperty("--n", N);
+      if (topbar) document.documentElement.style.setProperty("--topbar-h", topbar.offsetHeight + "px");
+    }
+    function pinGeometry() {
+      var th = topbar ? topbar.offsetHeight : 62;
+      var top = pin.getBoundingClientRect().top + (window.pageYOffset || 0) - th;
+      return { top: top, range: Math.max(1, pin.offsetHeight - (window.innerHeight - th)) };
+    }
     function currentIndex() {
       if (fine) return index;
       var origin = cards[0].offsetLeft, best = Infinity, cur = 0;
@@ -686,15 +704,33 @@
       return cur;
     }
     function update() {
-      var i = currentIndex(), last = cards.length - 1;
+      var i = currentIndex();
       if (prev) prev.disabled = i <= 0;
       if (next) next.disabled = i >= last;
-      if (progress) progress.style.transform = "scaleX(" + (last > 0 ? i / last : 1) + ")";
-      cards.forEach(function (c, k) { c.setAttribute("aria-hidden", fine && k !== i ? "true" : "false"); if (fine) c.inert = k !== i; });
+      if (progress && !pinned) progress.style.transform = "scaleX(" + (last > 0 ? i / last : 1) + ")";
+      cards.forEach(function (c, k) { var off = fine && k !== i; c.setAttribute("aria-hidden", off ? "true" : "false"); c.inert = off; });
     }
+    // Pinned: page scroll position → continuous slide position.
+    var frame = false;
+    function onScroll() {
+      frame = false;
+      if (!pinned) return;
+      var g = pinGeometry();
+      var p = Math.max(0, Math.min(1, ((window.pageYOffset || 0) - g.top) / g.range));
+      var pos = p * last;
+      slider.style.setProperty("--slide", pos.toFixed(4));
+      if (progress) progress.style.transform = "scaleX(" + p.toFixed(4) + ")";
+      var i = Math.round(pos);
+      if (i !== index) { index = i; update(); }
+    }
+    function schedule() { if (!frame) { frame = true; requestAnimationFrame(onScroll); } }
+
     function go(i) {
-      i = Math.max(0, Math.min(cards.length - 1, i));
-      if (fine) {
+      i = Math.max(0, Math.min(last, i));
+      if (pinned) {
+        var g = pinGeometry();
+        window.scrollTo({ top: g.top + (last > 0 ? i / last : 0) * g.range + 1, behavior: "smooth" });
+      } else if (fine) {
         index = i;
         slider.style.setProperty("--slide", i);
         update();
@@ -711,24 +747,27 @@
       else if (e.key === "ArrowLeft") { e.preventDefault(); step(-1); }
     });
     if (fine) {
-      // A clearly sideways gesture (trackpad swipe, shift-wheel) flips one card; vertical input is never touched.
+      // A clearly sideways gesture (trackpad swipe, shift-wheel) moves one project; vertical input is never touched.
       var acc = 0, locked = false, idle = null;
       slider.addEventListener("wheel", function (e) {
         var dx = e.deltaX, dy = e.deltaY;
         if (e.shiftKey && !dx) { dx = dy; dy = 0; }
         if (Math.abs(dx) <= Math.abs(dy) * 1.2) return;
-        e.preventDefault(); // stop the browser's back/forward swipe while flipping cards
+        e.preventDefault(); // stop the browser's back/forward swipe
         clearTimeout(idle);
         idle = setTimeout(function () { acc = 0; locked = false; }, 180);
         if (locked) return;
         acc += dx;
         if (Math.abs(acc) > 40) { step(acc > 0 ? 1 : -1); locked = true; acc = 0; }
       }, { passive: false });
+      window.addEventListener("scroll", schedule, { passive: true });
     } else {
       slider.addEventListener("scroll", update, { passive: true });
     }
-    window.addEventListener("resize", update);
+    window.addEventListener("resize", function () { setMode(); if (!pinned && fine) slider.style.setProperty("--slide", index); update(); schedule(); });
+    setMode();
     update();
+    onScroll();
   }
 
   /* Scroll-linked reading focus on the research directions, without moving text. */
@@ -838,6 +877,31 @@
     els.forEach(function (e) { io.observe(e); });
   }
 
+  function initResearchIndex() {
+    var journal = document.querySelector(".research-journal");
+    if (!journal) return;
+    var nav = journal.querySelector(".rj-nav");
+    var links = Array.prototype.slice.call(nav.querySelectorAll("[data-research-link]"));
+    var areas = Array.prototype.slice.call(journal.querySelectorAll("[data-research-area]"));
+    var queued = false;
+    function update() {
+      queued = false;
+      var header = document.querySelector(".topbar");
+      journal.style.setProperty("--rj-nav-top", (header ? header.offsetHeight : 64) + "px");
+      var readingLine = nav.getBoundingClientRect().bottom + Math.min(160, window.innerHeight * .2);
+      var current = areas[0];
+      areas.forEach(function (area) { if (area.getBoundingClientRect().top <= readingLine) current = area; });
+      links.forEach(function (link) {
+        if (current && link.getAttribute("data-research-link") === current.id) link.setAttribute("aria-current", "location");
+        else link.removeAttribute("aria-current");
+      });
+    }
+    function schedule() { if (!queued) { queued = true; requestAnimationFrame(update); } }
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
+    update();
+  }
+
   /* ─────────────────────────── boot ─────────────────────────────── */
   ready(function () {
     // Screenshot / no-motion mode: freeze load + scroll animations at their final frame.
@@ -851,6 +915,7 @@
     initScrollProgress();
     initExplorer();
     initPracticeSlider();
+    initResearchIndex();
     initScrollScenes();
     initBibtex();
     initSpotlight();

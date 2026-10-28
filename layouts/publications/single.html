@@ -3,6 +3,8 @@
 {{ $pub := dict }}
 {{ range hugo.Data.publications }}{{ if eq .slug $.Params.pub }}{{ $pub = . }}{{ end }}{{ end }}
 {{ $acc := or (index $typeAccents (or $pub.type "")) "var(--brand)" }}
+{{ $colors := $pub.colors | default dict }}
+{{ with $colors.accent }}{{ $acc = . }}{{ end }}
 <article class="workspace pub-page" style="--field: {{ $acc | safeCSS }}">
   <a class="link-arrow mb-6 inline-flex" href="{{ "/publications/" | relURL }}">
     <span class="rotate-180">{{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</span> {{ i18n "all_publications" }}
@@ -15,24 +17,14 @@
   {{ $name := $full }}
   {{ if ne $full .Title }}{{ $name = .Title }}{{ end }}
   {{ $single := eq $name $full }}
-  {{- /* Hero plate: the project-page "printed plate", tinted by the paper type.
-       Left: venue, short name, hook, links. Right: the demo video or the designed figure. */ -}}
-  <header class="study is-hero pub-plate{{ if $single }} is-single{{ end }} fx-rise" data-study="generic">
+  {{- /* Hero plate: the project-page "printed plate", tinted by the paper type (or the paper's own colours).
+       It carries only the name, the hook and the media; venue, type and links live once, in the paper block. */ -}}
+  {{ $plateStyle := "" }}
+  {{ with $colors.plate }}{{ $plateStyle = printf "--plate: %s; --plate-ink: %s;" . ($colors.ink | default "oklch(0.97 0.01 100)") }}{{ end }}
+  <header class="study is-hero pub-plate{{ if $single }} is-single{{ end }} fx-rise" data-study="generic"{{ with $plateStyle }} style="{{ . | safeCSS }}"{{ end }}>
     <div class="study-text">
-      <div>
-        <span class="study-kicker">{{ with $pub.venue }}{{ . }}{{ end }}{{ with $pub.year }}{{ if not (in (string $pub.venue) (string .)) }} · {{ . }}{{ end }}{{ end }}</span>
-        <h1 class="pub-title"><span class="pub-name">{{ partial "title-words.html" $name }}</span></h1>
-        {{ with .Params.hook }}<p class="pub-hook">{{ . }}</p>{{ end }}
-      </div>
-      <div>
-        {{ with $pub.links }}
-        <div class="study-methods pub-plate-links">
-          {{ with .pdf }}<a href="{{ . | relURL }}" target="_blank" rel="noopener">{{ i18n "read_paper" }} {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-3.5") }}</a>{{ end }}
-          {{ with .code }}<a href="{{ . }}" target="_blank" rel="noopener">Code {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-3.5") }}</a>{{ end }}
-        </div>
-        {{ end }}
-        {{ with $pub.type }}<span class="study-caption block mt-3">{{ partial "pub-type-label.html" . }}</span>{{ end }}
-      </div>
+      <h1 class="pub-title"><span class="pub-name">{{ partial "title-words.html" $name }}</span></h1>
+      {{ with .Params.hook }}<p class="pub-hook">{{ . }}</p>{{ end }}
     </div>
     <div class="pub-plate-media">{{ partial "pub-media.html" (dict "pub" $pub) }}</div>
   </header>
@@ -107,7 +99,7 @@
             {{ with .arxiv }}<li><a class="link-arrow" href="{{ . }}" target="_blank" rel="noopener">arXiv {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-3.5") }}</a></li>{{ end }}
             {{ with .anthology }}<li><a class="link-arrow" href="{{ . }}" target="_blank" rel="noopener">ACL Anthology {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-3.5") }}</a></li>{{ end }}
             {{ with .doi }}<li><a class="link-arrow" href="{{ . }}" target="_blank" rel="noopener">DOI {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-3.5") }}</a></li>{{ end }}
-            {{ with .code }}<li><a class="link-arrow" href="{{ . }}" target="_blank" rel="noopener">Code {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-3.5") }}</a></li>{{ end }}
+            {{ with .code }}<li><a class="link-arrow" href="{{ . }}" target="_blank" rel="noopener">{{ if in . "github.com" }}GitHub{{ else }}Code{{ end }} {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-3.5") }}</a></li>{{ end }}
             {{ with .docs }}<li><a class="link-arrow" href="{{ . }}" target="_blank" rel="noopener">Documentation {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-3.5") }}</a></li>{{ end }}
             {{ with .poster }}<li><a class="link-arrow" href="{{ . | relURL }}" target="_blank" rel="noopener">Poster {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-3.5") }}</a></li>{{ end }}
             {{ with .video }}<li><a class="link-arrow" href="{{ . | relURL }}" target="_blank" rel="noopener">Demo video {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-3.5") }}</a></li>{{ end }}

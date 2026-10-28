@@ -37,7 +37,9 @@
 </section>
 
 <!-- ───────────────── Selected projects ───────────────── -->
-<section class="workspace" aria-labelledby="practice-title">
+<section class="workspace practice-section" aria-labelledby="practice-title">
+  {{/* Scroll-through: on mouse/trackpad screens app.js pins .practice-sticky and page scrolling slides the projects across. */}}
+  <div class="practice-pin"><div class="practice-sticky">
   <div class="section-head fx-scroll-soft">
     <div>
       <h2 id="practice-title">Selected projects</h2>
@@ -69,6 +71,7 @@
     {{ end }}
   </div>
   <div class="practice-scroll-progress" aria-hidden="true"><span></span></div>
+  </div></div>
 </section>
 
 <!-- ───────────────── In numbers ───────────────── -->

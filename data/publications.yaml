@@ -3,6 +3,10 @@
 # Under-review / preprint-only entries are intentionally excluded.
 - title: "Schematize: An Agentic System for Generating and Refining Information-Extraction Schemas for Legal Research"
   slug: "schematize"
+  colors:                      # sampled from the poster and video header bar
+    accent: "#447c74"
+    plate: "#447c74"
+    ink: "#f3f1e7"
   media:
     video:
       src: "/papers/schematize-emnlp2026-demo.mp4"

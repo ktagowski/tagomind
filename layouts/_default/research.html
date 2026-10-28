@@ -1,66 +1,61 @@
 {{ define "main" }}
-<div class="workspace research-page">
-  <header class="research-header fx-rise">
-    <div>
-      <span class="eyebrow">Research &amp; collaboration</span>
-      <h1 class="research-title">Reliable AI.<br><em>Open questions.</em></h1>
-      <p class="research-intro">{{ .Params.lead }}</p>
-    </div>
-    <a class="research-profile" href="{{ "/about/" | relURL }}">
-      {{ with site.Params.avatarSmall }}<img src="{{ . | relURL }}" width="48" height="48" alt="">{{ end }}
-      <span><strong>Kamil Tagowski, PhD</strong><span>Postdoctoral Researcher · Wrocław Tech</span></span>
-      {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-4") }}
-    </a>
+<div class="workspace research-journal">
+  <header class="rj-header">
+    <div class="rj-masthead"><span>Research &amp; collaboration</span><a href="{{ "/publications/" | relURL }}">Complete publication list {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-3.5") }}</a></div>
+    <div class="rj-title-row"><h1>Research<span>.</span></h1><p>{{ .Params.lead }}</p></div>
+    <div class="rj-byline"><span>Kamil Tagowski, PhD</span><span>Postdoctoral Researcher · Wrocław Tech</span><a href="{{ "/about/" | relURL }}">About {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-3.5") }}</a></div>
   </header>
 
-  <section aria-labelledby="directions-title" class="research-directions">
-    <div class="research-section-head">
-      <h2 id="directions-title">Three directions to explore</h2>
-      <span>Building on existing work. Open to collaboration.</span>
+  <nav class="rj-nav" aria-label="Research areas">
+    {{ range .Params.areas }}<a href="#{{ .id }}" data-research-link="{{ .id }}">{{ .label }}</a>{{ end }}
+    <a class="rj-nav-contact" href="#collaborate">Work with me {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-3.5 rotate-90") }}</a>
+  </nav>
+
+  {{ range $index, $area := .Params.areas }}
+  <section id="{{ .id }}" class="rj-chapter" data-research-area aria-labelledby="{{ .id }}-title">
+    <div class="rj-chapter-heading"><span class="rj-label">{{ .label }}</span><h2 id="{{ .id }}-title">{{ .title }}</h2><p>{{ .summary }}</p></div>
+    {{ if eq .id "vision" }}
+    <div class="rj-vision">
+      <a class="rj-tactyc" href="{{ "/projects/tactyc/" | relURL }}" aria-label="Explore TACTYC research">
+        <span class="rj-tactyc-meta">Toss A Coin to A Cartographer <span>Active research</span></span>
+        <span class="rj-tactyc-name">TACTYC{{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-8") }}</span>
+        <span class="rj-tactyc-role">Coordinator &amp; Co-author</span>
+      </a>
+      <div class="rj-vision-methods"><div><span class="rj-label">Vision-language models</span><h3>Read the terrain.</h3><p>Understand game maps tile by tile.</p></div><div><span class="rj-label">Generative models</span><h3>Generate &amp; edit.</h3><p>Redraw maps from their visual structure.</p></div><a class="link-arrow" href="{{ "/projects/tactyc/" | relURL }}">About the research {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</a></div>
     </div>
-    <div class="research-cards">
-      {{ range $i, $direction := .Params.directions }}
-      <article class="research-card research-card-{{ $i }} fx-scroll-soft">
-        <div class="research-card-top"><span>{{ .label }}</span></div>
-        <div class="research-visual" aria-hidden="true">
-          {{ if eq $i 0 }}
-          <div class="discovery-visual"><i></i><i></i><i></i><span>?</span><i></i></div>
-          {{ else if eq $i 1 }}
-          <div class="schema-visual"><div><i></i><b></b></div><div><i></i><b></b></div><div><i></i><b></b></div></div>
-          {{ else }}
-          <div class="evaluation-visual"><i></i><i></i><i></i><i></i><i></i></div>
-          {{ end }}
-        </div>
-        <h3>{{ .title }}</h3>
-        <p>{{ .question }}</p>
-        <div class="research-card-links">
-          {{ range .links }}<a href="{{ .url | relURL }}">{{ .label }} {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-3.5") }}</a>{{ end }}
-        </div>
-      </article>
+    {{ else }}
+    <div class="rj-evidence{{ if eq .id "graphs" }} rj-evidence-graphs{{ end }}">
+      <div class="rj-work-list">
+        {{ range $slug := .works }}
+        {{ with site.GetPage (printf "/publications/%s" $slug) }}
+        {{ $record := index (where hugo.Data.publications "slug" $slug) 0 }}
+        <article class="rj-work">
+          <div class="rj-work-meta"><span>{{ $record.venue }}{{ if eq $record.type "Demo" }} · System Demonstrations{{ else if eq $record.type "Datasets & Benchmarks" }} · Datasets &amp; Benchmarks{{ end }}</span>{{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-4") }}</div>
+          <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+          {{ with .Params.hook }}<p>{{ . }}</p>{{ end }}
+          <div class="rj-work-links"><a href="{{ .RelPermalink }}">Read the paper summary</a>{{ with $record.links.code }}<a href="{{ . }}" target="_blank" rel="noopener">Code ↗</a>{{ end }}</div>
+        </article>
+        {{ end }}
+        {{ end }}
+      </div>
+      {{ if eq .id "language" }}
+      <figure class="rj-demo">
+        <div class="rj-demo-caption"><span>Schematize / in use</span><span>EMNLP 2026 demo</span></div>
+        <video controls playsinline preload="none" poster="{{ "/papers/schematize-demo-poster.jpg" | relURL }}" aria-label="Schematize: a real schema generation run"><source src="{{ "/papers/schematize-emnlp2026-demo.mp4" | relURL }}" type="video/mp4"><a href="{{ "/papers/schematize-emnlp2026-demo.mp4" | relURL }}">Watch the Schematize demo</a></video>
+        <figcaption>A real run: expert dialogue, schema refinement, and extraction.</figcaption>
+        <div class="rj-related"><span class="rj-label">Research in deployed systems</span><a href="{{ "/projects/ai-tax/" | relURL }}">AI-Tax {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-4") }}</a><a href="{{ "/projects/juddges/" | relURL }}">JuDDGES {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-4") }}</a></div>
+      </figure>
+      {{ else }}
+      <aside class="rj-graph-note"><span class="rj-label">A continuing thread</span><p>From dynamic graphs to complex information.</p><span>Representation learning and evaluation connect this earlier work to the systems I build today.</span><a href="{{ "/publications/embedding-alignment-dynamic-networks/" | relURL }}">Embedding alignment study · ICCS 2021 {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-4") }}</a></aside>
       {{ end }}
     </div>
+    {{ end }}
   </section>
+  {{ end }}
 
-  <div class="research-background">
-    <span class="eyebrow">Research foundations</span>
-    <p>NLP, graph learning, and reproducible evaluation.<br><a href="{{ "/publications/rafen/" | relURL }}">Earlier first-author work: RAFEN {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-3.5") }}</a></p>
-    <a class="link-arrow" href="{{ "/publications/" | relURL }}">All publications {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</a>
-  </div>
-
-  <section id="collaborate" class="research-collaborate fx-scroll-soft" aria-labelledby="collaborate-title">
-    <div class="research-collaborate-copy">
-      <span class="eyebrow">Let's work together</span>
-      <h2 id="collaborate-title">A real problem.<br><em>A practical next step.</em></h2>
-      <p>Need better search, document extraction, or an AI workflow that works on your data? Let’s define the problem and build toward a measurable result.</p>
-      <a class="btn btn-primary" href="mailto:{{ site.Params.email }}">Talk about your project {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-4") }}</a>
-    </div>
-    <div class="research-contact-note">
-      <span class="eyebrow">Start with three things</span>
-      <ol><li>The problem you need solved</li><li>Your data and constraints</li><li>What success looks like</li></ol>
-      <p>For research partnerships, institutional arrangements are also possible.</p>
-    </div>
+  <section id="collaborate" class="rj-contact" aria-labelledby="rj-contact-title">
+    <div><span class="rj-label">Collaboration</span><h2 id="rj-contact-title">Work with me.</h2><p>Tell me what you need to solve, the data you have, and what a useful result looks like.</p><a class="rj-email" href="mailto:{{ site.Params.email }}">{{ site.Params.email }} {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-5") }}</a></div>
+    <div class="rj-contact-options"><a href="{{ "/services/" | relURL }}"><span>Applied AI</span><strong>Consulting &amp; implementation {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-4") }}</strong></a><a href="mailto:{{ site.Params.email }}?subject=Research%20collaboration"><span>Research partnerships</span><strong>Joint experiments &amp; publications {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-4") }}</strong></a><p>Sponsored research through institutional arrangements.</p></div>
   </section>
-  {{/* The Polish services link stays out of the chrome until the Polish pages are promoted. */}}
-  <p class="research-consulting">Explore advisory and implementation services: <a href="{{ "/services/" | relURL }}">Consulting {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-3.5") }}</a></p>
 </div>
 {{ end }}
