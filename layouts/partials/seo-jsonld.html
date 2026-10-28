@@ -1,21 +1,43 @@
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "{{ site.Params.author }}",
-  "jobTitle": "{{ site.Params.role }}",
-  "description": "{{ site.Params.description }}",
-  "affiliation": { "@type": "Organization", "name": "{{ site.Params.affiliation }}" },
-  "memberOf": { "@type": "Organization", "name": "OdysAI", "url": "https://odysai.pl" },
-  "url": "{{ site.BaseURL }}",
-  "email": "{{ site.Params.email }}",
-  "sameAs": [
-    {{- $first := true -}}
-    {{- range site.Params.socials -}}
-      {{- if hasPrefix .url "http" -}}
-        {{- if not $first }}, {{ end -}}"{{ .url }}"{{- $first = false -}}
-      {{- end -}}
-    {{- end -}}
-  ]
-}
-</script>
+{{- $sameAs := slice -}}
+{{- range site.Params.socials }}{{ if hasPrefix .url "http" }}{{ $sameAs = $sameAs | append .url }}{{ end }}{{ end -}}
+{{- $person := dict
+  "@type" "Person"
+  "@id" (printf "%s#person" site.BaseURL)
+  "name" site.Params.author
+  "givenName" "Kamil"
+  "familyName" "Tagowski"
+  "honorificSuffix" site.Params.authorTitle
+  "jobTitle" site.Params.role
+  "description" site.Params.description
+  "url" site.BaseURL
+  "image" (site.Params.avatar | absURL)
+  "email" site.Params.email
+  "sameAs" $sameAs
+  "identifier" (dict "@type" "PropertyValue" "propertyID" "ORCID" "value" (printf "https://orcid.org/%s" site.Params.orcid))
+  "worksFor" (dict "@type" "Organization" "name" "Wrocław University of Science and Technology" "url" "https://pwr.edu.pl/" "department" (dict "@type" "Organization" "name" "Department of Artificial Intelligence"))
+  "affiliation" (dict "@type" "Organization" "name" site.Params.affiliation)
+  "alumniOf" (dict "@type" "CollegeOrUniversity" "name" "Wrocław University of Science and Technology" "url" "https://pwr.edu.pl/")
+  "memberOf" (slice (dict "@type" "Organization" "name" "Finance AI" "url" (absURL "/projects/finance-ai/")) (dict "@type" "Organization" "name" "OdysAI" "url" "https://odysai.pl"))
+  "address" (dict "@type" "PostalAddress" "addressLocality" "Wrocław" "addressCountry" "PL")
+  "knowsAbout" site.Params.knowsAbout
+  "hasOccupation" (slice (dict "@type" "Occupation" "name" "Postdoctoral Researcher") (dict "@type" "Occupation" "name" "AI Engineer") (dict "@type" "Occupation" "name" "AI Consultant"))
+-}}
+{{- $site := dict
+  "@type" "WebSite"
+  "@id" (printf "%s#website" site.BaseURL)
+  "name" site.Params.brand
+  "url" site.BaseURL
+  "author" (dict "@id" (printf "%s#person" site.BaseURL))
+-}}
+{{- $graph := slice $person $site -}}
+{{- if eq .Section "publications" -}}
+  {{- range hugo.Data.publications -}}
+    {{- $authors := slice -}}
+    {{- range split (.authors | plainify) ", " }}{{ $authors = $authors | append (dict "@type" "Person" "name" .) }}{{ end -}}
+    {{- $art := dict "@type" "ScholarlyArticle" "headline" .title "name" .title "author" $authors "datePublished" (string .year) "isPartOf" (dict "@type" "Periodical" "name" .venue) "inLanguage" "en" -}}
+    {{- with .summary }}{{ $art = merge $art (dict "abstract" .) }}{{ end -}}
+    {{- with .links }}{{ with .pdf }}{{ $art = merge $art (dict "url" (. | absURL)) }}{{ end }}{{ with .doi }}{{ $art = merge $art (dict "sameAs" .) }}{{ end }}{{ end -}}
+    {{- $graph = $graph | append $art -}}
+  {{- end -}}
+{{- end -}}
+<script type="application/ld+json">{{ (dict "@context" "https://schema.org" "@graph" $graph) | jsonify | safeJS }}</script>

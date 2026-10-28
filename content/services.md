@@ -1,5 +1,8 @@
 ---
 title: "Work with me"
+date: 2026-10-28
+sitemap:
+  priority: 0.7
 layout: "services"
 description: "AI consulting and engineering by Kamil Tagowski, PhD: Legal & Tax AI and applied NLP/LLM systems, with shipped production systems behind every offer."
 lead: "Consulting and hands-on engineering, focused on two areas, both backed by systems running in production."

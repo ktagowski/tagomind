@@ -1,5 +1,8 @@
 ---
 title: "About"
+date: 2026-10-28
+sitemap:
+  priority: 0.8
 layout: "about"
 description: "Kamil Tagowski, PhD, postdoc and AI engineer in graph representation learning, NLP, and computer vision at Wrocław University of Science and Technology."
 expertise:

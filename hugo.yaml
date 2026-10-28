@@ -41,6 +41,16 @@ sitemap:
   changefreq: weekly
   priority: 0.5
 
+# Plain-text summary for LLM crawlers → /llms.txt (template: layouts/home.llms.txt)
+outputFormats:
+  llms:
+    mediaType: "text/plain"
+    baseName: "llms"
+    isPlainText: true
+    notAlternative: true
+outputs:
+  home: ["HTML", "RSS", "llms"]
+
 # Fields are consumed only as filter chips inside the Explorer, not as own pages.
 disableKinds:
   - taxonomy
@@ -55,6 +65,8 @@ params:
   booking: "https://calendar.app.google/mvQcy3JLLyvBQ3VG9"
   affiliation: "Department of Artificial Intelligence, Wrocław University of Science and Technology"
   location: "Wrocław, Poland"
+  orcid: "0000-0003-4809-3587"
+  knowsAbout: ["Natural Language Processing", "Large Language Models", "Graph Representation Learning", "Agentic AI", "Legal AI", "Information Extraction", "Benchmarks and Evaluation", "Computer Vision", "Machine Learning"]
   avatar: "img/kamil-tagowski.jpg"
   avatarSmall: "img/kamil-tagowski-96.webp"
   themeColor: "#26262A"
@@ -73,6 +85,9 @@ params:
     - name: "Google Scholar"
       icon: "scholar"
       url: "https://scholar.google.com/citations?user=psVLt8wAAAAJ"
+    - name: "ORCID"
+      icon: "orcid"
+      url: "https://orcid.org/0000-0003-4809-3587"
     - name: "DBLP"
       icon: "paper"
       url: "https://dblp.org/pid/225/0671.html"

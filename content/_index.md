@@ -1,5 +1,8 @@
 ---
 title: "TagoMind · Kamil Tagowski, PhD"
+date: 2026-10-28
+sitemap:
+  priority: 1.0
 description: "Kamil Tagowski (PhD), researcher and engineer in graph representation learning, NLP, and computer vision. Published benchmarks, production legal-AI systems, and AI consulting."
 hero:
   eyebrow: "Kamil Tagowski · PhD"

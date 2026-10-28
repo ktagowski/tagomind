@@ -35,6 +35,8 @@ assets/
   css/main.css         # design tokens (OKLCH) + components + motion
   js/app.js            # theme, Explorer filters, graph canvas, reveals
 static/                # CNAME, favicon, images
+layouts/robots.txt     # crawler rules + Sitemap line (search + AI bots allowed)
+layouts/home.llms.txt  # → /llms.txt, plain-text site summary for LLM crawlers
 ```
 
 ### Editing content
