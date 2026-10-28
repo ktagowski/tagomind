@@ -13,7 +13,7 @@ Reviewed on 2026-10-29, after commit `184454d`. Measurements come from Playwrigh
 1. **Motion explains a change.** Every animation must answer one question: what changed, where it came from, or what belongs together. If it answers none, cut it.
 2. **One orchestrated moment per view.** Each page gets one entrance (the title) and one signature (the study plates and paper figures drawing in). Everything else is quiet.
 3. **Reading text is never hidden behind a reveal.** Body copy, lists, facts and links must be visible without JavaScript, after an anchor jump, in find-in-page and in print. Reveals are for media, figures and cards only.
-4. **Never write to scroll.** No wheel hijacking, no scroll-jacking, no snapping on the page itself. Scroll-linked effects read the scroll position and never change it. Horizontal snapping is allowed inside an explicit slider only.
+4. **Never write to scroll.** No wheel hijacking, no scroll-jacking, no snapping on the page itself. Scroll-linked effects read the scroll position and never change it. On mouse and trackpad devices, do not put a sideways scroll box in the path of vertical reading: browsers lock a whole trackpad gesture to it as soon as the gesture has any sideways movement, and the page stops. Carousels use `overflow: clip` and `translate` there; touch devices may keep native horizontal scrolling.
 5. **Animate paint, never layout.** Use `transform`, `opacity`, `filter` and `clip-path`. Never animate `height`, `top`, `margin` or `font-size`. An element in normal flow (the sticky top bar) may change colour and shadow on scroll, never size.
 6. **Ambient motion is rare and bounded.** At most one ambient (looping) layer per page, only in the home hero. It pauses when offscreen and when the tab is hidden. Inner pages have no infinite loops; status cues (live badge, scroll cue) stop after three loops or on first interaction.
 7. **Reduced motion keeps all information.** Under `prefers-reduced-motion: reduce` and `?still=1`, every element shows its end state instantly. Movement is removed, never content. Counters show their final value; drawn lines are drawn.
@@ -70,6 +70,7 @@ Verdicts: **keep** as is, **tune** (keep the idea, change parameters), **cut**.
 | Wheel over the projects slider was captured and turned into card steps | Page moved 0px for 1,200px of wheel; slider jumped 2,432px sideways | Removed the wheel handler (commit `184454d`) |
 | Scrolled top bar shrank by 10px | All content jumped 10px when crossing 24px of scroll | Bar now changes paint only |
 | Hero keep-out lagged during fast scroll | Re-measured every 16 frames with layout reads in the scroll handler | Measured in document coordinates, offset by scroll each frame |
+| Trackpad scrolling stopped over the projects slider | Any vertical gesture with 1px of sideways movement over the slider moved the page 0px. Chrome latches the gesture to the nearest box that can scroll sideways, even an `overflow: hidden` one | On mouse and trackpad devices the slider is `overflow: clip` (not a scroll box) and cards move with `translate`; sideways swipes, shift-wheel, arrows and arrow keys flip one card. Touch keeps native swiping |
 
 ### Entrances (play once on load)
 
@@ -118,7 +119,7 @@ Verdicts: **keep** as is, **tune** (keep the idea, change parameters), **cut**.
 | Cross-document crossfade, 220ms | All pages | **Keep** | Cheap, degrades to a normal load in Firefox |
 | Named title transition | Detail pages only | **Tune** | List pages do not name their titles, so the list-to-detail morph never happens. Name the card title on hover-target cards, or drop the name |
 | Smooth scroll for in-page links | All pages | **Keep** | Turned off under reduced motion |
-| Slider snapping, arrow steps | Home projects | **Keep** | Inside an explicit slider, never on the page. Real trackpad swipes not verified in a headless browser |
+| Slider: cards slide with `translate` on mouse and trackpad, native snap scrolling on touch | Home projects | **Keep** | Never captures vertical scrolling. Verified with synthetic wheel input; confirm with a real trackpad |
 
 ### Consistency
 

@@ -216,3 +216,7 @@ other = "Problem"
 other = "Key finding"
 [read_paper]
 other = "Read the paper"
+[presented_at]
+other = "Presented at"
+[download_pdf]
+other = "Download PDF"

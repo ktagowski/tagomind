@@ -573,7 +573,7 @@
   .study[data-study="generic"]  { --study-bg: color-mix(in oklch, var(--field, oklch(0.5 0.1 280)) 30%, oklch(0.2 0 0)); --study-bg-light: color-mix(in oklch, var(--field, oklch(0.5 0.1 280)) 40%, oklch(0.25 0 0)); --study-ink: color-mix(in oklch, var(--field, oklch(0.8 0.08 280)) 55%, white); }
 
   /* ── Paper media: framed video, poster thumb, designed figure ────── */
-  .pub-media { display: grid; gap: 1rem; margin-bottom: clamp(2rem, 4vw, 3rem); }
+  .pub-media { display: grid; gap: 1rem; }
   .media-frame { overflow: hidden; display: flex; flex-direction: column; }
   .media-frame video, .media-frame img { display: block; width: 100%; height: auto; background: #000; }
   .media-frame video { aspect-ratio: 16 / 9; object-fit: cover; }
@@ -588,8 +588,6 @@
   .pub-figure g[font-family] { opacity: 1; }
   .pub-figure.is-thumb { padding: 0.7rem; }
   .pub-figure.is-thumb text, .study.is-thumb .study-motif text { display: none; }
-  .pub-media .figure-wrap { aspect-ratio: 16 / 7; }
-  @media (min-width: 1024px) { .pub-media .figure-wrap { aspect-ratio: 8 / 3; } .pub-media .pub-figure svg { max-width: 44rem; } }
 
   /* At-a-glance facts strip */
   .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); gap: 0; margin-top: 1.5rem; overflow: hidden; }
@@ -600,16 +598,26 @@
   @media (max-width: 639px) { .facts { grid-template-columns: 1fr 1fr; } .facts > div:nth-child(odd) { border-left: 0; } .facts > div:nth-child(n+3) { border-top: 1px solid var(--border); } }
 
   /* Paper page header */
-  .pub-head {
-    position: relative; isolation: isolate;
-    display: flex; flex-direction: column; align-items: flex-start;
-    margin-bottom: clamp(1.75rem, 3.2vw, 2.5rem);
-  }
-  .pub-head::before {
-    content: ""; position: absolute; z-index: -1; pointer-events: none;
-    inset: -4rem 0 auto -10rem; height: 26rem;
-    background: radial-gradient(40% 55% at 22% 40%, color-mix(in oklch, var(--field, var(--brand)) 13%, transparent), transparent 72%);
-  }
+  /* Hero plate: reuses .study.is-hero (project pages), tinted by the paper type via --field. */
+  .pub-plate { margin-bottom: clamp(2rem, 4vw, 3rem); --elevated: var(--study-bg); }
+  .pub-plate .pub-title { margin-top: 0.4rem; font: inherit; color: var(--study-ink); text-wrap: balance; }
+  .pub-plate .pub-name { display: block; font-size: clamp(2.4rem, 9cqw, 4.4rem); font-weight: 500; letter-spacing: -0.05em; line-height: 1; }
+  .pub-plate.is-single .pub-name { font-size: clamp(1.7rem, 4.6cqw, 2.4rem); letter-spacing: -0.03em; line-height: 1.12; }
+  .pub-hook { margin-top: 1rem; max-width: 30rem; font-size: clamp(1rem, 2.6cqw, 1.15rem); line-height: 1.5; color: color-mix(in oklch, var(--study-ink) 82%, transparent); text-wrap: pretty; }
+  .pub-plate-links { justify-content: flex-start; gap: 1.5rem; margin-top: 1.5rem; }
+  .pub-plate-links a { display: inline-flex; align-items: center; gap: 0.3rem; color: var(--study-ink); text-decoration: none; }
+  .pub-plate-links a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .pub-plate-media { flex: 1 1 auto; min-width: 0; display: flex; align-items: center; margin-top: 1rem; }
+  @media (min-width: 1024px) { .pub-plate-media { margin-top: 0; } .study.is-hero.pub-plate .study-text { flex-basis: 36%; } }
+  .pub-plate .pub-media { width: 100%; margin: 0; }
+  .pub-plate .media-frame { background: transparent; border: 1px solid var(--study-line); box-shadow: none; }
+  .pub-plate .media-caption { color: color-mix(in oklch, var(--study-ink) 70%, transparent); border-top-color: var(--study-line); }
+  .pub-plate .media-caption .num { color: inherit; }
+  .pub-plate .pub-figure { --fig-ink: var(--study-ink); background: transparent; }
+  .pub-plate .pub-figure text { fill: color-mix(in oklch, var(--study-ink) 75%, transparent); }
+  .pub-plate .figure-wrap { aspect-ratio: 16 / 9; }
+  .pub-plate:not(:has(video)) .media-frame { border: 0; }
+  .pub-title { view-transition-name: page-title; }
   .pub-kicker {
     display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem 0;
     font-size: 0.76rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; line-height: 1.4;
@@ -618,16 +626,6 @@
   .pub-kicker > span + span::before { content: ""; display: inline-block; width: 1.1rem; height: 1px; margin-inline: 0.65rem; vertical-align: 0.24em; background: var(--border-strong); }
   .pub-kicker-type { display: inline-flex; align-items: center; gap: 0.5rem; color: color-mix(in oklch, var(--field, var(--brand)) 78%, var(--foreground)); }
   .pub-kicker-type::before { content: ""; width: 0.5rem; height: 0.5rem; border-radius: 999px; background: var(--field, var(--brand)); box-shadow: 0 0 0 3px color-mix(in oklch, var(--field, var(--brand)) 20%, transparent); }
-  .pub-title { view-transition-name: page-title; font-size: inherit; }
-  .pub-name { display: block; font-size: clamp(2.9rem, 7vw, 5.2rem); font-weight: 540; line-height: 0.98; letter-spacing: -0.03em; }
-  .pub-title.is-single .pub-name { max-width: 30ch; font-size: clamp(2.2rem, 4.6vw, 3.6rem); line-height: 1.06; letter-spacing: -0.02em; text-wrap: balance; }
-  .pub-hook {
-    margin-top: 0.9rem; max-width: 100%;
-    font-family: var(--font-display); font-size: clamp(1.15rem, 1.85vw, 1.45rem); font-weight: 400; line-height: 1.35; letter-spacing: -0.01em;
-    color: color-mix(in oklch, var(--foreground) 62%, var(--muted-foreground));
-    text-wrap: pretty;
-  }
-  .pub-read { margin-top: 1.1rem; font-size: 0.92rem; }
   /* Paper block: the formal record under the media. */
   .pub-paper { display: flex; flex-direction: column; align-items: flex-start; padding-top: 1.5rem; border-top: 1px solid var(--border); }
   .paper-title { margin-top: 0.8rem; max-width: 46rem; font-size: clamp(1.35rem, 2.2vw, 1.75rem); font-weight: 500; line-height: 1.25; letter-spacing: -0.012em; text-wrap: pretty; }
@@ -636,6 +634,15 @@
   .pub-authors strong { color: var(--foreground); font-weight: 620; background: linear-gradient(color-mix(in oklch, var(--field, var(--brand)) 26%, transparent), color-mix(in oklch, var(--field, var(--brand)) 26%, transparent)) 0 92% / 100% 0.3em no-repeat; }
   .pub-lead { margin-top: 1.1rem; max-width: 46rem; font-size: clamp(1.05rem, 1.3vw, 1.15rem); line-height: 1.6; color: color-mix(in oklch, var(--foreground) 80%, var(--muted-foreground)); text-wrap: pretty; }
   .pub-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem; margin-top: 1.25rem; }
+  /* Poster section at the end of the write-up. */
+  .pub-poster { margin-top: 3rem; padding-top: 1.75rem; border-top: 1px solid var(--border); }
+  .pub-poster h2 { font-size: 1.5rem; margin-bottom: 1.1rem; }
+  .pub-poster-body { display: grid; gap: 1.25rem; }
+  @media (min-width: 640px) { .pub-poster-body { grid-template-columns: minmax(0, 20rem) minmax(0, 1fr); align-items: start; gap: 1.75rem; } }
+  .pub-poster-thumb { display: block; overflow: hidden; border: 1px solid var(--border); border-radius: var(--radius-lg, 0.9rem); background: var(--elevated); max-width: 24rem; }
+  .pub-poster-thumb img { display: block; width: 100%; height: auto; transition: transform .5s cubic-bezier(.16,1,.3,1); }
+  .pub-poster-thumb:hover img { transform: scale(1.02); }
+  .pub-poster-text p { margin-bottom: 1rem; color: var(--muted-foreground); text-wrap: pretty; }
 
   /* Sidebar meta list */
   .meta-list { display: flex; flex-direction: column; }
@@ -917,6 +924,15 @@
   /* One project at a time: every card is exactly the slider width, snapping never rests between cards. */
   .practice-slider { display: flex; gap: 1rem; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; padding: .25rem 0 1rem; scrollbar-width: none; }
   .practice-slider::-webkit-scrollbar { display: none; }
+  /* Mouse and trackpad: the slider is not a user scroll box, so a trackpad gesture can never latch onto it and
+     vertical scrolling always reaches the page. app.js moves it (arrows, clearly sideways swipes); touch keeps native swiping. */
+  @media (hover: hover) and (pointer: fine) {
+    /* `clip` is not a scroll container (hidden still is, and Chrome latches trackpad gestures to it).
+       Cards slide with the individual `translate` property, which composes with the reveal `transform`. */
+    .practice-slider { overflow-x: clip; scroll-snap-type: none; }
+    .practice-card { translate: calc(var(--slide, 0) * (-100% - 1rem)) 0; transition: translate .7s cubic-bezier(.16,1,.3,1), opacity .35s cubic-bezier(.16,1,.3,1), transform .45s cubic-bezier(.16,1,.3,1); }
+  }
+  @media (prefers-reduced-motion: reduce) { .practice-card { transition: none; } }
   .practice-card { display: grid; grid-template-columns: 1fr 1.12fr; flex: 0 0 100%; min-width: 0; overflow: hidden; border-radius: var(--radius-2xl); scroll-snap-align: start; scroll-snap-stop: always; }
   .practice-copy { display: flex; flex-direction: column; padding: clamp(1.5rem, 3vw, 2.5rem); }
   .practice-card-top { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1.8rem; }

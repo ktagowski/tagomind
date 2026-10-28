@@ -15,17 +15,27 @@
   {{ $name := $full }}
   {{ if ne $full .Title }}{{ $name = .Title }}{{ end }}
   {{ $single := eq $name $full }}
-  <header class="pub-head fx-rise">
-    <h1 class="pub-title{{ if $single }} is-single{{ end }}">
-      <span class="pub-name">{{ partial "title-words.html" $name }}</span>
-    </h1>
-    {{ with .Params.hook }}<p class="pub-hook">{{ . }}</p>{{ end }}
-    {{ with $pub.links }}{{ with .pdf }}
-    <a class="link-arrow pub-read" href="{{ . | relURL }}" target="_blank" rel="noopener">{{ i18n "read_paper" }} {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-3.5") }}</a>
-    {{ end }}{{ end }}
+  {{- /* Hero plate: the project-page "printed plate", tinted by the paper type.
+       Left: venue, short name, hook, links. Right: the demo video or the designed figure. */ -}}
+  <header class="study is-hero pub-plate{{ if $single }} is-single{{ end }} fx-rise" data-study="generic">
+    <div class="study-text">
+      <div>
+        <span class="study-kicker">{{ with $pub.venue }}{{ . }}{{ end }}{{ with $pub.year }}{{ if not (in (string $pub.venue) (string .)) }} · {{ . }}{{ end }}{{ end }}</span>
+        <h1 class="pub-title"><span class="pub-name">{{ partial "title-words.html" $name }}</span></h1>
+        {{ with .Params.hook }}<p class="pub-hook">{{ . }}</p>{{ end }}
+      </div>
+      <div>
+        {{ with $pub.links }}
+        <div class="study-methods pub-plate-links">
+          {{ with .pdf }}<a href="{{ . | relURL }}" target="_blank" rel="noopener">{{ i18n "read_paper" }} {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-3.5") }}</a>{{ end }}
+          {{ with .code }}<a href="{{ . }}" target="_blank" rel="noopener">Code {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-3.5") }}</a>{{ end }}
+        </div>
+        {{ end }}
+        {{ with $pub.type }}<span class="study-caption block mt-3">{{ partial "pub-type-label.html" . }}</span>{{ end }}
+      </div>
+    </div>
+    <div class="pub-plate-media">{{ partial "pub-media.html" (dict "pub" $pub) }}</div>
   </header>
-
-  {{ partial "pub-media.html" (dict "pub" $pub) }}
 
   <div class="grid gap-10 lg:grid-cols-[minmax(0,1fr)_17rem]">
     <div class="min-w-0">
@@ -63,6 +73,21 @@
       <div class="prose-ink fx-scroll-soft{{ if not (or .Params.problem .Params.finding) }} mt-10{{ end }}">
         {{ .Content }}
       </div>
+
+      {{ with $pub.media }}{{ with .poster }}{{ if .src }}
+      <section class="pub-poster fx-scroll-soft" aria-labelledby="poster-title">
+        <h2 id="poster-title">{{ i18n "poster_label" }}</h2>
+        <div class="pub-poster-body">
+          <a class="pub-poster-thumb" href="{{ .src | relURL }}" target="_blank" rel="noopener">
+            {{ with .thumb }}<img src="{{ . | relURL }}" alt="{{ i18n "poster_label" }}: {{ $full }}" loading="lazy" decoding="async" width="{{ $pub.media.poster.width | default 497 }}" height="{{ $pub.media.poster.height | default 702 }}">{{ end }}
+          </a>
+          <div class="pub-poster-text">
+            <p>{{ i18n "presented_at" }} {{ $pub.venue }}{{ with $pub.type }}, {{ partial "pub-type-label.html" . }}{{ end }}.</p>
+            <a class="btn btn-sm" href="{{ .src | relURL }}" target="_blank" rel="noopener">{{ partial "icon.html" (dict "name" "paper" "class" "size-4") }} {{ i18n "download_pdf" }}</a>
+          </div>
+        </div>
+      </section>
+      {{ end }}{{ end }}{{ end }}
     </div>
 
     <aside class="flex flex-col gap-4 lg:sticky lg:top-20 lg:self-start">

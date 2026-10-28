@@ -670,27 +670,63 @@
     if (!slider) return;
     var prev = document.querySelector("[data-practice-prev]");
     var next = document.querySelector("[data-practice-next]");
+    var cards = Array.prototype.slice.call(slider.querySelectorAll(".practice-card"));
+    if (!cards.length) return;
+    var progress = slider.parentNode.querySelector(".practice-scroll-progress > span");
+    // Fine pointers: the slider is overflow:clip (not a scroll box), so no trackpad gesture can latch onto it and
+    // vertical scrolling always reaches the page. Cards move by `translate` driven by --slide.
+    // Touch: native horizontal scrolling with snap, tracked through scrollLeft.
+    var fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    var index = 0;
+
+    function currentIndex() {
+      if (fine) return index;
+      var origin = cards[0].offsetLeft, best = Infinity, cur = 0;
+      cards.forEach(function (c, i) { var d = Math.abs(c.offsetLeft - origin - slider.scrollLeft); if (d < best) { best = d; cur = i; } });
+      return cur;
+    }
     function update() {
-      if (prev) prev.disabled = slider.scrollLeft <= 4;
-      if (next) next.disabled = slider.scrollLeft + slider.clientWidth >= slider.scrollWidth - 2;
-      var progress = slider.parentNode.querySelector(".practice-scroll-progress > span");
-      var distance = slider.scrollWidth - slider.clientWidth;
-      if (progress) progress.style.transform = "scaleX(" + (distance > 0 ? Math.min(1, slider.scrollLeft / distance) : 1) + ")";
+      var i = currentIndex(), last = cards.length - 1;
+      if (prev) prev.disabled = i <= 0;
+      if (next) next.disabled = i >= last;
+      if (progress) progress.style.transform = "scaleX(" + (last > 0 ? i / last : 1) + ")";
+      cards.forEach(function (c, k) { c.setAttribute("aria-hidden", fine && k !== i ? "true" : "false"); if (fine) c.inert = k !== i; });
     }
-    // Index-based: go to the exact offset of the neighbouring card so the slider never rests between two.
-    function step(direction) {
-      var cards = Array.prototype.slice.call(slider.querySelectorAll(".practice-card"));
-      if (!cards.length) return;
-      var current = 0, best = Infinity;
-      var origin = cards[0].offsetLeft;
-      cards.forEach(function (c, i) { var d = Math.abs(c.offsetLeft - origin - slider.scrollLeft); if (d < best) { best = d; current = i; } });
-      var target = cards[Math.max(0, Math.min(cards.length - 1, current + direction))];
-      slider.scrollTo({ left: target.offsetLeft - origin, behavior: reduceMotion ? "instant" : "smooth" });
+    function go(i) {
+      i = Math.max(0, Math.min(cards.length - 1, i));
+      if (fine) {
+        index = i;
+        slider.style.setProperty("--slide", i);
+        update();
+      } else {
+        slider.scrollTo({ left: cards[i].offsetLeft - cards[0].offsetLeft, behavior: reduceMotion ? "instant" : "smooth" });
+      }
     }
+    function step(direction) { go(currentIndex() + direction); }
+
     if (prev) prev.addEventListener("click", function () { step(-1); });
     if (next) next.addEventListener("click", function () { step(1); });
-    slider.addEventListener("scroll", update, { passive: true });
-    // Vertical wheel always scrolls the page. The slider moves with arrows, sideways swipes and shift-wheel.
+    slider.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowRight") { e.preventDefault(); step(1); }
+      else if (e.key === "ArrowLeft") { e.preventDefault(); step(-1); }
+    });
+    if (fine) {
+      // A clearly sideways gesture (trackpad swipe, shift-wheel) flips one card; vertical input is never touched.
+      var acc = 0, locked = false, idle = null;
+      slider.addEventListener("wheel", function (e) {
+        var dx = e.deltaX, dy = e.deltaY;
+        if (e.shiftKey && !dx) { dx = dy; dy = 0; }
+        if (Math.abs(dx) <= Math.abs(dy) * 1.2) return;
+        e.preventDefault(); // stop the browser's back/forward swipe while flipping cards
+        clearTimeout(idle);
+        idle = setTimeout(function () { acc = 0; locked = false; }, 180);
+        if (locked) return;
+        acc += dx;
+        if (Math.abs(acc) > 40) { step(acc > 0 ? 1 : -1); locked = true; acc = 0; }
+      }, { passive: false });
+    } else {
+      slider.addEventListener("scroll", update, { passive: true });
+    }
     window.addEventListener("resize", update);
     update();
   }
