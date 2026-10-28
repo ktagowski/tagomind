@@ -1,0 +1,80 @@
+{{ define "main" }}
+{{ $typeAccents := dict "Conference" "oklch(0.62 0.13 255)" "Workshop" "oklch(0.6 0.15 300)" "Journal" "oklch(0.6 0.1 168)" "Datasets & Benchmarks" "oklch(0.63 0.13 32)" "Demo" "oklch(0.62 0.14 200)" }}
+{{ $pub := dict }}
+{{ range hugo.Data.publications }}{{ if eq .slug $.Params.pub }}{{ $pub = . }}{{ end }}{{ end }}
+{{ $acc := or (index $typeAccents (or $pub.type "")) "var(--brand)" }}
+<article class="workspace pub-page" style="--field: {{ $acc | safeCSS }}">
+  <a class="link-arrow mb-6 inline-flex" href="{{ "/publications/" | relLangURL }}">
+    <span class="rotate-180">{{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</span> {{ i18n "all_publications" }}
+  </a>
+
+  <div class="grid gap-10 lg:grid-cols-[minmax(0,1fr)_17rem]">
+    <div class="min-w-0">
+      <div class="page-head fx-rise">
+        <div class="flex flex-wrap items-center gap-2">
+          {{ with $pub.venue }}<span class="badge badge-venue">{{ . }}</span>{{ end }}
+          {{ with $pub.type }}<span class="badge badge-type" data-type="{{ . | lower | replaceRE "[^a-z0-9]+" "-" }}">{{ . }}</span>{{ end }}
+          {{ with $pub.year }}<span class="num text-sm text-subtle">{{ . }}</span>{{ end }}
+        </div>
+        <h1 class="pub-page-title">{{ or $pub.title .Title }}</h1>
+        {{ with $pub.authors }}<p class="text-base text-muted-foreground">{{ . | safeHTML }}</p>{{ end }}
+        {{ with .Params.lead }}<p class="lead">{{ . }}</p>{{ end }}
+      </div>
+
+      <div class="mt-6 flex flex-wrap items-center gap-2.5">
+        {{ partial "pub-links.html" (dict "links" $pub.links "primary" true) }}
+        {{ with $pub.bibtex }}<button type="button" class="btn btn-sm" data-bibtex-toggle aria-expanded="false">{{ partial "icon.html" (dict "name" "quote" "class" "size-4") }} BibTeX</button>{{ end }}
+      </div>
+      {{ with $pub.bibtex }}
+      <div class="bibtex-block mt-3" hidden>
+        <button type="button" class="bibtex-copy" data-bibtex-copy>{{ partial "icon.html" (dict "name" "code" "class" "size-3.5") }} <span>Copy</span></button>
+        <pre class="bibtex-pre"><code>{{ . }}</code></pre>
+      </div>
+      {{ end }}
+
+      <div class="prose-ink mt-9 fx-scroll-soft">
+        {{ .Content }}
+      </div>
+    </div>
+
+    <aside class="flex flex-col gap-4 lg:sticky lg:top-20 lg:self-start">
+      <div class="panel flex flex-col divide-y divide-border">
+        {{ with $pub.venue }}<div class="p-4"><div class="text-[11px] uppercase tracking-wider text-subtle">{{ i18n "venue_label" }}</div><div class="mt-1 text-sm">{{ . }}</div></div>{{ end }}
+        {{ with $pub.type }}<div class="p-4"><div class="text-[11px] uppercase tracking-wider text-subtle">{{ i18n "type_label" }}</div><div class="mt-1 text-sm">{{ . }}</div></div>{{ end }}
+        {{ with $pub.year }}<div class="p-4"><div class="text-[11px] uppercase tracking-wider text-subtle">{{ i18n "year_label" }}</div><div class="num mt-1 text-sm">{{ . }}</div></div>{{ end }}
+        {{ with $pub.links }}
+        <div class="p-4">
+          <div class="text-[11px] uppercase tracking-wider text-subtle">{{ i18n "resources_label" }}</div>
+          <ul class="mt-2 flex flex-col gap-1.5 text-sm">
+            {{ with .pdf }}<li><a class="link-arrow" href="{{ . | relURL }}" target="_blank" rel="noopener">PDF {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-3.5") }}</a></li>{{ end }}
+            {{ with .anthology }}<li><a class="link-arrow" href="{{ . }}" target="_blank" rel="noopener">ACL Anthology {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-3.5") }}</a></li>{{ end }}
+            {{ with .doi }}<li><a class="link-arrow" href="{{ . }}" target="_blank" rel="noopener">DOI {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-3.5") }}</a></li>{{ end }}
+            {{ with .code }}<li><a class="link-arrow" href="{{ . }}" target="_blank" rel="noopener">Code {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-3.5") }}</a></li>{{ end }}
+            {{ with .docs }}<li><a class="link-arrow" href="{{ . }}" target="_blank" rel="noopener">Documentation {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-3.5") }}</a></li>{{ end }}
+            {{ with .poster }}<li><a class="link-arrow" href="{{ . | relURL }}" target="_blank" rel="noopener">Poster {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-3.5") }}</a></li>{{ end }}
+            {{ with .video }}<li><a class="link-arrow" href="{{ . | relURL }}" target="_blank" rel="noopener">Demo video {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-3.5") }}</a></li>{{ end }}
+            {{ with .dataset }}<li><a class="link-arrow" href="{{ . }}" target="_blank" rel="noopener">Dataset {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-3.5") }}</a></li>{{ end }}
+            {{ with .leaderboard }}<li><a class="link-arrow" href="{{ . }}" target="_blank" rel="noopener">Leaderboard {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-3.5") }}</a></li>{{ end }}
+          </ul>
+        </div>
+        {{ end }}
+      </div>
+    </aside>
+  </div>
+
+  <nav class="mt-14 grid gap-3 border-t border-border pt-6 sm:grid-cols-2">
+    {{ with .NextInSection }}
+      <a class="panel group flex flex-col gap-1 p-4 transition hover:border-border-strong" href="{{ .RelPermalink }}">
+        <span class="text-xs text-subtle">{{ i18n "newer_paper" }}</span>
+        <span class="font-display font-medium">{{ .Title }}</span>
+      </a>
+    {{ else }}<span></span>{{ end }}
+    {{ with .PrevInSection }}
+      <a class="panel group flex flex-col items-end gap-1 p-4 text-right transition hover:border-border-strong" href="{{ .RelPermalink }}">
+        <span class="text-xs text-subtle">{{ i18n "older_paper" }}</span>
+        <span class="font-display font-medium">{{ .Title }}</span>
+      </a>
+    {{ end }}
+  </nav>
+</article>
+{{ end }}

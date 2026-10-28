@@ -30,7 +30,7 @@
   "author" (dict "@id" (printf "%s#person" site.BaseURL))
 -}}
 {{- $graph := slice $person $site -}}
-{{- if eq .Section "publications" -}}
+{{- if and (eq .Section "publications") (not .IsPage) -}}
   {{- range hugo.Data.publications -}}
     {{- $authors := slice -}}
     {{- range split (.authors | plainify) ", " }}{{ $authors = $authors | append (dict "@type" "Person" "name" .) }}{{ end -}}
@@ -39,5 +39,16 @@
     {{- with .links }}{{ with .pdf }}{{ $art = merge $art (dict "url" (. | absURL)) }}{{ end }}{{ with .doi }}{{ $art = merge $art (dict "sameAs" .) }}{{ end }}{{ end -}}
     {{- $graph = $graph | append $art -}}
   {{- end -}}
+{{- end -}}
+{{- if and (eq .Section "publications") .IsPage -}}
+  {{- $page := . -}}
+  {{- range hugo.Data.publications -}}{{- if eq .slug $page.Params.pub -}}
+    {{- $authors := slice -}}
+    {{- range split (.authors | plainify) ", " }}{{ $authors = $authors | append (dict "@type" "Person" "name" .) }}{{ end -}}
+    {{- $art := dict "@type" "ScholarlyArticle" "@id" (printf "%s#article" $page.Permalink) "headline" .title "name" .title "author" $authors "datePublished" (string .year) "isPartOf" (dict "@type" "Periodical" "name" .venue) "inLanguage" "en" "url" $page.Permalink "mainEntityOfPage" $page.Permalink -}}
+    {{- with .summary }}{{ $art = merge $art (dict "abstract" .) }}{{ end -}}
+    {{- with .links }}{{ $same := slice }}{{ with .pdf }}{{ $same = $same | append (. | absURL) }}{{ end }}{{ with .doi }}{{ $same = $same | append . }}{{ end }}{{ with .anthology }}{{ $same = $same | append . }}{{ end }}{{ if $same }}{{ $art = merge $art (dict "sameAs" $same) }}{{ end }}{{ end -}}
+    {{- $graph = $graph | append $art -}}
+  {{- end -}}{{- end -}}
 {{- end -}}
 <script type="application/ld+json">{{ (dict "@context" "https://schema.org" "@graph" $graph) | jsonify | safeJS }}</script>

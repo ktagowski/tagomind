@@ -163,7 +163,7 @@
   {{/* Featured = significance, not recency: the NeurIPS benchmark outranks a newer ICCS paper. */}}
   {{ $featured := where . "featured" true }}
   <div class="fx-scroll mt-8 grid gap-4 lg:grid-cols-3">
-    {{ range first 3 (cond (gt (len $featured) 0) $featured .) }}
+    {{ range first 3 (cond (gt (len $featured) 0) $featured .) }}{{ $pub := . }}
       {{ $acc := or (index $typeAccents .type) "var(--brand)" }}
       <article class="pub-card" style="--field: {{ $acc | safeCSS }}">
         <div class="mb-3 flex items-start justify-between gap-2">
@@ -173,7 +173,8 @@
           </div>
           <span class="num shrink-0 pt-0.5 text-sm text-subtle">{{ .year }}</span>
         </div>
-        <h3 class="text-lg font-semibold leading-snug">{{ .title }}</h3>
+        {{ $pg := site.GetPage (printf "/publications/%s" .slug) }}
+        <h3 class="text-lg font-semibold leading-snug">{{ with $pg }}<a class="pub-title-link" href="{{ .RelPermalink }}">{{ $pub.title }}</a>{{ else }}{{ .title }}{{ end }}</h3>
         <p class="mt-2.5 text-sm text-muted-foreground clamp-2">{{ .authors | safeHTML }}</p>
         {{ with .summary }}<p class="mt-2 text-sm text-subtle clamp-3">{{ . }}</p>{{ end }}
         {{ with .links }}{{ with .pdf }}<a class="link-arrow mt-auto pt-4" href="{{ . | relURL }}" target="_blank" rel="noopener">PDF {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-4") }}</a>{{ end }}{{ end }}

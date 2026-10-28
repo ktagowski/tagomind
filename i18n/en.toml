@@ -140,3 +140,14 @@ other = "Built with Hugo"
 other = "Lost in the graph"
 [e404_body]
 other = "This node doesn't exist, or it migrated to another cluster."
+
+[read_summary]
+other = "Read the one-pager"
+[type_label]
+other = "Type"
+[resources_label]
+other = "Resources"
+[newer_paper]
+other = "Newer paper"
+[older_paper]
+other = "Older paper"

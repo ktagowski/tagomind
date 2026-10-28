@@ -26,6 +26,7 @@ content/
   about.md             # bio, expertise, timeline
   services.md          # offerings + engagement process
   projects/*.md        # one page per project (role, status, fields, tech)
+  publications/*.md    # one-pager per paper; `pub:` keys the entry in data/publications.yaml by slug
 data/
   publications.yaml    # publication list; `featured: true` → homepage teaser
   fields.yaml          # field taxonomy → Explorer chips + card accent hues
@@ -42,7 +43,7 @@ layouts/home.llms.txt  # → /llms.txt, plain-text site summary for LLM crawlers
 ### Editing content
 
 - **New project**: add `content/projects/<slug>.md` with `fields`, `role`, `status` (use `Live` / `Active` / `Library` / `Published`), `impact`, and optional `featured: true` (surfaces it in the footer).
-- **New publication**: append to `data/publications.yaml`; set `featured: true` only for headline venues — the homepage shows the first three featured entries. `type` is one of `Conference` / `Workshop` / `Journal` / `Datasets & Benchmarks` / `Demo`; `links` may hold `pdf`, `code`, `poster`, `video`, `docs`, `dataset`, `leaderboard`, `doi` (site-relative paths such as `/papers/x.pdf` work, with files under `static/papers/`).
+- **New publication**: append to `data/publications.yaml` with a unique `slug`, then add `content/publications/<slug>.md` (front matter `pub: <slug>`, `lead`, `description`; body = abstract + highlights) for its one-pager; set `featured: true` only for headline venues — the homepage shows the first three featured entries. `type` is one of `Conference` / `Workshop` / `Journal` / `Datasets & Benchmarks` / `Demo`; `links` may hold `pdf`, `code`, `poster`, `video`, `docs`, `dataset`, `leaderboard`, `doi` (site-relative paths such as `/papers/x.pdf` work, with files under `static/papers/`).
 - **Roles / affiliations**: edit `data/groups.yaml`; it feeds both the homepage credibility band and the About "Research groups" section.
 
 ## Deployment

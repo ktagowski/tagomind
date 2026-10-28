@@ -2,6 +2,7 @@
 # Newest first. Authors: wrap "K. Tagowski" in <strong> for emphasis.
 # Under-review / preprint-only entries are intentionally excluded.
 - title: "Schematize: An Agentic System for Generating and Refining Information-Extraction Schemas for Legal Research"
+  slug: "schematize"
   authors: "A. Sawczyn, J. Binkowski, <strong>K. Tagowski</strong>, Ł. Augustyniak, B. Kaczmarek-Templin, T. Kajdanowicz"
   venue: "EMNLP 2026 Demo"
   type: "Demo"
@@ -9,35 +10,53 @@
   year: 2026
   summary: "An open-source multi-agent system that turns a researcher's problem statement into a validated information-extraction schema: a clarification dialogue elicits expert intent, criteria-based and data-grounded loops refine the schema against real rulings, and a chat lets the expert post-edit it. Evaluated with legal professionals via an expert-question coverage protocol, and released as a pip-installable Python package."
   links:
-    pdf: "/papers/schematize-emnlp2026.pdf"
+    pdf: "https://aclanthology.org/2026.emnlp-demos.66.pdf"
+    anthology: "https://aclanthology.org/2026.emnlp-demos.66/"
     code: "https://github.com/pwr-ai/schematize"
     poster: "/papers/schematize-emnlp2026-poster.pdf"
     video: "/papers/schematize-emnlp2026-demo.mp4"
     docs: "https://pwr-ai.github.io/schematize/"
   bibtex: |
-    @inproceedings{sawczyn2026schematize,
+    @inproceedings{sawczyn-etal-2026-schematize,
       title     = {Schematize: An Agentic System for Generating and Refining Information-Extraction Schemas for Legal Research},
       author    = {Sawczyn, Albert and Binkowski, Jakub and Tagowski, Kamil and Augustyniak, {\L}ukasz and Kaczmarek-Templin, Berenika and Kajdanowicz, Tomasz},
       booktitle = {Proceedings of the 2026 Conference on Empirical Methods in Natural Language Processing: System Demonstrations},
-      year      = {2026}
+      month     = oct,
+      year      = {2026},
+      address   = {Budapest, Hungary},
+      publisher = {Association for Computational Linguistics},
+      url       = {https://aclanthology.org/2026.emnlp-demos.66/},
+      pages     = {696--705}
     }
 
 - title: "Factual State Discovery Benchmark: Evaluating Fact Elicitation in Polish Tax Law"
+  slug: "fsdbench"
   authors: "M. Bystroński, <strong>K. Tagowski</strong>, D. Janiak, J. Farganus, Ł. Augustyniak, M. Kajdanowicz, T. Kajdanowicz"
   venue: "ACL 2026 SRW"
   type: "Conference"
   featured: true
   year: 2026
   summary: "A benchmark for conversational fact elicitation in Polish tax law: 500 official tax-interpretation narratives decomposed into 32,874 validated atomic facts, evaluated with a discovery-through-dialogue protocol. Even the best model recovers under half the facts on hard cases after 50 turns."
+  links:
+    pdf: "https://aclanthology.org/2026.acl-srw.114.pdf"
+    anthology: "https://aclanthology.org/2026.acl-srw.114/"
+    doi: "https://doi.org/10.18653/v1/2026.acl-srw.114"
   bibtex: |
-    @inproceedings{bystronski2026factual,
-      title     = {Factual State Discovery Benchmark: Evaluating Fact Elicitation in Polish Tax Law},
+    @inproceedings{bystronski-etal-2026-factual,
+      title     = {Factual State Discovery Benchmark: Evaluating Fact Elicitation in {P}olish Tax Law},
       author    = {Bystro\'nski, Mateusz and Tagowski, Kamil and Janiak, Denis and Farganus, Julia and Augustyniak, {\L}ukasz and Kajdanowicz, Monika and Kajdanowicz, Tomasz},
-      booktitle = {Proceedings of the 64th Annual Meeting of the Association for Computational Linguistics: Student Research Workshop},
-      year      = {2026}
+      booktitle = {Proceedings of the 64th Annual Meeting of the Association for Computational Linguistics (Volume 4: Student Research Workshop)},
+      month     = jul,
+      year      = {2026},
+      address   = {San Diego, California, United States},
+      publisher = {Association for Computational Linguistics},
+      url       = {https://aclanthology.org/2026.acl-srw.114/},
+      doi       = {10.18653/v1/2026.acl-srw.114},
+      pages     = {1262--1279}
     }
 
 - title: "Bridging AI and Law: A Scalable Multi-Agent Platform for Quantitative Legal Analytics Across Millions of Documents"
+  slug: "bridging-ai-and-law"
   authors: "Ł. Augustyniak, <strong>K. Tagowski</strong>, A. Szymczak, J. Binkowski, A. Sawczyn, M. Skibiński, D. Janiak, M. Bystroński, G. Piotrowski, M. Bernaczyk, K. Kamiński, T. Kajdanowicz"
   venue: "AILaw 2026"
   type: "Workshop"
@@ -55,6 +74,7 @@
     }
 
 - title: "RAFEN: Regularized Alignment Framework for Embeddings of Nodes"
+  slug: "rafen"
   authors: "<strong>K. Tagowski</strong>, P. Bielak, J. Binkowski, T. Kajdanowicz"
   venue: "ICCS 2023"
   type: "Conference"
@@ -63,6 +83,7 @@
   links:
     doi: "https://doi.org/10.1007/978-3-031-35995-8_25"
     pdf: "https://arxiv.org/abs/2303.01926"
+    code: "https://github.com/graphml-lab-pwr/rafen"
   bibtex: |
     @inproceedings{tagowski2023rafen,
       title     = {{RAFEN}: Regularized Alignment Framework for Embeddings of Nodes},
@@ -73,6 +94,7 @@
     }
 
 - title: "This is the way: designing and compiling LEPISZCZE, a comprehensive NLP benchmark for Polish"
+  slug: "lepiszcze"
   authors: "Ł. Augustyniak, <strong>K. Tagowski</strong>, A. Sawczyn, D. Janiak, R. Bartusiak, A. Szymczak, A. Janz, P. Szymański, M. Wątroba, M. Morzy, T. Kajdanowicz, M. Piasecki"
   venue: "NeurIPS 2022"
   type: "Datasets & Benchmarks"
@@ -92,6 +114,7 @@
     }
 
 - title: "FILDNE: A Framework for Incremental Learning of Dynamic Networks Embeddings"
+  slug: "fildne"
   authors: "P. Bielak, <strong>K. Tagowski</strong>, M. Falkiewicz, T. Kajdanowicz, N. V. Chawla"
   venue: "Knowledge-Based Systems"
   type: "Journal"
@@ -109,6 +132,7 @@
     }
 
 - title: "Embedding Alignment Methods in Dynamic Networks"
+  slug: "embedding-alignment-dynamic-networks"
   authors: "<strong>K. Tagowski</strong>, P. Bielak, T. Kajdanowicz"
   venue: "ICCS 2021"
   type: "Conference"
@@ -126,6 +150,7 @@
     }
 
 - title: "Incremental Learning in Dynamic Networks for Node Classification"
+  slug: "incremental-learning-dynamic-networks"
   authors: "T. Kajdanowicz, <strong>K. Tagowski</strong>, M. Falkiewicz, P. Kazienko"
   venue: "ENIC 2017"
   type: "Conference"

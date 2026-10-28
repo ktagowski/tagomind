@@ -1,0 +1,14 @@
+{{- /* Buttons for a publication's links. Usage: partial "pub-links.html" (dict "links" .links "primary" true) */ -}}
+{{- $l := .links -}}
+{{- $primary := .primary -}}
+{{- with $l -}}
+{{ with .pdf }}<a class="btn btn-sm{{ if $primary }} btn-primary{{ end }}" href="{{ . | relURL }}" target="_blank" rel="noopener">{{ partial "icon.html" (dict "name" "paper" "class" "size-4") }} PDF</a>{{ end }}
+{{ with .anthology }}<a class="btn btn-sm" href="{{ . }}" target="_blank" rel="noopener">{{ partial "icon.html" (dict "name" "external" "class" "size-4") }} ACL Anthology</a>{{ end }}
+{{ with .code }}<a class="btn btn-sm" href="{{ . }}" target="_blank" rel="noopener">{{ partial "icon.html" (dict "name" "code" "class" "size-4") }} Code</a>{{ end }}
+{{ with .poster }}<a class="btn btn-sm" href="{{ . | relURL }}" target="_blank" rel="noopener">{{ partial "icon.html" (dict "name" "grid" "class" "size-4") }} Poster</a>{{ end }}
+{{ with .video }}<a class="btn btn-sm" href="{{ . | relURL }}" target="_blank" rel="noopener">{{ partial "icon.html" (dict "name" "play" "class" "size-4") }} Demo video</a>{{ end }}
+{{ with .docs }}<a class="btn btn-sm" href="{{ . }}" target="_blank" rel="noopener">{{ partial "icon.html" (dict "name" "globe" "class" "size-4") }} Docs</a>{{ end }}
+{{ with .dataset }}<a class="btn btn-sm" href="{{ . }}" target="_blank" rel="noopener">{{ partial "icon.html" (dict "name" "dataset" "class" "size-4") }} Dataset</a>{{ end }}
+{{ with .leaderboard }}<a class="btn btn-sm" href="{{ . }}" target="_blank" rel="noopener">{{ partial "icon.html" (dict "name" "globe" "class" "size-4") }} Leaderboard</a>{{ end }}
+{{ with .doi }}<a class="btn btn-sm" href="{{ . }}" target="_blank" rel="noopener">{{ partial "icon.html" (dict "name" "external" "class" "size-4") }} DOI</a>{{ end }}
+{{- end -}}
