@@ -1,5 +1,7 @@
 ---
 title: "Flat Explorer"
+description: "Flat Explorer: an AI-assisted flat hunting app by Kamil Tagowski that scores apartment listings, summarizes visits and compares options side by side."
+seoTitle: "Flat Explorer · AI-assisted flat hunting app · Kamil Tagowski"
 date: 2026-01-01
 draft: false
 logo: "img/logos/flat-explorer.svg"

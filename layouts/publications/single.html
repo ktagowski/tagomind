@@ -42,11 +42,19 @@
         {{ with $pub.venue }}<div class="p-4"><div class="text-[11px] uppercase tracking-wider text-subtle">{{ i18n "venue_label" }}</div><div class="mt-1 text-sm">{{ . }}</div></div>{{ end }}
         {{ with $pub.type }}<div class="p-4"><div class="text-[11px] uppercase tracking-wider text-subtle">{{ i18n "type_label" }}</div><div class="mt-1 text-sm">{{ . }}</div></div>{{ end }}
         {{ with $pub.year }}<div class="p-4"><div class="text-[11px] uppercase tracking-wider text-subtle">{{ i18n "year_label" }}</div><div class="num mt-1 text-sm">{{ . }}</div></div>{{ end }}
+        {{ with .Params.project }}{{ with site.GetPage (printf "/projects/%s" .) }}
+        <div class="p-4">
+          <div class="text-[11px] uppercase tracking-wider text-subtle">{{ i18n "project_label" }}</div>
+          <a class="link-arrow mt-1 text-sm" href="{{ .RelPermalink }}">{{ .Title }} {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-3.5") }}</a>
+          {{ with .Params.summary }}<div class="mt-1 text-xs text-subtle">{{ . }}</div>{{ end }}
+        </div>
+        {{ end }}{{ end }}
         {{ with $pub.links }}
         <div class="p-4">
           <div class="text-[11px] uppercase tracking-wider text-subtle">{{ i18n "resources_label" }}</div>
           <ul class="mt-2 flex flex-col gap-1.5 text-sm">
             {{ with .pdf }}<li><a class="link-arrow" href="{{ . | relURL }}" target="_blank" rel="noopener">PDF {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-3.5") }}</a></li>{{ end }}
+            {{ with .arxiv }}<li><a class="link-arrow" href="{{ . }}" target="_blank" rel="noopener">arXiv {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-3.5") }}</a></li>{{ end }}
             {{ with .anthology }}<li><a class="link-arrow" href="{{ . }}" target="_blank" rel="noopener">ACL Anthology {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-3.5") }}</a></li>{{ end }}
             {{ with .doi }}<li><a class="link-arrow" href="{{ . }}" target="_blank" rel="noopener">DOI {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-3.5") }}</a></li>{{ end }}
             {{ with .code }}<li><a class="link-arrow" href="{{ . }}" target="_blank" rel="noopener">Code {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-3.5") }}</a></li>{{ end }}

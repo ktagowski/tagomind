@@ -51,6 +51,16 @@
           <div class="mt-2 flex flex-wrap gap-1.5">{{ range . }}<span class="tag">{{ . }}</span>{{ end }}</div>
         </div>
         {{ end }}
+        {{ with .Params.papers }}
+        <div class="p-4">
+          <div class="text-[11px] uppercase tracking-wider text-subtle">{{ i18n "papers_label" }}</div>
+          <ul class="mt-2 flex flex-col gap-2 text-sm">
+            {{ range $slug := . }}{{ range hugo.Data.publications }}{{ if eq .slug $slug }}{{ $pub := . }}{{ with site.GetPage (printf "/publications/%s" $slug) }}
+            <li><a class="link-arrow" href="{{ .RelPermalink }}">{{ .Title }} {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-3.5") }}</a><div class="mt-0.5 text-xs text-subtle">{{ $pub.venue }}</div></li>
+            {{ end }}{{ end }}{{ end }}{{ end }}
+          </ul>
+        </div>
+        {{ end }}
       </div>
     </aside>
   </div>

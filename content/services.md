@@ -1,10 +1,11 @@
 ---
 title: "Work with me"
+seoTitle: "AI consulting: Legal & Tax AI, NLP and LLMs · Kamil Tagowski"
 date: 2026-10-28
 sitemap:
   priority: 0.7
 layout: "services"
-description: "AI consulting and engineering by Kamil Tagowski, PhD: Legal & Tax AI and applied NLP/LLM systems, with shipped production systems behind every offer."
+description: "Independent AI consulting by Kamil Tagowski, PhD: legal and tax AI, retrieval-augmented generation, information extraction and LLM agents, proven in production."
 lead: "Consulting and hands-on engineering, focused on two areas, both backed by systems running in production."
 niches:
   - title: "Legal & Tax AI"

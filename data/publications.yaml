@@ -11,6 +11,7 @@
   summary: "An open-source multi-agent system that turns a researcher's problem statement into a validated information-extraction schema: a clarification dialogue elicits expert intent, criteria-based and data-grounded loops refine the schema against real rulings, and a chat lets the expert post-edit it. Evaluated with legal professionals via an expert-question coverage protocol, and released as a pip-installable Python package."
   links:
     pdf: "https://aclanthology.org/2026.emnlp-demos.66.pdf"
+    arxiv: "https://arxiv.org/abs/2609.22209"
     anthology: "https://aclanthology.org/2026.emnlp-demos.66/"
     code: "https://github.com/pwr-ai/schematize"
     poster: "/papers/schematize-emnlp2026-poster.pdf"
@@ -82,7 +83,8 @@
   summary: "A regularized framework for aligning node embeddings across snapshots of a dynamic graph, improving the stability of temporal representations."
   links:
     doi: "https://doi.org/10.1007/978-3-031-35995-8_25"
-    pdf: "https://arxiv.org/abs/2303.01926"
+    pdf: "https://arxiv.org/pdf/2303.01926"
+    arxiv: "https://arxiv.org/abs/2303.01926"
     code: "https://github.com/graphml-lab-pwr/rafen"
   bibtex: |
     @inproceedings{tagowski2023rafen,
@@ -103,6 +105,7 @@
   summary: "A comprehensive, reproducible benchmark for Polish NLP spanning 14 diverse tasks, with a public leaderboard and pre-computed embeddings."
   links:
     pdf: "https://proceedings.neurips.cc/paper_files/paper/2022/file/890b206ebb79e550f3988cb8db936f42-Paper-Datasets_and_Benchmarks.pdf"
+    arxiv: "https://arxiv.org/abs/2211.13112"
     leaderboard: "https://lepiszcze.clarin-pl.eu/"
     dataset: "https://huggingface.co/clarin-pl"
   bibtex: |

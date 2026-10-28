@@ -1,9 +1,10 @@
 ---
 title: "TagoMind · Kamil Tagowski, PhD"
+seoTitle: "Kamil Tagowski, PhD · NLP & Legal AI researcher, consultant"
 date: 2026-10-28
 sitemap:
   priority: 1.0
-description: "Kamil Tagowski (PhD), researcher and engineer in graph representation learning, NLP, and computer vision. Published benchmarks, production legal-AI systems, and AI consulting."
+description: "Kamil Tagowski, PhD: NLP and legal AI researcher at Wrocław Tech and independent AI consultant. Papers at NeurIPS, ACL and EMNLP; legal AI in production."
 hero:
   eyebrow: "Kamil Tagowski · PhD"
   role: "PhD · NLP, Vision & Graph ML"

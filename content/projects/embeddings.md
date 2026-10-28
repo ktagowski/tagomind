@@ -1,5 +1,8 @@
 ---
 title: "CLARIN-PL Embeddings"
+description: "CLARIN-PL Embeddings: a transformer-based Python library for Polish NLP: text classification, sequence labeling and embeddings; the engine behind LEPISZCZE."
+seoTitle: "CLARIN-PL Embeddings · Polish NLP library · Kamil Tagowski"
+papers: ["lepiszcze"]
 date: 2022-01-01
 draft: false
 logo: "img/logos/clarin-pl.png"

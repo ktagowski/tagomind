@@ -1,5 +1,7 @@
 ---
 title: "Finance AI"
+description: "Finance AI: an applied finance-AI research group at Wrocław University of Science and Technology within OdysAI, founded and led by Kamil Tagowski."
+seoTitle: "Finance AI · applied finance-AI research group, Wrocław Tech"
 date: 2026-06-01
 draft: false
 logo: "img/logos/finance-ai.svg"

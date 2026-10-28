@@ -1,5 +1,6 @@
 ---
 title: "FILDNE"
+seoTitle: "FILDNE: incremental dynamic network embeddings (KBS 2022)"
 date: 2022-01-01
 pub: "fildne"
 description: "One-page summary of FILDNE (Knowledge-Based Systems, 2022): incremental learning of dynamic network embeddings that reuses any static embedding method."
@@ -16,4 +17,4 @@ Representation learning on graphs has emerged as a powerful mechanism to automat
 - **Alignment plus convex combination.** Per-timestep embeddings are aligned and merged into a single representation with a learned convex combination, instead of retraining on the full history.
 - **Cheaper and competitive.** Up to 6x less memory and 50x less compute than contemporary dynamic-graph methods on seven real-world datasets, with gains of up to 19 pp AUC on link prediction and 33 pp mAP on graph reconstruction.
 
-Published in Knowledge-Based Systems, volume 236 (2022), with Nitesh V. Chawla of the University of Notre Dame.
+Published in Knowledge-Based Systems, volume 236 (2022), with Nitesh V. Chawla of the University of Notre Dame. It builds on the [embedding alignment study](/publications/embedding-alignment-dynamic-networks/) and the [incremental node classification](/publications/incremental-learning-dynamic-networks/) work, and is followed by [RAFEN](/publications/rafen/).

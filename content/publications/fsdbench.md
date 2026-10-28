@@ -1,5 +1,7 @@
 ---
 title: "FSDBench"
+seoTitle: "FSDBench: fact elicitation in Polish tax law (ACL 2026 SRW)"
+project: "ai-tax"
 date: 2026-07-01
 pub: "fsdbench"
 description: "One-page summary of the Factual State Discovery Benchmark (ACL 2026 SRW): can a language model elicit all relevant facts from a taxpayer through dialogue?"

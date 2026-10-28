@@ -1,5 +1,7 @@
 ---
 title: "Unite! Researcher Discovery"
+description: "Unite! Researcher Discovery: a semantic search and visualization platform over 200k+ researcher profiles across nine European universities."
+seoTitle: "Unite! Researcher Discovery · semantic researcher search"
 date: 2026-01-01
 draft: false
 year: 2026

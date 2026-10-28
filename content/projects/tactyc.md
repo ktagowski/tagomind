@@ -1,5 +1,6 @@
 ---
 title: "TACTYC"
+seoTitle: "TACTYC · AI that generates and edits game maps"
 date: 2026-06-01
 draft: false
 icon: "compass"

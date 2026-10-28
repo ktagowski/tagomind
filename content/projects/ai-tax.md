@@ -1,5 +1,7 @@
 ---
 title: "AI-Tax"
+seoTitle: "AI-Tax · Polish tax & legal AI platform · Kamil Tagowski"
+papers: ["fsdbench", "bridging-ai-and-law"]
 date: 2025-01-01
 draft: false
 logo: "img/logos/ai-tax.svg"

@@ -1,10 +1,11 @@
 ---
 title: "About"
+seoTitle: "About Kamil Tagowski · AI researcher and consultant, Wrocław"
 date: 2026-10-28
 sitemap:
   priority: 0.8
 layout: "about"
-description: "Kamil Tagowski, PhD, postdoc and AI engineer in graph representation learning, NLP, and computer vision at Wrocław University of Science and Technology."
+description: "Kamil Tagowski, PhD: postdoctoral researcher in NLP and graph learning at Wrocław Tech and independent AI consultant for legal, tax and document AI."
 expertise:
   - title: "Natural Language Processing"
     icon: "sparkle"

@@ -1,5 +1,8 @@
 ---
 title: "JuDDGES"
+description: "JuDDGES: an EU-funded platform for NLP analysis of judicial decisions across Poland and England & Wales, with LLM extraction, evaluation and annotation tools."
+seoTitle: "JuDDGES · NLP for judicial decisions, Poland & England"
+papers: ["schematize", "bridging-ai-and-law"]
 date: 2024-01-01
 draft: false
 logo: "img/logos/juddges.svg"

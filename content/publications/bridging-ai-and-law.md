@@ -1,5 +1,7 @@
 ---
 title: "Bridging AI and Law"
+seoTitle: "Bridging AI and Law: legal analytics at scale (AILaw 2026)"
+project: "ai-tax"
 date: 2026-05-01
 pub: "bridging-ai-and-law"
 description: "One-page summary of Bridging AI and Law (AILaw 2026): a production-scale multi-agent platform for quantitative legal analytics across millions of documents."

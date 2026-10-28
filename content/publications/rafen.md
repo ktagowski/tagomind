@@ -1,8 +1,9 @@
 ---
 title: "RAFEN"
+seoTitle: "RAFEN: aligned node embeddings for dynamic graphs (ICCS 2023)"
 date: 2023-07-01
 pub: "rafen"
-description: "One-page summary of RAFEN (ICCS 2023): a regularized alignment framework that learns comparable node embeddings across snapshots of a dynamic graph during training."
+description: "RAFEN (ICCS 2023): a regularized alignment framework that learns comparable node embeddings across snapshots of a dynamic graph during training."
 lead: "Node embeddings of a changing graph drift between snapshots, so they are usually aligned after the fact. RAFEN moves alignment into the training objective, which makes any embedding method produce comparable vectors across time without a post-processing step."
 ---
 
@@ -16,4 +17,4 @@ Learning representations of nodes has been a crucial area of the graph machine l
 - **Method-agnostic.** The framework wraps any node embedding method rather than replacing it, and several variants of the regularizer are proposed.
 - **Evaluated on six real-world datasets.** RAFEN matches or beats post-hoc alignment while removing the extra processing step.
 
-Published at the International Conference on Computational Science (ICCS) 2023. A follow-up to the embedding alignment study below and to FILDNE.
+Published at the International Conference on Computational Science (ICCS) 2023. A follow-up to the [embedding alignment study](/publications/embedding-alignment-dynamic-networks/) and to [FILDNE](/publications/fildne/).

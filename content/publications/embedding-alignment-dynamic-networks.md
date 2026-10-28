@@ -1,8 +1,9 @@
 ---
 title: "Embedding Alignment Methods in Dynamic Networks"
+seoTitle: "Embedding alignment methods for dynamic networks (ICCS 2021)"
 date: 2021-06-16
 pub: "embedding-alignment-dynamic-networks"
-description: "One-page summary of Embedding Alignment Methods in Dynamic Networks (ICCS 2021): nine alignment techniques for snapshot embeddings, evaluated on link prediction and graph reconstruction."
+description: "Embedding Alignment Methods in Dynamic Networks (ICCS 2021): nine alignment techniques for snapshot embeddings, tested on link prediction and reconstruction."
 lead: "When a dynamic graph is embedded snapshot by snapshot, the embeddings of consecutive windows live in different coordinate systems. This paper compares nine ways to align them and shows that alignment alone lifts downstream performance by up to 11 percentage points."
 ---
 
@@ -16,4 +17,4 @@ In recent years, dynamic graph embedding has attracted a lot of attention due to
 - **Nine alignment techniques compared** on real-world datasets, using link prediction and graph reconstruction as downstream tasks.
 - **Alignment pays off.** Aligning Node2vec embeddings improves downstream performance by up to 11 percentage points over the unaligned baseline.
 
-Published at the International Conference on Computational Science (ICCS) 2021. This study motivated FILDNE and RAFEN, which build the alignment step into the embedding framework itself.
+Published at the International Conference on Computational Science (ICCS) 2021. This study motivated [FILDNE](/publications/fildne/) and [RAFEN](/publications/rafen/), which build the alignment step into the embedding framework itself.

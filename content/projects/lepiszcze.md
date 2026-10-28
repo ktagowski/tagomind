@@ -1,5 +1,8 @@
 ---
 title: "LEPISZCZE"
+description: "LEPISZCZE: a 14-task NLP benchmark for Polish with unified evaluation infrastructure and a public leaderboard, published at NeurIPS 2022."
+seoTitle: "LEPISZCZE · Polish NLP benchmark (NeurIPS 2022) · project"
+papers: ["lepiszcze"]
 date: 2022-01-01
 draft: false
 logo: "img/logos/clarin-pl.png"

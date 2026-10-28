@@ -3,6 +3,7 @@
 {{- $primary := .primary -}}
 {{- with $l -}}
 {{ with .pdf }}<a class="btn btn-sm{{ if $primary }} btn-primary{{ end }}" href="{{ . | relURL }}" target="_blank" rel="noopener">{{ partial "icon.html" (dict "name" "paper" "class" "size-4") }} PDF</a>{{ end }}
+{{ with .arxiv }}<a class="btn btn-sm" href="{{ . }}" target="_blank" rel="noopener">{{ partial "icon.html" (dict "name" "external" "class" "size-4") }} arXiv</a>{{ end }}
 {{ with .anthology }}<a class="btn btn-sm" href="{{ . }}" target="_blank" rel="noopener">{{ partial "icon.html" (dict "name" "external" "class" "size-4") }} ACL Anthology</a>{{ end }}
 {{ with .code }}<a class="btn btn-sm" href="{{ . }}" target="_blank" rel="noopener">{{ partial "icon.html" (dict "name" "code" "class" "size-4") }} Code</a>{{ end }}
 {{ with .poster }}<a class="btn btn-sm" href="{{ . | relURL }}" target="_blank" rel="noopener">{{ partial "icon.html" (dict "name" "grid" "class" "size-4") }} Poster</a>{{ end }}

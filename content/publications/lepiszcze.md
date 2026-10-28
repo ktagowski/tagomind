@@ -1,5 +1,7 @@
 ---
 title: "LEPISZCZE"
+seoTitle: "LEPISZCZE: a comprehensive Polish NLP benchmark (NeurIPS 2022)"
+project: "lepiszcze"
 date: 2022-11-28
 pub: "lepiszcze"
 description: "One-page summary of LEPISZCZE (NeurIPS 2022 Datasets and Benchmarks): a comprehensive, reproducible NLP benchmark for Polish with a public leaderboard."

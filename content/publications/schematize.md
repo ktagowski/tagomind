@@ -1,8 +1,10 @@
 ---
 title: "Schematize"
+seoTitle: "Schematize: agentic schema generation, EMNLP 2026 demo"
+project: "juddges"
 date: 2026-10-01
 pub: "schematize"
-description: "One-page summary of Schematize (EMNLP 2026 System Demonstrations): an agentic system that turns a legal research question into a validated information-extraction schema."
+description: "Schematize (EMNLP 2026 System Demonstrations): an agentic system that turns a legal research question into a validated information-extraction schema."
 lead: "Empirical legal research starts with a schema: which fields to pull out of thousands of rulings. Schematize makes an LLM agent team design, criticize, and ground that schema against real documents, with the legal expert in the loop, before any large-scale extraction begins."
 ---
 
