@@ -16,6 +16,8 @@ npm run build      # production build → public/
 
 Append `?still=1` to any page URL to freeze all animations at their end state (used for screenshots), and `?theme=dark` / `?theme=light` to force a theme. Without a stored choice the site follows `prefers-color-scheme`; the toggle persists in `localStorage`.
 
+Motion rules and the current motion review live in [`docs/motion.md`](docs/motion.md). Read it before adding or changing any animation.
+
 > Dev-server quirk: when adding a new partial together with new component CSS, Hugo's deferred Tailwind build can serve stale styles — restart `hugo server` if new classes don't apply.
 
 ## Structure
