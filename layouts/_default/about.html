@@ -9,8 +9,8 @@
       </div>
       <div class="flex items-center gap-2 border-t border-border p-3">{{ partial "social-links.html" (dict "size" "size-[1.05rem]") }}</div>
     </div>
-    <div class="fx-rise">
-      <h1 class="vt-title">{{ site.Params.author }}, {{ site.Params.authorTitle }}</h1>
+    <div class="page-head !block fx-rise">
+      <h1 class="vt-title">{{ partial "title-words.html" (printf "%s, %s" site.Params.author site.Params.authorTitle) }}</h1>
       <p class="lead mt-3">{{ site.Params.role }}</p>
       <p class="mt-2 text-sm text-subtle">{{ site.Params.affiliation }} · {{ site.Params.location }}</p>
       <p class="mt-1.5 text-sm text-subtle">Founder &amp; Lead of <a class="font-medium text-muted-foreground underline decoration-1 underline-offset-2 transition-colors hover:text-foreground" href="{{ "/projects/finance-ai/" | relURL }}">Finance AI</a>, a research group at Wrocław Tech, within <a class="font-medium text-muted-foreground underline decoration-1 underline-offset-2 transition-colors hover:text-foreground" href="https://odysai.pl" target="_blank" rel="noopener">OdysAI</a>.</p>
@@ -27,7 +27,7 @@
     <h2>Research groups</h2>
     <div class="mt-7 grid gap-x-10 gap-y-6 sm:grid-cols-3">
       {{ range . }}
-      <div class="border-t border-border pt-5">
+      <div class="border-t border-border pt-5 fx-scroll-soft">
         {{ if .url }}
         <a class="font-display text-lg font-[560] tracking-[-0.01em] transition-colors hover:text-brand" href="{{ .url }}"{{ if hasPrefix .url "http" }} target="_blank" rel="noopener"{{ end }}>{{ .org }} <span class="inline-block align-middle text-subtle">{{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-3.5") }}</span></a>
         {{ else }}
@@ -46,7 +46,7 @@
     <h2>{{ i18n "expertise" }}</h2>
     <div class="exp-grid mt-7">
       {{ range . }}
-        <div class="exp-row">
+        <div class="exp-row fx-scroll-soft">
           <h3>{{ .title }}</h3>
           <p>{{ .summary }}</p>
         </div>

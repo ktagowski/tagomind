@@ -20,7 +20,7 @@
           {{ with .Params.status }}<span class="badge{{ if eq . "Live" }} badge-live{{ else }} badge-status{{ end }}">{{ . }}</span>{{ end }}
           {{ range .Params.fields }}<span class="tag">{{ . }}</span>{{ end }}
         </div>
-        <h1 class="vt-title">{{ .Title }}</h1>
+        <h1 class="vt-title">{{ partial "title-words.html" .Title }}</h1>
         {{ with .Params.summary }}<p class="lead">{{ . }}</p>{{ end }}
       </div>
 
@@ -34,7 +34,7 @@
       </div>
       {{ end }}
 
-      <div class="prose-ink mt-9">
+      <div class="prose-ink mt-9 fx-scroll-soft">
         {{ .Content }}
       </div>
     </div>

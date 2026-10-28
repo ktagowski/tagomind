@@ -146,6 +146,25 @@
     var sprNode = null, sprPulse = null, blend = "lighter", t = 0;
     var edgeSet = new Set(), nb_i = [], nb_d = [], cn_i = [], cn_d = [];
     var mouse = { x: 0, y: 0, px: -1, py: -1, on: false };
+    // Keep-out: the network frames the hero copy instead of running through it. The ellipse is
+    // measured from the real hero blocks (headline → buttons), so it follows any layout or font size.
+    var keepEls = (function () {
+      var h = document.querySelector(".hero-title");
+      if (!h || !h.parentNode) return [];
+      return Array.prototype.filter.call(h.parentNode.children, function (el) { return !el.classList.contains("hero-halo"); });
+    })();
+    var keep = null;
+    function measureKeep() {
+      if (!keepEls.length) { keep = null; return; }
+      var l = Infinity, tp = Infinity, r = -Infinity, b = -Infinity;
+      keepEls.forEach(function (el) {
+        var q = el.getBoundingClientRect();
+        if (!q.width || !q.height) return;
+        l = Math.min(l, q.left); tp = Math.min(tp, q.top); r = Math.max(r, q.right); b = Math.max(b, q.bottom);
+      });
+      if (!isFinite(l)) { keep = null; return; }
+      keep = { cx: (l + r) / 2, cy: (tp + b) / 2, rx: (r - l) / 2 + 70, ry: (b - tp) / 2 + 60 };
+    }
 
     function makeGlow(rgb, soft) {
       var s = 64, oc = document.createElement("canvas");
@@ -387,6 +406,22 @@
         ctx.fillStyle = "rgba(" + pal.node[0] + "," + pal.node[1] + "," + pal.node[2] + "," + coreA.toFixed(3) + ")";
         ctx.beginPath(); ctx.arc(p.dx, p.dy, 0.75 + p.z * 0.55 + prox * 0.7, 0, 6.2832); ctx.fill();
       }
+
+      // ── Keep-out: erase a soft ellipse behind the hero copy ──
+      if ((t & 15) === 1) measureKeep();
+      if (keep && keep.cy + keep.ry > 0) {
+        ctx.save();
+        ctx.globalCompositeOperation = "destination-out";
+        ctx.translate(keep.cx, keep.cy);
+        ctx.scale(1, keep.ry / keep.rx);
+        var kg = ctx.createRadialGradient(0, 0, 0, 0, 0, keep.rx);
+        kg.addColorStop(0, "rgba(0,0,0,1)");
+        kg.addColorStop(0.72, "rgba(0,0,0,0.96)");
+        kg.addColorStop(1, "rgba(0,0,0,0)");
+        ctx.fillStyle = kg;
+        ctx.beginPath(); ctx.arc(0, 0, keep.rx, 0, 6.2832); ctx.fill();
+        ctx.restore();
+      }
       ctx.globalCompositeOperation = "source-over";
     }
 
@@ -409,7 +444,10 @@
     }
 
     resize();
+    measureKeep();
     scrollFade();
+    window.addEventListener("scroll", measureKeep, { passive: true });
+    window.addEventListener("resize", measureKeep);
     // Re-measure the moment layout actually gives the canvas its real size (deferred CSS,
     // font swaps, orientation changes) — not just on window resize events.
     if ("ResizeObserver" in window) {
@@ -686,6 +724,7 @@
     if (reduceMotion || /[?&]still=1/.test(location.search)) return;
     var research = document.querySelector(".home-research");
     var rows = Array.prototype.slice.call(document.querySelectorAll(".home-research-row"));
+    var stage = Array.prototype.slice.call(document.querySelectorAll(".home-research-stage .stage-item"));
     if (!rows.length) return;
     var framePending = false;
     function clamp(value) { return Math.max(0, Math.min(1, value)); }
@@ -702,7 +741,11 @@
           nearest = row; nearestDistance = distance;
         }
       });
-      rows.forEach(function (row) { row.classList.toggle("is-reading", row === nearest); });
+      rows.forEach(function (row, i) {
+        var reading = row === nearest;
+        row.classList.toggle("is-reading", reading);
+        if (reading && stage[i]) stage.forEach(function (it, j) { it.classList.toggle("is-active", j === i); });
+      });
       if (research) {
         var rect = research.getBoundingClientRect();
         research.style.setProperty("--research-read", clamp((height * .6 - rect.top) / Math.max(1, rect.height)).toFixed(3));
@@ -714,6 +757,73 @@
     window.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("resize", schedule);
     update();
+  }
+
+  /* ───────── Cursor spotlight on card surfaces ───────── */
+  function initSpotlight() {
+    if (reduceMotion || !window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+    var sel = ".card, .pub-card, .pub-row, .panel, .practice-card, .research-card, .media-frame, .facts, .research-collaborate, .collab-card";
+    var els = Array.prototype.slice.call(document.querySelectorAll(sel));
+    if (!els.length) return;
+    els.forEach(function (el) { el.classList.add("spot"); });
+    document.addEventListener("pointermove", function (e) {
+      var el = e.target.closest ? e.target.closest(".spot") : null;
+      if (!el) return;
+      var r = el.getBoundingClientRect();
+      el.style.setProperty("--mx", (e.clientX - r.left) + "px");
+      el.style.setProperty("--my", (e.clientY - r.top) + "px");
+    }, { passive: true });
+  }
+
+  /* ───────── Magnetic primary buttons ───────── */
+  function initMagnetic() {
+    if (reduceMotion || !window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+    document.querySelectorAll(".btn-primary, .practice-project-link").forEach(function (el) {
+      el.classList.add("is-magnetic");
+      el.addEventListener("pointermove", function (e) {
+        var r = el.getBoundingClientRect();
+        var dx = (e.clientX - (r.left + r.width / 2)) / r.width, dy = (e.clientY - (r.top + r.height / 2)) / r.height;
+        el.style.transform = "translate(" + (dx * 8).toFixed(1) + "px," + (dy * 6).toFixed(1) + "px)";
+      });
+      el.addEventListener("pointerleave", function () { el.style.transform = ""; });
+    });
+  }
+
+  /* ───────── Topbar compacts once the page is scrolled ───────── */
+  function initTopbar() {
+    var bar = document.querySelector(".topbar");
+    if (!bar) return;
+    var on = false;
+    function update() { var want = window.scrollY > 24; if (want !== on) { on = want; bar.classList.toggle("is-scrolled", on); } }
+    window.addEventListener("scroll", update, { passive: true });
+    update();
+  }
+
+  /* ───────── Facts strip: numbers count up when they enter the viewport ───────── */
+  function initCountUp() {
+    var els = Array.prototype.slice.call(document.querySelectorAll(".facts b, .numbers b"));
+    if (!els.length || reduceMotion || /[?&]still=1/.test(location.search) || !("IntersectionObserver" in window)) return;
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        io.unobserve(en.target);
+        var el = en.target, text = el.textContent.trim();
+        var m = text.match(/^([^0-9]*)([0-9][0-9,.]*)(.*)$/);
+        if (!m) return;
+        var prefix = m[1], suffix = m[3], raw = m[2], decimals = (raw.split(".")[1] || "").length;
+        var target = parseFloat(raw.replace(/,/g, ""));
+        if (isNaN(target)) return;
+        var grouped = raw.indexOf(",") >= 0, start = performance.now(), dur = 900;
+        function fmt(v) { var f = v.toFixed(decimals); return grouped ? f.replace(/\B(?=(\d{3})+(?!\d))/g, ",") : f; }
+        function tick(now) {
+          var t = Math.min(1, (now - start) / dur), e = 1 - Math.pow(1 - t, 3);
+          el.textContent = prefix + fmt(target * e) + suffix;
+          if (t < 1) requestAnimationFrame(tick); else el.textContent = text;
+        }
+        requestAnimationFrame(tick);
+      });
+    }, { threshold: 0.4 });
+    els.forEach(function (e) { io.observe(e); });
   }
 
   /* ─────────────────────────── boot ─────────────────────────────── */
@@ -731,6 +841,10 @@
     initPracticeSlider();
     initScrollScenes();
     initBibtex();
+    initSpotlight();
+    initMagnetic();
+    initTopbar();
+    initCountUp();
   });
 
   /* ───────── BibTeX disclosure + copy ───────── */

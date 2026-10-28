@@ -1,7 +1,7 @@
 {{ define "main" }}
 <div class="workspace">
   <div class="page-head fx-rise">
-    <h1>{{ .Title }}</h1>
+    <h1>{{ partial "title-words.html" .Title }}</h1>
     {{ with .Params.lead }}<p class="lead">{{ . }}</p>{{ end }}
     {{ if .IsTranslated }}
     <p class="mt-1 text-sm text-subtle">
@@ -50,7 +50,7 @@
     <h2>{{ i18n "how_we_work" }}</h2>
     <div class="mt-7 grid gap-x-10 gap-y-6 sm:grid-cols-3">
       {{ range . }}
-        <div class="border-t border-border pt-5">
+        <div class="border-t border-border pt-5 fx-scroll-soft">
           <span class="num font-display text-3xl italic font-[480] text-link">{{ .step }}</span>
           <h3 class="mt-2.5">{{ .title }}</h3>
           <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">{{ .summary }}</p>
@@ -61,7 +61,7 @@
   {{ end }}
 
   <section class="mt-14">
-    <div class="panel relative overflow-hidden p-8 text-center sm:p-12">
+    <div class="panel relative overflow-hidden p-8 text-center sm:p-12 fx-scroll-soft">
       <span class="absolute inset-0 bg-spotlight"></span>
       <div class="relative mx-auto max-w-2xl">
         <h2>{{ i18n "cta_title" }}</h2>

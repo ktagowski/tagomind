@@ -6,6 +6,7 @@ date: 2022-11-28
 pub: "lepiszcze"
 description: "One-page summary of LEPISZCZE (NeurIPS 2022 Datasets and Benchmarks): a comprehensive, reproducible NLP benchmark for Polish with a public leaderboard."
 lead: "Polish had a GLUE-style benchmark, but not one broad or reproducible enough to measure real progress. LEPISZCZE adds thirteen task-dataset pairs, eight of them new, with versioned data and tracked models, and documents the lessons as a blueprint for other low-resource languages."
+hook: "A broad, reproducible NLP benchmark for Polish, and a blueprint for other low-resource languages."
 problem: "Progress in Polish NLP requires evaluation across varied tasks with reproducible data and model comparisons."
 finding: "The first benchmark run compared five Polish language models across 13 task-dataset pairs, including eight newly released datasets. Data versioning and model tracking support reproducible extensions, and the paper records lessons for other low-resource languages."
 ---

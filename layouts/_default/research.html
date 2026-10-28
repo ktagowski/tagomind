@@ -20,7 +20,7 @@
     </div>
     <div class="research-cards">
       {{ range $i, $direction := .Params.directions }}
-      <article class="research-card research-card-{{ $i }}">
+      <article class="research-card research-card-{{ $i }} fx-scroll-soft">
         <div class="research-card-top"><span>{{ .label }}</span></div>
         <div class="research-visual" aria-hidden="true">
           {{ if eq $i 0 }}
@@ -47,7 +47,7 @@
     <a class="link-arrow" href="{{ "/publications/" | relURL }}">All publications {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</a>
   </div>
 
-  <section id="collaborate" class="research-collaborate" aria-labelledby="collaborate-title">
+  <section id="collaborate" class="research-collaborate fx-scroll-soft" aria-labelledby="collaborate-title">
     <div class="research-collaborate-copy">
       <span class="eyebrow">Let's work together</span>
       <h2 id="collaborate-title">A real problem.<br><em>A practical next step.</em></h2>

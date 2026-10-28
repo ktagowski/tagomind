@@ -214,3 +214,5 @@ other = "Cite"
 other = "Problem"
 [finding_label]
 other = "Key finding"
+[read_paper]
+other = "Read the paper"

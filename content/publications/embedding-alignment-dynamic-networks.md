@@ -5,6 +5,7 @@ date: 2021-06-16
 pub: "embedding-alignment-dynamic-networks"
 description: "Embedding Alignment Methods in Dynamic Networks (ICCS 2021): nine alignment techniques for snapshot embeddings, tested on link prediction and reconstruction."
 lead: "When a dynamic graph is embedded snapshot by snapshot, the embeddings of consecutive windows live in different coordinate systems. This paper compares nine ways to align them and shows that alignment alone lifts downstream performance by up to 11 percentage points."
+hook: "Nine ways to align snapshot embeddings, and up to 11 points gained from alignment alone."
 ---
 
 ## Abstract

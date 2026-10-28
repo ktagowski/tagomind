@@ -5,7 +5,7 @@
 {{ range $pubs }}{{ if not (in $years .year) }}{{ $years = $years | append .year }}{{ end }}{{ end }}
 <div class="workspace">
   <div class="page-head fx-rise">
-    <h1>{{ .Title }}</h1>
+    <h1>{{ partial "title-words.html" .Title }}</h1>
     {{ with .Params.lead }}<p class="lead">{{ . }}</p>{{ end }}
   </div>
 
@@ -19,7 +19,7 @@
         {{ range where $pubs "year" $y }}{{ $pub := . }}
           {{ $acc := or (index $typeAccents .type) "var(--brand)" }}
           {{ $pg := site.GetPage (printf "/publications/%s" .slug) }}
-          <article class="pub-row{{ if .featured }} has-figure{{ end }}" style="--field: {{ $acc | safeCSS }}">
+          <article class="pub-row fx-scroll-soft{{ if .featured }} has-figure{{ end }}" style="--field: {{ $acc | safeCSS }}">
             <div class="min-w-0">
               <div class="mb-2 flex flex-wrap items-center gap-2">
                 {{ with .venue }}<span class="badge badge-venue">{{ . }}</span>{{ end }}

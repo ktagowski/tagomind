@@ -5,6 +5,7 @@ date: 2023-07-01
 pub: "rafen"
 description: "RAFEN (ICCS 2023): a regularized alignment framework that learns comparable node embeddings across snapshots of a dynamic graph during training."
 lead: "Node embeddings of a changing graph drift between snapshots, so they are usually aligned after the fact. RAFEN moves alignment into the training objective, which makes any embedding method produce comparable vectors across time without a post-processing step."
+hook: "Graph embeddings that stay comparable over time, aligned during training instead of after it."
 ---
 
 ## Abstract

@@ -1,0 +1,2 @@
+{{- /* Split a plain-text title into word spans that reveal one by one (.tw). Usage: {{ partial "title-words.html" .Title }} */ -}}
+{{- range $i, $w := split (. | plainify) " " -}}{{ if $i }} {{ end }}<span class="tw" style="--i:{{ $i }}">{{ $w }}</span>{{- end -}}

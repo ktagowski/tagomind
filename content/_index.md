@@ -11,6 +11,17 @@ hero:
   headlineB: "for <em>complex information.</em>"
   lead: "I study how AI discovers missing facts and structures knowledge, from research to deployed systems."
   affiliation: "Postdoctoral Researcher · Wrocław University of Science and Technology"
+# Homepage numbers band (the paper count is computed from data/publications.yaml and shown first).
+numbers:
+  - value: "3M+"
+    label: "legal and tax documents indexed"
+    source: "AI-Tax platform, Wrocław Tech"
+  - value: "200k+"
+    label: "researcher profiles searchable"
+    source: "Unite! Researcher Discovery"
+  - value: "9"
+    label: "European universities connected"
+    source: "UNITE! alliance"
 practice:
   - page: "ai-tax"
     host: "ai4tax.pl"

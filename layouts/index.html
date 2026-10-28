@@ -1,33 +1,38 @@
 {{ define "main" }}
 {{ $hero := .Params.hero }}
 
-<!-- ───────────────── Hero ───────────────── -->
-<section class="workspace relative overflow-x-clip flex min-h-[min(68vh,36rem)] flex-col items-center justify-center text-center !pt-14 !pb-8">
+<!-- ───────────────── Hero: owns the whole first view ───────────────── -->
+<section class="hero-full workspace relative overflow-x-clip">
   <span class="hero-halo" aria-hidden="true"></span>
-  {{/* Headline words reveal one by one; <em>…</em> in the data marks the accented words. */}}
-  {{ $lines := slice ($hero.headlineA | default "Intelligence redefined.") }}
-  {{ with $hero.headlineB }}{{ $lines = $lines | append . }}{{ end }}
-  {{ $n := 0 }}{{ $inEm := false }}
-  <h1 class="hero-title text-[length:var(--t-display)] leading-[1.02]">
-    {{- range $li, $line := $lines -}}
-      {{- if gt $li 0 }}<br class="hidden sm:block"> {{ end -}}
-      {{- range $w := split $line " " -}}
-        {{- if hasPrefix $w "<em>" }}{{ $inEm = true }}{{ end -}}
-        {{- $word := $w | replaceRE "</?em>" "" -}}
-        <span class="hw{{ if $inEm }} is-em{{ end }}" style="--i:{{ $n }}">{{ $word }}</span>{{ " " }}
-        {{- if hasSuffix $w "</em>" }}{{ $inEm = false }}{{ end -}}
-        {{- $n = add $n 1 -}}
+  <div class="hero-main">
+    {{/* Headline words reveal one by one; <em>…</em> in the data marks the accented words. */}}
+    {{ $lines := slice ($hero.headlineA | default "Intelligence redefined.") }}
+    {{ with $hero.headlineB }}{{ $lines = $lines | append . }}{{ end }}
+    {{ $n := 0 }}{{ $inEm := false }}
+    <h1 class="hero-title text-[length:var(--t-display)] leading-[1.02]">
+      {{- range $li, $line := $lines -}}
+        {{- if gt $li 0 }}<br class="hidden sm:block"> {{ end -}}
+        {{- range $w := split $line " " -}}
+          {{- if hasPrefix $w "<em>" }}{{ $inEm = true }}{{ end -}}
+          {{- $word := $w | replaceRE "</?em>" "" -}}
+          <span class="hw{{ if $inEm }} is-em{{ end }}" style="--i:{{ $n }}">{{ $word }}</span>{{ " " }}
+          {{- if hasSuffix $w "</em>" }}{{ $inEm = false }}{{ end -}}
+          {{- $n = add $n 1 -}}
+        {{- end -}}
       {{- end -}}
-    {{- end -}}
-  </h1>
-  <p class="fx-hero mx-auto mt-6 max-w-xl text-base sm:text-lg leading-relaxed text-muted-foreground text-balance" style="--d:0s">{{ $hero.lead | default site.Params.tagline }}</p>
-  <p class="hero-who fx-hero mt-6" style="--d:.1s">
-    {{ with or site.Params.avatarSmall site.Params.avatar }}<img src="{{ . | relURL }}" alt="" loading="eager" width="96" height="96">{{ end }}
-    <span><b>{{ $hero.eyebrow | default site.Params.author }}</b> · {{ $hero.affiliation }}</span>
-  </p>
-  <div class="fx-hero mt-8 flex flex-wrap items-center justify-center gap-3" style="--d:.2s">
-    <a class="btn btn-primary" href="{{ "/research/" | relURL }}">Explore research {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</a>
-    <a class="btn btn-outline" href="{{ "/research/#collaborate" | relURL }}">Discuss your project</a>
+    </h1>
+    <p class="fx-hero mx-auto mt-6 max-w-xl text-base sm:text-lg leading-relaxed text-muted-foreground text-balance" style="--d:0s">{{ $hero.lead | default site.Params.tagline }}</p>
+    <p class="hero-who fx-hero mt-6" style="--d:.1s">
+      {{ with or site.Params.avatarSmall site.Params.avatar }}<img src="{{ . | relURL }}" alt="" loading="eager" width="96" height="96">{{ end }}
+      <span><b>{{ $hero.eyebrow | default site.Params.author }}</b><span class="hero-who-sep" aria-hidden="true"> · </span><span class="hero-who-role">{{ $hero.affiliation }}</span></span>
+    </p>
+    <div class="fx-hero mt-8 flex flex-wrap items-center justify-center gap-3" style="--d:.2s">
+      <a class="btn btn-primary" href="{{ "/research/" | relURL }}">Explore research {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</a>
+      <a class="btn btn-outline" href="{{ "/research/#collaborate" | relURL }}">Discuss your project</a>
+    </div>
+  </div>
+  <div class="hero-foot fx-hero" style="--d:.5s">
+    <a class="scroll-cue" href="#practice-title" aria-label="Scroll to selected projects">{{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</a>
   </div>
 </section>
 
@@ -65,6 +70,42 @@
   </div>
   <div class="practice-scroll-progress" aria-hidden="true"><span></span></div>
 </section>
+
+<!-- ───────────────── In numbers ───────────────── -->
+{{ $pubCount := len hugo.Data.publications }}
+<section class="workspace !pt-4" aria-label="In numbers">
+  <div class="numbers">
+    <div class="fx-scroll-soft"><b>{{ $pubCount }}</b><span>peer-reviewed papers</span><small>EMNLP, ACL, NeurIPS, ICCS, Knowledge-Based Systems</small></div>
+    {{ range .Params.numbers }}<div class="fx-scroll-soft"><b>{{ .value }}</b><span>{{ .label }}</span><small>{{ .source }}</small></div>{{ end }}
+  </div>
+</section>
+
+<!-- ───────────────── Watch it work: the paper with a real demo ───────────────── -->
+{{ $demo := dict }}
+{{ range hugo.Data.publications }}{{ if and (not $demo.slug) .media }}{{ if .media.video }}{{ $demo = . }}{{ end }}{{ end }}{{ end }}
+{{ with $demo.slug }}
+{{ $dpg := site.GetPage (printf "/publications/%s" .) }}
+<section class="workspace demo-section" aria-labelledby="demo-title" style="--field: oklch(0.62 0.14 200)">
+  <div class="demo-copy fx-scroll-soft">
+    <p class="demo-kicker">{{ $demo.venue }} · {{ partial "pub-type-label.html" $demo.type }}</p>
+    <h2 id="demo-title">Watch an agent team design a legal extraction schema</h2>
+    {{ with $dpg }}{{ with .Params.lead }}<p class="demo-lead">{{ . }}</p>{{ end }}{{ end }}
+    {{ with $demo.facts }}
+    <ul class="demo-facts">{{ range first 3 . }}<li><b>{{ .value }}</b> {{ .label }}</li>{{ end }}</ul>
+    {{ end }}
+    <div class="mt-7 flex flex-wrap items-center gap-3">
+      {{ with $dpg }}<a class="btn btn-primary" href="{{ .RelPermalink }}">{{ i18n "read_summary" }} {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</a>{{ end }}
+      {{ with $demo.links.code }}<a class="btn btn-outline" href="{{ . }}" target="_blank" rel="noopener">{{ partial "icon.html" (dict "name" "code" "class" "size-4") }} Code</a>{{ end }}
+    </div>
+  </div>
+  <figure class="media-frame demo-media fx-scroll-soft">
+    <video controls preload="none" playsinline poster="{{ $demo.media.video.poster | relURL }}" width="1280" height="720" aria-label="{{ $demo.media.video.caption }}">
+      <source src="{{ $demo.media.video.src | relURL }}" type="video/mp4">
+    </video>
+    <figcaption class="media-caption"><span>{{ $demo.media.video.caption }}</span>{{ with $demo.media.video.duration }}<span class="num">{{ . }}</span>{{ end }}</figcaption>
+  </figure>
+</section>
+{{ end }}
 
 <!-- ───────────────── Selected research ───────────────── -->
 {{ with hugo.Data.publications }}
@@ -110,6 +151,21 @@
     <span class="eyebrow">Research directions</span>
     <h2 id="home-research-title">Questions<br>I explore</h2>
     <a class="link-arrow" href="{{ "/research/" | relURL }}">Research &amp; collaboration {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-4") }}</a>
+    {{/* Stage: the figure of the direction currently being read, swapped by app.js as rows cross the viewport. */}}
+    {{ $typeAccents := dict "Demo" "oklch(0.62 0.14 200)" "Conference" "oklch(0.62 0.13 255)" "Workshop" "oklch(0.6 0.15 300)" "Journal" "oklch(0.6 0.1 168)" "Datasets & Benchmarks" "oklch(0.63 0.13 32)" }}
+    <div class="home-research-stage" aria-hidden="true">
+      {{ range $i, $d := .Params.directions }}
+        {{ $pg := site.GetPage $d.url }}
+        <div class="stage-item{{ if eq $i 0 }} is-active{{ end }}" data-stage="{{ $i }}">
+          {{ if and $pg (eq $pg.Section "publications") }}
+            {{ $pub := dict }}{{ range hugo.Data.publications }}{{ if eq .slug $pg.Params.pub }}{{ $pub = . }}{{ end }}{{ end }}
+            <div class="stage-figure" style="--field: {{ (or (index $typeAccents (or $pub.type "")) "var(--brand)") | safeCSS }}">{{ partial "pub-figure.html" (dict "pub" $pub "variant" "full") }}</div>
+          {{ else if $pg }}
+            {{ partial "project-study.html" (dict "page" $pg "variant" "thumb") }}
+          {{ end }}
+        </div>
+      {{ end }}
+    </div>
   </div>
   <div class="home-research-list">
     {{ range .Params.directions }}
@@ -121,13 +177,50 @@
   </div>
 </section>
 
-<section class="workspace !pt-0">
-  <div class="band fx-scroll-soft">
+<!-- ───────────────── Path ───────────────── -->
+{{ with site.GetPage "/about" }}{{ with .Params.timeline }}
+<section class="workspace" aria-labelledby="path-title">
+  <div class="section-head fx-scroll-soft">
     <div>
-      <h2>Need help with an applied AI problem?</h2>
-      <p>I also offer independent consulting in legal and document AI, NLP, and LLM systems.</p>
+      <h2 id="path-title">Path so far</h2>
+      <p>From language and graph research to platforms people use, and the groups that build them.</p>
     </div>
-    <a class="btn btn-outline" href="{{ "/services/" | relURL }}">Explore consulting {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</a>
+    <a class="link-arrow" href="{{ "/about/" | relURL }}">About me {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</a>
+  </div>
+  <ol class="path fx-scroll-soft">
+    {{ range . }}
+    <li{{ if eq .year "Now" }} class="is-now"{{ end }}>
+      <span class="path-year num">{{ .year }}</span>
+      <h3>{{ .title }}</h3>
+      <p class="path-place">{{ .place }}</p>
+      <p>{{ .summary }}</p>
+    </li>
+    {{ end }}
+  </ol>
+</section>
+{{ end }}{{ end }}
+
+<!-- ───────────────── Collaborate ───────────────── -->
+<section class="workspace" aria-labelledby="collab-title">
+  <h2 id="collab-title" class="fx-scroll-soft">Work together</h2>
+  <div class="collab-grid mt-8">
+    <article class="collab-card fx-scroll-soft">
+      <span class="collab-icon">{{ partial "icon.html" (dict "name" "graph" "class" "size-5") }}</span>
+      <h3>Research collaboration</h3>
+      <p>Joint papers and datasets, or a shared problem in information discovery, extraction, or evaluation. I lead the Finance AI group at Wrocław Tech and coordinate research on AI-Tax.</p>
+      <div class="collab-actions">
+        <a class="btn btn-primary" href="{{ "/research/#collaborate" | relURL }}">Propose a collaboration {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</a>
+      </div>
+    </article>
+    <article class="collab-card fx-scroll-soft">
+      <span class="collab-icon">{{ partial "icon.html" (dict "name" "briefcase" "class" "size-5") }}</span>
+      <h3>Consulting and engineering</h3>
+      <p>Legal and tax AI, retrieval and extraction over messy documents, and LLM agents with evaluation you can trust. From a short advisory call to a production system your team owns.</p>
+      <div class="collab-actions">
+        {{ with site.Params.booking }}<a class="btn btn-primary" href="{{ . }}" target="_blank" rel="noopener">{{ partial "icon.html" (dict "name" "calendar" "class" "size-4") }} {{ i18n "book_consultation" }}</a>{{ end }}
+        <a class="btn btn-outline" href="{{ "/services/" | relURL }}">See services</a>
+      </div>
+    </article>
   </div>
 </section>
 {{ end }}

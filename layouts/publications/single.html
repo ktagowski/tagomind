@@ -8,39 +8,59 @@
     <span class="rotate-180">{{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</span> {{ i18n "all_publications" }}
   </a>
 
+  {{- /* Page order: headline (short name + hook) → media → paper block (venue, official title, authors, summary, links).
+       The headline uses the paper's short name (.Title) whenever it differs from the official title;
+       papers without a short name show the official title as the headline and skip it in the paper block. */ -}}
+  {{ $full := or $pub.title .Title }}
+  {{ $name := $full }}
+  {{ if ne $full .Title }}{{ $name = .Title }}{{ end }}
+  {{ $single := eq $name $full }}
+  <header class="pub-head fx-rise">
+    <h1 class="pub-title{{ if $single }} is-single{{ end }}">
+      <span class="pub-name">{{ partial "title-words.html" $name }}</span>
+    </h1>
+    {{ with .Params.hook }}<p class="pub-hook">{{ . }}</p>{{ end }}
+    {{ with $pub.links }}{{ with .pdf }}
+    <a class="link-arrow pub-read" href="{{ . | relURL }}" target="_blank" rel="noopener">{{ i18n "read_paper" }} {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-3.5") }}</a>
+    {{ end }}{{ end }}
+  </header>
+
+  {{ partial "pub-media.html" (dict "pub" $pub) }}
+
   <div class="grid gap-10 lg:grid-cols-[minmax(0,1fr)_17rem]">
     <div class="min-w-0">
-      <div class="page-head fx-rise">
-        <div class="flex flex-wrap items-center gap-2">
-          {{ with $pub.venue }}<span class="badge badge-venue">{{ . }}</span>{{ end }}
-          {{ with $pub.type }}<span class="badge badge-type" data-type="{{ . | lower | replaceRE "[^a-z0-9]+" "-" }}">{{ partial "pub-type-label.html" . }}</span>{{ end }}
-          {{ with $pub.year }}<span class="num text-sm text-subtle">{{ . }}</span>{{ end }}
+      <section class="pub-paper"{{ if not $single }} aria-labelledby="paper-title"{{ end }}>
+        <p class="pub-kicker">
+          {{ with $pub.type }}<span class="pub-kicker-type">{{ partial "pub-type-label.html" . }}</span>{{ end }}
+          {{ with $pub.venue }}<span>{{ . }}</span>{{ end }}
+          {{ with $pub.year }}{{ if not (in (string $pub.venue) (string .)) }}<span class="num">{{ . }}</span>{{ end }}{{ end }}
+        </p>
+        {{ if not $single }}<h2 id="paper-title" class="paper-title">{{ $full }}</h2>{{ end }}
+        {{ with $pub.authors }}
+        <p class="pub-authors">{{ range $i, $a := split . ", " }}{{ if $i }}, {{ end }}<span>{{ $a | safeHTML }}</span>{{ end }}</p>
+        {{ end }}
+        {{ with .Params.lead }}<p class="pub-lead">{{ . }}</p>{{ end }}
+        {{ with $pub.links }}
+        <div class="pub-actions">
+          {{ partial "pub-links.html" (dict "links" . "primary" true) }}
         </div>
-        <h1 class="pub-title">{{ or $pub.title .Title }}</h1>
-        {{ with $pub.authors }}<p class="pub-authors">{{ . | safeHTML }}</p>{{ end }}
-        {{ with .Params.lead }}<p class="lead">{{ . }}</p>{{ end }}
-      </div>
-
-      {{ partial "pub-media.html" (dict "pub" $pub) }}
+        {{ end }}
+      </section>
 
       {{ with $pub.facts }}
-      <dl class="facts" aria-label="{{ i18n "at_a_glance" }}">
+      <dl class="facts fx-scroll-soft" aria-label="{{ i18n "at_a_glance" }}">
         {{ range . }}<div><dt class="sr-only">{{ .label }}</dt><dd><b>{{ .value }}</b><span>{{ .label }}</span></dd></div>{{ end }}
       </dl>
       {{ end }}
 
-      <div class="mt-6 flex flex-wrap items-center gap-2.5">
-        {{ partial "pub-links.html" (dict "links" $pub.links "primary" true) }}
-      </div>
-
       {{ if or .Params.problem .Params.finding }}
-      <div class="pub-brief mt-10">
+      <div class="pub-brief mt-10 fx-scroll-soft">
         {{ with .Params.problem }}<div><h2>{{ i18n "problem_label" }}</h2><p>{{ . | markdownify }}</p></div>{{ end }}
         {{ with .Params.finding }}<div><h2>{{ i18n "finding_label" }}</h2><p>{{ . | markdownify }}</p></div>{{ end }}
       </div>
       {{ end }}
 
-      <div class="prose-ink{{ if not (or .Params.problem .Params.finding) }} mt-10{{ end }}">
+      <div class="prose-ink fx-scroll-soft{{ if not (or .Params.problem .Params.finding) }} mt-10{{ end }}">
         {{ .Content }}
       </div>
     </div>
