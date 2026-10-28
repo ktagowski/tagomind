@@ -18,6 +18,7 @@ links:
   repo: "https://github.com/CLARIN-PL/embeddings"
   paper: "https://proceedings.neurips.cc/paper_files/paper/2022/file/890b206ebb79e550f3988cb8db936f42-Paper-Datasets_and_Benchmarks.pdf"
   dataset: "https://github.com/CLARIN-PL/LEPISZCZE"
+study: "embeddings"
 ---
 
 A Python library for transformer-based text processing and embeddings in Polish, built as the core component of the NeurIPS 2022 LEPISZCZE benchmark. It abstracts away model configuration and training boilerplate through composable pipelines.

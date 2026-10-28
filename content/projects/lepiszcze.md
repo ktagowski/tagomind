@@ -20,6 +20,7 @@ links:
   paper: "https://proceedings.neurips.cc/paper_files/paper/2022/file/890b206ebb79e550f3988cb8db936f42-Paper-Datasets_and_Benchmarks.pdf"
   site: "https://lepiszcze.clarin-pl.eu/"
   dataset: "https://lepiszcze.clarin-pl.eu/datasets/"
+study: "lepiszcze"
 ---
 
 LEPISZCZE is an NLP benchmark for Polish, published at NeurIPS 2022 (Datasets & Benchmarks track). The benchmark unifies evaluation across 14 distinct NLP tasks spanning sentiment analysis, named entity recognition, part-of-speech tagging, sequence labeling, and question answering.

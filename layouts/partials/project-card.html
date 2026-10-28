@@ -5,7 +5,7 @@
 {{- range hugo.Data.fields -}}{{- if eq .label $primary -}}{{- $color = .color -}}{{- end -}}{{- end -}}
 {{- $summary := $p.Params.summary | default $p.Summary -}}
 {{- $search := delimit (slice $p.Title $summary (delimit $fields " ") (delimit ($p.Params.tech | default slice) " ") ($p.Params.venue | default "")) " " -}}
-<a class="card js-card group fx-scroll-soft"
+<a class="card js-card group"
    href="{{ $p.RelPermalink }}"
    {{ with $color }}style="--field: {{ . | safeCSS }}"{{ end }}
    data-title="{{ $p.Title }}"
@@ -13,12 +13,9 @@
    data-fields="{{ delimit $fields "," }}"
    data-year="{{ $p.Params.year }}"
    data-featured="{{ $p.Params.featured | default false }}">
+  <div class="card-media">{{ partial "project-study.html" (dict "page" $p "variant" "thumb") }}</div>
   <div class="card-body">
     <div class="card-top">
-      <span class="card-logo">
-        {{ with $p.Params.logo }}<img src="{{ . | relURL }}" alt="{{ $p.Title }} logo" loading="lazy">
-        {{ else }}{{ partial "project-logo.html" (dict "title" $p.Title "color" (or $color "oklch(0.65 0.215 287)") "class" "size-full") }}{{ end }}
-      </span>
       <span class="card-headings">
         <h3 class="card-title">{{ $p.Title }}</h3>
         <span class="card-sub">

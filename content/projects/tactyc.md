@@ -9,6 +9,7 @@ fields: ["Computer Vision", "Generative AI"]
 role: "Coordinator & Co-author"
 status: "Active"
 summary: "Toss A Coin to A Cartographer. AI that generates and edits game maps: vision-language models read the terrain tile by tile, generative models redraw it."
+study: "tactyc"
 ---
 
 TACTYC (Toss A Coin to A Cartographer) is an active research project on AI for generating and editing game maps.

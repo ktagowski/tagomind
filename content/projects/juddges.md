@@ -18,6 +18,7 @@ tech: ["Python", "NLP", "Machine Learning", "DVC", "Hydra", "LLM-as-judge", "Act
 links:
   repo: "https://github.com/pwr-ai/JuDDGES"
   site: "https://juddges.augustyniak.ai/"
+study: "juddges"
 ---
 
 JuDDGES (Judicial Decision Data Gathering, Encoding, and Sharing) is an EU-funded collaborative platform that makes judicial decisions analyzable across different legal systems for empirical legal research. The project analyzes criminal court records from Poland and England & Wales, using NLP and human-in-the-loop techniques to extract structured data across jurisdictions.

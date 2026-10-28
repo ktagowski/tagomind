@@ -15,6 +15,7 @@ links:
 impact: 90
 featured: true
 summary: "A Polish tax & legal AI platform built at Wrocław Tech: AI search, chat with citations, and agentic extraction over tax interpretations and court judgments."
+study: "ai-tax"
 ---
 
 AI-Tax is a production platform for Polish **tax law** and the legal documents around it, built at Wrocław University of Science and Technology under a three-year research grant (2024–2027) co-financed by the European Union under the **FENG** programme (European Funds for Smart Economy 2021–2027). It runs on two tracks at once: a SaaS product used by tax and legal professionals, and applied research on legal NLP.

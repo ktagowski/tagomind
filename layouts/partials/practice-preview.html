@@ -1,21 +1,4 @@
-{{- $entry := .entry -}}
-{{- if $entry.screenshot -}}
-{{- $size := images.Config (printf "static/%s" $entry.screenshot) -}}
+{{- /* Homepage slider preview: the project's study panel. */ -}}
 <div class="practice-preview">
-  <div class="practice-orbit" aria-hidden="true"></div>
-  <a class="practice-capture" href="{{ $entry.site }}" target="_blank" rel="noopener" aria-label="Visit {{ .title }} at {{ $entry.host }}">
-    <div class="practice-capture-bar"><span class="practice-capture-dots" aria-hidden="true"><i></i><i></i><i></i></span><span>{{ $entry.host }}</span>{{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-3.5") }}</div>
-    <img src="{{ $entry.screenshot | relURL }}" alt="Screenshot of the {{ .title }} website" width="{{ $size.Width }}" height="{{ $size.Height }}" loading="lazy" decoding="async">
-  </a>
+  {{ partial "project-study.html" (dict "page" .page "variant" "card") }}
 </div>
-{{ else }}
-<div class="practice-preview practice-tactyc">
-  <div class="tactyc-study" aria-label="TACTYC research: vision-language understanding and generative map editing">
-    <span class="tactyc-kicker">Toss A Coin to A Cartographer</span>
-    <div class="tactyc-wordmark">TACTYC<span>↗</span></div>
-    <div class="tactyc-contours" aria-hidden="true"><svg viewBox="0 0 400 180" fill="none"><g stroke="currentColor" stroke-width="1"><path d="M-20 110C40 10 80 170 160 75S280 10 420 70M-20 125C40 25 80 185 160 90S280 25 420 85M-20 140C40 40 80 200 160 105S280 40 420 100M-20 155C40 55 80 215 160 120S280 55 420 115M-20 170C40 70 80 230 160 135S280 70 420 130M-20 95C40-5 80 155 160 60S280-5 420 55M-20 80C40-20 80 140 160 45S280-20 420 40"/></g><path d="m230 40 10 26-10-6-10 6z" fill="currentColor"/></svg></div>
-    <div class="tactyc-methods"><span>Understand terrain</span><span>Generate &amp; edit</span></div>
-    <span class="tactyc-caption">Vision-language &amp; generative models · Active research</span>
-  </div>
-</div>
-{{ end }}

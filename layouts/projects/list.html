@@ -1,7 +1,6 @@
 {{ define "main" }}
 <div class="workspace" id="explorer">
   <div class="page-head fx-rise">
-    <span class="eyebrow">{{ partial "icon.html" (dict "name" "folder" "class" "size-3.5") }} {{ i18n "the_explorer" }}</span>
     <h1>{{ .Title }}</h1>
     {{ with .Params.lead }}<p class="lead">{{ . }}</p>{{ end }}
   </div>

@@ -1,0 +1,45 @@
+# Project "studies": the printed-plate visual panel shown on the homepage slider, the project
+# page hero and the Explorer cards. Keyed by the `study:` front-matter value of a project.
+# `mark` is the short wordmark (the title is used when absent); `methods` are the two verbs
+# under the motif; `caption` is one line of status/context. Motifs live in
+# layouts/partials/project-study.html.
+tactyc:
+  kicker: "Toss A Coin to A Cartographer"
+  mark: "TACTYC"
+  methods: ["Understand terrain", "Generate & edit"]
+  caption: "Vision-language and generative models · active research"
+ai-tax:
+  kicker: "Polish tax interpretations and judgments"
+  mark: "AI-Tax"
+  methods: ["Search & cite", "Extract"]
+  caption: "Live platform · Wrocław Tech · FENG 2024–2027"
+juddges:
+  kicker: "Judicial decisions, two legal systems"
+  mark: "JuDDGES"
+  methods: ["Harmonize", "Extract & judge"]
+  caption: "EU-funded platform · Poland and England & Wales"
+unite-research-search:
+  kicker: "200k researcher profiles, nine universities"
+  mark: "Unite!"
+  methods: ["Hybrid search", "Visualize"]
+  caption: "Researcher discovery across the UNITE! alliance"
+flat-explorer:
+  kicker: "Listings scored against your criteria"
+  mark: "Flat Explorer"
+  methods: ["Score", "Compare"]
+  caption: "Live product · LLM agents end to end"
+lepiszcze:
+  kicker: "Thirteen tasks, five Polish language models"
+  mark: "LEPISZCZE"
+  methods: ["Benchmark", "Track"]
+  caption: "NeurIPS 2022 · public leaderboard"
+embeddings:
+  kicker: "CLARIN-PL"
+  mark: "Embeddings"
+  methods: ["Embed", "Classify"]
+  caption: "Polish NLP library · the engine behind LEPISZCZE"
+finance-ai:
+  kicker: "Research group at Wrocław Tech"
+  mark: "Finance AI"
+  methods: ["Model", "Apply"]
+  caption: "Founded 2026 · part of OdysAI"
