@@ -1,11 +1,10 @@
-{{- /* Paper media block: real video + poster where they exist, a designed figure otherwise.
+{{- /* Paper media: one item only. The demo video when the paper has one, the designed figure otherwise.
+     The poster PDF stays reachable from the link buttons and the sidebar.
      Usage: {{ partial "pub-media.html" (dict "pub" $pubData) }} */ -}}
 {{- $pub := .pub -}}
 {{- $m := $pub.media | default dict -}}
 {{- $hasVideo := and $m.video $m.video.src -}}
-{{- $hasPoster := and $m.poster $m.poster.src -}}
-{{- $two := or (and $hasVideo $hasPoster) (and (not $hasVideo) $hasPoster) -}}
-<div class="pub-media{{ if $two }} has-two{{ end }} fx-scroll-soft">
+<div class="pub-media{{ if $hasVideo }} is-video{{ end }} fx-scroll-soft">
   {{ if $hasVideo }}
   <figure class="media-frame">
     <video controls preload="metadata" playsinline{{ with $m.video.poster }} poster="{{ . | relURL }}"{{ end }} width="1280" height="720" aria-label="{{ $m.video.caption | default (i18n "watch_demo") }}">
@@ -17,15 +16,6 @@
   <figure class="media-frame">
     <div class="figure-wrap">{{ partial "pub-figure.html" (dict "pub" $pub "variant" "full") }}</div>
     {{ with $m.caption }}<figcaption class="media-caption"><span>{{ . }}</span></figcaption>{{ end }}
-  </figure>
-  {{ end }}
-  {{ if $hasPoster }}
-  <figure class="media-frame media-poster">
-    <a href="{{ $m.poster.src | relURL }}" target="_blank" rel="noopener" aria-label="{{ i18n "poster_label" }} (PDF)">
-      {{ with $m.poster.thumb }}<img src="{{ . | relURL }}" alt="" loading="lazy" decoding="async" width="{{ $m.poster.width | default 497 }}" height="{{ $m.poster.height | default 702 }}">{{ end }}
-      <span class="pdf-tag">PDF</span>
-    </a>
-    <figcaption class="media-caption"><span>{{ i18n "poster_label" }}</span>{{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-3.5 shrink-0") }}</figcaption>
   </figure>
   {{ end }}
 </div>

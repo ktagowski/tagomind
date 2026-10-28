@@ -163,7 +163,8 @@
         l = Math.min(l, q.left); tp = Math.min(tp, q.top); r = Math.max(r, q.right); b = Math.max(b, q.bottom);
       });
       if (!isFinite(l)) { keep = null; return; }
-      keep = { cx: (l + r) / 2, cy: (tp + b) / 2, rx: (r - l) / 2 + 70, ry: (b - tp) / 2 + 60 };
+      var sy = window.pageYOffset || 0;
+      keep = { cx: (l + r) / 2, cyDoc: (tp + b) / 2 + sy, rx: (r - l) / 2 + 70, ry: (b - tp) / 2 + 60 };
     }
 
     function makeGlow(rgb, soft) {
@@ -408,11 +409,12 @@
       }
 
       // ── Keep-out: erase a soft ellipse behind the hero copy ──
-      if ((t & 15) === 1) measureKeep();
-      if (keep && keep.cy + keep.ry > 0) {
+      if ((t & 63) === 1) measureKeep(); // headline settles after its entrance; re-measure occasionally, never per scroll
+      var kcy = keep ? keep.cyDoc - (window.pageYOffset || 0) : 0;
+      if (keep && kcy + keep.ry > 0) {
         ctx.save();
         ctx.globalCompositeOperation = "destination-out";
-        ctx.translate(keep.cx, keep.cy);
+        ctx.translate(keep.cx, kcy);
         ctx.scale(1, keep.ry / keep.rx);
         var kg = ctx.createRadialGradient(0, 0, 0, 0, 0, keep.rx);
         kg.addColorStop(0, "rgba(0,0,0,1)");
@@ -446,7 +448,6 @@
     resize();
     measureKeep();
     scrollFade();
-    window.addEventListener("scroll", measureKeep, { passive: true });
     window.addEventListener("resize", measureKeep);
     // Re-measure the moment layout actually gives the canvas its real size (deferred CSS,
     // font swaps, orientation changes) — not just on window resize events.
@@ -689,32 +690,7 @@
     if (prev) prev.addEventListener("click", function () { step(-1); });
     if (next) next.addEventListener("click", function () { step(1); });
     slider.addEventListener("scroll", update, { passive: true });
-    // One wheel gesture advances one project; release page scrolling at either end.
-    var wheelUntil = 0, wheelDirection = 0, wheelDistance = 0;
-    slider.addEventListener("wheel", function (event) {
-      if (event.ctrlKey || event.metaKey || event.shiftKey || Math.abs(event.deltaX) >= Math.abs(event.deltaY)) return;
-      var direction = event.deltaY > 0 ? 1 : -1;
-      var now = performance.now();
-      if (direction === wheelDirection && now < wheelUntil) {
-        event.preventDefault();
-        return;
-      }
-      var atStart = slider.scrollLeft <= 4;
-      var atEnd = slider.scrollLeft + slider.clientWidth >= slider.scrollWidth - 2;
-      if ((direction < 0 && atStart) || (direction > 0 && atEnd)) {
-        wheelDistance = 0;
-        return;
-      }
-      event.preventDefault();
-      if (direction !== wheelDirection) wheelDistance = 0;
-      wheelDirection = direction;
-      var unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? slider.clientWidth : 1;
-      wheelDistance += Math.abs(event.deltaY) * unit;
-      if (wheelDistance < 20) return;
-      wheelDistance = 0;
-      wheelUntil = now + (reduceMotion ? 250 : 650);
-      step(direction);
-    }, { passive: false });
+    // Vertical wheel always scrolls the page. The slider moves with arrows, sideways swipes and shift-wheel.
     window.addEventListener("resize", update);
     update();
   }
