@@ -6,19 +6,9 @@ date: 2026-10-01
 pub: "schematize"
 description: "Schematize (EMNLP 2026 System Demonstrations): an agentic system that turns a legal research question into a validated information-extraction schema."
 lead: "Empirical legal research starts with a schema: which fields to pull out of thousands of rulings. Schematize makes an LLM agent team design, criticize, and ground that schema against real documents, with the legal expert in the loop, before any large-scale extraction begins."
+problem: "Legal researchers need extraction schemas that capture their intent and can be populated from real rulings. Designing those schemas is an expertise-heavy bottleneck."
+finding: "Across seven tested model backbones, Schematize achieved the best or second-best expert-question coverage; on four, it surpassed average coverage between the experts themselves. The study evaluates legal research problems, so transfer to other domains remains a research question."
 ---
-
-## Problem
-
-Legal researchers need extraction schemas that capture their intent and can be populated from real rulings. Designing those schemas is an expertise-heavy bottleneck.
-
-## Key finding
-
-Across seven tested model backbones, Schematize achieved the best or second-best expert-question coverage; on four, it surpassed average coverage between the experts themselves. The study evaluates legal research problems, so transfer to other domains remains a research question.
-
-## Resources
-
-[Paper](https://aclanthology.org/2026.emnlp-demos.66/) · [Code](https://github.com/pwr-ai/schematize) · [Documentation](https://pwr-ai.github.io/schematize/) · [Poster](/papers/schematize-emnlp2026-poster.pdf) · [Demo video](/papers/schematize-emnlp2026-demo.mp4)
 
 ## Abstract
 

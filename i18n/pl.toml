@@ -95,3 +95,18 @@ other = "Nawigacja"
 other = "Badania"
 [research_collaborate]
 other = "Współpraca"
+
+[visit_site]
+other = "Zobacz stronę"
+[at_a_glance]
+other = "W skrócie"
+[watch_demo]
+other = "Nagranie demo"
+[poster_label]
+other = "Plakat konferencyjny"
+[cite_label]
+other = "Cytowanie"
+[problem_label]
+other = "Problem"
+[finding_label]
+other = "Główny wynik"

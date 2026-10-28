@@ -3,6 +3,27 @@
 # Under-review / preprint-only entries are intentionally excluded.
 - title: "Schematize: An Agentic System for Generating and Refining Information-Extraction Schemas for Legal Research"
   slug: "schematize"
+  media:
+    video:
+      src: "/papers/schematize-emnlp2026-demo.mp4"
+      poster: "/papers/schematize-demo-poster.jpg"
+      caption: "Two-minute demo: one real run, from idea to extraction"
+      duration: "1:59"
+    poster:
+      src: "/papers/schematize-emnlp2026-poster.pdf"
+      thumb: "/papers/schematize-poster-thumb.jpg"
+      width: 497
+      height: 702
+    figure: "schematize"
+  facts:
+    - value: "7"
+      label: "model backbones tested"
+    - value: "Top 2"
+      label: "expert-question coverage on every backbone"
+    - value: "4 of 7"
+      label: "backbones above expert-to-expert agreement"
+    - value: "MIT"
+      label: "pip-installable package and docs"
   authors: "A. Sawczyn, J. Binkowski, <strong>K. Tagowski</strong>, Ł. Augustyniak, B. Kaczmarek-Templin, T. Kajdanowicz"
   venue: "EMNLP 2026"
   type: "Demo"
@@ -32,6 +53,18 @@
 
 - title: "Factual State Discovery Benchmark: Evaluating Fact Elicitation in Polish Tax Law"
   slug: "fsdbench"
+  media:
+    figure: "fsdbench"
+    caption: "A discovery agent questions a simulated taxpayer; coverage is scored against validated atomic facts"
+  facts:
+    - value: "500"
+      label: "official tax-interpretation narratives"
+    - value: "32,874"
+      label: "validated atomic facts"
+    - value: "77%"
+      label: "facts recovered on easy cases, best model"
+    - value: "<49%"
+      label: "on hard cases after 50 turns"
   authors: "M. Bystroński, <strong>K. Tagowski</strong>, D. Janiak, J. Farganus, Ł. Augustyniak, M. Kajdanowicz, T. Kajdanowicz"
   venue: "ACL 2026 SRW"
   type: "Conference"
@@ -58,6 +91,16 @@
 
 - title: "Bridging AI and Law: A Scalable Multi-Agent Platform for Quantitative Legal Analytics Across Millions of Documents"
   slug: "bridging-ai-and-law"
+  media:
+    figure: "bridging-ai-and-law"
+    caption: "Retrieval over the full corpus, agents for aggregation, interpretable analytics for lawyers"
+  facts:
+    - value: "3M+"
+      label: "legal and tax documents indexed"
+    - value: "300M+"
+      label: "semantic vectors"
+    - value: "Multi"
+      label: "jurisdictions on one pipeline"
   authors: "Ł. Augustyniak, <strong>K. Tagowski</strong>, A. Szymczak, J. Binkowski, A. Sawczyn, M. Skibiński, D. Janiak, M. Bystroński, G. Piotrowski, M. Bernaczyk, K. Kamiński, T. Kajdanowicz"
   venue: "AILaw 2026"
   type: "Workshop"
@@ -76,6 +119,16 @@
 
 - title: "RAFEN: Regularized Alignment Framework for Embeddings of Nodes"
   slug: "rafen"
+  media:
+    figure: "rafen"
+    caption: "Alignment enters the training objective, so snapshot embeddings come out comparable"
+  facts:
+    - value: "6"
+      label: "real-world datasets"
+    - value: "Any"
+      label: "node embedding method can be wrapped"
+    - value: "0"
+      label: "post-processing steps"
   authors: "<strong>K. Tagowski</strong>, P. Bielak, J. Binkowski, T. Kajdanowicz"
   venue: "ICCS 2023"
   type: "Conference"
@@ -97,6 +150,18 @@
 
 - title: "This is the way: designing and compiling LEPISZCZE, a comprehensive NLP benchmark for Polish"
   slug: "lepiszcze"
+  media:
+    figure: "lepiszcze"
+    caption: "Thirteen task-dataset pairs, five Polish language models, one tracked leaderboard"
+  facts:
+    - value: "13"
+      label: "task-dataset pairs in the first run"
+    - value: "8"
+      label: "datasets released for the first time"
+    - value: "5"
+      label: "Polish language models compared"
+    - value: "Open"
+      label: "public leaderboard, versioned data"
   authors: "Ł. Augustyniak, <strong>K. Tagowski</strong>, A. Sawczyn, D. Janiak, R. Bartusiak, A. Szymczak, A. Janz, P. Szymański, M. Wątroba, M. Morzy, T. Kajdanowicz, M. Piasecki"
   venue: "NeurIPS 2022"
   type: "Datasets & Benchmarks"
@@ -118,6 +183,18 @@
 
 - title: "FILDNE: A Framework for Incremental Learning of Dynamic Networks Embeddings"
   slug: "fildne"
+  media:
+    figure: "fildne"
+    caption: "Per-timestep embeddings are aligned and merged with a learned convex combination"
+  facts:
+    - value: "6×"
+      label: "less memory"
+    - value: "50×"
+      label: "less compute"
+    - value: "+19 pp"
+      label: "AUC on link prediction"
+    - value: "+33 pp"
+      label: "mAP on graph reconstruction"
   authors: "P. Bielak, <strong>K. Tagowski</strong>, M. Falkiewicz, T. Kajdanowicz, N. V. Chawla"
   venue: "Knowledge-Based Systems"
   type: "Journal"
@@ -136,6 +213,14 @@
 
 - title: "Embedding Alignment Methods in Dynamic Networks"
   slug: "embedding-alignment-dynamic-networks"
+  media:
+    figure: "embedding-alignment-dynamic-networks"
+    caption: "Independently trained snapshot embeddings live in different coordinate systems until aligned"
+  facts:
+    - value: "9"
+      label: "alignment techniques compared"
+    - value: "+11 pp"
+      label: "downstream gain from alignment alone"
   authors: "<strong>K. Tagowski</strong>, P. Bielak, T. Kajdanowicz"
   venue: "ICCS 2021"
   type: "Conference"
@@ -154,6 +239,9 @@
 
 - title: "Incremental Learning in Dynamic Networks for Node Classification"
   slug: "incremental-learning-dynamic-networks"
+  media:
+    figure: "incremental-learning-dynamic-networks"
+    caption: "A node's state is forecast from the messages it receives, with the classifier updated incrementally"
   authors: "T. Kajdanowicz, <strong>K. Tagowski</strong>, M. Falkiewicz, P. Kazienko"
   venue: "ENIC 2017"
   type: "Conference"
