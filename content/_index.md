@@ -7,8 +7,8 @@ sitemap:
 description: "Kamil Tagowski, PhD, postdoctoral researcher at Wrocław Tech. Research in information discovery, agentic extraction, NLP and graph learning, with deployed legal AI."
 hero:
   eyebrow: "Kamil Tagowski, PhD"
-  headlineA: "Reliable AI for"
-  headlineB: "<em>complex information.</em>"
+  headlineA: "Reliable AI"
+  headlineB: "for <em>complex information.</em>"
   lead: "I study how AI discovers missing facts and structures knowledge, from research to deployed systems."
   affiliation: "Postdoctoral Researcher · Wrocław University of Science and Technology"
 practice:

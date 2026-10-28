@@ -4,15 +4,28 @@
 <!-- ───────────────── Hero ───────────────── -->
 <section class="workspace relative overflow-x-clip flex min-h-[min(68vh,36rem)] flex-col items-center justify-center text-center !pt-14 !pb-8">
   <span class="hero-halo" aria-hidden="true"></span>
-  <h1 class="fx-hero text-[length:var(--t-display)] leading-[1.02]">
-    {{ $hero.headlineA | default "Intelligence redefined." | safeHTML }}{{ with $hero.headlineB }}<br class="hidden sm:block"> {{ . | safeHTML }}{{ end }}
+  {{/* Headline words reveal one by one; <em>…</em> in the data marks the accented words. */}}
+  {{ $lines := slice ($hero.headlineA | default "Intelligence redefined.") }}
+  {{ with $hero.headlineB }}{{ $lines = $lines | append . }}{{ end }}
+  {{ $n := 0 }}{{ $inEm := false }}
+  <h1 class="hero-title text-[length:var(--t-display)] leading-[1.02]">
+    {{- range $li, $line := $lines -}}
+      {{- if gt $li 0 }}<br class="hidden sm:block"> {{ end -}}
+      {{- range $w := split $line " " -}}
+        {{- if hasPrefix $w "<em>" }}{{ $inEm = true }}{{ end -}}
+        {{- $word := $w | replaceRE "</?em>" "" -}}
+        <span class="hw{{ if $inEm }} is-em{{ end }}" style="--i:{{ $n }}">{{ $word }}</span>{{ " " }}
+        {{- if hasSuffix $w "</em>" }}{{ $inEm = false }}{{ end -}}
+        {{- $n = add $n 1 -}}
+      {{- end -}}
+    {{- end -}}
   </h1>
-  <p class="fx-hero mx-auto mt-6 max-w-xl text-base sm:text-lg leading-relaxed text-muted-foreground text-balance" style="animation-delay:.08s">{{ $hero.lead | default site.Params.tagline }}</p>
-  <p class="hero-who fx-hero mt-6" style="animation-delay:.14s">
+  <p class="fx-hero mx-auto mt-6 max-w-xl text-base sm:text-lg leading-relaxed text-muted-foreground text-balance" style="--d:0s">{{ $hero.lead | default site.Params.tagline }}</p>
+  <p class="hero-who fx-hero mt-6" style="--d:.1s">
     {{ with or site.Params.avatarSmall site.Params.avatar }}<img src="{{ . | relURL }}" alt="" loading="eager" width="96" height="96">{{ end }}
     <span><b>{{ $hero.eyebrow | default site.Params.author }}</b> · {{ $hero.affiliation }}</span>
   </p>
-  <div class="fx-hero mt-8 flex flex-wrap items-center justify-center gap-3" style="animation-delay:.2s">
+  <div class="fx-hero mt-8 flex flex-wrap items-center justify-center gap-3" style="--d:.2s">
     <a class="btn btn-primary" href="{{ "/research/" | relURL }}">Explore research {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</a>
     <a class="btn btn-outline" href="{{ "/research/#collaborate" | relURL }}">Discuss your project</a>
   </div>
@@ -20,7 +33,7 @@
 
 <!-- ───────────────── Selected projects ───────────────── -->
 <section class="workspace" aria-labelledby="practice-title">
-  <div class="section-head">
+  <div class="section-head fx-scroll-soft">
     <div>
       <h2 id="practice-title">Selected projects</h2>
       <p>Research platforms, experimental systems, and independent products.</p>
@@ -34,7 +47,7 @@
   <div id="practice-slider" class="practice-slider mt-8" role="region" aria-label="Selected projects" tabindex="0">
     {{ range $i, $entry := .Params.practice }}
     {{ with site.GetPage (printf "/projects/%s" .page) }}
-    <article class="practice-card" data-project="{{ $entry.page }}">
+    <article class="practice-card fx-scroll-soft" data-project="{{ $entry.page }}">
       <div class="practice-copy">
         <div class="practice-card-top"><span class="practice-category">{{ $entry.category }}</span><span class="practice-project-number num">{{ printf "%d of %d" (add $i 1) (len $.Params.practice) }}</span></div>
         <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
@@ -56,7 +69,7 @@
 <!-- ───────────────── Selected research ───────────────── -->
 {{ with hugo.Data.publications }}
 <section class="workspace">
-  <div class="section-head">
+  <div class="section-head fx-scroll-soft">
     <div>
       <h2>Selected research</h2>
       <p>{{ i18n "pubs_sub" }}</p>
@@ -69,7 +82,7 @@
     {{ range first 3 (cond (gt (len $featured) 0) $featured .) }}{{ $pub := . }}
       {{ $acc := or (index $typeAccents .type) "var(--brand)" }}
       {{ $pg := site.GetPage (printf "/publications/%s" .slug) }}
-      <article class="pub-card surface-hover flex flex-col overflow-hidden" style="--field: {{ $acc | safeCSS }}">
+      <article class="pub-card surface-hover fx-scroll-soft flex flex-col overflow-hidden" style="--field: {{ $acc | safeCSS }}">
         <div class="aspect-[16/7] border-b border-border">{{ partial "pub-figure.html" (dict "pub" $pub "variant" "thumb") }}</div>
         <div class="flex flex-1 flex-col p-5">
           <div class="mb-3 flex items-start justify-between gap-2">
@@ -87,20 +100,20 @@
       </article>
     {{ end }}
   </div>
-  <p class="mt-6 text-muted-foreground"><a class="link-arrow" href="{{ "/publications/rafen/" | relURL }}">RAFEN · Graph representation learning {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</a></p>
+  <p class="mt-6 text-muted-foreground fx-scroll-soft"><a class="link-arrow" href="{{ "/publications/rafen/" | relURL }}">RAFEN · Graph representation learning {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</a></p>
 </section>
 {{ end }}
 
 <!-- ───────────────── Research directions ───────────────── -->
 <section class="workspace home-research" aria-labelledby="home-research-title">
-  <div class="home-research-intro">
+  <div class="home-research-intro fx-scroll-soft">
     <span class="eyebrow">Research directions</span>
     <h2 id="home-research-title">Questions<br>I explore</h2>
     <a class="link-arrow" href="{{ "/research/" | relURL }}">Research &amp; collaboration {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-4") }}</a>
   </div>
   <div class="home-research-list">
     {{ range .Params.directions }}
-    <a class="home-research-row" href="{{ .url | relURL }}">
+    <a class="home-research-row fx-scroll-soft" href="{{ .url | relURL }}">
       <div><h3>{{ .title }}</h3><p>{{ .question }}</p><span class="home-research-evidence">{{ .evidence }}</span></div>
       <span class="home-research-arrow">{{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-5") }}</span>
     </a>
@@ -109,7 +122,7 @@
 </section>
 
 <section class="workspace !pt-0">
-  <div class="band">
+  <div class="band fx-scroll-soft">
     <div>
       <h2>Need help with an applied AI problem?</h2>
       <p>I also offer independent consulting in legal and document AI, NLP, and LLM systems.</p>

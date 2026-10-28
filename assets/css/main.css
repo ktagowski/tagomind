@@ -537,7 +537,12 @@
     color: var(--study-ink);
   }
   .study-mark > span { font-size: 0.6em; font-weight: 300; opacity: .8; }
-  .study-motif { flex: 1 1 auto; min-height: 5.5rem; display: grid; align-items: center; margin-block: 0.4rem; opacity: .9; }
+  .study-motif { flex: 1 1 auto; min-height: 5.5rem; display: grid; align-items: center; margin-block: 0.4rem; opacity: .9; transition: transform .6s cubic-bezier(.16,1,.3,1); }
+  .study-mark > span { transition: transform .3s cubic-bezier(.16,1,.3,1); }
+  @media (hover: hover) and (pointer: fine) {
+    .study:hover .study-motif, a:hover .study .study-motif { transform: translateY(-4px) scale(1.025); }
+    .study:hover .study-mark > span, a:hover .study .study-mark > span { transform: translate(3px, -3px); }
+  }
   .study-motif svg { width: 100%; height: auto; max-height: 11rem; display: block; }
   .study-methods { display: flex; justify-content: space-between; gap: 1rem; padding-top: 0.85rem; border-top: 1px solid var(--study-line); font-size: clamp(0.74rem, 2.5cqw, 0.85rem); font-weight: 500; }
   .study-caption { font-size: clamp(0.7rem, 2.3cqw, 0.76rem); color: color-mix(in oklch, var(--study-ink) 68%, transparent); }
@@ -680,6 +685,9 @@
       radial-gradient(46% 56% at 50% 34%, color-mix(in oklch, var(--brand) 11%, transparent), transparent 72%),
       radial-gradient(30% 40% at 68% 22%, color-mix(in oklch, var(--brand-2) 8%, transparent), transparent 70%);
   }
+  .hero-title { text-wrap: balance; }
+  .hw { display: inline-block; }
+  .hw.is-em { font-style: italic; font-weight: 480; color: var(--link); }
   .hero-who { display: inline-flex; align-items: center; gap: 0.7rem; font-size: 0.9rem; color: var(--muted-foreground); }
   .hero-who img { width: 2.4rem; height: 2.4rem; border-radius: 999px; object-fit: cover; box-shadow: 0 0 0 1px var(--border); }
   .hero-who b { color: var(--foreground); font-weight: 600; }
@@ -760,6 +768,7 @@
 
 .fx-rise { animation: fx-rise .8s cubic-bezier(.2,.7,.2,1) both; }
 .fx-hero { animation: fx-hero 1.05s cubic-bezier(.16,1,.3,1) both; }
+.hero-title ~ .fx-hero { animation-delay: calc(.45s + var(--d, 0s)) !important; }
 .hero-halo { animation: fx-halo-in 1.6s ease-out both, fx-halo-drift 16s ease-in-out 1.6s infinite alternate; }
 [style*="--i"].fx-rise { animation-delay: calc(var(--i) * 60ms); }
 
@@ -919,3 +928,45 @@
     .home-research-row.is-reading .home-research-arrow { transform: none; }
   }
 }
+
+/* ── Motif draw-in: plate and figure parts settle in one after another when their card is revealed. ── */
+@keyframes motif-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes tile-in { from { opacity: 0; transform: scale(.5); } to { opacity: var(--o, 1); transform: none; } }
+@keyframes motif-drift { from { transform: translateY(26px); } to { transform: translateY(-6px); } }
+.js:not(.is-still) :is(.study-motif, .pub-figure) svg > * { opacity: 0; }
+.js:not(.is-still) :is(.is-in, .fx-rise, .fx-hero) :is(.study-motif, .pub-figure) svg > * {
+  animation: motif-in .9s cubic-bezier(.16,1,.3,1) both;
+  animation-delay: calc(.12s + var(--k, 0) * 110ms);
+  transform-box: fill-box; transform-origin: center;
+}
+:is(.study-motif, .pub-figure) svg > :nth-child(2) { --k: 1; }
+:is(.study-motif, .pub-figure) svg > :nth-child(3) { --k: 2; }
+:is(.study-motif, .pub-figure) svg > :nth-child(4) { --k: 3; }
+:is(.study-motif, .pub-figure) svg > :nth-child(5) { --k: 4; }
+:is(.study-motif, .pub-figure) svg > :nth-child(6) { --k: 5; }
+:is(.study-motif, .pub-figure) svg > :nth-child(7) { --k: 6; }
+:is(.study-motif, .pub-figure) svg > :nth-child(n+8) { --k: 7; }
+/* Grid plates (LEPISZCZE): tiles twinkle in on a pseudo-random pattern instead of a left-to-right sweep. */
+.js:not(.is-still) :is(.is-in, .fx-rise) :is(.study-motif, .pub-figure) svg > rect { animation-name: tile-in; animation-duration: .7s; animation-delay: .25s; }
+:is(.study-motif, .pub-figure) svg > rect:nth-child(2n) { animation-delay: .4s !important; }
+:is(.study-motif, .pub-figure) svg > rect:nth-child(3n) { animation-delay: .55s !important; }
+:is(.study-motif, .pub-figure) svg > rect:nth-child(5n) { animation-delay: .7s !important; }
+:is(.study-motif, .pub-figure) svg > rect:nth-child(7n) { animation-delay: .85s !important; }
+/* Scroll-linked drift of the plate motif while its card crosses the viewport (browsers with scroll-driven animations). */
+@supports (animation-timeline: view()) {
+  .js:not(.is-still) .practice-preview .study-motif, .js:not(.is-still) .card-media .study-motif {
+    animation: motif-drift linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 55%;
+  }
+}
+/* Hero: words rise out of soft focus one after another, then the rest of the hero follows. */
+.hw { animation: fx-hero .9s cubic-bezier(.16,1,.3,1) both; animation-delay: calc(var(--i) * 80ms); }
+.is-still .hw { animation: none !important; opacity: 1 !important; transform: none !important; filter: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  .hw { animation: none !important; opacity: 1 !important; transform: none !important; filter: none !important; }
+  :is(.study-motif, .pub-figure) svg > * { animation: none !important; opacity: 1 !important; }
+  .js :is(.study-motif, .pub-figure) svg > * { opacity: 1; }
+  .study-motif, .study-mark > span { transition: none !important; animation: none !important; transform: none !important; }
+}
+.is-still :is(.study-motif, .pub-figure) svg > * { animation: none !important; opacity: 1 !important; }

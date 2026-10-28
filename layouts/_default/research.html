@@ -60,6 +60,7 @@
       <p>For research partnerships, institutional arrangements are also possible.</p>
     </div>
   </section>
-  <p class="research-consulting">Explore advisory and implementation services: <a href="{{ "/services/" | relURL }}">Consulting {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-3.5") }}</a> <a href="{{ "/pl/services/" | relURL }}">Po polsku</a></p>
+  {{/* The Polish services link stays out of the chrome until the Polish pages are promoted. */}}
+  <p class="research-consulting">Explore advisory and implementation services: <a href="{{ "/services/" | relURL }}">Consulting {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-3.5") }}</a></p>
 </div>
 {{ end }}
