@@ -35,6 +35,7 @@
       <a href="{{ "/projects/finance-ai/" | relLangURL }}">Finance AI</a>
       <a href="https://odysai.pl" target="_blank" rel="noopener">OdysAI</a>
       <a href="https://scholar.google.com/citations?user=psVLt8wAAAAJ" target="_blank" rel="noopener">Google Scholar</a>
+      {{ with site.Params.orcid }}<a href="https://orcid.org/{{ . }}" target="_blank" rel="me noopener">ORCID {{ . }}</a>{{ end }}
       <a href="https://dblp.org/pid/225/0671.html" target="_blank" rel="noopener">DBLP</a>
     </nav>
   </div>
