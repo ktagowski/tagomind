@@ -1,0 +1,11 @@
+{{- /* ScholarlyArticle.author list from the "A. Name, <strong>K. Tagowski</strong>, ..." string in data/publications.yaml.
+       The <strong> segment is the site owner and is emitted as a reference to the Person node. */ -}}
+{{- $authors := slice -}}
+{{- range split .authors ", " -}}
+  {{- if in . "<strong>" -}}
+    {{- $authors = $authors | append (dict "@id" (printf "%s#person" site.BaseURL)) -}}
+  {{- else -}}
+    {{- $authors = $authors | append (dict "@type" "Person" "name" (. | plainify | strings.TrimSpace)) -}}
+  {{- end -}}
+{{- end -}}
+{{- return $authors -}}

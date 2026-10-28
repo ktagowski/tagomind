@@ -1,0 +1,92 @@
+# Polish UI strings. Only the keys used by pages that exist in Polish (services + shared chrome) are
+# required; the rest mirror en.toml so a future translated page renders without gaps.
+[nav_home]
+other = "Start"
+[nav_projects]
+other = "Projekty"
+[nav_publications]
+other = "Publikacje"
+[nav_about]
+other = "O mnie"
+[nav_services]
+other = "Usługi"
+[nav_notes]
+other = "Notatki"
+
+[lets_talk]
+other = "Porozmawiajmy"
+[explore_projects]
+other = "Zobacz projekty"
+[all_projects]
+other = "Wszystkie projekty"
+[all_publications]
+other = "Wszystkie publikacje"
+[all_notes]
+other = "Wszystkie notatki"
+[start_conversation]
+other = "Napisz do mnie"
+[book_consultation]
+other = "Umów rozmowę wstępną"
+[intro_call_note]
+other = "30 minut · opowiedz o swoich danych i ograniczeniach"
+[see_services]
+other = "Zobacz usługi"
+
+[work_with_me]
+other = "Współpraca"
+[engagement]
+other = "Proces"
+[how_we_work]
+other = "Jak wygląda współpraca"
+[cta_title]
+other = "Masz problem wart rozwiązania?"
+[cta_lead]
+other = "Opowiedz mi o swoich danych, użytkownikach i ograniczeniach. Powiem wprost, gdzie AI pomoże, a gdzie nie."
+[case_details]
+other = "Zobacz projekt"
+[also_available]
+other = "Pozostałe obszary"
+[in_polish]
+other = "Polski"
+[in_english]
+other = "English"
+
+[built_with]
+other = "Zbudowane w Hugo"
+[e404_title]
+other = "Zgubione w grafie"
+[e404_body]
+other = "Ten węzeł nie istnieje albo przeniósł się do innego klastra."
+
+[newer_note]
+other = "Nowsza notatka"
+[older_note]
+other = "Starsza notatka"
+[reading_time]
+one = "{{ .Count }} min czytania"
+other = "{{ .Count }} min czytania"
+[previous]
+other = "Poprzedni"
+[next]
+other = "Następny"
+
+[skip_to_content]
+other = "Przejdź do treści"
+[aria_primary_nav]
+other = "Nawigacja główna"
+[aria_toggle_theme]
+other = "Przełącz motyw"
+[aria_open_menu]
+other = "Otwórz menu"
+[aria_nav_menu]
+other = "Menu nawigacji"
+[aria_close_menu]
+other = "Zamknij menu"
+[aria_mobile_nav]
+other = "Nawigacja mobilna"
+[aria_footer_site]
+other = "Strona"
+[aria_footer_contact]
+other = "Kontakt"
+[footer_explore]
+other = "Nawigacja"

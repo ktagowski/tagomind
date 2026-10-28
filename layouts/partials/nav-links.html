@@ -7,8 +7,13 @@
   (dict "key" "nav_about" "url" "/about/" "icon" "user")
   (dict "key" "nav_services" "url" "/services/" "icon" "briefcase")
 -}}
+{{- /* Notes only shows once the first post is published (drafts do not count). */ -}}
+{{- if gt (len (where hugo.Sites.Default.RegularPages "Section" "notes")) 0 -}}
+  {{- $links = $links | append (dict "key" "nav_notes" "url" "/notes/" "icon" "paper") -}}
+{{- end -}}
 {{- range $links -}}
-  {{- $u := .url | relLangURL -}}
+  {{- /* Only Services exists in Polish, so it alone stays language-aware; the rest point at the English pages. */ -}}
+  {{- $u := cond (eq .url "/services/") (.url | relLangURL) (.url | relURL) -}}
   {{- $active := or (eq $page.RelPermalink $u) (and (ne .url "/") (hasPrefix $page.RelPermalink $u)) -}}
   <a class="nav-link{{ if $active }} is-active{{ end }}" href="{{ $u }}"{{ if $active }} aria-current="page"{{ end }}>
     {{ if ne $variant "top" }}{{ partial "icon.html" (dict "name" .icon "class" "size-[1.05rem]") }}{{ end }}

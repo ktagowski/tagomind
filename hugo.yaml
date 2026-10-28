@@ -1,6 +1,22 @@
 baseURL: "https://tagomind.com/"
-languageCode: "en-US"
 title: "TagoMind · Kamil Tagowski, PhD"
+
+# Multilingual: English is the site and keeps its root URLs. Polish exists only for the pages that have a
+# *.pl.md translation (today: services), served under /pl/; the generated Polish home/section/RSS pages are
+# disabled so nothing empty is published. Templates link with relURL (English) except the Services nav entry.
+defaultContentLanguage: "en"
+defaultContentLanguageInSubdir: false
+languages:
+  en:
+    languageName: "English"
+    languageCode: "en-US"
+    weight: 1
+  pl:
+    languageName: "Polski"
+    languageCode: "pl-PL"
+    weight: 2
+    title: "TagoMind · dr inż. Kamil Tagowski"
+    disableKinds: ["home", "section", "taxonomy", "term", "RSS", "404"]
 enableRobotsTXT: true
 enableGitInfo: false
 enableEmoji: true
@@ -94,3 +110,6 @@ params:
     - name: "DBLP"
       icon: "paper"
       url: "https://dblp.org/pid/225/0671.html"
+  # Profiles that belong in Person.sameAs / llms.txt but have no icon in the social row.
+  profiles:
+    - "https://huggingface.co/ktagowski"

@@ -4,7 +4,7 @@
 {{ range hugo.Data.publications }}{{ if eq .slug $.Params.pub }}{{ $pub = . }}{{ end }}{{ end }}
 {{ $acc := or (index $typeAccents (or $pub.type "")) "var(--brand)" }}
 <article class="workspace pub-page" style="--field: {{ $acc | safeCSS }}">
-  <a class="link-arrow mb-6 inline-flex" href="{{ "/publications/" | relLangURL }}">
+  <a class="link-arrow mb-6 inline-flex" href="{{ "/publications/" | relURL }}">
     <span class="rotate-180">{{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</span> {{ i18n "all_publications" }}
   </a>
 

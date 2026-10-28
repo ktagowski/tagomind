@@ -4,6 +4,11 @@
     <span class="eyebrow">{{ partial "icon.html" (dict "name" "briefcase" "class" "size-3.5") }} {{ i18n "work_with_me" }}</span>
     <h1>{{ .Title }}</h1>
     {{ with .Params.lead }}<p class="lead">{{ . }}</p>{{ end }}
+    {{ if .IsTranslated }}
+    <p class="mt-1 text-sm text-subtle">
+      {{ range .Translations }}<a class="link-arrow" href="{{ .RelPermalink }}" hreflang="{{ .Language.LanguageCode }}" lang="{{ .Language.Lang }}">{{ partial "icon.html" (dict "name" "globe" "class" "size-3.5") }} {{ cond (eq .Language.Lang "pl") (i18n "in_polish") (i18n "in_english") }}</a>{{ end }}
+    </p>
+    {{ end }}
   </div>
 
   {{ with .Params.niches }}
@@ -22,7 +27,7 @@
         <div class="mt-6 border-t border-border pt-5">
           <span class="font-mono text-[0.68rem] font-semibold uppercase tracking-[0.09em] text-subtle">{{ .label }}</span>
           <p class="mt-2 text-sm leading-relaxed text-muted-foreground">{{ .text }}</p>
-          {{ with .link }}<a class="link-arrow mt-3" href="{{ . | relLangURL }}">Case details {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</a>{{ end }}
+          {{ with .link }}<a class="link-arrow mt-3" href="{{ . | relURL }}">{{ i18n "case_details" }} {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</a>{{ end }}
         </div>
         {{ end }}
       </div>
@@ -33,7 +38,7 @@
   {{ with .Params.also }}
   <section class="mt-8">
     <div class="grid gap-x-10 gap-y-3 border-y border-border py-5 sm:grid-cols-2">
-      <span class="fields-band-label sm:col-span-2">Also available</span>
+      <span class="fields-band-label sm:col-span-2">{{ i18n "also_available" }}</span>
       {{ range . }}{{ $p := split . ":" }}<p class="text-sm text-muted-foreground"><strong class="font-semibold text-foreground">{{ index $p 0 }}:</strong>{{ delimit (after 1 $p) ":" }}</p>{{ end }}
     </div>
   </section>

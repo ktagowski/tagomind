@@ -1,8 +1,11 @@
 {{- $sameAs := slice -}}
 {{- range site.Params.socials }}{{ if hasPrefix .url "http" }}{{ $sameAs = $sameAs | append .url }}{{ end }}{{ end -}}
+{{- range site.Params.profiles }}{{ $sameAs = $sameAs | append . }}{{ end -}}
+{{- $personId := printf "%s#person" site.BaseURL -}}
+{{- $about := hugo.Sites.Default.GetPage "/about" -}}
 {{- $person := dict
   "@type" "Person"
-  "@id" (printf "%s#person" site.BaseURL)
+  "@id" $personId
   "name" site.Params.author
   "givenName" "Kamil"
   "familyName" "Tagowski"
@@ -10,6 +13,7 @@
   "jobTitle" site.Params.role
   "description" site.Params.description
   "url" site.BaseURL
+  "mainEntityOfPage" (cond (ne $about nil) $about.Permalink site.BaseURL)
   "image" (site.Params.avatar | absURL)
   "email" site.Params.email
   "sameAs" $sameAs
@@ -32,8 +36,7 @@
 {{- $graph := slice $person $site -}}
 {{- if and (eq .Section "publications") (not .IsPage) -}}
   {{- range hugo.Data.publications -}}
-    {{- $authors := slice -}}
-    {{- range split (.authors | plainify) ", " }}{{ $authors = $authors | append (dict "@type" "Person" "name" .) }}{{ end -}}
+    {{- $authors := partial "pub-authors-jsonld.html" . -}}
     {{- $art := dict "@type" "ScholarlyArticle" "headline" .title "name" .title "author" $authors "datePublished" (string .year) "isPartOf" (dict "@type" "Periodical" "name" .venue) "inLanguage" "en" -}}
     {{- with .summary }}{{ $art = merge $art (dict "abstract" .) }}{{ end -}}
     {{- with .links }}{{ with .pdf }}{{ $art = merge $art (dict "url" (. | absURL)) }}{{ end }}{{ with .doi }}{{ $art = merge $art (dict "sameAs" .) }}{{ end }}{{ end -}}
@@ -43,15 +46,22 @@
 {{- if and (eq .Section "publications") .IsPage -}}
   {{- $page := . -}}
   {{- range hugo.Data.publications -}}{{- if eq .slug $page.Params.pub -}}
-    {{- $authors := slice -}}
-    {{- range split (.authors | plainify) ", " }}{{ $authors = $authors | append (dict "@type" "Person" "name" .) }}{{ end -}}
+    {{- $authors := partial "pub-authors-jsonld.html" . -}}
     {{- $art := dict "@type" "ScholarlyArticle" "@id" (printf "%s#article" $page.Permalink) "headline" .title "name" .title "author" $authors "datePublished" (string .year) "isPartOf" (dict "@type" "Periodical" "name" .venue) "inLanguage" "en" "url" $page.Permalink "mainEntityOfPage" $page.Permalink -}}
     {{- with .summary }}{{ $art = merge $art (dict "abstract" .) }}{{ end -}}
     {{- with .links }}{{ $same := slice }}{{ with .pdf }}{{ $same = $same | append (. | absURL) }}{{ end }}{{ with .doi }}{{ $same = $same | append . }}{{ end }}{{ with .anthology }}{{ $same = $same | append . }}{{ end }}{{ with .arxiv }}{{ $same = $same | append . }}{{ end }}{{ if $same }}{{ $art = merge $art (dict "sameAs" $same) }}{{ end }}{{ end -}}
     {{- $graph = $graph | append $art -}}
   {{- end -}}{{- end -}}
 {{- end -}}
-{{- if and .IsPage (in (slice "projects" "publications") .Section) -}}
+{{- if eq .Layout "about" -}}
+  {{- $graph = $graph | append (dict "@type" "ProfilePage" "@id" (printf "%s#profile" .Permalink) "url" .Permalink "mainEntity" (dict "@id" $personId) "dateCreated" (.Date.Format "2006-01-02") "dateModified" (.Lastmod.Format "2006-01-02")) -}}
+{{- end -}}
+{{- if and (eq .Section "notes") .IsPage -}}
+  {{- $post := dict "@type" "BlogPosting" "@id" (printf "%s#post" .Permalink) "headline" .Title "description" ((or .Description .Summary) | plainify | chomp) "url" .Permalink "mainEntityOfPage" .Permalink "datePublished" (.Date.Format "2006-01-02") "dateModified" (.Lastmod.Format "2006-01-02") "inLanguage" site.Language.Lang "author" (dict "@id" $personId) "publisher" (dict "@id" $personId) "image" (site.Params.avatar | absURL) -}}
+  {{- with .Params.tags }}{{ $post = merge $post (dict "keywords" (delimit . ", ")) }}{{ end -}}
+  {{- $graph = $graph | append $post -}}
+{{- end -}}
+{{- if and .IsPage (in (slice "projects" "publications" "notes") .Section) -}}
   {{- $sec := .CurrentSection -}}
   {{- $crumbs := slice (dict "@type" "ListItem" "position" 1 "name" "Home" "item" site.BaseURL) (dict "@type" "ListItem" "position" 2 "name" $sec.Title "item" $sec.Permalink) (dict "@type" "ListItem" "position" 3 "name" .Title "item" .Permalink) -}}
   {{- $graph = $graph | append (dict "@type" "BreadcrumbList" "itemListElement" $crumbs) -}}

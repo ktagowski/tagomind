@@ -1,0 +1,33 @@
+{{ define "main" }}
+<article class="workspace">
+  <a class="link-arrow mb-6 inline-flex" href="{{ "/notes/" | relURL }}">
+    <span class="rotate-180">{{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</span> {{ i18n "all_notes" }}
+  </a>
+  <div class="page-head fx-rise">
+    <div class="flex flex-wrap items-center gap-2 text-sm text-subtle">
+      <time class="num" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>
+      <span aria-hidden="true">·</span>
+      <span class="num">{{ i18n "reading_time" (dict "Count" .ReadingTime) }}</span>
+      {{ range .Params.tags }}<span class="tag">{{ . }}</span>{{ end }}
+    </div>
+    <h1>{{ .Title }}</h1>
+    {{ with .Params.lead }}<p class="lead">{{ . }}</p>{{ end }}
+  </div>
+  <div class="prose-ink mt-8 fx-scroll-soft">{{ .Content }}</div>
+
+  <nav class="mt-14 grid gap-3 border-t border-border pt-6 sm:grid-cols-2">
+    {{ with .NextInSection }}
+      <a class="panel group flex flex-col gap-1 p-4 transition hover:border-border-strong" href="{{ .RelPermalink }}">
+        <span class="text-xs text-subtle">{{ i18n "newer_note" }}</span>
+        <span class="font-display font-medium">{{ .Title }}</span>
+      </a>
+    {{ else }}<span></span>{{ end }}
+    {{ with .PrevInSection }}
+      <a class="panel group flex flex-col items-end gap-1 p-4 text-right transition hover:border-border-strong" href="{{ .RelPermalink }}">
+        <span class="text-xs text-subtle">{{ i18n "older_note" }}</span>
+        <span class="font-display font-medium">{{ .Title }}</span>
+      </a>
+    {{ end }}
+  </nav>
+</article>
+{{ end }}

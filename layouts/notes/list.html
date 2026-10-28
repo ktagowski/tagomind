@@ -1,0 +1,25 @@
+{{ define "main" }}
+<div class="workspace">
+  <div class="page-head fx-rise">
+    <span class="eyebrow">{{ partial "icon.html" (dict "name" "paper" "class" "size-3.5") }} {{ i18n "nav_notes" }}</span>
+    <h1>{{ .Title }}</h1>
+    {{ with .Params.lead }}<p class="lead">{{ . }}</p>{{ end }}
+  </div>
+  {{ with .Content }}<div class="prose-ink mt-6">{{ . }}</div>{{ end }}
+  <div class="mt-8 flex flex-col divide-y divide-border border-y border-border">
+    {{ range .Pages.ByDate.Reverse }}
+      <a class="group grid gap-x-8 gap-y-1 py-5 sm:grid-cols-[8rem_1fr]" href="{{ .RelPermalink }}">
+        <time class="num text-sm text-subtle" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
+        <span class="min-w-0">
+          <span class="font-display text-xl font-[540] transition-colors group-hover:text-brand">{{ .Title }}</span>
+          {{ with or .Description .Summary }}<span class="mt-1 block text-sm text-muted-foreground">{{ . | plainify }}</span>{{ end }}
+          <span class="mt-2 flex flex-wrap items-center gap-2 text-xs text-subtle">
+            <span class="num">{{ i18n "reading_time" (dict "Count" .ReadingTime) }}</span>
+            {{ range .Params.tags }}<span class="tag">{{ . }}</span>{{ end }}
+          </span>
+        </span>
+      </a>
+    {{ end }}
+  </div>
+</div>
+{{ end }}

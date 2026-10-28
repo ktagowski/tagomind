@@ -11,6 +11,8 @@ Site: {{ site.BaseURL }}
 Email: {{ site.Params.email }}
 {{- range site.Params.socials }}{{ if hasPrefix .url "http" }}
 {{ .name }}: {{ .url }}{{ end }}{{ end }}
+{{- range site.Params.profiles }}
+Profile: {{ . }}{{ end }}
 {{- with site.Params.booking }}
 Book an intro call: {{ . }}{{ end }}
 
@@ -27,6 +29,10 @@ Book an intro call: {{ . }}{{ end }}
 ## Publications
 {{ range hugo.Data.publications }}{{ $pg := site.GetPage (printf "/publications/%s" .slug) }}- {{ .title }} ({{ .venue }}, {{ .year }}). {{ .authors | plainify }}.{{ with $pg }} Summary: {{ .Permalink }}{{ end }}{{ with .links }}{{ with .pdf }} PDF: {{ . | absURL }}{{ end }}{{ with .code }} Code: {{ . }}{{ end }}{{ end }}
 {{ end }}
+{{ with where site.RegularPages "Section" "notes" }}## Notes
+{{ range . }}- [{{ .Title }}]({{ .Permalink }}) ({{ .Date.Format "2006-01-02" }}): {{ .Description }}
+{{ end }}
+{{ end -}}
 ## Services
 {{ with site.GetPage "/services" }}{{ .Params.lead }}
 {{ range .Params.niches }}- {{ .title }}{{ with .summary }}: {{ . | plainify }}{{ end }}

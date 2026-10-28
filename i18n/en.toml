@@ -155,3 +155,44 @@ other = "Older paper"
 other = "Papers"
 [project_label]
 other = "Project"
+
+[nav_notes]
+other = "Notes"
+[all_notes]
+other = "All notes"
+[newer_note]
+other = "Newer note"
+[older_note]
+other = "Older note"
+[reading_time]
+one = "{{ .Count }} min read"
+other = "{{ .Count }} min read"
+[case_details]
+other = "Case details"
+[also_available]
+other = "Also available"
+[in_polish]
+other = "Polski"
+[in_english]
+other = "English"
+
+[skip_to_content]
+other = "Skip to content"
+[aria_primary_nav]
+other = "Primary"
+[aria_toggle_theme]
+other = "Toggle theme"
+[aria_open_menu]
+other = "Open menu"
+[aria_nav_menu]
+other = "Navigation menu"
+[aria_close_menu]
+other = "Close menu"
+[aria_mobile_nav]
+other = "Mobile"
+[aria_footer_site]
+other = "Site"
+[aria_footer_contact]
+other = "Contact"
+[footer_explore]
+other = "Explore"
