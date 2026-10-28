@@ -876,9 +876,10 @@
 /* ── Home: selected projects slider + research directions ─────────── */
 @layer components {
   #practice-title { scroll-margin-top: 6rem; }
-  .practice-slider { display: flex; gap: 1rem; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; padding: .25rem .15rem 1rem; scrollbar-width: none; }
+  /* One project at a time: every card is exactly the slider width, snapping never rests between cards. */
+  .practice-slider { display: flex; gap: 1rem; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; padding: .25rem 0 1rem; scrollbar-width: none; }
   .practice-slider::-webkit-scrollbar { display: none; }
-  .practice-card { display: grid; grid-template-columns: 1fr 1.12fr; flex: 0 0 min(100%, 64rem); min-width: 0; overflow: hidden; border-radius: var(--radius-2xl); scroll-snap-align: start; }
+  .practice-card { display: grid; grid-template-columns: 1fr 1.12fr; flex: 0 0 100%; min-width: 0; overflow: hidden; border-radius: var(--radius-2xl); scroll-snap-align: start; scroll-snap-stop: always; }
   .practice-copy { display: flex; flex-direction: column; padding: clamp(1.5rem, 3vw, 2.5rem); }
   .practice-card-top { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1.8rem; }
   .practice-category { color: var(--muted-foreground); font-size: .8rem; font-weight: 560; }
@@ -898,7 +899,7 @@
   .practice-scroll-progress { height: 2px; margin-top: .75rem; overflow: hidden; background: var(--border); }
   .practice-scroll-progress > span { display: block; width: 100%; height: 100%; background: var(--link); transform: scaleX(0); transform-origin: left; }
   @media (max-width: 767px) {
-    .practice-card { grid-template-columns: 1fr; flex-basis: 92%; border-radius: var(--radius-xl); }
+    .practice-card { grid-template-columns: 1fr; border-radius: var(--radius-xl); }
     .practice-preview { grid-row: 1; min-height: 17rem; }
     .practice-card-top { margin-bottom: 1.2rem; }
     .practice-proof { margin-top: 0; }

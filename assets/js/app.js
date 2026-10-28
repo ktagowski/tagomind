@@ -638,10 +638,15 @@
       var distance = slider.scrollWidth - slider.clientWidth;
       if (progress) progress.style.transform = "scaleX(" + (distance > 0 ? Math.min(1, slider.scrollLeft / distance) : 1) + ")";
     }
+    // Index-based: go to the exact offset of the neighbouring card so the slider never rests between two.
     function step(direction) {
-      var card = slider.querySelector(".practice-card");
-      if (!card) return;
-      slider.scrollBy({ left: direction * (card.getBoundingClientRect().width + 16), behavior: reduceMotion ? "instant" : "smooth" });
+      var cards = Array.prototype.slice.call(slider.querySelectorAll(".practice-card"));
+      if (!cards.length) return;
+      var current = 0, best = Infinity;
+      var origin = cards[0].offsetLeft;
+      cards.forEach(function (c, i) { var d = Math.abs(c.offsetLeft - origin - slider.scrollLeft); if (d < best) { best = d; current = i; } });
+      var target = cards[Math.max(0, Math.min(cards.length - 1, current + direction))];
+      slider.scrollTo({ left: target.offsetLeft - origin, behavior: reduceMotion ? "instant" : "smooth" });
     }
     if (prev) prev.addEventListener("click", function () { step(-1); });
     if (next) next.addEventListener("click", function () { step(1); });
