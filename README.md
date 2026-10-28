@@ -40,7 +40,7 @@ static/                # CNAME, favicon, images
 ### Editing content
 
 - **New project**: add `content/projects/<slug>.md` with `fields`, `role`, `status` (use `Live` / `Active` / `Library` / `Published`), `impact`, and optional `featured: true` (surfaces it in the footer).
-- **New publication**: append to `data/publications.yaml`; set `featured: true` only for headline venues — the homepage shows the first three featured entries.
+- **New publication**: append to `data/publications.yaml`; set `featured: true` only for headline venues — the homepage shows the first three featured entries. `type` is one of `Conference` / `Workshop` / `Journal` / `Datasets & Benchmarks` / `Demo`; `links` may hold `pdf`, `code`, `poster`, `video`, `docs`, `dataset`, `leaderboard`, `doi` (site-relative paths such as `/papers/x.pdf` work, with files under `static/papers/`).
 - **Roles / affiliations**: edit `data/groups.yaml`; it feeds both the homepage credibility band and the About "Research groups" section.
 
 ## Deployment

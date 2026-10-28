@@ -433,10 +433,12 @@
   .badge-type[data-type="workshop"]            { --t: oklch(0.54 0.10 300); }
   .badge-type[data-type="journal"]             { --t: oklch(0.50 0.10 160); }
   .badge-type[data-type="datasets-benchmarks"] { --t: oklch(0.54 0.11 28); }
+  .badge-type[data-type="demo"]                { --t: oklch(0.52 0.11 200); }
   :root.dark .badge-type[data-type="conference"]          { --t: oklch(0.74 0.09 250); }
   :root.dark .badge-type[data-type="workshop"]            { --t: oklch(0.76 0.09 300); }
   :root.dark .badge-type[data-type="journal"]             { --t: oklch(0.74 0.09 160); }
   :root.dark .badge-type[data-type="datasets-benchmarks"] { --t: oklch(0.76 0.10 28); }
+  :root.dark .badge-type[data-type="demo"]                { --t: oklch(0.76 0.09 200); }
 
   /* Applications showcase cards */
   .app-card {

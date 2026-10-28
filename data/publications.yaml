@@ -1,6 +1,27 @@
 # Peer-reviewed publications, sourced from the author's DBLP record.
 # Newest first. Authors: wrap "K. Tagowski" in <strong> for emphasis.
 # Under-review / preprint-only entries are intentionally excluded.
+- title: "Schematize: An Agentic System for Generating and Refining Information-Extraction Schemas for Legal Research"
+  authors: "A. Sawczyn, J. Binkowski, <strong>K. Tagowski</strong>, Ł. Augustyniak, B. Kaczmarek-Templin, T. Kajdanowicz"
+  venue: "EMNLP 2026 Demo"
+  type: "Demo"
+  featured: true
+  year: 2026
+  summary: "An open-source multi-agent system that turns a researcher's problem statement into a validated information-extraction schema: a clarification dialogue elicits expert intent, criteria-based and data-grounded loops refine the schema against real rulings, and a chat lets the expert post-edit it. Evaluated with legal professionals via an expert-question coverage protocol, and released as a pip-installable Python package."
+  links:
+    pdf: "/papers/schematize-emnlp2026.pdf"
+    code: "https://github.com/pwr-ai/schematize"
+    poster: "/papers/schematize-emnlp2026-poster.pdf"
+    video: "/papers/schematize-emnlp2026-demo.mp4"
+    docs: "https://pwr-ai.github.io/schematize/"
+  bibtex: |
+    @inproceedings{sawczyn2026schematize,
+      title     = {Schematize: An Agentic System for Generating and Refining Information-Extraction Schemas for Legal Research},
+      author    = {Sawczyn, Albert and Binkowski, Jakub and Tagowski, Kamil and Augustyniak, {\L}ukasz and Kaczmarek-Templin, Berenika and Kajdanowicz, Tomasz},
+      booktitle = {Proceedings of the 2026 Conference on Empirical Methods in Natural Language Processing: System Demonstrations},
+      year      = {2026}
+    }
+
 - title: "Factual State Discovery Benchmark: Evaluating Fact Elicitation in Polish Tax Law"
   authors: "M. Bystroński, <strong>K. Tagowski</strong>, D. Janiak, J. Farganus, Ł. Augustyniak, M. Kajdanowicz, T. Kajdanowicz"
   venue: "ACL 2026 SRW"
@@ -20,7 +41,6 @@
   authors: "Ł. Augustyniak, <strong>K. Tagowski</strong>, A. Szymczak, J. Binkowski, A. Sawczyn, M. Skibiński, D. Janiak, M. Bystroński, G. Piotrowski, M. Bernaczyk, K. Kamiński, T. Kajdanowicz"
   venue: "AILaw 2026"
   type: "Workshop"
-  featured: true
   year: 2026
   summary: "A production-scale, multi-agent platform bridging AI and legal practice, indexing 3M+ documents and 300M+ semantic vectors, with a Quantitative Legal Agent architecture for aggregation and interpretable analysis across jurisdictions."
   links:

@@ -1,5 +1,5 @@
 {{ define "main" }}
-{{ $typeAccents := dict "Conference" "oklch(0.62 0.13 255)" "Workshop" "oklch(0.6 0.15 300)" "Journal" "oklch(0.6 0.1 168)" "Datasets & Benchmarks" "oklch(0.63 0.13 32)" }}
+{{ $typeAccents := dict "Conference" "oklch(0.62 0.13 255)" "Workshop" "oklch(0.6 0.15 300)" "Journal" "oklch(0.6 0.1 168)" "Datasets & Benchmarks" "oklch(0.63 0.13 32)" "Demo" "oklch(0.62 0.14 200)" }}
 <div class="workspace">
   <div class="page-head fx-rise">
     <span class="eyebrow">{{ partial "icon.html" (dict "name" "paper" "class" "size-3.5") }} {{ i18n "peer_reviewed" }}</span>
@@ -23,8 +23,11 @@
         {{ with .summary }}<p class="mt-3 max-w-3xl text-sm">{{ . }}</p>{{ end }}
         <div class="mt-4 flex flex-wrap items-center gap-2">
           {{ with .links }}
-          {{ with .pdf }}<a class="btn btn-sm" href="{{ . }}" target="_blank" rel="noopener">{{ partial "icon.html" (dict "name" "paper" "class" "size-4") }} PDF</a>{{ end }}
+          {{ with .pdf }}<a class="btn btn-sm" href="{{ . | relURL }}" target="_blank" rel="noopener">{{ partial "icon.html" (dict "name" "paper" "class" "size-4") }} PDF</a>{{ end }}
           {{ with .code }}<a class="btn btn-sm" href="{{ . }}" target="_blank" rel="noopener">{{ partial "icon.html" (dict "name" "code" "class" "size-4") }} Code</a>{{ end }}
+          {{ with .poster }}<a class="btn btn-sm" href="{{ . | relURL }}" target="_blank" rel="noopener">{{ partial "icon.html" (dict "name" "grid" "class" "size-4") }} Poster</a>{{ end }}
+          {{ with .video }}<a class="btn btn-sm" href="{{ . | relURL }}" target="_blank" rel="noopener">{{ partial "icon.html" (dict "name" "play" "class" "size-4") }} Demo video</a>{{ end }}
+          {{ with .docs }}<a class="btn btn-sm" href="{{ . }}" target="_blank" rel="noopener">{{ partial "icon.html" (dict "name" "globe" "class" "size-4") }} Docs</a>{{ end }}
           {{ with .dataset }}<a class="btn btn-sm" href="{{ . }}" target="_blank" rel="noopener">{{ partial "icon.html" (dict "name" "dataset" "class" "size-4") }} Dataset</a>{{ end }}
           {{ with .leaderboard }}<a class="btn btn-sm" href="{{ . }}" target="_blank" rel="noopener">{{ partial "icon.html" (dict "name" "globe" "class" "size-4") }} Leaderboard</a>{{ end }}
           {{ with .doi }}<a class="btn btn-sm" href="{{ . }}" target="_blank" rel="noopener">{{ partial "icon.html" (dict "name" "external" "class" "size-4") }} DOI</a>{{ end }}
