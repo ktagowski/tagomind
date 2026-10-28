@@ -27,6 +27,7 @@ content/
   services.md          # offerings + engagement process
   projects/*.md        # one page per project (role, status, fields, tech)
   publications/*.md    # one-pager per paper; `pub:` keys the entry in data/publications.yaml by slug
+  # `seoTitle` in any page front matter overrides the <title>; `papers:` on a project and `project:` on a paper cross-link them
 data/
   publications.yaml    # publication list; `featured: true` → homepage teaser
   fields.yaml          # field taxonomy → Explorer chips + card accent hues
@@ -36,6 +37,7 @@ assets/
   css/main.css         # design tokens (OKLCH) + components + motion
   js/app.js            # theme, Explorer filters, graph canvas, reveals
 static/                # CNAME, favicon, images
+static/fonts/          # self-hosted Inter, Fraunces, JetBrains Mono (variable woff2, latin + latin-ext); faces in assets/css/fonts.css
 layouts/robots.txt     # crawler rules + Sitemap line (search + AI bots allowed)
 layouts/home.llms.txt  # → /llms.txt, plain-text site summary for LLM crawlers
 ```

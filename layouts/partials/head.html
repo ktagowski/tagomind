@@ -1,11 +1,14 @@
 {{- $isHome := .IsHome -}}
-{{- $title := cond $isHome site.Title (printf "%s · %s" .Title site.Params.brand) -}}
+{{- $title := or .Params.seoTitle (cond $isHome site.Title (printf "%s · %s" .Title site.Params.brand)) -}}
 {{- $desc := (or .Description .Summary site.Params.description) | plainify | chomp -}}
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{{ $title }}</title>
 <meta name="description" content="{{ $desc }}">
 <link rel="canonical" href="{{ .Permalink }}">
+{{ with .OutputFormats.Get "RSS" }}<link rel="alternate" type="application/rss+xml" title="{{ site.Title }}" href="{{ .Permalink }}">{{ else }}{{ with site.Home.OutputFormats.Get "RSS" }}<link rel="alternate" type="application/rss+xml" title="{{ site.Title }}" href="{{ .Permalink }}">{{ end }}{{ end }}
+{{ with site.Params.googleSiteVerification }}<meta name="google-site-verification" content="{{ . }}">{{ end }}
+{{ with site.Params.bingSiteVerification }}<meta name="msvalidate.01" content="{{ . }}">{{ end }}
 <meta name="author" content="{{ site.Params.author }}">
 <meta name="theme-color" content="{{ site.Params.themeColor }}">
 
@@ -20,11 +23,11 @@
 <meta name="twitter:description" content="{{ $desc }}">
 
 <script>
-  (function(){try{var q=new URLSearchParams(location.search).get('theme');var t=(q==='light'||q==='dark')?q:localStorage.getItem('tm-theme');document.documentElement.classList.toggle('dark', t ? t==='dark' : false);var P=new URLSearchParams(location.search);var ac=P.get('accent'),hue=P.get('hue');var a=hue?'custom':(ac||localStorage.getItem('tm-accent')||'blue');if(a&&a!=='mono')document.documentElement.setAttribute('data-accent',a);if(a==='custom'){var hv=hue||localStorage.getItem('tm-accent-hue');if(hv)document.documentElement.setAttribute('data-accent-hue',hv);}}catch(e){}})();
+  (function(){try{document.documentElement.classList.add('js');var q=new URLSearchParams(location.search).get('theme');var t=(q==='light'||q==='dark')?q:localStorage.getItem('tm-theme');document.documentElement.classList.toggle('dark', t ? t==='dark' : false);var P=new URLSearchParams(location.search);var ac=P.get('accent'),hue=P.get('hue');var a=hue?'custom':(ac||localStorage.getItem('tm-accent')||'blue');if(a&&a!=='mono')document.documentElement.setAttribute('data-accent',a);if(a==='custom'){var hv=hue||localStorage.getItem('tm-accent-hue');if(hv)document.documentElement.setAttribute('data-accent-hue',hv);}}catch(e){}})();
 </script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+{{/* Fonts are self-hosted (static/fonts, assets/css/fonts.css). Preload the two faces used above the fold. */}}
+<link rel="preload" href="{{ "fonts/inter-normal-latin.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{{ "fonts/fraunces-normal-latin.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
 
 <link rel="icon" href="{{ "favicon.svg" | relURL }}" type="image/svg+xml">
 <link rel="apple-touch-icon" href="{{ "favicon.svg" | relURL }}">
