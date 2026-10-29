@@ -135,7 +135,9 @@ for (const path of PAGES) {
 const rm = await browser.newPage({ viewport: VIEWPORT, reducedMotion: "reduce" });
 await rm.goto(BASE + "/?theme=light", { waitUntil: "networkidle" });
 await rm.waitForTimeout(1500);
-const rmRunning = await rm.evaluate(() => document.getAnimations().filter(a => a.playState === "running").length);
+// Time-based animations only: scroll-driven ones (progress bar) move only with the user's own scroll, which is not
+// motion reduced-motion users need protection from.
+const rmRunning = await rm.evaluate(() => document.getAnimations().filter(a => a.playState === "running" && a.timeline instanceof DocumentTimeline).length);
 await browser.close();
 
 const STANDARDS = [

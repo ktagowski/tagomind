@@ -543,7 +543,7 @@
     color: var(--study-ink);
   }
   .study-mark > span { font-size: 0.6em; font-weight: 300; opacity: .8; }
-  .study-motif { flex: 1 1 auto; min-height: 5.5rem; display: grid; align-items: center; margin-block: 0.4rem; opacity: .9; transition: transform .6s cubic-bezier(.16,1,.3,1); }
+  .study-motif { flex: 1 1 auto; min-height: 5.5rem; display: grid; align-items: center; margin-block: 0.4rem; opacity: .9; transition: transform .35s cubic-bezier(.23,1,.32,1); }
   .study-mark > span { transition: transform .3s cubic-bezier(.16,1,.3,1); }
   @media (hover: hover) and (pointer: fine) {
     .study:hover .study-motif, a:hover .study .study-motif { transform: translateY(-4px) scale(1.025); }
@@ -1111,7 +1111,7 @@
   .path { position: relative; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1.75rem; margin-top: 2.5rem; padding-top: 2.2rem; list-style: none; }
   .path::before, .path::after { content: ""; position: absolute; top: 0.45rem; left: 0; right: 0; height: 1px; }
   .path::before { background: var(--border-strong); }
-  .path::after { background: var(--link); transform-origin: left; transform: scaleX(0); transition: transform 1.6s cubic-bezier(.16,1,.3,1) .15s; }
+  .path::after { background: var(--link); transform-origin: left; transform: scaleX(0); transition: transform .9s cubic-bezier(.23,1,.32,1) .1s; }
   .path.is-in::after, .is-still .path::after, html:not(.js) .path::after { transform: scaleX(1); }
   .path li { position: relative; }
   .path li::before { content: ""; position: absolute; top: -2.2rem; left: 0; width: 0.95rem; height: 0.95rem; border-radius: 999px; background: var(--background); border: 2px solid var(--link); }
@@ -1122,10 +1122,10 @@
   .path p:last-child { margin-top: 0.6rem; font-size: 0.88rem; line-height: 1.6; color: var(--muted-foreground); }
   .js:not(.is-still) .path li { opacity: 0; transform: translateY(10px); transition: opacity .5s ease, transform .6s cubic-bezier(.16,1,.3,1); }
   .js:not(.is-still) .path.is-in li { opacity: 1; transform: none; }
-  .path.is-in li:nth-child(2) { transition-delay: .25s; }
-  .path.is-in li:nth-child(3) { transition-delay: .5s; }
-  .path.is-in li:nth-child(4) { transition-delay: .75s; }
-  .path.is-in li:nth-child(5) { transition-delay: 1s; }
+  .path.is-in li:nth-child(2) { transition-delay: 0.08s; }
+  .path.is-in li:nth-child(3) { transition-delay: 0.16s; }
+  .path.is-in li:nth-child(4) { transition-delay: 0.24s; }
+  .path.is-in li:nth-child(5) { transition-delay: 0.32s; }
   @media (max-width: 899px) {
     .path { grid-template-columns: 1fr; gap: 1.6rem; padding-top: 0; padding-left: 2rem; }
     .path::before, .path::after { top: 0; bottom: 0; left: 0.45rem; right: auto; width: 1px; height: auto; }
@@ -1191,7 +1191,7 @@
   .practice-dots button::before {
     content: ""; position: absolute; left: 50%; top: 50%; width: 0.55rem; height: 0.55rem; margin: -0.275rem 0 0 -0.275rem;
     border-radius: 999px; background: color-mix(in oklch, var(--foreground) 22%, transparent);
-    transition: transform .45s cubic-bezier(.16,1,.3,1), background-color .3s;
+    transition: transform .3s cubic-bezier(.23,1,.32,1), background-color .2s;
   }
   .practice-dots button:hover::before { background: color-mix(in oklch, var(--foreground) 45%, transparent); }
   .practice-dots button[aria-current="true"]::before { transform: scaleX(2.6); background: var(--foreground); }
@@ -1367,3 +1367,21 @@ html.pin-on { scroll-snap-type: y proximity; scroll-padding-top: var(--topbar-h,
 @media (prefers-reduced-motion: reduce) { :is(.study-motif, .pub-figure) > svg { animation: none !important; } }
 .is-still :is(.study-motif, .pub-figure) > svg { animation: none !important; }
 .scroll-cue.ambient-off svg { animation-play-state: paused !important; }
+
+/* ════ Motion-skill audit (Emil Kowalski standards + fixing-motion-performance), 2026-10-29 ════ */
+/* Scroll-linked motion runs on browser scroll/view timelines (compositor, same frame as the scroll); app.js only
+   drives these where animation-timeline is unsupported. */
+@supports (animation-timeline: scroll()) {
+  .scroll-progress > span { animation: progress-grow linear both; animation-timeline: scroll(root block); }
+  .graph-bg { animation: canvas-fade linear both; animation-timeline: scroll(root block); animation-range: 0 55vh; }
+  .home-research-row::before { animation: row-read linear both; animation-timeline: view(); animation-range: entry 15% cover 50%; }
+}
+@keyframes progress-grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes canvas-fade { to { opacity: 0; } }
+@keyframes row-read { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@media (prefers-reduced-motion: reduce) { .home-research-row::before, .graph-bg { animation: none !important; } }
+/* Hover motion only on devices with a real pointer (touch fires false hovers on tap). */
+@media (hover: none), (pointer: coarse) {
+  .wordmark:hover .glyph, .link-arrow:hover svg, .pager-tile:hover small svg, .pager-tile.is-next:hover small svg,
+  .practice-project-link:hover, .video-play:hover span { transform: none; }
+}

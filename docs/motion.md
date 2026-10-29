@@ -74,7 +74,7 @@ Every change to motion must pass `npm run motion:check` (scripts/motion-check.mj
 | G7 | No long tasks while scrolling | 0 | A task over 50ms drops frames |
 | G8 | No layout work during scroll | ≤ 0.05 layouts per frame | Layout reads after style writes force a full layout every frame; scroll handlers read cached geometry only (ResizeObserver refreshes it), and SVG parts animate opacity only |
 | G9 | Nothing animates off screen | 0 canvas redraws, 0 running infinite animations | Off-screen loops cost battery and frames; the hero network stops when scrolled away, glows and badges pause via `initAmbientPause` |
-| G10 | Reduced motion | 0 running animations | Everything shows its end state instantly |
+| G10 | Reduced motion | 0 running time-based animations | Everything shows its end state instantly; scroll-driven indicators (the progress bar) only move with the user's own scroll |
 | G11 | Nothing moves after a gesture ends | 0 drift | Catches snap pull and late programmatic scrolling |
 | G12 | No late reveals | 0 frames | Revealed content is at least 90% visible before its top reaches 60% of the viewport; reveals start 12% below the fold |
 
@@ -86,6 +86,19 @@ Rules that keep these green:
 
 
 > **Status after the restore (2026-10-29).** The cuts recommended in Parts 2 and 3 were applied once and then reverted. Removing motion was the wrong response to the review. The motion is back (reveals, title words, glows and drift, draw-ins, progress bar, scroll cue, spotlight, count-up), rebuilt so every gold standard above passes. Count-up skips ranks and fractions ("Top 2", "4 of 7") so it never shows a false intermediate value.
+
+### Motion skills
+
+Four skills in `~/.claude/skills` hold the craft bar these standards enforce. Use them on any motion change:
+
+| Skill | Use it to |
+|---|---|
+| `review-animations` (Emil Kowalski; run it yourself as `/review-animations`) | Review a motion diff: easing, duration budgets, origin, interruptibility, reduced motion |
+| `improve-animations` (Emil Kowalski) | Audit all motion and write prioritized plans |
+| `apple-design` (Emil Kowalski) | Apple-style fluid motion: springs, momentum, interruptibility, materials |
+| `fixing-motion-performance` (ibelick) | Find and fix jank: scroll-linked motion, layout thrash, layers, blur |
+
+Applied on 2026-10-29: scroll-linked motion (progress bar, hero canvas fade, research reading lines) moved from scroll events to CSS scroll and view timelines; hover motion gated to fine pointers; plate hover 0.35s, dots 0.3s, path line 0.9s, path stagger 80ms.
 
 ## Part 2. Review of the current site
 

@@ -5,6 +5,8 @@
   "use strict";
 
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  // Scroll-linked motion (progress bar, canvas fade, row reading lines) runs on CSS scroll timelines where supported.
+  var scrollTimelines = !!(window.CSS && CSS.supports && CSS.supports("animation-timeline: scroll()"));
 
   // HSL→RGB (h,s,l in 0..1) → [r,g,b] 0..255. Shared by the accent switcher + network.
   function hslToRgb(h, s, l) {
@@ -445,8 +447,9 @@
       var vh = window.innerHeight || 800;
       var f = Math.max(0, Math.min(1, 1 - (window.pageYOffset || 0) / (vh * 0.55)));
       var dark = document.documentElement.classList.contains("dark");
-      canvas.style.opacity = ((dark ? 0.95 : 0.72) * f).toFixed(3);
-      canvas.style.visibility = f > 0 ? "visible" : "hidden";
+      if (!scrollTimelines) canvas.style.opacity = ((dark ? 0.95 : 0.72) * f).toFixed(3);
+      var vis = f > 0 ? "visible" : "hidden";
+      if (canvas.style.visibility !== vis) canvas.style.visibility = vis; // written only when it changes
     }
 
     resize();
@@ -811,7 +814,7 @@
       var nearest = -1, nearestDistance = Infinity;
       geo.forEach(function (g, i) {
         var top = g.top - sy;
-        rows[i].style.setProperty("--row-read", clamp((height * .85 - top) / Math.min(g.height + height * .25, height * .6)).toFixed(3));
+        if (!scrollTimelines) rows[i].style.setProperty("--row-read", clamp((height * .85 - top) / Math.min(g.height + height * .25, height * .6)).toFixed(3));
         var distance = Math.abs(top + g.height / 2 - height * .52);
         if (top + g.height > 80 && top < height * .9 && distance < nearestDistance) { nearest = i; nearestDistance = distance; }
       });
@@ -886,7 +889,7 @@
 
   function initScrollProgress() {
     var bar = document.querySelector(".scroll-progress > span");
-    if (!bar) return;
+    if (!bar || scrollTimelines) return; // CSS scroll timeline drives it on the compositor
     var ticking = false, max = 1;
     // Page height is cached (re-measured only when the page size changes), so a scroll frame never reads layout.
     function measure() { var de = document.documentElement; max = Math.max(1, de.scrollHeight - de.clientHeight); }
