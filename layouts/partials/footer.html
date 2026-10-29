@@ -4,7 +4,7 @@
 {{- if lt (len $featured) 4 }}{{ $featured = first 5 $projects }}{{ end -}}
 <footer class="site-footer mt-6">
   <div class="workspace grid gap-10 !py-12 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1fr]">
-    <div class="flex max-w-xs flex-col gap-2">
+    <div class="footer-col fx-scroll-soft flex max-w-xs flex-col gap-2">
       <a class="wordmark" href="{{ "/" | relURL }}">
         <span class="glyph">{{ partial "icon.html" (dict "name" "graph" "class" "size-4") }}</span>
         <span>Tago<b>Mind</b></span>
@@ -14,25 +14,26 @@
       <div class="mt-2 flex items-center gap-1.5">{{ partial "social-links.html" (dict "size" "size-[1.05rem]") }}</div>
     </div>
 
-    <nav class="footer-col" aria-label="{{ i18n "aria_footer_site" }}">
+    <nav class="footer-col fx-scroll-soft" aria-label="{{ i18n "aria_footer_site" }}">
       <span class="footer-head">{{ i18n "footer_explore" }}</span>
       <a href="{{ "/" | relURL }}">{{ i18n "nav_home" }}</a>
       <a href="{{ "/research/" | relURL }}">{{ i18n "nav_research" }}</a>
       <a href="{{ "/projects/" | relURL }}">{{ i18n "nav_projects" }}</a>
+      <a href="{{ "/products/" | relURL }}">{{ i18n "nav_products" }}</a>
       <a href="{{ "/publications/" | relURL }}">{{ i18n "nav_publications" }}</a>
       {{ if gt (len (where hugo.Sites.Default.RegularPages "Section" "notes")) 0 }}<a href="{{ "/notes/" | relURL }}">{{ i18n "nav_notes" }}</a>{{ end }}
       <a href="{{ "/about/" | relURL }}">{{ i18n "nav_about" }}</a>
       <a href="{{ "/services/" | relLangURL }}">{{ i18n "nav_services" }}</a>
     </nav>
 
-    <nav class="footer-col" aria-label="{{ i18n "nav_projects" }}">
+    <nav class="footer-col fx-scroll-soft" aria-label="{{ i18n "nav_projects" }}">
       <span class="footer-head">{{ i18n "nav_projects" }}</span>
       {{ range $featured }}
       <a href="{{ .RelPermalink }}">{{ .Title }}</a>
       {{ end }}
     </nav>
 
-    <nav class="footer-col" aria-label="{{ i18n "aria_footer_contact" }}">
+    <nav class="footer-col fx-scroll-soft" aria-label="{{ i18n "aria_footer_contact" }}">
       <span class="footer-head">{{ i18n "work_with_me" }}</span>
       {{ with site.Params.booking }}<a href="{{ . }}" target="_blank" rel="noopener">{{ i18n "book_consultation" }}</a>{{ end }}
       <a href="{{ "/research/#collaborate" | relURL }}">{{ i18n "research_collaborate" }}</a>

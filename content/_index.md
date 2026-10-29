@@ -1,15 +1,15 @@
 ---
 title: "TagoMind · Kamil Tagowski, PhD"
-seoTitle: "Kamil Tagowski, PhD · NLP, agentic AI & evaluation research"
+seoTitle: "Kamil Tagowski, PhD · AI research, engineering & products"
 date: 2026-10-28
 sitemap:
   priority: 1.0
-description: "Kamil Tagowski, PhD, postdoctoral researcher at Wrocław Tech. Research in information discovery, agentic extraction, NLP and graph learning, with deployed legal AI."
+description: "Kamil Tagowski, PhD: AI research, engineering, and independent products. Tools for complex professional work and everyday decisions, from legal AI to Flat Explorer."
 hero:
   eyebrow: "Kamil Tagowski, PhD"
   headlineA: "Reliable AI"
   headlineB: "for <em>complex information.</em>"
-  lead: "I study how AI discovers missing facts and structures knowledge, from research to deployed systems."
+  lead: "I build AI tools for complex work and everyday decisions, grounded in research."
   affiliation: "Postdoctoral Researcher · Wrocław University of Science and Technology"
 practice:
   - page: "ai-tax"
@@ -40,7 +40,7 @@ practice:
     category: "TagoMind product"
     description: "AI-assisted flat hunting: scoring listings, summarizing visits, and comparing options against the criteria that matter to you."
     proof: "LLM agents · end-to-end product"
-    context: "Live application · independent engineering and delivery"
+    context: "Early access · public demo · independent engineering and delivery"
 directions:
   - title: "Discover missing information"
     question: "How can agents identify missing facts and ask useful follow-up questions?"

@@ -1,0 +1,66 @@
+{{ define "main" }}
+<div class="workspace products-page">
+  <div class="page-head fx-rise">
+    <h1>{{ partial "title-words.html" .Title }}</h1>
+    {{ with .Params.lead }}<p class="lead">{{ . }}</p>{{ end }}
+  </div>
+
+  {{/* Index: one row per product in its plate colour, so the page reads as a set before the detail. */}}
+  <nav class="product-index fx-rise" style="--i: 3" aria-label="Products on this page">
+    {{ range .Params.items }}{{ $item := . }}{{ with site.GetPage (printf "/projects/%s" .project) }}
+    <a class="study-scope" data-study="{{ .Params.study }}" href="#{{ $item.project }}">
+      <span class="product-index-dot" aria-hidden="true"></span>
+      <span><strong>{{ .Title }}</strong><small>{{ $item.purpose }}</small></span>
+      {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4 rotate-90") }}
+    </a>
+    {{ end }}{{ end }}
+  </nav>
+
+  {{/* One row per product: the pitch and the way in on the left, the product itself on its plate on the right. */}}
+  <div class="product-list">
+    {{ range $i, $item := .Params.items }}{{ with site.GetPage (printf "/projects/%s" .project) }}
+    <section class="product-row study-scope" id="{{ $item.project }}" data-study="{{ .Params.study }}" aria-labelledby="{{ $item.project }}-title">
+      <div class="product-copy fx-scroll-soft">
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="eyebrow">{{ $item.purpose }}</span>
+          {{ with .Params.status }}<span class="badge{{ if eq . "Live" }} badge-live{{ else }} badge-status{{ end }}">{{ . }}</span>{{ end }}
+        </div>
+        <h2 id="{{ $item.project }}-title">{{ .Title }}</h2>
+        <p class="product-headline">{{ $item.headline }}</p>
+        <p class="product-description">{{ $item.description }}</p>
+        {{ with $item.workflow }}
+        <div class="prose-ink product-steps"><ol>{{ range . }}<li>{{ . }}</li>{{ end }}</ol></div>
+        {{ end }}
+        <div class="product-actions">
+          {{ range $j, $action := $item.actions }}{{ $ext := hasPrefix $action.url "http" }}
+          <a class="btn{{ if eq $j 0 }} btn-primary{{ else }} btn-outline{{ end }}" href="{{ $action.url }}"{{ if $ext }} target="_blank" rel="noopener"{{ end }}>{{ if hasPrefix $action.url "mailto:" }}{{ partial "icon.html" (dict "name" "mail" "class" "size-4") }} {{ end }}{{ $action.label }}{{ if $ext }} {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-4") }}{{ end }}</a>
+          {{ end }}
+        </div>
+        {{ with $item.access }}<p class="product-access">{{ . }}</p>{{ end }}
+        <a class="link-arrow mt-5" href="{{ .RelPermalink }}">How it’s built {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</a>
+      </div>
+
+      {{/* A screenshot sits on the product's plate; until one exists, the plate carries the product's motif. */}}
+      {{ if and $item.image (os.FileExists (printf "static/%s" $item.image)) }}
+      <figure class="study product-plate fx-scroll-soft" data-study="{{ .Params.study }}">
+        <a class="product-shot" href="{{ $item.image | relURL }}" target="_blank" rel="noopener" aria-label="Open the full-size screenshot of {{ .Title }}">
+          <img src="{{ $item.image | relURL }}" alt="{{ $item.imageAlt }}" width="1280" height="720" loading="{{ if eq $i 0 }}eager{{ else }}lazy{{ end }}" decoding="async">
+        </a>
+        {{ with $item.caption }}<figcaption class="study-caption">{{ . }}</figcaption>{{ end }}
+      </figure>
+      {{ else }}
+      <div class="product-plate is-motif fx-scroll-soft">{{ partial "project-study.html" (dict "page" . "variant" "card") }}</div>
+      {{ end }}
+    </section>
+    {{ end }}{{ end }}
+  </div>
+
+  <section class="band research-band fx-scroll-soft" aria-labelledby="products-more-title">
+    <div>
+      <h2 id="products-more-title">Research platforms and team projects</h2>
+      <p>Legal AI, benchmarks and research search built with universities and research groups.</p>
+    </div>
+    <a class="btn btn-outline" href="{{ "/projects/" | relURL }}">Explore all projects {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</a>
+  </section>
+</div>
+{{ end }}

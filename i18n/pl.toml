@@ -4,6 +4,8 @@
 other = "Start"
 [nav_projects]
 other = "Projekty"
+[nav_products]
+other = "Produkty"
 [nav_publications]
 other = "Publikacje"
 [nav_about]

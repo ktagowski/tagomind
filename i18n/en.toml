@@ -3,6 +3,8 @@
 other = "Home"
 [nav_projects]
 other = "Projects"
+[nav_products]
+other = "Products"
 [nav_publications]
 other = "Publications"
 [nav_about]
@@ -99,6 +101,8 @@ other = "{{ .Count }} projects"
 
 [role_label]
 other = "Role"
+[context_label]
+other = "Context"
 [year_label]
 other = "Year"
 [venue_label]
