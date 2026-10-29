@@ -6,7 +6,7 @@ Written by the `improve-animations` audit at d96bd3c. Gold standards G1–G12 (`
 |---|---|---|---|
 | 001 | [Interruptible project chapter build](001-interruptible-project-chapters.md) | HIGH | DONE (gold check pending) |
 | 002 | [Fast, asymmetric press feedback](002-press-feedback.md) | HIGH | DONE (gold check pending) |
-| 003 | [Topbar double backdrop blur](003-topbar-double-backdrop.md) | MEDIUM | DONE (gold check pending) |
+| 003 | [Topbar double backdrop blur](003-topbar-double-backdrop.md) | MEDIUM | REVERTED: the inner blur is visible (text showed sharp through the bar) |
 | 004 | [Reduced-motion hover](004-hover-reduced-motion.md) | MEDIUM | DONE (gold check pending) |
 | 005 | [Easing token, one reveal, card hover](005-motion-tokens.md) | MEDIUM | DONE (gold check pending) |
 

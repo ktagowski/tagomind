@@ -33,7 +33,7 @@
         {{ end }}
         <div class="product-actions">
           {{ range $j, $action := $item.actions }}{{ $ext := hasPrefix $action.url "http" }}
-          <a class="btn{{ if eq $j 0 }} btn-primary{{ else }} btn-outline{{ end }}" href="{{ $action.url }}"{{ if $ext }} target="_blank" rel="noopener"{{ end }}>{{ if hasPrefix $action.url "mailto:" }}{{ partial "icon.html" (dict "name" "mail" "class" "size-4") }} {{ end }}{{ $action.label }}{{ if $ext }} {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-4") }}{{ end }}</a>
+          <a class="btn{{ if eq $j 0 }} btn-primary{{ end }}" href="{{ $action.url }}"{{ if $ext }} target="_blank" rel="noopener"{{ end }}>{{ $action.label }}{{ if $ext }} {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "btn-ext") }}{{ end }}</a>
           {{ end }}
         </div>
         {{ with $item.access }}<p class="product-access">{{ . }}</p>{{ end }}
@@ -60,7 +60,7 @@
       <h2 id="products-more-title">Research platforms and team projects</h2>
       <p>Legal AI, benchmarks and research search built with universities and research groups.</p>
     </div>
-    <a class="btn btn-outline" href="{{ "/projects/" | relURL }}">Explore all projects {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</a>
+    <a class="btn" href="{{ "/projects/" | relURL }}">Explore all projects</a>
   </section>
 </div>
 {{ end }}

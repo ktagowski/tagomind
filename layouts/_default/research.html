@@ -35,10 +35,10 @@
       {{ with .intro }}<p>{{ . }}</p>{{ end }}
     </div>
     {{ with .links }}
-    <div class="flex flex-wrap gap-3">
+    <div class="band-actions flex flex-wrap gap-3">
       {{ range $i, $l := . }}
-      {{ $mail := hasPrefix $l.url "mailto:" }}
-      <a class="btn {{ if eq $i 0 }}btn-primary{{ else }}btn-outline{{ end }}" href="{{ if hasPrefix $l.url "/" }}{{ $l.url | relURL }}{{ else }}{{ $l.url }}{{ end }}">{{ if $mail }}{{ partial "icon.html" (dict "name" "mail" "class" "size-4") }} {{ end }}{{ $l.label }}{{ if not $mail }} {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}{{ end }}</a>
+      {{ $ext := hasPrefix $l.url "http" }}
+      <a class="btn{{ if eq $i 0 }} btn-primary{{ end }}" href="{{ if hasPrefix $l.url "/" }}{{ $l.url | relURL }}{{ else }}{{ $l.url }}{{ end }}"{{ if $ext }} target="_blank" rel="noopener"{{ end }}>{{ $l.label }}{{ if $ext }} {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "btn-ext") }}{{ end }}</a>
       {{ end }}
     </div>
     {{ end }}

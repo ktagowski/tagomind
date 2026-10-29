@@ -4,8 +4,8 @@
   <h1 class="mt-3">{{ i18n "e404_title" }}</h1>
   <p class="lead mt-4 max-w-md">{{ i18n "e404_body" }}</p>
   <div class="mt-7 flex flex-wrap justify-center gap-3">
-    <a class="btn btn-primary" href="{{ "/" | relURL }}">{{ partial "icon.html" (dict "name" "home" "class" "size-4") }} {{ i18n "nav_home" }}</a>
-    <a class="btn" href="{{ "/projects/" | relURL }}">{{ i18n "explore_projects" }} {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</a>
+    <a class="btn btn-primary" href="{{ "/" | relURL }}">{{ i18n "nav_home" }}</a>
+    <a class="btn" href="{{ "/projects/" | relURL }}">{{ i18n "explore_projects" }}</a>
   </div>
 </div>
 {{ end }}

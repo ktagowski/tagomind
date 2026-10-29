@@ -1,0 +1,8 @@
+{{- /* One-line paper meta: type dot, venue, type label. Never wraps; the full text is in the title attribute.
+     Usage: {{ partial "pub-meta.html" (dict "pub" $record "compact" bool) }}; compact (cards) drops the type label and
+     leaves the type to the dot colour. The card or row sets --field from pub-accent.html. */ -}}
+{{- $pub := .pub -}}
+{{- $type := partial "pub-type-label.html" $pub.type -}}
+<p class="pub-meta" title="{{ $pub.venue }}{{ with $pub.type }} · {{ $type }}{{ end }}">
+  <span class="pub-meta-venue">{{ $pub.venue }}</span>{{ if and $pub.type (not .compact) }}<span class="pub-meta-type">{{ $type }}</span>{{ end }}
+</p>

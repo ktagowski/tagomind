@@ -26,9 +26,9 @@
       {{ with or site.Params.avatarSmall site.Params.avatar }}<img src="{{ . | relURL }}" alt="" loading="eager" width="96" height="96">{{ end }}
       <span><b>{{ $hero.eyebrow | default site.Params.author }}</b><span class="hero-who-sep" aria-hidden="true"> · </span><span class="hero-who-role">{{ $hero.affiliation }}</span></span>
     </p>
-    <div class="fx-hero mt-8 flex flex-wrap items-center justify-center gap-3" style="--d:.2s">
-      <a class="btn btn-primary" href="{{ "/research/" | relURL }}">Explore research {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</a>
-      <a class="btn btn-outline" href="{{ "/products/" | relURL }}">Explore products</a>
+    <div class="hero-actions fx-hero mt-8 flex flex-wrap items-center justify-center gap-3" style="--d:.2s">
+      <a class="btn btn-lg btn-primary" href="{{ "/research/" | relURL }}">Explore research</a>
+      <a class="btn btn-lg" href="{{ "/products/" | relURL }}">Explore products</a>
       <a class="link-arrow" href="{{ "/services/#contact" | relURL }}">Discuss your project {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</a>
     </div>
   </div>
@@ -38,17 +38,18 @@
 </section>
 
 <!-- ───────────────── Selected projects ───────────────── -->
-{{/* Pinned projects, compositor path: per-card keyframes on a view timeline (see main.css). Between two projects the
-     track rests for 15% of the scroll, glides for 70% (ease-in-out) and rests for 15%; native scroll snapping (one
-     must-stop snap point per project) lands every gesture on a project. Generated from the number of projects. */}}
+{{/* Pinned projects, compositor path: per-card keyframes on a view timeline (see main.css). Scroll drives the cards 1:1
+     and is never snapped or pulled back. Between two projects the track rests for 30% of the scroll, glides for 40%
+     (ease-in-out) and rests for 30%, so most of the scroll shows one settled project: wherever a gesture stops, it
+     almost always stops on a whole project. Generated from the number of projects. */}}
 {{- $N := len .Params.practice -}}{{- $last := sub $N 1 -}}
 {{- if gt $last 0 -}}
 {{- $seg := div 100.0 $last -}}
 {{- $pts := slice (dict "pct" 0.0 "pos" 0) -}}
 {{- range $s := seq 0 (sub $last 1) -}}
   {{- $start := mul $seg $s -}}
-  {{- $pts = $pts | append (dict "pct" (add $start (mul $seg 0.15)) "pos" $s) -}}
-  {{- $pts = $pts | append (dict "pct" (add $start (mul $seg 0.85)) "pos" (add $s 1)) -}}
+  {{- $pts = $pts | append (dict "pct" (add $start (mul $seg 0.30)) "pos" $s) -}}
+  {{- $pts = $pts | append (dict "pct" (add $start (mul $seg 0.70)) "pos" (add $s 1)) -}}
 {{- end -}}
 {{- $pts = $pts | append (dict "pct" 100.0 "pos" $last) -}}
 {{- $css := "" -}}
@@ -65,7 +66,6 @@
 <section class="workspace practice-section" aria-labelledby="practice-title">
   {{/* Scroll-through: on mouse/trackpad screens app.js pins .practice-sticky and page scrolling slides the projects across. */}}
   <div class="practice-pin">
-    {{ range $i, $e := .Params.practice }}<span class="practice-snap" style="--i: {{ $i }}" aria-hidden="true"></span>{{ end }}
     <div class="practice-sticky">
   <div class="section-head fx-scroll-soft">
     <div>
@@ -117,8 +117,8 @@
     <ul class="demo-facts">{{ range first 3 . }}<li><b>{{ .value }}</b> {{ .label }}</li>{{ end }}</ul>
     {{ end }}
     <div class="mt-7 flex flex-wrap items-center gap-3">
-      {{ with $dpg }}<a class="btn btn-primary" href="{{ .RelPermalink }}">{{ i18n "read_summary" }} {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</a>{{ end }}
-      {{ with $demo.links.code }}<a class="btn btn-outline" href="{{ . }}" target="_blank" rel="noopener">{{ partial "icon.html" (dict "name" "code" "class" "size-4") }} Code</a>{{ end }}
+      {{ with $dpg }}<a class="btn btn-primary" href="{{ .RelPermalink }}">{{ i18n "read_summary" }}</a>{{ end }}
+      {{ with $demo.links.code }}<a class="btn" href="{{ . }}" target="_blank" rel="noopener">Code {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "btn-ext") }}</a>{{ end }}
     </div>
   </div>
   <figure class="media-frame demo-media fx-scroll-soft">
@@ -207,20 +207,18 @@
   <h2 id="collab-title" class="fx-scroll-soft">Work together</h2>
   <div class="collab-grid mt-8">
     <article class="collab-card fx-scroll-soft">
-      <span class="collab-icon">{{ partial "icon.html" (dict "name" "graph" "class" "size-5") }}</span>
       <h3>Research collaboration</h3>
       <p>Joint papers and datasets, or a shared problem in information discovery, extraction, or evaluation. I lead the Finance AI group at Wrocław Tech and coordinate research on AI-Tax.</p>
       <div class="collab-actions">
-        <a class="btn btn-primary" href="{{ "/research/#collaborate" | relURL }}">Propose a collaboration {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</a>
+        <a class="btn btn-primary" href="{{ "/research/#collaborate" | relURL }}">Propose a collaboration</a>
       </div>
     </article>
     <article class="collab-card fx-scroll-soft">
-      <span class="collab-icon">{{ partial "icon.html" (dict "name" "briefcase" "class" "size-5") }}</span>
       <h3>Consulting and engineering</h3>
       <p>Legal and tax AI, retrieval and extraction over messy documents, and LLM agents with evaluation you can trust. From a short advisory call to a production system your team owns.</p>
       <div class="collab-actions">
-        {{ with site.Params.booking }}<a class="btn btn-primary" href="{{ . }}" target="_blank" rel="noopener">{{ partial "icon.html" (dict "name" "calendar" "class" "size-4") }} {{ i18n "book_consultation" }}</a>{{ end }}
-        <a class="btn btn-outline" href="{{ "/services/" | relURL }}">See services</a>
+        {{ with site.Params.booking }}<a class="btn btn-primary" href="{{ . }}" target="_blank" rel="noopener">{{ i18n "book_consultation" }} {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "btn-ext") }}</a>{{ end }}
+        <a class="btn" href="{{ "/services/" | relURL }}">See services</a>
       </div>
     </article>
   </div>

@@ -11,6 +11,7 @@
       {{ partial "icon.html" (dict "name" "search" "class" "size-[1.05rem]") }}
       <input id="explorer-search" class="input" type="search" placeholder="{{ i18n "search_placeholder" }}" autocomplete="off" aria-label="{{ i18n "search_placeholder" }}">
     </label>
+    <span class="toolbar-sep" aria-hidden="true"></span>
     <label class="sr-only" for="explorer-sort">{{ i18n "sort_newest" }}</label>
     <select id="explorer-sort" class="select" aria-label="{{ i18n "sort_newest" }}">
       <option value="year_desc">{{ i18n "sort_newest" }}</option>

@@ -42,7 +42,7 @@
     <div class="about-doc">
       <div class="about-bio prose-ink">{{ $bio | safeHTML }}</div>
       <div class="about-actions">
-        <a class="btn btn-primary" href="mailto:{{ site.Params.email }}">{{ partial "icon.html" (dict "name" "mail" "class" "size-4") }} {{ site.Params.email }}</a>
+        <a class="btn btn-primary" href="mailto:{{ site.Params.email }}">{{ site.Params.email }}</a>
         <a class="link-arrow" href="{{ "/services/" | relURL }}">{{ i18n "work_with_me" }} {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</a>
       </div>
     </div>

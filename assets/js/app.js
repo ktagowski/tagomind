@@ -646,14 +646,32 @@
           if (s.classList && (s.classList.contains("fx-scroll") || s.classList.contains("fx-scroll-soft"))) k++;
         }
       }
-      e.style.transitionDelay = Math.min(idx, 5) * 70 + "ms"; // cascade: 70ms between siblings, capped
+      e.style.transitionDelay = Math.min(idx, 3) * 50 + "ms"; // cascade: 50ms between siblings, capped at 150ms
+      if (idx) e.style.setProperty("--rv", Math.min(idx, 3)); // the same cascade as staggered scroll ranges (main.css)
     });
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
         if (en.isIntersecting) { en.target.classList.add("is-in"); io.unobserve(en.target); }
       });
-    }, { rootMargin: "0px 0px -10% 0px", threshold: 0 }); // plays once the element is a tenth into view, so it is seen
+    }, { rootMargin: "0px 0px -5% 0px", threshold: 0 }); // plays once the element is on screen, so it is seen
     els.forEach(function (e) { io.observe(e); });
+    initLoadEntrance();
+  }
+
+  /* Scroll-linked entrances (main.css) cannot play for content that is already on screen when the page opens, and
+     content in the bottom band would sit part-way. At load, every scroll-linked entrance already in view is tagged
+     .fx-load, which runs the same keyframes once on time instead (main.css). Measured once, before any scroll. */
+  function initLoadEntrance() {
+    if (!scrollTimelines || reduceMotion || /[?&]still=1/.test(location.search) || !document.getAnimations) return;
+    var names = /^(rv-soft|rv-card|m-wipe|m-follow|m-scale|m-from-left|m-from-right|m-line|path-draw|path-draw-y|path-step|path-dot)$/;
+    var vh = window.innerHeight, hosts = [];
+    document.getAnimations().forEach(function (a) {
+      var tl = a.timeline, fx = a.effect, t = fx && fx.target;
+      if (!t || !tl || (window.DocumentTimeline && tl instanceof DocumentTimeline) || !names.test(a.animationName || "")) return;
+      var el = t.element || t, r = el.getBoundingClientRect();
+      if (r.top < vh && r.bottom > 0) hosts.push(el);
+    });
+    hosts.forEach(function (el) { el.classList.add("fx-load"); });
   }
 
 
@@ -676,7 +694,7 @@
     //  touch   – native horizontal scrolling with snap.
     // In the first two the slider is overflow:clip (never a scroll box), so trackpad gestures always reach the page.
     var fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-    var tall = window.matchMedia("(min-height: 700px)");
+    var tall = window.matchMedia("(min-height: 700px) and (min-width: 900px)"); // narrower, a card stacks taller than the screen and cannot pin
     var pinned = false, index = 0, geom = null;
 
     function setMode() {
@@ -718,29 +736,19 @@
       });
       update();
     }
-    var frame = false, lastY = window.pageYOffset || 0, restY = lastY, restT = null, snapOn = null;
-    function rest() { restT = null; restY = window.pageYOffset || 0; }
+    var frame = false;
     function onScroll() {
       frame = false;
       if (!pinned || !geom) return;
       // Cached geometry (refreshed by the ResizeObserver below): a scroll frame only does arithmetic, never a layout read.
-      var y = window.pageYOffset || 0, dir = y - lastY;
-      lastY = y;
-      var p = Math.max(0, Math.min(1, (y - geom.top) / geom.range));
+      var p = Math.max(0, Math.min(1, ((window.pageYOffset || 0) - geom.top) / geom.range));
       var i = Math.round(p * last);
       if (i !== index) show(i, true);
-      // Snapping is off only for a gesture that starts resting on the first or last project (or beyond it) and heads
-      // out of the section: a short scroll then leaves instead of being pulled back onto the edge project. Every other
-      // gesture keeps it, so a hard flick from inside still stops at the next project.
-      var lo = geom.top + 2, hi = geom.top + geom.range - 2;
-      var on = dir > 0 ? restY < hi : dir < 0 ? restY > lo : snapOn !== false;
-      if (on !== snapOn) { snapOn = on; document.documentElement.classList.toggle("snap-on", on); }
-      if (restT) clearTimeout(restT);
-      restT = setTimeout(rest, 160); // where the page settled (after momentum and the snap) is where the next gesture starts
     }
     function schedule() { if (!frame) { frame = true; requestAnimationFrame(onScroll); } }
 
-    // Pinned: native scroll snapping lands each gesture on a project (main.css); this only maps position → project.
+    // Pinned: scroll drives the cards directly (main.css, no snapping); this maps position → project for the dots,
+    // and the dots and arrows scroll to the middle of a project's rest stretch.
     function restTop(g, i) { return g.top + (last > 0 ? i / last : 0) * g.range; }
     function jump(i) {
       var g = pinGeometry();
@@ -944,10 +952,14 @@
         if (isNaN(target)) return;
         var grouped = raw.indexOf(",") >= 0, start = performance.now(), dur = 900;
         function fmt(v) { var f = v.toFixed(decimals); return grouped ? f.replace(/\B(?=(\d{3})+(?!\d))/g, ",") : f; }
+        // Odometer steps: the value advances in 12 steps and the text is written only when it changes, so the count
+        // costs about a dozen small text layouts instead of one every frame.
+        var shown = null;
         function tick(now) {
-          var t = Math.min(1, (now - start) / dur), e = 1 - Math.pow(1 - t, 3);
-          el.textContent = prefix + fmt(target * e) + suffix;
-          if (t < 1) requestAnimationFrame(tick); else el.textContent = text;
+          var t = Math.min(1, (now - start) / dur), e = 1 - Math.pow(1 - Math.ceil(t * 12) / 12, 3);
+          var s = t < 1 ? prefix + fmt(target * e) + suffix : text;
+          if (s !== shown) { shown = s; el.textContent = s; }
+          if (t < 1) requestAnimationFrame(tick);
         }
         requestAnimationFrame(tick);
       });

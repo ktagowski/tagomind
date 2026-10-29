@@ -11,7 +11,7 @@
       </a>
       <p class="mt-1 text-sm text-muted-foreground">{{ site.Params.author }}, {{ site.Params.authorTitle }} · {{ site.Params.role }}.</p>
       <p class="text-xs leading-relaxed text-subtle">{{ site.Params.affiliation }} · {{ site.Params.location }}</p>
-      <div class="mt-2 flex items-center gap-1.5">{{ partial "social-links.html" (dict "size" "size-[1.05rem]") }}</div>
+      <div class="social-row mt-2">{{ partial "social-links.html" (dict "size" "size-[1.05rem]") }}</div>
     </div>
 
     <nav class="footer-col fx-scroll-soft" aria-label="{{ i18n "aria_footer_site" }}">

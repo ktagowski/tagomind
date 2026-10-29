@@ -4,13 +4,17 @@
 //   npm run dev            # in another terminal (http://127.0.0.1:1313)
 //   npm run motion:check   # or: node scripts/motion-check.mjs [baseUrl] [--pages /,/projects/]
 // Standards and thresholds are documented in docs/motion.md ("Gold standards").
-import { chromium } from "playwright";
+import { chromium, devices } from "playwright";
 
 const args = process.argv.slice(2);
 const BASE = (args.find(a => /^https?:/.test(a)) || "http://127.0.0.1:1313").replace(/\/$/, "");
 const pagesArg = args.includes("--pages") ? args[args.indexOf("--pages") + 1] : null;
 const PAGES = pagesArg ? pagesArg.split(",") : ["/", "/projects/", "/projects/ai-tax/", "/publications/", "/publications/schematize/", "/research/", "/about/", "/services/"];
-const VIEWPORT = { width: 1440, height: 900 };
+// --mobile: an iPhone 13 (390px, touch, coarse pointer) with touch scroll gestures instead of a mouse/trackpad.
+const MOBILE = args.includes("--mobile");
+const DEVICE = MOBILE ? devices["iPhone 13"] : { viewport: { width: 1440, height: 900 } };
+const VIEWPORT = DEVICE.viewport;
+const SOURCE = MOBILE ? "touch" : "mouse";
 
 // Instrumentation injected before any page script runs.
 const INSTRUMENT = () => {
@@ -40,7 +44,7 @@ const INSTRUMENT = () => {
         if (r.top < vh * 0.6 && r.bottom > 80 && parseFloat(getComputedStyle(el).opacity) < 0.9) late++;
       }
       m.late = (m.late || 0) + (late ? 1 : 0);
-      m.frames.push({ t, y: window.scrollY, blocks, sticky: sticky ? sticky.getBoundingClientRect().top : null, h: document.documentElement.scrollHeight });
+      m.frames.push({ t, y: window.scrollY, blocks, sticky: sticky ? sticky.getBoundingClientRect().top : null, pin: sticky ? parseFloat(getComputedStyle(sticky).top) || 0 : null, h: document.documentElement.scrollHeight });
     }
     requestAnimationFrame(sample);
   }
@@ -54,7 +58,7 @@ async function scrollThrough(page, cdp) {
     const y0 = await page.evaluate(() => scrollY);
     if (y0 >= maxY - 2) break;
     const before = await page.evaluate(() => window.__mc.frames.length);
-    await cdp.send("Input.synthesizeScrollGesture", { x: VIEWPORT.width / 2, y: VIEWPORT.height / 2, yDistance: -650, speed: 1600, gestureSourceType: "mouse", preventFling: false });
+    await cdp.send("Input.synthesizeScrollGesture", { x: VIEWPORT.width / 2, y: VIEWPORT.height / 2, yDistance: -650, speed: 1600, gestureSourceType: SOURCE, preventFling: false });
     await page.waitForTimeout(500);
     const ya = await page.evaluate(() => scrollY); await page.waitForTimeout(700); const yb = await page.evaluate(() => scrollY);
     dirs.push({ from: before, to: await page.evaluate(() => window.__mc.frames.length), dir: 1, drift: Math.abs(yb - ya), at: Math.round(ya) });
@@ -63,7 +67,7 @@ async function scrollThrough(page, cdp) {
   }
   for (let k = 0; k < 4; k++) {
     const before = await page.evaluate(() => window.__mc.frames.length);
-    await cdp.send("Input.synthesizeScrollGesture", { x: VIEWPORT.width / 2, y: VIEWPORT.height / 2, yDistance: 650, speed: 1600, gestureSourceType: "mouse", preventFling: false });
+    await cdp.send("Input.synthesizeScrollGesture", { x: VIEWPORT.width / 2, y: VIEWPORT.height / 2, yDistance: 650, speed: 1600, gestureSourceType: SOURCE, preventFling: false });
     await page.waitForTimeout(500);
     const ya = await page.evaluate(() => scrollY); await page.waitForTimeout(700); const yb = await page.evaluate(() => scrollY);
     dirs.push({ from: before, to: await page.evaluate(() => window.__mc.frames.length), dir: -1, drift: Math.abs(yb - ya), at: Math.round(ya) });
@@ -87,7 +91,10 @@ function analyse(frames, gestures) {
       }
       if (a.sticky !== null && b.sticky !== null) {
         const d = b.sticky - a.sticky, err = Math.min(Math.abs(d), Math.abs(d + dy));
-        if (err > 1.5) { stickyJumps++; worstSticky = Math.max(worstSticky, err); }
+        // A frame that crosses the pin edge moves part of the way and then pins (or the reverse): legitimate when
+        // either end of the frame sits at the pinned position.
+        const edge = Math.abs(a.sticky - b.sticky) <= Math.abs(dy) + 1.5 && (Math.abs(b.sticky - a.pin) < 1.5 || Math.abs(a.sticky - a.pin) < 1.5);
+        if (err > 1.5 && !edge) { stickyJumps++; worstSticky = Math.max(worstSticky, err); }
       }
     }
   }
@@ -100,7 +107,7 @@ function analyse(frames, gestures) {
 const results = [];
 const browser = await chromium.launch();
 for (const path of PAGES) {
-  const page = await browser.newPage({ viewport: VIEWPORT });
+  const page = await (await browser.newContext(DEVICE)).newPage();
   await page.addInitScript(INSTRUMENT);
   const cdp = await page.context().newCDPSession(page);
   await cdp.send("Performance.enable");
@@ -132,7 +139,7 @@ for (const path of PAGES) {
   await page.close();
 }
 // Reduced motion: nothing may run.
-const rm = await browser.newPage({ viewport: VIEWPORT, reducedMotion: "reduce" });
+const rm = await (await browser.newContext({ ...DEVICE, reducedMotion: "reduce" })).newPage();
 await rm.goto(BASE + "/?theme=light", { waitUntil: "networkidle" });
 await rm.waitForTimeout(1500);
 // Time-based animations only: scroll-driven ones (progress bar) move only with the user's own scroll, which is not

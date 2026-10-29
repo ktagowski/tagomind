@@ -26,11 +26,12 @@
 
       {{ with $l }}
       <div class="mt-6 flex flex-wrap items-center gap-2.5">
-        {{ with .site }}<a class="btn btn-sm btn-primary" href="{{ . }}" target="_blank" rel="noopener">{{ partial "icon.html" (dict "name" "globe" "class" "size-4") }} {{ i18n "visit_site" }}</a>{{ end }}
-        {{ with .paper }}<a class="btn btn-sm{{ if not $l.site }} btn-primary{{ end }}" href="{{ . }}" target="_blank" rel="noopener">{{ partial "icon.html" (dict "name" "paper" "class" "size-4") }} Paper</a>{{ end }}
-        {{ with .repo }}<a class="btn btn-sm" href="{{ . }}" target="_blank" rel="noopener">{{ partial "icon.html" (dict "name" "code" "class" "size-4") }} Code</a>{{ end }}
-        {{ with .demo }}<a class="btn btn-sm" href="{{ . }}" target="_blank" rel="noopener">{{ partial "icon.html" (dict "name" "play" "class" "size-4") }} Demo</a>{{ end }}
-        {{ with .dataset }}<a class="btn btn-sm" href="{{ . }}" target="_blank" rel="noopener">{{ partial "icon.html" (dict "name" "dataset" "class" "size-4") }} Dataset</a>{{ end }}
+        {{ $ext := partial "icon.html" (dict "name" "arrow-up-right" "class" "btn-ext") }}
+        {{ with .site }}<a class="btn btn-primary" href="{{ . }}" target="_blank" rel="noopener">{{ i18n "visit_site" }} {{ $ext }}</a>{{ end }}
+        {{ with .paper }}<a class="btn{{ if not $l.site }} btn-primary{{ end }}" href="{{ . }}" target="_blank" rel="noopener">Paper {{ $ext }}</a>{{ end }}
+        {{ with .repo }}<a class="btn" href="{{ . }}" target="_blank" rel="noopener">Code {{ $ext }}</a>{{ end }}
+        {{ with .demo }}<a class="btn" href="{{ . }}" target="_blank" rel="noopener">Demo {{ $ext }}</a>{{ end }}
+        {{ with .dataset }}<a class="btn" href="{{ . }}" target="_blank" rel="noopener">Dataset {{ $ext }}</a>{{ end }}
       </div>
       {{ end }}
 
@@ -41,6 +42,7 @@
 
     <aside class="flex flex-col gap-4 lg:sticky lg:top-20 lg:self-start">
       <div class="panel meta-list">
+        {{ with .Params.context }}<div><div class="meta-label">{{ i18n "context_label" }}</div><div class="mt-1 text-sm">{{ . }}</div></div>{{ end }}
         {{ with .Params.role }}<div><div class="meta-label">{{ i18n "role_label" }}</div><div class="mt-1 text-sm">{{ . }}</div></div>{{ end }}
         {{ with .Params.year }}<div><div class="meta-label">{{ i18n "year_label" }}</div><div class="num mt-1 text-sm">{{ . }}{{ with $.Params.yearEnd }}–{{ . }}{{ end }}</div></div>{{ end }}
         {{ with .Params.venue }}<div><div class="meta-label">{{ i18n "venue_label" }}</div><div class="mt-1 text-sm">{{ . }}</div></div>{{ end }}

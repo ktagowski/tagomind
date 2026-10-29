@@ -10,8 +10,9 @@
         <span class="hidden dark:inline">{{ partial "icon.html" (dict "name" "sun" "class" "size-5") }}</span>
         <span class="inline dark:hidden">{{ partial "icon.html" (dict "name" "moon" "class" "size-5") }}</span>
       </button>
-      <a class="btn btn-sm btn-primary hidden sm:inline-flex" href="{{ "/research/#collaborate" | relURL }}">
-        {{ partial "icon.html" (dict "name" "mail" "class" "size-4") }}<span class="hidden md:inline">{{ i18n "research_collaborate" }}</span>
+      {{/* Text from md up; between sm and md the bar is tight, so the button is the mail glyph alone (labelled). */}}
+      <a class="btn btn-sm btn-primary hidden sm:inline-flex" href="{{ "/research/#collaborate" | relURL }}" aria-label="{{ i18n "research_collaborate" }}">
+        {{ partial "icon.html" (dict "name" "mail" "class" "size-4 md:hidden") }}<span class="hidden md:inline">{{ i18n "research_collaborate" }}</span>
       </a>
       <button class="icon-btn lg:hidden" data-nav-toggle aria-label="{{ i18n "aria_open_menu" }}" aria-expanded="false" aria-controls="mobile-nav">
         {{ partial "icon.html" (dict "name" "menu" "class" "size-5") }}

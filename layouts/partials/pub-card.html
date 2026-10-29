@@ -6,15 +6,12 @@
 <article class="pub-card surface-hover fx-scroll-soft flex flex-col overflow-hidden" style="--field: {{ $acc | safeCSS }}">
   <div class="pub-card-thumb">{{ partial "pub-figure.html" (dict "pub" $pub "variant" "thumb") }}</div>
   <div class="flex flex-1 flex-col p-5">
-    <div class="mb-3 flex items-start justify-between gap-2">
-      <div class="flex flex-wrap items-center gap-1.5">
-        {{ with .venue }}<span class="badge badge-venue">{{ . }}</span>{{ end }}
-        {{ with .type }}<span class="badge badge-type" data-type="{{ . | lower | replaceRE "[^a-z0-9]+" "-" }}">{{ partial "pub-type-label.html" . }}</span>{{ end }}
-      </div>
-      <span class="num shrink-0 pt-0.5 text-sm text-subtle">{{ .year }}</span>
+    <div class="mb-3 flex items-baseline justify-between gap-3">
+      {{ partial "pub-meta.html" (dict "pub" . "compact" true) }}
+      <span class="num shrink-0 text-sm text-subtle">{{ .year }}</span>
     </div>
     <h3 class="text-lg font-semibold leading-snug">{{ with $pg }}<a class="pub-title-link" href="{{ .RelPermalink }}">{{ $pub.title }}</a>{{ else }}{{ .title }}{{ end }}</h3>
-    <p class="mt-2.5 text-sm text-muted-foreground clamp-2">{{ .authors | safeHTML }}</p>
+    <p class="pub-authors mt-2.5 text-sm text-muted-foreground clamp-2">{{ range $i, $a := split .authors ", " }}{{ if $i }}, {{ end }}<span>{{ $a | safeHTML }}</span>{{ end }}</p>
     {{ with .summary }}<p class="mt-2 text-sm text-subtle clamp-3">{{ . }}</p>{{ end }}
     {{ with $pg }}<a class="link-arrow mt-auto pt-4" href="{{ .RelPermalink }}">{{ i18n "read_summary" }} {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</a>{{ end }}
   </div>

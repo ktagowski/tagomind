@@ -20,14 +20,11 @@
           {{ $pg := site.GetPage (printf "/publications/%s" .slug) }}
           <article class="pub-row fx-scroll-soft{{ if .featured }} has-figure{{ end }}" style="--field: {{ $acc | safeCSS }}">
             <div class="min-w-0">
-              <div class="mb-2 flex flex-wrap items-center gap-2">
-                {{ with .venue }}<span class="badge badge-venue">{{ . }}</span>{{ end }}
-                {{ with .type }}<span class="badge badge-type" data-type="{{ . | lower | replaceRE "[^a-z0-9]+" "-" }}">{{ partial "pub-type-label.html" . }}</span>{{ end }}
-              </div>
-              <h2 class="font-display">{{ with $pg }}<a class="pub-title-link" href="{{ .RelPermalink }}">{{ $pub.title }}</a>{{ else }}{{ .title }}{{ end }}</h2>
-              <p class="mt-1.5 text-sm text-muted-foreground">{{ .authors | safeHTML }}</p>
+              {{ partial "pub-meta.html" (dict "pub" .) }}
+              <h2 class="font-display mt-2">{{ with $pg }}<a class="pub-title-link" href="{{ .RelPermalink }}">{{ $pub.title }}</a>{{ else }}{{ .title }}{{ end }}</h2>
+              <p class="pub-authors mt-1.5 text-sm text-muted-foreground">{{ range $i, $a := split .authors ", " }}{{ if $i }}, {{ end }}<span>{{ $a | safeHTML }}</span>{{ end }}</p>
               {{ with .summary }}<p class="mt-3 max-w-3xl text-sm">{{ . }}{{ with $pg }} <a class="pub-more" href="{{ .RelPermalink }}">{{ i18n "read_summary" }} {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-3.5") }}</a>{{ end }}</p>{{ end }}
-              <div class="mt-4 flex flex-wrap items-center gap-2">
+              <div class="pub-row-links">
                 {{ partial "pub-links.html" (dict "links" .links) }}
                 {{ with .bibtex }}<button type="button" class="btn btn-sm" data-bibtex-toggle aria-expanded="false">{{ partial "icon.html" (dict "name" "quote" "class" "size-4") }} BibTeX</button>{{ end }}
               </div>

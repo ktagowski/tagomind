@@ -14,7 +14,7 @@
 {{ with site.Params.googleSiteVerification }}<meta name="google-site-verification" content="{{ . }}">{{ end }}
 {{ with site.Params.bingSiteVerification }}<meta name="msvalidate.01" content="{{ . }}">{{ end }}
 <meta name="author" content="{{ site.Params.author }}">
-<meta name="theme-color" content="#FAFAFB" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#FAFAFB" media="(prefers-color-scheme: light)">{{/* dark: hugo.yaml themeColor, kept in step with --background in main.css */}}
 <meta name="theme-color" content="{{ site.Params.themeColor }}" media="(prefers-color-scheme: dark)">
 
 <meta property="og:type" content="{{ cond $isHome "website" "article" }}">
@@ -29,7 +29,7 @@
 <meta name="twitter:description" content="{{ $desc }}">
 
 <script>
-  (function(){try{document.documentElement.classList.add('js');var q=new URLSearchParams(location.search).get('theme');var t=(q==='light'||q==='dark')?q:(localStorage.getItem('tm-theme')||(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));document.documentElement.classList.toggle('dark', t==='dark');var P=new URLSearchParams(location.search);var ac=P.get('accent'),hue=P.get('hue');var a=hue?'custom':(ac||localStorage.getItem('tm-accent')||'blue');if(a&&a!=='mono')document.documentElement.setAttribute('data-accent',a);if(a==='custom'){var hv=hue||localStorage.getItem('tm-accent-hue');if(hv)document.documentElement.setAttribute('data-accent-hue',hv);}}catch(e){}})();
+  (function(){try{document.documentElement.classList.add('js');var q=new URLSearchParams(location.search).get('theme');var t=(q==='light'||q==='dark')?q:(localStorage.getItem('tm-theme')||(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));document.documentElement.classList.toggle('dark', t==='dark');var P=new URLSearchParams(location.search);var ac=P.get('accent'),hue=P.get('hue');var a=hue?'custom':(ac||localStorage.getItem('tm-accent')||'mono');if(a&&a!=='mono')document.documentElement.setAttribute('data-accent',a);if(a==='custom'){var hv=hue||localStorage.getItem('tm-accent-hue');if(hv)document.documentElement.setAttribute('data-accent-hue',hv);}}catch(e){}})();
 </script>
 {{/* Fonts are self-hosted (static/fonts, assets/css/fonts.css). Preload the two faces used above the fold. */}}
 <link rel="preload" href="{{ "fonts/inter-normal-latin.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
