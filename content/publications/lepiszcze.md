@@ -22,4 +22,8 @@ The availability of compute and data to train larger and larger language models 
 - **Public leaderboard.** Results for the five most recent Polish language models are published on an open leaderboard, with pre-computed embeddings available on Hugging Face.
 - **A blueprint.** The paper records what worked and what did not while building the benchmark, aimed at teams doing the same for other low-resource languages.
 
+## My contribution
+
+I built the benchmark repository and led the library behind it; see the [project page](/projects/lepiszcze/).
+
 Published in the NeurIPS 2022 Datasets and Benchmarks track. See the [LEPISZCZE project page](/projects/lepiszcze/) for the benchmark infrastructure and the [CLARIN-PL Embeddings](/projects/embeddings/) library that powers it.

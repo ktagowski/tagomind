@@ -37,6 +37,6 @@ AI-Tax is institutional research and engineering work at Wrocław University of 
 
 As Research Coordinator & AI Engineer, I'm one of the lead authors on AI-Tax.
 
-- **Co-author full-stack features** across the frontend and backend: the chat/RAG interface, search, and extraction tooling.
-- **Co-build the agentic architecture** for search and extraction on LangGraph.
-- **Coordinate a team** of PhD and graduate students on the research.
+- **Research management.** Drafted the quarterly research plans and broke each research track into scoped tasks for PhD and graduate students, from method and experiments to the paper, poster, and code release.
+- **Platform engineering.** Built most of the web app (chat with citations, document search, collections, and the schema studio), the document ingestion pipeline, and the shared legal-AI core package. Co-built the agentic search and extraction layer on LangGraph.
+- **Releases and evaluation.** Ran the internal-tester release of the app, set up annotation with tax experts, and set up the storage for experiment and dataset artefacts.

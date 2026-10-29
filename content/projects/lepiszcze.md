@@ -8,7 +8,7 @@ draft: false
 logo: "img/logos/clarin-pl.png"
 year: 2022
 fields: ["NLP", "Benchmarks", "Datasets"]
-role: "Co-author"
+role: "Co-author & Benchmark Engineer"
 venue: "NeurIPS 2022"
 status: "Published"
 impact: 95
@@ -38,5 +38,8 @@ The repository provides reproducible experiment configurations, hyperparameter s
 
 ## My role
 
-Co-authored the benchmark design and implementation, contributing to the curation and standardization of task definitions and dataset integration. The work involved coordinating across 11 collaborators to establish unified evaluation protocols and baseline results across all 14 tasks.
+- **Built the benchmark repository:** the experiment configurations, the DVC pipeline, and the run scripts.
+- **Wrote most of the dataset cards** for the benchmark's tasks.
+- The benchmark runs on [CLARIN-PL Embeddings](/projects/embeddings/), the library I led.
 
+The work involved coordinating across 11 collaborators to establish unified evaluation protocols and baseline results across all 14 tasks.

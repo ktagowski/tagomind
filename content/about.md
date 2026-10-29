@@ -28,15 +28,18 @@ expertise:
   - title: "Research Engineering"
     icon: "code"
     summary: "Turning research prototypes into maintainable systems with FastAPI, PyTorch, and modern tooling."
+  - title: "Research Leadership"
+    icon: "check"
+    summary: "Research roadmaps, scoped work for PhD and graduate teams, code review, and taking projects from idea to paper and release."
 timeline:
   - year: "2022"
     title: "LEPISZCZE benchmark"
     place: "NeurIPS 2022 · Datasets & Benchmarks"
-    summary: "Co-authored a reproducible benchmark for Polish NLP across 14 tasks."
+    summary: "Built the benchmark infrastructure and co-authored a reproducible benchmark for Polish NLP across 14 tasks."
   - year: "2025–27"
     title: "Legal & tax AI at scale"
     place: "AI-Tax / Legal AI"
-    summary: "Built production systems indexing millions of legal documents for researchers and professionals."
+    summary: "Co-led engineering of production systems indexing millions of legal documents, and coordinated the research team."
   - year: "2026"
     title: "Unite! researcher discovery"
     place: "UNITE! European university alliance"
@@ -53,7 +56,7 @@ timeline:
 
 I work at the seam between research and engineering. My academic background is in **graph representation learning** and **natural language processing**, and my day-to-day is building systems that take those ideas out of papers and into tools people rely on.
 
-That has meant co-authoring **LEPISZCZE**, a NeurIPS 2022 benchmark that standardized how Polish language models are evaluated, and it has meant shipping production **legal and tax AI** platforms that index millions of documents and serve working researchers. I care about the unglamorous parts that decide whether a model is actually useful: clean datasets, honest evaluation, and software that does not fall over.
+That has meant building **LEPISZCZE**, a NeurIPS 2022 benchmark that standardized how Polish language models are evaluated, and it has meant shipping production **legal and tax AI** platforms that index millions of documents and serve working researchers. I care about the unglamorous parts that decide whether a model is actually useful: clean datasets, honest evaluation, and software that does not fall over. I also lead research: planning it, scoping it for **research teams** of PhD and graduate students, and seeing it through to papers and releases.
 
 More recently that work has grown to include **vision and generative models**: vision-language systems that read imagery and generative models that create it, like an AI pipeline for generating and editing game maps. I also founded and lead **Finance AI**, a research group at Wrocław Tech, part of the [OdysAI](https://odysai.pl) applied-AI initiative.
 

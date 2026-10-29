@@ -32,3 +32,7 @@ Paste a listing URL and the backend scrapes the property, scores it against weig
 ## Stack
 
 A Next.js + React frontend (Supabase auth) over a FastAPI backend that runs LLM agents with LangGraph; data lives in PostgreSQL with row-level security.
+
+## My contribution
+
+Sole author: product design, frontend, backend, and the research behind the scoring.

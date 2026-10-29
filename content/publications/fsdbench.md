@@ -22,4 +22,10 @@ Before a tax authority can issue a ruling, it must receive a complete descriptio
 - **A large gap to close.** The best of four tested models recovers 77% of facts on easy cases and under 49% on hard ones after 50 turns, which makes fact elicitation an open problem rather than a solved subtask.
 - **Direction for future work.** The results point to retrieval-augmented and adaptive questioning strategies as the next step for conversational tax and legal assistants.
 
+## My contribution
+
+- **Managed the research track** from method design to the ACL SRW submission.
+- **Main writer of the paper.**
+- **Built the public release:** the benchmark package and its project page.
+
 Published in the ACL 2026 Student Research Workshop in San Diego. The benchmark grew out of the AI-Tax platform work at Wrocław Tech.

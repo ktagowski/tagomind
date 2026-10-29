@@ -34,3 +34,9 @@ CLARIN-PL Embeddings wraps Hugging Face Transformers and PyTorch Lightning into 
 - Pre-configured Polish datasets: PolEmo2, KPWR-NER, NKJP-POS, and more
 - Static and transformer embeddings with Flair backend support
 - Published in NeurIPS 2022 as part of the LEPISZCZE benchmark paper
+
+## My contribution
+
+- **Led development** of the library from 2021, including code review for the team.
+- **Core engineering.** Designed the composable pipelines, the hyperparameter-search pipelines on Optuna, the test suite, and the tutorials.
+- **Coordination.** Planned the milestones toward the benchmark's first version and the stable release, and split them into tasks for the team.
