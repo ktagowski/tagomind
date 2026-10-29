@@ -9,6 +9,7 @@ year: 2025
 yearEnd: 2027
 fields: ["Legal AI", "Agentic AI", "NLP", "Graph ML", "Applications"]
 role: "Research Coordinator & AI Engineer"
+context: "University research · Wrocław Tech"
 status: "Live"
 links:
   site: "https://ai4tax.pl"

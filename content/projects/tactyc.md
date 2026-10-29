@@ -7,6 +7,7 @@ icon: "compass"
 year: 2026
 fields: ["Computer Vision", "Generative AI"]
 role: "Coordinator & Lead Developer"
+context: "Collaborative research"
 status: "Active"
 summary: "Toss A Coin to A Cartographer. AI that generates and edits game maps: vision-language models read the terrain tile by tile, generative models redraw it."
 study: "tactyc"

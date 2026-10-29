@@ -9,6 +9,7 @@ logo: "img/logos/clarin-pl.png"
 year: 2022
 fields: ["NLP", "Benchmarks"]
 role: "Lead Engineer and Coordinator"
+context: "Research software · CLARIN-PL"
 status: "Library"
 impact: 80
 featured: false

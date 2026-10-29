@@ -10,6 +10,7 @@ year: 2025
 yearEnd: 2026
 fields: ["NLP", "Legal AI", "Datasets"]
 role: "Consultant"
+context: "EU-funded collaborative research"
 status: "Active"
 impact: 88
 featured: true

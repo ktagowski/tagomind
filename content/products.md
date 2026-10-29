@@ -30,11 +30,11 @@ items:
     workflow:
       - "Move between room views and dimensioned plans."
       - "Inspect furniture and compare colours and materials."
-      - "Use the Design Lab to develop scenes from a brief in the local development workspace."
+      - "Describe a change to kitchen finishes and preview it in 3D."
     image: "img/products/flat-explorer-design.jpg"
     imageAlt: "Flat Explorer Design’s interactive room viewer with furniture dimensions and material controls."
     caption: "Design workspace · interactive 3D view"
-    access: "The online workspace requires a password. The AI scene creator is currently a local development tool."
+    access: "The online workspace requires a password. Get in touch to discuss access."
     actions:
       - label: "Ask about access"
         url: "mailto:kamil.tagowski@tagomind.com?subject=Flat%20Explorer%20Design"

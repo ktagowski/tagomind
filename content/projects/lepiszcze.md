@@ -1,6 +1,6 @@
 ---
 title: "LEPISZCZE"
-description: "LEPISZCZE: a 14-task NLP benchmark for Polish with unified evaluation infrastructure and a public leaderboard, published at NeurIPS 2022."
+description: "LEPISZCZE: evaluation infrastructure and a public leaderboard for Polish NLP. The NeurIPS 2022 paper reports 13 task-dataset pairs in its first run."
 seoTitle: "LEPISZCZE · Polish NLP benchmark (NeurIPS 2022) · project"
 papers: ["lepiszcze"]
 date: 2022-01-01
@@ -9,11 +9,12 @@ logo: "img/logos/clarin-pl.png"
 year: 2022
 fields: ["NLP", "Benchmarks", "Datasets"]
 role: "Co-author & Benchmark Engineer"
+context: "Collaborative benchmark research"
 venue: "NeurIPS 2022"
 status: "Published"
 impact: 95
 featured: true
-summary: "A 14-task NLP benchmark for Polish with unified evaluation infrastructure and public leaderboard."
+summary: "Evaluation infrastructure for Polish NLP, with versioned datasets, experiment tracking, and a public leaderboard."
 tech: ["Python", "PyTorch", "NLP", "Transformers", "Benchmarking", "Named Entity Recognition", "Sentiment Analysis", "Sequence Labeling"]
 hero: ""
 links:
@@ -23,7 +24,7 @@ links:
 study: "lepiszcze"
 ---
 
-LEPISZCZE is an NLP benchmark for Polish, published at NeurIPS 2022 (Datasets & Benchmarks track). The benchmark unifies evaluation across 14 distinct NLP tasks spanning sentiment analysis, named entity recognition, part-of-speech tagging, sequence labeling, and question answering.
+LEPISZCZE is an NLP benchmark for Polish, published at NeurIPS 2022 (Datasets & Benchmarks track). The published first run evaluated five language models on **13 task-dataset pairs**. This counts experiments pairing a task with a dataset, rather than distinct task types.
 
 ## What it is
 
@@ -41,4 +42,4 @@ The repository provides reproducible experiment configurations, hyperparameter s
 - **Built the benchmark repository** and wrote most of the dataset cards.
 - The benchmark runs on [CLARIN-PL Embeddings](/projects/embeddings/), the library I led.
 
-The work involved coordinating across 11 collaborators to establish unified evaluation protocols and baseline results across all 14 tasks.
+The work involved coordinating across 11 collaborators to establish unified evaluation protocols and baseline results.

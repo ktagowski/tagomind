@@ -35,7 +35,7 @@ timeline:
   - year: "2022"
     title: "LEPISZCZE benchmark"
     place: "NeurIPS 2022 · Datasets & Benchmarks"
-    summary: "Built the benchmark infrastructure and co-authored a reproducible benchmark for Polish NLP across 14 tasks."
+    summary: "Built the benchmark infrastructure and co-authored a Polish NLP benchmark whose first run evaluated 13 task-dataset pairs."
   - year: "2025–27"
     now: true # ongoing: marked as current on the path
     title: "Legal & tax AI at scale"

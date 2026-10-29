@@ -23,7 +23,7 @@ flat-explorer:
   mark: "Flat Explorer"
   caption: "Live product · LLM agents end to end"
 lepiszcze:
-  kicker: "Thirteen tasks, five Polish language models"
+  kicker: "13 task-dataset pairs, five Polish language models"
   mark: "LEPISZCZE"
   caption: "NeurIPS 2022 · public leaderboard"
 embeddings:

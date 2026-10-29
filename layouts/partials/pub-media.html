@@ -7,7 +7,7 @@
 <div class="pub-media{{ if $hasVideo }} is-video{{ end }} fx-scroll-soft">
   {{ if $hasVideo }}
   <figure class="media-frame">
-    <video controls preload="metadata" playsinline{{ with $m.video.poster }} poster="{{ . | relURL }}"{{ end }} width="1280" height="720" aria-label="{{ $m.video.caption | default (i18n "watch_demo") }}">
+    <video controls preload="none" playsinline{{ with $m.video.poster }} poster="{{ . | relURL }}"{{ end }} width="1280" height="720" aria-label="{{ $m.video.caption | default (i18n "watch_demo") }}">
       <source src="{{ $m.video.src | relURL }}" type="video/mp4">
     </video>
     <figcaption class="media-caption"><span>{{ $m.video.caption | default (i18n "watch_demo") }}</span></figcaption>

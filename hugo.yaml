@@ -89,8 +89,8 @@ params:
   avatar: "img/kamil-tagowski.jpg"
   avatarSmall: "img/kamil-tagowski-96.webp"
   themeColor: "#26262A"
-  tagline: "Reliable AI for complex information: information discovery, agentic extraction, and evaluation, grounded in NLP and graph learning."
-  description: "Kamil Tagowski, PhD, postdoctoral researcher at Wrocław University of Science and Technology. Research in information discovery, agentic extraction, NLP, graph learning, and evaluation, with deployed legal AI."
+  tagline: "Reliable AI for complex work and everyday decisions, grounded in research."
+  description: "Kamil Tagowski, PhD: AI researcher and engineer at Wrocław University of Science and Technology, building systems for complex professional work and independent TagoMind products."
   socials:
     - name: "GitHub"
       icon: "github"

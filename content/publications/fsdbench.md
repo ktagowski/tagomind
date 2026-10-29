@@ -1,10 +1,10 @@
 ---
 title: "FSDBench"
-seoTitle: "FSDBench: fact elicitation in Polish tax law (ACL 2026 SRW)"
+seoTitle: "FSDBench · ACL 2026 Student Research Workshop"
 project: "ai-tax"
 date: 2026-07-01
 pub: "fsdbench"
-description: "One-page summary of the Factual State Discovery Benchmark (ACL 2026 SRW): can a language model elicit all relevant facts from a taxpayer through dialogue?"
+description: "Factual State Discovery Benchmark (ACL 2026 Student Research Workshop): can a language model elicit all relevant facts from a taxpayer through dialogue?"
 lead: "A tax authority cannot rule until it knows the whole situation. FSDBench measures whether a language model can discover those facts by asking questions, and shows that even strong models leave half of the hard cases uncovered after fifty turns."
 hook: "Can a language model find out the facts of a tax case just by asking questions?"
 problem: "A tax assistant needs a complete factual account before it can reason about a case. FSDBench asks whether language models can discover those facts through dialogue."

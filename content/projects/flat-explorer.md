@@ -8,9 +8,11 @@ logo: "img/logos/flat-explorer.svg"
 year: 2026
 fields: ["Agentic AI", "Applications"]
 role: "Author"
-status: "Live"
+context: "Independent product · TagoMind"
+status: "Early access"
 links:
   site: "https://flat-explorer.tagomind.com/"
+  demo: "https://flat-explorer.tagomind.com/demo"
 impact: 72
 featured: true
 summary: "AI-assisted flat hunting: scores apartment listings, summarizes visits, and compares options side by side."
@@ -32,6 +34,10 @@ Paste a listing URL and the backend scrapes the property, scores it against weig
 ## Stack
 
 A Next.js + React frontend (Supabase auth) over a FastAPI backend that runs LLM agents with LangGraph; data lives in PostgreSQL with row-level security.
+
+## Access
+
+A public demo uses sample data without sign-up. The full application is in early access, with access requests handled through the product website. See [Products](/products/#flat-explorer) for the demo and access links.
 
 ## My contribution
 

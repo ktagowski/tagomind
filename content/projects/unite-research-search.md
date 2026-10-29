@@ -7,6 +7,7 @@ draft: false
 year: 2026
 fields: ["NLP", "Graph ML", "Applications"]
 role: "Consultant"
+context: "University collaboration · UNITE! alliance"
 status: "Live"
 links:
   site: "https://caai-sm.com/"

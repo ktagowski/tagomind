@@ -9,6 +9,7 @@ icon: "trending-up"
 year: 2026
 fields: ["Applications"]
 role: "Founder & Lead"
+context: "University research group · Wrocław Tech"
 status: "Active"
 summary: "An applied finance-AI research group in active development, building out the team and the system."
 links:
