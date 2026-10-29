@@ -646,13 +646,13 @@
           if (s.classList && (s.classList.contains("fx-scroll") || s.classList.contains("fx-scroll-soft"))) k++;
         }
       }
-      e.style.transitionDelay = Math.min(idx, 4) * 45 + "ms";
+      e.style.transitionDelay = Math.min(idx, 5) * 70 + "ms"; // cascade: 70ms between siblings, capped
     });
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
         if (en.isIntersecting) { en.target.classList.add("is-in"); io.unobserve(en.target); }
       });
-    }, { rootMargin: "0px 0px 12% 0px", threshold: 0 }); // start just before entering: settled by the time you read it
+    }, { rootMargin: "0px 0px -10% 0px", threshold: 0 }); // plays once the element is a tenth into view, so it is seen
     els.forEach(function (e) { io.observe(e); });
   }
 
@@ -711,27 +711,32 @@
     // transition (CSS, 0.9s) to that project; scroll speed never scrubs the motion.
     function show(i, entering) {
       i = Math.max(0, Math.min(last, i));
-      var changed = i !== index;
       index = i;
       slider.style.setProperty("--slide", i);
       cards.forEach(function (c, k) {
         c.classList.toggle("is-current", k === i);
-        if (k !== i) c.classList.remove("is-entering");
       });
-      if (changed && entering && !reduceMotion) {
-        var cur = cards[i];
-        cur.classList.remove("is-entering"); void cur.offsetWidth; cur.classList.add("is-entering"); // restart the build
-      }
       update();
     }
-    var frame = false;
+    var frame = false, lastY = window.pageYOffset || 0, restY = lastY, restT = null, snapOn = null;
+    function rest() { restT = null; restY = window.pageYOffset || 0; }
     function onScroll() {
       frame = false;
       if (!pinned || !geom) return;
       // Cached geometry (refreshed by the ResizeObserver below): a scroll frame only does arithmetic, never a layout read.
-      var p = Math.max(0, Math.min(1, ((window.pageYOffset || 0) - geom.top) / geom.range));
+      var y = window.pageYOffset || 0, dir = y - lastY;
+      lastY = y;
+      var p = Math.max(0, Math.min(1, (y - geom.top) / geom.range));
       var i = Math.round(p * last);
       if (i !== index) show(i, true);
+      // Snapping is off only for a gesture that starts resting on the first or last project (or beyond it) and heads
+      // out of the section: a short scroll then leaves instead of being pulled back onto the edge project. Every other
+      // gesture keeps it, so a hard flick from inside still stops at the next project.
+      var lo = geom.top + 2, hi = geom.top + geom.range - 2;
+      var on = dir > 0 ? restY < hi : dir < 0 ? restY > lo : snapOn !== false;
+      if (on !== snapOn) { snapOn = on; document.documentElement.classList.toggle("snap-on", on); }
+      if (restT) clearTimeout(restT);
+      restT = setTimeout(rest, 160); // where the page settled (after momentum and the snap) is where the next gesture starts
     }
     function schedule() { if (!frame) { frame = true; requestAnimationFrame(onScroll); } }
 
@@ -843,9 +848,9 @@
         if (!e.movementX && !e.movementY) return;
         var r = el.getBoundingClientRect();
         var dx = (e.clientX - (r.left + r.width / 2)) / r.width, dy = (e.clientY - (r.top + r.height / 2)) / r.height;
-        el.style.transform = "translate(" + (dx * 8).toFixed(1) + "px," + (dy * 6).toFixed(1) + "px)";
+        el.style.translate = (dx * 8).toFixed(1) + "px " + (dy * 6).toFixed(1) + "px";
       });
-      el.addEventListener("pointerleave", function () { el.style.transform = ""; });
+      el.addEventListener("pointerleave", function () { el.style.translate = ""; });
     });
   }
 

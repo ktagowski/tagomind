@@ -191,7 +191,7 @@
   </div>
   <ol class="path fx-scroll-soft">
     {{ range . }}
-    <li{{ if eq .year "Now" }} class="is-now"{{ end }}>
+    <li{{ if or (eq .year "Now") .now }} class="is-now"{{ end }}>
       <span class="path-year num">{{ .year }}</span>
       <h3>{{ .title }}</h3>
       <p class="path-place">{{ .place }}</p>
