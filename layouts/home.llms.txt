@@ -15,7 +15,7 @@ Profile: {{ . }}{{ end }}
 Book an intro call: {{ . }}{{ end }}
 
 ## Research and collaboration
-Research interests: fact elicitation and adaptive questioning; agentic schema generation and document-grounded refinement; reproducible benchmarks and deployment evaluation.
+{{ with site.GetPage "/research" }}{{ .Description }}{{ end }}
 Explore research: {{ "research/" | absURL }}
 Collaboration inquiries: {{ "research/#collaborate" | absURL }}
 

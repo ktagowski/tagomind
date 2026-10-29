@@ -5,11 +5,13 @@
   "private": true,
   "scripts": {
     "dev": "hugo server",
-    "build": "hugo --gc --minify"
+    "build": "hugo --gc --minify",
+    "motion:check": "node scripts/motion-check.mjs"
   },
   "devDependencies": {
     "@tailwindcss/cli": "^4.1.0",
     "@tailwindcss/typography": "^0.5.16",
+    "playwright": "1.64.1",
     "tailwindcss": "^4.1.0"
   }
 }

@@ -34,6 +34,8 @@
 {{/* Fonts are self-hosted (static/fonts, assets/css/fonts.css). Preload the two faces used above the fold. */}}
 <link rel="preload" href="{{ "fonts/inter-normal-latin.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="{{ "fonts/fraunces-normal-latin.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
+{{/* The hero headline's accented words are Fraunces italic: preloaded so the headline never re-wraps when it swaps in. */}}
+<link rel="preload" href="{{ "fonts/fraunces-italic-latin.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
 
 <link rel="icon" href="{{ "favicon.svg" | relURL }}" type="image/svg+xml">
 <link rel="apple-touch-icon" href="{{ "favicon.svg" | relURL }}">

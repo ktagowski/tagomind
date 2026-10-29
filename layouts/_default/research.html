@@ -1,61 +1,48 @@
 {{ define "main" }}
-<div class="workspace research-journal">
-  <header class="rj-header">
-    <div class="rj-masthead"><span>Research &amp; collaboration</span><a href="{{ "/publications/" | relURL }}">Complete publication list {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-3.5") }}</a></div>
-    <div class="rj-title-row"><h1>Research<span>.</span></h1><p>{{ .Params.lead }}</p></div>
-    <div class="rj-byline"><span>Kamil Tagowski, PhD</span><span>Postdoctoral Researcher · Wrocław Tech</span><a href="{{ "/about/" | relURL }}">About {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-3.5") }}</a></div>
-  </header>
-
-  <nav class="rj-nav" aria-label="Research areas">
-    {{ range .Params.areas }}<a href="#{{ .id }}" data-research-link="{{ .id }}">{{ .label }}</a>{{ end }}
-    <a class="rj-nav-contact" href="#collaborate">Work with me {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-3.5 rotate-90") }}</a>
-  </nav>
-
-  {{ range $index, $area := .Params.areas }}
-  <section id="{{ .id }}" class="rj-chapter" data-research-area aria-labelledby="{{ .id }}-title">
-    <div class="rj-chapter-heading"><span class="rj-label">{{ .label }}</span><h2 id="{{ .id }}-title">{{ .title }}</h2><p>{{ .summary }}</p></div>
-    {{ if eq .id "vision" }}
-    <div class="rj-vision">
-      <a class="rj-tactyc" href="{{ "/projects/tactyc/" | relURL }}" aria-label="Explore TACTYC research">
-        <span class="rj-tactyc-meta">Toss A Coin to A Cartographer <span>Active research</span></span>
-        <span class="rj-tactyc-name">TACTYC{{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-8") }}</span>
-        <span class="rj-tactyc-role">Coordinator &amp; Co-author</span>
-      </a>
-      <div class="rj-vision-methods"><div><span class="rj-label">Vision-language models</span><h3>Read the terrain.</h3><p>Understand game maps tile by tile.</p></div><div><span class="rj-label">Generative models</span><h3>Generate &amp; edit.</h3><p>Redraw maps from their visual structure.</p></div><a class="link-arrow" href="{{ "/projects/tactyc/" | relURL }}">About the research {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</a></div>
+{{ $fieldColors := dict }}
+{{ range hugo.Data.fields }}{{ $fieldColors = merge $fieldColors (dict .label .color) }}{{ end }}
+<div class="workspace research-page">
+  <div class="page-head fx-rise">
+    <h1>{{ partial "title-words.html" .Title }}</h1>
+    {{ with .Params.lead }}<p class="lead">{{ . }}</p>{{ end }}
+    {{ with .Params.intro }}<p class="max-w-3xl text-muted-foreground">{{ . }}</p>{{ end }}
+    <div class="flex flex-wrap gap-x-6 gap-y-2">
+      <a class="link-arrow" href="{{ "/publications/" | relURL }}">{{ i18n "all_publications" }} {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</a>
+      <a class="link-arrow" href="{{ "/about/" | relURL }}">About me {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</a>
     </div>
-    {{ else }}
-    <div class="rj-evidence{{ if eq .id "graphs" }} rj-evidence-graphs{{ end }}">
-      <div class="rj-work-list">
-        {{ range $slug := .works }}
-        {{ with site.GetPage (printf "/publications/%s" $slug) }}
-        {{ $record := index (where hugo.Data.publications "slug" $slug) 0 }}
-        <article class="rj-work">
-          <div class="rj-work-meta"><span>{{ $record.venue }}{{ if eq $record.type "Demo" }} · System Demonstrations{{ else if eq $record.type "Datasets & Benchmarks" }} · Datasets &amp; Benchmarks{{ end }}</span>{{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-4") }}</div>
-          <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
-          {{ with .Params.hook }}<p>{{ . }}</p>{{ end }}
-          <div class="rj-work-links"><a href="{{ .RelPermalink }}">Read the paper summary</a>{{ with $record.links.code }}<a href="{{ . }}" target="_blank" rel="noopener">Code ↗</a>{{ end }}</div>
-        </article>
-        {{ end }}
-        {{ end }}
+  </div>
+
+  {{/* One row per interest: label and question on the left, the thinking on the right. */}}
+  <div class="research-list">
+    {{ range .Params.areas }}
+    <section id="{{ .id }}" class="research-interest fx-scroll-soft" aria-labelledby="{{ .id }}-title"{{ with index $fieldColors (.field | default "") }} style="--field: {{ . | safeCSS }}"{{ end }}>
+      <div>
+        <span class="eyebrow"><span class="tag-dot" aria-hidden="true"></span>{{ .label }}</span>
+        <h2 id="{{ .id }}-title">{{ .title }}</h2>
       </div>
-      {{ if eq .id "language" }}
-      <figure class="rj-demo">
-        <div class="rj-demo-caption"><span>Schematize / in use</span><span>EMNLP 2026 demo</span></div>
-        <video controls playsinline preload="none" poster="{{ "/papers/schematize-demo-poster.jpg" | relURL }}" aria-label="Schematize: a real schema generation run"><source src="{{ "/papers/schematize-emnlp2026-demo.mp4" | relURL }}" type="video/mp4"><a href="{{ "/papers/schematize-emnlp2026-demo.mp4" | relURL }}">Watch the Schematize demo</a></video>
-        <figcaption>A real run: expert dialogue, schema refinement, and extraction.</figcaption>
-        <div class="rj-related"><span class="rj-label">Research in deployed systems</span><a href="{{ "/projects/ai-tax/" | relURL }}">AI-Tax {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-4") }}</a><a href="{{ "/projects/juddges/" | relURL }}">JuDDGES {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-4") }}</a></div>
-      </figure>
-      {{ else }}
-      <aside class="rj-graph-note"><span class="rj-label">A continuing thread</span><p>From dynamic graphs to complex information.</p><span>Representation learning and evaluation connect this earlier work to the systems I build today.</span><a href="{{ "/publications/embedding-alignment-dynamic-networks/" | relURL }}">Embedding alignment study · ICCS 2021 {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-4") }}</a></aside>
+      <div class="research-interest-text">
+        {{ with .context }}<p class="research-interest-context">{{ . }}</p>{{ end }}
+        {{ with .body }}<div class="prose-ink">{{ $.RenderString (dict "display" "block") . }}</div>{{ end }}
+      </div>
+    </section>
+    {{ end }}
+  </div>
+
+  {{ with .Params.collaboration }}
+  <section id="collaborate" class="band research-band fx-scroll-soft" aria-labelledby="collab-title">
+    <div>
+      <h2 id="collab-title">{{ .title }}</h2>
+      {{ with .intro }}<p>{{ . }}</p>{{ end }}
+    </div>
+    {{ with .links }}
+    <div class="flex flex-wrap gap-3">
+      {{ range $i, $l := . }}
+      {{ $mail := hasPrefix $l.url "mailto:" }}
+      <a class="btn {{ if eq $i 0 }}btn-primary{{ else }}btn-outline{{ end }}" href="{{ if hasPrefix $l.url "/" }}{{ $l.url | relURL }}{{ else }}{{ $l.url }}{{ end }}">{{ if $mail }}{{ partial "icon.html" (dict "name" "mail" "class" "size-4") }} {{ end }}{{ $l.label }}{{ if not $mail }} {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}{{ end }}</a>
       {{ end }}
     </div>
     {{ end }}
   </section>
   {{ end }}
-
-  <section id="collaborate" class="rj-contact" aria-labelledby="rj-contact-title">
-    <div><span class="rj-label">Collaboration</span><h2 id="rj-contact-title">Work with me.</h2><p>Tell me what you need to solve, the data you have, and what a useful result looks like.</p><a class="rj-email" href="mailto:{{ site.Params.email }}">{{ site.Params.email }} {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-5") }}</a></div>
-    <div class="rj-contact-options"><a href="{{ "/services/" | relURL }}"><span>Applied AI</span><strong>Consulting &amp; implementation {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-4") }}</strong></a><a href="mailto:{{ site.Params.email }}?subject=Research%20collaboration"><span>Research partnerships</span><strong>Joint experiments &amp; publications {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-4") }}</strong></a><p>Sponsored research through institutional arrangements.</p></div>
-  </section>
 </div>
 {{ end }}

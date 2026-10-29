@@ -37,9 +37,35 @@
 </section>
 
 <!-- ───────────────── Selected projects ───────────────── -->
+{{/* Pinned projects, compositor path: per-card keyframes on a view timeline (see main.css). Between two projects the
+     track rests for 15% of the scroll, glides for 70% (ease-in-out) and rests for 15%; native scroll snapping (one
+     must-stop snap point per project) lands every gesture on a project. Generated from the number of projects. */}}
+{{- $N := len .Params.practice -}}{{- $last := sub $N 1 -}}
+{{- if gt $last 0 -}}
+{{- $seg := div 100.0 $last -}}
+{{- $pts := slice (dict "pct" 0.0 "pos" 0) -}}
+{{- range $s := seq 0 (sub $last 1) -}}
+  {{- $start := mul $seg $s -}}
+  {{- $pts = $pts | append (dict "pct" (add $start (mul $seg 0.15)) "pos" $s) -}}
+  {{- $pts = $pts | append (dict "pct" (add $start (mul $seg 0.85)) "pos" (add $s 1)) -}}
+{{- end -}}
+{{- $pts = $pts | append (dict "pct" 100.0 "pos" $last) -}}
+{{- $css := "" -}}
+{{- range $k := seq 0 $last -}}
+  {{- $css = printf "%s@keyframes pk%d{" $css $k -}}
+  {{- range $pts -}}
+    {{- $d := cond (eq .pos $k) 0 1 -}}
+    {{- $css = printf "%s%.3f%%{translate:calc(%d * (-100%% - 1rem)) 0;opacity:%.2f;scale:%.3f;animation-timing-function:cubic-bezier(.65,0,.35,1)}" $css .pct .pos (sub 1.0 (mul $d 0.7)) (sub 1.0 (mul $d 0.06)) -}}
+  {{- end -}}
+  {{- $css = printf "%s}" $css -}}
+{{- end -}}
+<style>{{ $css | safeCSS }}</style>
+{{- end }}
 <section class="workspace practice-section" aria-labelledby="practice-title">
   {{/* Scroll-through: on mouse/trackpad screens app.js pins .practice-sticky and page scrolling slides the projects across. */}}
-  <div class="practice-pin"><div class="practice-sticky">
+  <div class="practice-pin">
+    {{ range $i, $e := .Params.practice }}<span class="practice-snap" style="--i: {{ $i }}" aria-hidden="true"></span>{{ end }}
+    <div class="practice-sticky">
   <div class="section-head fx-scroll-soft">
     <div>
       <h2 id="practice-title">Selected projects</h2>
@@ -54,7 +80,7 @@
   <div id="practice-slider" class="practice-slider mt-8" role="region" aria-label="Selected projects" tabindex="0">
     {{ range $i, $entry := .Params.practice }}
     {{ with site.GetPage (printf "/projects/%s" .page) }}
-    <article class="practice-card fx-scroll-soft" data-project="{{ $entry.page }}">
+    <article class="practice-card" data-project="{{ $entry.page }}" style="--pk: pk{{ $i }}">
       <div class="practice-copy">
         <div class="practice-card-top"><span class="practice-category">{{ $entry.category }}</span><span class="practice-project-number num">{{ printf "%d of %d" (add $i 1) (len $.Params.practice) }}</span></div>
         <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
@@ -70,17 +96,10 @@
     {{ end }}
     {{ end }}
   </div>
-  <div class="practice-scroll-progress" aria-hidden="true"><span></span></div>
-  </div></div>
-</section>
-
-<!-- ───────────────── In numbers ───────────────── -->
-{{ $pubCount := len hugo.Data.publications }}
-<section class="workspace !pt-4" aria-label="In numbers">
-  <div class="numbers">
-    <div class="fx-scroll-soft"><b>{{ $pubCount }}</b><span>peer-reviewed papers</span><small>EMNLP, ACL, NeurIPS, ICCS, Knowledge-Based Systems</small></div>
-    {{ range .Params.numbers }}<div class="fx-scroll-soft"><b>{{ .value }}</b><span>{{ .label }}</span><small>{{ .source }}</small></div>{{ end }}
+  <div class="practice-dots" aria-label="Choose a project">
+    {{ range $i, $entry := .Params.practice }}{{ with site.GetPage (printf "/projects/%s" .page) }}<button type="button" data-practice-dot="{{ $i }}" aria-label="{{ .Title }}"{{ if eq $i 0 }} aria-current="true"{{ end }}></button>{{ end }}{{ end }}
   </div>
+  </div></div>
 </section>
 
 <!-- ───────────────── Watch it work: the paper with a real demo ───────────────── -->
@@ -88,7 +107,7 @@
 {{ range hugo.Data.publications }}{{ if and (not $demo.slug) .media }}{{ if .media.video }}{{ $demo = . }}{{ end }}{{ end }}{{ end }}
 {{ with $demo.slug }}
 {{ $dpg := site.GetPage (printf "/publications/%s" .) }}
-<section class="workspace demo-section" aria-labelledby="demo-title" style="--field: oklch(0.62 0.14 200)">
+<section class="workspace demo-section" aria-labelledby="demo-title" style="--field: {{ partial "pub-accent.html" $demo.type | safeCSS }}">
   <div class="demo-copy fx-scroll-soft">
     <p class="demo-kicker">{{ $demo.venue }} · {{ partial "pub-type-label.html" $demo.type }}</p>
     <h2 id="demo-title">Watch an agent team design a legal extraction schema</h2>
@@ -120,29 +139,9 @@
     </div>
     <a class="link-arrow" href="{{ "/publications/" | relURL }}">{{ i18n "all_publications" }} {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</a>
   </div>
-  {{ $typeAccents := dict "Demo" "oklch(0.62 0.14 200)" "Conference" "oklch(0.62 0.13 255)" "Workshop" "oklch(0.6 0.15 300)" "Journal" "oklch(0.6 0.1 168)" "Datasets & Benchmarks" "oklch(0.63 0.13 32)" }}
   {{ $featured := where . "featured" true }}
   <div class="mt-8 grid gap-4 lg:grid-cols-3">
-    {{ range first 3 (cond (gt (len $featured) 0) $featured .) }}{{ $pub := . }}
-      {{ $acc := or (index $typeAccents .type) "var(--brand)" }}
-      {{ $pg := site.GetPage (printf "/publications/%s" .slug) }}
-      <article class="pub-card surface-hover fx-scroll-soft flex flex-col overflow-hidden" style="--field: {{ $acc | safeCSS }}">
-        <div class="aspect-[16/7] border-b border-border">{{ partial "pub-figure.html" (dict "pub" $pub "variant" "thumb") }}</div>
-        <div class="flex flex-1 flex-col p-5">
-          <div class="mb-3 flex items-start justify-between gap-2">
-            <div class="flex flex-wrap items-center gap-1.5">
-              {{ with .venue }}<span class="badge badge-venue">{{ . }}</span>{{ end }}
-              {{ with .type }}<span class="badge badge-type" data-type="{{ . | lower | replaceRE "[^a-z0-9]+" "-" }}">{{ partial "pub-type-label.html" . }}</span>{{ end }}
-            </div>
-            <span class="num shrink-0 pt-0.5 text-sm text-subtle">{{ .year }}</span>
-          </div>
-          <h3 class="text-lg font-semibold leading-snug">{{ with $pg }}<a class="pub-title-link" href="{{ .RelPermalink }}">{{ $pub.title }}</a>{{ else }}{{ .title }}{{ end }}</h3>
-          <p class="mt-2.5 text-sm text-muted-foreground clamp-2">{{ .authors | safeHTML }}</p>
-          {{ with .summary }}<p class="mt-2 text-sm text-subtle clamp-3">{{ . }}</p>{{ end }}
-          {{ with $pg }}<a class="link-arrow mt-auto pt-4" href="{{ .RelPermalink }}">{{ i18n "read_summary" }} {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</a>{{ end }}
-        </div>
-      </article>
-    {{ end }}
+    {{ range first 3 (cond (gt (len $featured) 0) $featured .) }}{{ partial "pub-card.html" (dict "pub" .) }}{{ end }}
   </div>
   <p class="mt-6 text-muted-foreground fx-scroll-soft"><a class="link-arrow" href="{{ "/publications/rafen/" | relURL }}">RAFEN · Graph representation learning {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</a></p>
 </section>
@@ -155,14 +154,13 @@
     <h2 id="home-research-title">Questions<br>I explore</h2>
     <a class="link-arrow" href="{{ "/research/" | relURL }}">Research &amp; collaboration {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-4") }}</a>
     {{/* Stage: the figure of the direction currently being read, swapped by app.js as rows cross the viewport. */}}
-    {{ $typeAccents := dict "Demo" "oklch(0.62 0.14 200)" "Conference" "oklch(0.62 0.13 255)" "Workshop" "oklch(0.6 0.15 300)" "Journal" "oklch(0.6 0.1 168)" "Datasets & Benchmarks" "oklch(0.63 0.13 32)" }}
     <div class="home-research-stage" aria-hidden="true">
       {{ range $i, $d := .Params.directions }}
         {{ $pg := site.GetPage $d.url }}
         <div class="stage-item{{ if eq $i 0 }} is-active{{ end }}" data-stage="{{ $i }}">
           {{ if and $pg (eq $pg.Section "publications") }}
             {{ $pub := dict }}{{ range hugo.Data.publications }}{{ if eq .slug $pg.Params.pub }}{{ $pub = . }}{{ end }}{{ end }}
-            <div class="stage-figure" style="--field: {{ (or (index $typeAccents (or $pub.type "")) "var(--brand)") | safeCSS }}">{{ partial "pub-figure.html" (dict "pub" $pub "variant" "full") }}</div>
+            <div class="stage-figure" style="--field: {{ partial "pub-accent.html" $pub.type | safeCSS }}">{{ partial "pub-figure.html" (dict "pub" $pub "variant" "full") }}</div>
           {{ else if $pg }}
             {{ partial "project-study.html" (dict "page" $pg "variant" "thumb") }}
           {{ end }}

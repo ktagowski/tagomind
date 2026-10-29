@@ -4,7 +4,7 @@
 {{ $primary := index $fields 0 | default "" }}
 {{ $color := "" }}
 {{ range hugo.Data.fields }}{{ if eq .label $primary }}{{ $color = .color }}{{ end }}{{ end }}
-<article class="workspace"{{ with $color }} style="--field: {{ . | safeCSS }}"{{ end }}>
+<article class="workspace study-scope" data-study="{{ .Params.study | default "generic" }}"{{ with $color }} style="--field: {{ . | safeCSS }}"{{ end }}>
   <a class="link-arrow mb-6 inline-flex" href="{{ "/projects/" | relURL }}">
     <span class="rotate-180">{{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</span> {{ i18n "all_projects" }}
   </a>
@@ -69,7 +69,7 @@
       <a class="pager-tile" href="{{ .RelPermalink }}"><small>{{ partial "icon.html" (dict "name" "arrow-right" "class" "rotate-180") }} {{ i18n "previous" }}</small><strong>{{ .Title }}</strong></a>
     {{ end }}
     {{ with .NextInSection }}
-      <a class="pager-tile is-next" href="{{ .RelPermalink }}"><small>{{ i18n "next" }} {{ partial "icon.html" (dict "name" "arrow-right" "class" "") }}</small><strong>{{ .Title }}</strong></a>
+      <a class="pager-tile is-next" href="{{ .RelPermalink }}"><small>{{ i18n "next" }}{{ partial "icon.html" (dict "name" "arrow-right" "class" "pager-arrow") }}</small><strong>{{ .Title }}</strong></a>
     {{ end }}
   </nav>
 </article>

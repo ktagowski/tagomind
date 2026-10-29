@@ -59,6 +59,34 @@ Sources: [Chrome docs on cross-document view transitions](https://developer.chro
 
 ---
 
+## Gold standards (automated)
+
+Every change to motion must pass `npm run motion:check` (scripts/motion-check.mjs) against a running dev server. It scrolls eight pages with real Chrome scroll gestures, momentum included, and fails on any of the following.
+
+| # | Standard | Threshold | Why it matters |
+|---|---|---|---|
+| G1 | No scroll takeover: vertical wheel or touch input is never `preventDefault`ed | 0 | Taking over the wheel always feels sticky at the edges of the taken-over area |
+| G2 | No script writes to the scroll position while the user scrolls | 0 | Programmatic scrolling fights the user's momentum and reads as a jump |
+| G3 | Scrolling never gets stuck and never reverses mid-gesture | 0 | A stuck or reversing page is the most visible kind of jank |
+| G4 | Layout shift during load and scroll | CLS ≤ 0.001 | Shifts read as jumps; the italic headline face is preloaded for this reason |
+| G5 | In-flow blocks move exactly with the scroll | 0 frames off by more than 1.5px | Catches late layout changes, height toggles and transforms on whole sections |
+| G6 | The pinned projects panel never jumps | 0 frames | It must either stay put or move exactly with the scroll |
+| G7 | No long tasks while scrolling | 0 | A task over 50ms drops frames |
+| G8 | No layout work during scroll | ≤ 0.05 layouts per frame | Layout reads after style writes force a full layout every frame; scroll handlers read cached geometry only (ResizeObserver refreshes it), and SVG parts animate opacity only |
+| G9 | Nothing animates off screen | 0 canvas redraws, 0 running infinite animations | Off-screen loops cost battery and frames; the hero network stops when scrolled away, glows and badges pause via `initAmbientPause` |
+| G10 | Reduced motion | 0 running animations | Everything shows its end state instantly |
+| G11 | Nothing moves after a gesture ends | 0 drift | Catches snap pull and late programmatic scrolling |
+| G12 | No late reveals | 0 frames | Revealed content is at least 90% visible before its top reaches 60% of the viewport; reveals start 12% below the fold |
+
+Rules that keep these green:
+- Animate only `transform`, `translate`, `scale` and `opacity`. On SVG parts, animate `opacity` only; move the whole drawing instead.
+- Scroll handlers do arithmetic on cached geometry. Measure on load, resize, font load and through a `ResizeObserver` on the body, never per frame.
+- Pointer effects ignore the synthetic zero-movement `pointermove` Chrome sends after each scroll step.
+- Loops pause off screen. Anything that writes the scroll position or prevents wheel input needs a new standard first.
+
+
+> **Status after the restore (2026-10-29).** The cuts recommended in Parts 2 and 3 were applied once and then reverted. Removing motion was the wrong response to the review. The motion is back (reveals, title words, glows and drift, draw-ins, progress bar, scroll cue, spotlight, count-up), rebuilt so every gold standard above passes. Count-up skips ranks and fractions ("Top 2", "4 of 7") so it never shows a false intermediate value.
+
 ## Part 2. Review of the current site
 
 Verdicts: **keep** as is, **tune** (keep the idea, change parameters), **cut**.

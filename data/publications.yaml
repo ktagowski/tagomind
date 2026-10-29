@@ -6,7 +6,7 @@
   colors:                      # sampled from the poster and video header bar
     accent: "#447c74"
     plate: "#447c74"
-    ink: "#f3f1e7"
+    ink: "#ffffff"                # the poster sets white on this teal; cream measured 4.2:1
   media:
     video:
       src: "/papers/schematize-emnlp2026-demo.mp4"

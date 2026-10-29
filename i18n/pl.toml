@@ -112,7 +112,3 @@ other = "Problem"
 other = "Główny wynik"
 [read_paper]
 other = "Przeczytaj artykuł"
-[presented_at]
-other = "Zaprezentowano na"
-[download_pdf]
-other = "Pobierz PDF"

@@ -20,7 +20,7 @@
       <a class="pager-tile" href="{{ .RelPermalink }}"><small>{{ partial "icon.html" (dict "name" "arrow-right" "class" "rotate-180") }} {{ i18n "newer_note" }}</small><strong>{{ .Title }}</strong></a>
     {{ end }}
     {{ with .PrevInSection }}
-      <a class="pager-tile is-next" href="{{ .RelPermalink }}"><small>{{ i18n "older_note" }} {{ partial "icon.html" (dict "name" "arrow-right" "class" "") }}</small><strong>{{ .Title }}</strong></a>
+      <a class="pager-tile is-next" href="{{ .RelPermalink }}"><small>{{ i18n "older_note" }}{{ partial "icon.html" (dict "name" "arrow-right" "class" "pager-arrow") }}</small><strong>{{ .Title }}</strong></a>
     {{ end }}
   </nav>
 </article>

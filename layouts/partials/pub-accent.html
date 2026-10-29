@@ -1,0 +1,3 @@
+{{- /* Accent colour for a publication type. Usage: {{ $acc := partial "pub-accent.html" .type }} */ -}}
+{{- $accents := dict "Demo" "oklch(0.62 0.14 200)" "Conference" "oklch(0.62 0.13 255)" "Workshop" "oklch(0.6 0.15 300)" "Journal" "oklch(0.6 0.1 168)" "Datasets & Benchmarks" "oklch(0.63 0.13 32)" -}}
+{{- return (or (index $accents (or . "")) "var(--brand)") -}}

@@ -237,8 +237,8 @@
     position: sticky; top: 0; z-index: 50;
     border-bottom: 1px solid var(--border);
     background: color-mix(in oklch, var(--background) 72%, transparent);
-    backdrop-filter: blur(16px) saturate(150%);
-    -webkit-backdrop-filter: blur(16px) saturate(150%);
+    backdrop-filter: blur(12px) saturate(140%);
+    -webkit-backdrop-filter: blur(12px) saturate(140%);
   }
   /* Scrolled state changes paint only (background, shadow), never height: the bar is in flow, so a height change would shift the page. */
   .topbar { transition: background-color .25s, box-shadow .25s; }
@@ -428,7 +428,7 @@
   .explorer-grid.is-list > .card { flex-direction: row; align-items: stretch; }
   .explorer-grid.is-list .card-media { aspect-ratio: auto; width: 9rem; flex: none; border-bottom: 0; border-right: 1px solid var(--border); }
   .explorer-grid.is-list .card-media .study-mark, .explorer-grid.is-list .card-media .study-kicker { display: none; }
-  .explorer-grid.is-list .card-body { padding-block: 1rem; }
+  .explorer-grid.is-list .card-body { min-width: 0; padding-block: 1rem; }
   .explorer-grid.is-list .card-summary { -webkit-line-clamp: 2; }
   @media (max-width: 639px) { .explorer-grid.is-list .card-media { width: 6rem; } }
   .js-card[hidden] { display: none !important; }
@@ -483,8 +483,9 @@
   .prose-ink :where(h3) { margin-top: 1.6rem; margin-bottom: 0.5rem; font-size: 1.15rem; }
   .prose-ink :where(p, ul, ol) { margin-bottom: 1rem; color: color-mix(in oklch, var(--foreground) 86%, var(--muted-foreground)); text-wrap: pretty; }
   .prose-ink :where(ul) { list-style: none; padding-left: 0; }
-  .prose-ink :where(ul) li { position: relative; padding-left: 1.3rem; margin-bottom: 0.45rem; }
-  .prose-ink :where(ul) li::before { content: ""; position: absolute; left: 0.1rem; top: 0.66em; width: 0.42rem; height: 0.42rem; border-radius: 999px; background: var(--link); }
+  /* Bullets and numbered steps share one text edge (2.1rem); the bullet dot sits on the step circle's centre line. */
+  .prose-ink :where(ul) li { position: relative; padding-left: 2.1rem; margin-bottom: 0.45rem; }
+  .prose-ink :where(ul) li::before { content: ""; position: absolute; left: calc(0.725rem - 0.21rem); top: 0.66em; width: 0.42rem; height: 0.42rem; border-radius: 999px; background: var(--link); }
   .prose-ink :where(ol) { list-style: none; padding-left: 0; counter-reset: step; }
   .prose-ink :where(ol) li { position: relative; padding-left: 2.1rem; margin-bottom: 0.6rem; counter-increment: step; }
   .prose-ink :where(ol) li::before { content: counter(step); position: absolute; left: 0; top: 0.12em; width: 1.45rem; height: 1.45rem; border-radius: 999px; display: grid; place-items: center; font-size: 0.74rem; font-weight: 640; color: var(--link); border: 1px solid color-mix(in oklch, var(--brand) 45%, var(--border)); background: color-mix(in oklch, var(--brand) 10%, transparent); font-variant-numeric: tabular-nums; }
@@ -562,15 +563,15 @@
   @media (min-width: 1024px) { .study.is-hero { flex-direction: row; align-items: stretch; gap: 2rem; } .study.is-hero .study-text { display: flex; flex-direction: column; justify-content: space-between; flex: 0 0 38%; } .study.is-hero .study-motif { flex: 1 1 auto; } }
 
   /* Per-project plates: deep tinted field, lighter in light theme so it reads as a printed plate, not a hole. */
-  .study[data-study="tactyc"]   { --study-bg: oklch(0.25 0.035 155); --study-bg-light: oklch(0.32 0.04 155); --study-ink: oklch(0.86 0.07 125); }
-  .study[data-study="ai-tax"]   { --study-bg: oklch(0.25 0.035 60);  --study-bg-light: oklch(0.32 0.045 60);  --study-ink: oklch(0.88 0.09 85); }
-  .study[data-study="juddges"]  { --study-bg: oklch(0.24 0.03 200);  --study-bg-light: oklch(0.31 0.04 200);  --study-ink: oklch(0.86 0.08 190); }
-  .study[data-study="unite-research-search"] { --study-bg: oklch(0.24 0.045 258); --study-bg-light: oklch(0.31 0.055 258); --study-ink: oklch(0.85 0.09 245); }
-  .study[data-study="flat-explorer"] { --study-bg: oklch(0.24 0.05 285); --study-bg-light: oklch(0.31 0.06 285); --study-ink: oklch(0.86 0.09 285); }
-  .study[data-study="lepiszcze"] { --study-bg: oklch(0.25 0.04 30);  --study-bg-light: oklch(0.32 0.05 30);   --study-ink: oklch(0.88 0.09 40); }
-  .study[data-study="embeddings"] { --study-bg: oklch(0.24 0.045 315); --study-bg-light: oklch(0.31 0.055 315); --study-ink: oklch(0.86 0.09 320); }
-  .study[data-study="finance-ai"] { --study-bg: oklch(0.24 0.035 165); --study-bg-light: oklch(0.31 0.045 165); --study-ink: oklch(0.86 0.1 160); }
-  .study[data-study="generic"]  { --study-bg: color-mix(in oklch, var(--field, oklch(0.5 0.1 280)) 30%, oklch(0.2 0 0)); --study-bg-light: color-mix(in oklch, var(--field, oklch(0.5 0.1 280)) 40%, oklch(0.25 0 0)); --study-ink: color-mix(in oklch, var(--field, oklch(0.8 0.08 280)) 55%, white); }
+  .study[data-study="tactyc"], .study-scope[data-study="tactyc"]   { --study-bg: oklch(0.25 0.035 155); --study-bg-light: oklch(0.32 0.04 155); --study-ink: oklch(0.86 0.07 125); }
+  .study[data-study="ai-tax"], .study-scope[data-study="ai-tax"]   { --study-bg: oklch(0.25 0.035 60);  --study-bg-light: oklch(0.32 0.045 60);  --study-ink: oklch(0.88 0.09 85); }
+  .study[data-study="juddges"], .study-scope[data-study="juddges"]  { --study-bg: oklch(0.24 0.03 200);  --study-bg-light: oklch(0.31 0.04 200);  --study-ink: oklch(0.86 0.08 190); }
+  .study[data-study="unite-research-search"], .study-scope[data-study="unite-research-search"] { --study-bg: oklch(0.24 0.045 258); --study-bg-light: oklch(0.31 0.055 258); --study-ink: oklch(0.85 0.09 245); }
+  .study[data-study="flat-explorer"], .study-scope[data-study="flat-explorer"] { --study-bg: oklch(0.24 0.05 285); --study-bg-light: oklch(0.31 0.06 285); --study-ink: oklch(0.86 0.09 285); }
+  .study[data-study="lepiszcze"], .study-scope[data-study="lepiszcze"] { --study-bg: oklch(0.25 0.04 30);  --study-bg-light: oklch(0.32 0.05 30);   --study-ink: oklch(0.88 0.09 40); }
+  .study[data-study="embeddings"], .study-scope[data-study="embeddings"] { --study-bg: oklch(0.24 0.045 315); --study-bg-light: oklch(0.31 0.055 315); --study-ink: oklch(0.86 0.09 320); }
+  .study[data-study="finance-ai"], .study-scope[data-study="finance-ai"] { --study-bg: oklch(0.24 0.035 165); --study-bg-light: oklch(0.31 0.045 165); --study-ink: oklch(0.86 0.1 160); }
+  .study[data-study="generic"], .study-scope[data-study="generic"]  { --study-bg: color-mix(in oklch, var(--field, oklch(0.5 0.1 280)) 30%, oklch(0.2 0 0)); --study-bg-light: color-mix(in oklch, var(--field, oklch(0.5 0.1 280)) 40%, oklch(0.25 0 0)); --study-ink: color-mix(in oklch, var(--field, oklch(0.8 0.08 280)) 55%, white); }
 
   /* ── Paper media: framed video, poster thumb, designed figure ────── */
   .pub-media { display: grid; gap: 1rem; }
@@ -604,24 +605,31 @@
      (an explicit hue 0 would swing every plate toward purple). */
   .study.pub-plate[data-study] {
     --study-bg-light: var(--plate, color-mix(in oklch, var(--field) 38%, oklch(0.26 0 none)));
-    --study-bg: var(--plate-dark, color-mix(in oklch, var(--plate, color-mix(in oklch, var(--field) 30%, oklch(0.2 0 none))) 80%, oklch(0.12 0 none)));
+    --study-bg: var(--plate-dark, color-mix(in oklch, var(--plate, color-mix(in oklch, var(--field) 34%, oklch(0.27 0 none))) 86%, oklch(0.16 0 none)));
     --study-ink: var(--plate-ink, color-mix(in oklch, var(--field) 50%, oklch(0.97 0 none)));
   }
   :root:not(.dark) .study.pub-plate[data-study] { --study-bg: var(--study-bg-light); }
+  .dark .study.pub-plate { box-shadow: inset 0 0 0 1px color-mix(in oklch, var(--study-ink) 16%, transparent); }
   .pub-plate .pub-title { margin: 0; font: inherit; color: var(--study-ink); text-wrap: balance; }
   .pub-plate .pub-name { display: block; font-size: clamp(2.4rem, 9cqw, 4.4rem); font-weight: 500; letter-spacing: -0.05em; line-height: 1; }
   .pub-plate.is-single .pub-name { font-size: clamp(1.7rem, 4.6cqw, 2.4rem); letter-spacing: -0.03em; line-height: 1.12; }
-  .pub-hook { margin-top: 1rem; max-width: 30rem; font-size: clamp(1rem, 2.6cqw, 1.15rem); line-height: 1.5; color: color-mix(in oklch, var(--study-ink) 82%, transparent); text-wrap: pretty; }
+  .pub-hook { margin-top: 1rem; max-width: 30rem; font-size: clamp(1rem, 2.6cqw, 1.15rem); line-height: 1.5; color: var(--study-ink); text-wrap: balance; }  /* full ink: anything lighter drops under 4.5:1 on the light plates */
   .pub-plate-media { flex: 1 1 auto; min-width: 0; display: flex; align-items: center; margin-top: 1rem; }
   .study.pub-plate .study-text { display: flex; flex-direction: column; justify-content: center; }
   @media (min-width: 1024px) { .pub-plate-media { margin-top: 0; } .study.is-hero.pub-plate .study-text { flex-basis: 36%; justify-content: center; } }
   .pub-plate .pub-media { width: 100%; margin: 0; }
   .pub-plate .media-frame { background: transparent; border: 1px solid var(--study-line); box-shadow: none; }
-  .pub-plate .media-caption { color: color-mix(in oklch, var(--study-ink) 70%, transparent); border-top-color: var(--study-line); }
+  .pub-plate .media-caption { color: var(--study-ink); font-size: 0.86rem; border-top-color: var(--study-line); }
   .pub-plate .media-caption .num { color: inherit; }
-  .pub-plate .pub-figure { --fig-ink: var(--study-ink); background: transparent; }
-  .pub-plate .pub-figure text { fill: color-mix(in oklch, var(--study-ink) 75%, transparent); }
-  .pub-plate .figure-wrap { aspect-ratio: 16 / 9; }
+  .pub-plate .figure-wrap { aspect-ratio: 7 / 3; }  /* the figures are drawn at 400×170: the frame hugs them */
+  .pub-plate .pub-figure { --fig-ink: var(--study-ink); padding: 0.25rem; background: transparent; }
+  .pub-plate .pub-figure svg { max-width: 30rem; margin-inline: auto; }  /* 400-unit drawing at ≤1.2×: 12-unit labels ≤ 14.4px, under the 18px hook */
+  /* Phones: the drawing's own 20-unit side margins bleed past the frame, so its ink lines up with the text edge. */
+  @media (max-width: 1023px) { .pub-plate .pub-figure { padding: 0; } .pub-plate .pub-figure svg { width: calc(100% * 400 / 360); max-width: none; margin-left: calc(-100% * 20 / 360); } }
+  .pub-plate .pub-figure text { fill: var(--study-ink); }
+  /* Figure labels are written at 12 SVG units on a 400-unit-wide drawing. When the figure is under 480px wide,
+     16 units keeps them ≥ 12px on screen (16 × 311 / 400 ≈ 12.4px on a 390px phone). */
+  @container (max-width: 480px) { .pub-plate .pub-figure text { font-size: 16px; } }
   .pub-plate:not(:has(video)) .media-frame { border: 0; }
   .pub-title { view-transition-name: page-title; }
   .pub-kicker {
@@ -634,21 +642,67 @@
   .pub-kicker-type::before { content: ""; width: 0.5rem; height: 0.5rem; border-radius: 999px; background: var(--field, var(--brand)); box-shadow: 0 0 0 3px color-mix(in oklch, var(--field, var(--brand)) 20%, transparent); }
   /* Paper block: the formal record under the media. */
   .pub-paper { display: flex; flex-direction: column; align-items: flex-start; }
-  .paper-title { margin-top: 0.8rem; max-width: 46rem; font-size: clamp(1.35rem, 2.2vw, 1.75rem); font-weight: 500; line-height: 1.25; letter-spacing: -0.012em; text-wrap: pretty; }
-  .pub-authors { margin-top: 0.8rem; max-width: 52rem; font-size: 0.98rem; line-height: 1.6; color: var(--muted-foreground); }
+  .pub-paper > :first-child { text-box: trim-start cap alphabetic; }  /* first line's cap top = box top = sidebar top */
+  .paper-title { margin-top: 0; max-width: 44rem; font-size: clamp(1.35rem, 2.2vw, 1.75rem); font-weight: 500; line-height: 1.25; letter-spacing: -0.012em; text-wrap: pretty; }
+  .pub-authors { margin-top: 0.8rem; max-width: 44rem; font-size: 0.98rem; line-height: 1.6; color: var(--muted-foreground); }
   .pub-authors > span { white-space: nowrap; }
   .pub-authors strong { color: var(--foreground); font-weight: 620; background: linear-gradient(color-mix(in oklch, var(--field, var(--brand)) 26%, transparent), color-mix(in oklch, var(--field, var(--brand)) 26%, transparent)) 0 92% / 100% 0.3em no-repeat; }
-  .pub-lead { margin-top: 1.1rem; max-width: 46rem; font-size: clamp(1.05rem, 1.3vw, 1.15rem); line-height: 1.6; color: color-mix(in oklch, var(--foreground) 80%, var(--muted-foreground)); text-wrap: pretty; }
-  .pub-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem; margin-top: 1.25rem; }
-  /* Poster section at the end of the write-up. */
-  .pub-poster { margin-top: 3rem; padding-top: 1.75rem; border-top: 1px solid var(--border); }
-  .pub-poster h2 { font-size: 1.5rem; margin-bottom: 1.1rem; }
-  .pub-poster-body { display: grid; gap: 1.25rem; }
-  @media (min-width: 640px) { .pub-poster-body { grid-template-columns: minmax(0, 20rem) minmax(0, 1fr); align-items: start; gap: 1.75rem; } }
-  .pub-poster-thumb { display: block; overflow: hidden; border: 1px solid var(--border); border-radius: var(--radius-lg, 0.9rem); background: var(--elevated); max-width: 24rem; }
-  .pub-poster-thumb img { display: block; width: 100%; height: auto; transition: transform .5s cubic-bezier(.16,1,.3,1); }
-  .pub-poster-thumb:hover img { transform: scale(1.02); }
-  .pub-poster-text p { margin-bottom: 1rem; color: var(--muted-foreground); text-wrap: pretty; }
+  .paper-title .nw, .facts .nw { white-space: nowrap; }
+  .facts span .nw { display: inline; margin: 0; }  /* the label rule `.facts span` must not apply to the nowrap span inside a label */
+  /* Venue and type: sidebar rows on desktop, one line under the authors on phones (the sidebar lands after the write-up there). */
+  .pub-kicker-mobile { margin-top: 0.9rem; }
+  @media (min-width: 1024px) { .pub-kicker-mobile { display: none; } }
+  @media (max-width: 1023px) { .meta-list > .meta-paper { display: none; } .meta-list > .meta-paper + div:not(.meta-paper) { border-top: 0; } }
+  /* The paper column keeps one measure: title, authors, facts, problem/finding and prose share the write-up width. */
+  .pub-page .facts, .pub-page .pub-brief, .pub-page .prose-ink { max-width: 44rem; }
+  .pub-authors { text-wrap: balance; }
+  .pub-page .prose-ink :where(code) { white-space: nowrap; }
+  .dark .pub-page .meta-label { color: var(--muted-foreground); }
+  /* Play control on the hero video: a small icon-only circle in the bottom-right corner, so the poster frame stays readable (the label stays for screen readers). */
+  .pub-plate .media-frame:has(.video-shell) { position: relative; }
+  .pub-plate .video-shell { position: static; }  /* the play button now covers the whole frame (poster + caption), so a click anywhere plays */
+  .pub-plate .video-play { place-items: end end; padding: 0.45rem 0.6rem; background: none; }
+  .pub-plate .video-play span { width: 2.2rem; height: 2.2rem; padding: 0; gap: 0; justify-content: center; font-size: 0; border-radius: 999px; box-shadow: 0 8px 24px -8px rgb(0 0 0 / 0.55); }
+  .pub-plate .video-play span svg { width: 0.95rem; height: 0.95rem; margin-left: 2px; }
+  .pub-plate .media-frame:has(.video-shell) .media-caption { padding-right: 3.4rem; }  /* room for the play control */
+  .meta-type { display: inline-flex; align-items: center; gap: 0.45rem; }
+  .meta-type::before { content: ""; width: 0.45rem; height: 0.45rem; border-radius: 999px; background: var(--field, var(--brand)); }
+  .pub-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; margin-top: 1.5rem; }
+  /* Page-coloured buttons: on a paper or project page, buttons take that page's plate colour instead of the brand navy. */
+  .study-scope { --btn-accent: var(--study-bg-light, var(--study-bg)); --btn-accent-ink: var(--study-ink); }
+  /* Dark mode: the primary flips to the plate's light ink with plate-coloured text, so it clearly separates from the near-black page. */
+  .dark .study-scope { --btn-accent: var(--study-ink); --btn-accent-ink: var(--study-bg); }
+  /* Status chip ("Active") in the project's own colour; the generic --ok token is a neutral grey. */
+  .study-scope .badge-status { color: color-mix(in oklch, var(--study-bg-light) 85%, var(--foreground)); border-color: color-mix(in oklch, var(--study-bg-light) 45%, transparent); background: color-mix(in oklch, var(--study-bg-light) 12%, transparent); }
+  .study-scope .badge-status::before { content: ""; width: 0.4rem; height: 0.4rem; border-radius: 999px; background: currentColor; }
+  .dark .study-scope .badge-status { color: var(--study-ink); border-color: color-mix(in oklch, var(--study-ink) 40%, transparent); background: color-mix(in oklch, var(--study-ink) 10%, transparent); }
+  /* Phones: each project drawing's own side margin (--mx, in its 400-unit viewBox) bleeds past the plate text edge,
+     so the drawing's ink starts where the title starts. Values measured with getBBox(). */
+  .study[data-study="ai-tax"] { --mx: 28; } .study[data-study="juddges"], .study[data-study="flat-explorer"] { --mx: 24; }
+  .study[data-study="unite-research-search"] { --mx: 36; } .study[data-study="lepiszcze"] { --mx: 4; }
+  .study[data-study="embeddings"], .study[data-study="finance-ai"] { --mx: 20; }
+  @media (max-width: 520px) { .study.is-hero .study-motif svg { width: calc(100% * 400 / (400 - 2 * var(--mx, 0))); max-width: none; margin-left: calc(-100% * var(--mx, 0) / (400 - 2 * var(--mx, 0))); } }
+  .pub-page { --btn-accent: var(--plate, color-mix(in oklch, var(--field) 38%, oklch(0.26 0 none))); --btn-accent-ink: var(--plate-ink, color-mix(in oklch, var(--field) 50%, oklch(0.97 0 none))); }
+  .dark .pub-page { --btn-accent: var(--plate-dark, color-mix(in oklch, var(--plate, color-mix(in oklch, var(--field) 34%, oklch(0.27 0 none))) 86%, oklch(0.16 0 none))); }
+  :is(.study-scope, .pub-page aside) .btn-primary { background: var(--btn-accent); color: var(--btn-accent-ink); box-shadow: 0 1px 2px rgb(var(--shadow-rgb) / 0.3); }
+  :is(.study-scope, .pub-page aside) .btn-primary:hover { background: color-mix(in oklch, var(--btn-accent) 86%, white); box-shadow: 0 10px 26px -10px color-mix(in oklch, var(--btn-accent) 70%, transparent); }
+  .dark :is(.study-scope, .pub-page aside) .btn-primary { box-shadow: inset 0 0 0 1px color-mix(in oklch, var(--btn-accent-ink) 40%, transparent); }
+  :is(.study-scope, .pub-page aside) .btn:not(.btn-primary) { border-color: color-mix(in oklch, var(--btn-accent) 45%, var(--border-strong)); }
+  :is(.study-scope, .pub-page aside) .btn:not(.btn-primary):hover { border-color: var(--btn-accent); background: color-mix(in oklch, var(--btn-accent) 9%, transparent); }
+  /* Hero links: one filled primary (PDF), the rest as icon text links in the plate ink, so the row never breaks into ragged pill rows. */
+  /* Links sit on a grid, not a wrapping row: every icon in a column starts at the same x, and rows keep one rhythm. */
+  .pub-plate .pub-actions { display: grid; grid-template-columns: repeat(auto-fill, minmax(8.5rem, 1fr)); justify-items: start; align-items: center; gap: 0.7rem 1.25rem; margin-top: 1.6rem; }
+  .pub-plate .btn { height: auto; padding: 0.3rem 0; border: 0; border-radius: 0; background: none; box-shadow: none; color: var(--study-ink); font-weight: 560; text-decoration: none; }
+  .pub-plate .btn:hover { transform: none; text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
+  .pub-plate .btn-primary { height: 2.5rem; padding: 0 1.15rem; border-radius: 999px; background: var(--study-ink); color: var(--study-bg); }
+  .pub-plate .btn-primary:hover { text-decoration: none; background: color-mix(in oklch, var(--study-ink) 88%, white); box-shadow: 0 8px 22px -10px rgb(0 0 0 / 0.45); }
+  .pub-plate .pub-actions .btn-primary { grid-column: 1 / -1; margin-bottom: 0.2rem; }
+  .pub-plate .btn { gap: 0.55rem; line-height: 1.25; }
+  .pub-plate .btn svg { flex: none; width: 1.1rem; height: 1.1rem; }
+  /* Every glyph is brought to ~18 of 24 units of ink (13px on screen), centred in its box, so sizes and left edges match. */
+  .pub-plate .btn svg:is([data-icon="external"], [data-icon="arrow-up-right"]) { transform: scale(1.8); stroke-width: 0.95; }  /* arrow ink spans 10/24 */
+  .pub-plate .btn svg[data-icon="github"] { transform: scale(0.75); }  /* logo ink spans 24/24 */
+  .pub-plate .btn svg[data-icon="paper"] { margin-left: -1px; margin-right: 1px; }
 
   /* Sidebar meta list */
   .meta-list { display: flex; flex-direction: column; }
@@ -663,6 +717,9 @@
   .pager-tile.is-next { margin-left: auto; text-align: right; align-items: flex-end; }
   .pager-tile small { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.78rem; color: var(--subtle); }
   .pager-tile small svg { width: 0.9rem; height: 0.9rem; transition: transform .2s; }
+  /* The arrow hangs in a gutter: label text and title start (or end) at the same x. */
+  .pager-tile:not(.is-next) strong { padding-left: 1.2rem; }
+  .pager-tile.is-next strong { padding-right: 1.2rem; }
   .pager-tile strong { font-family: var(--font-display); font-weight: 540; font-size: 1.1rem; letter-spacing: -0.01em; line-height: 1.25; transition: color .15s; }
   .pager-tile:hover strong { color: var(--link); }
   .pager-tile:hover small svg { transform: translateX(-3px); }
@@ -764,7 +821,7 @@
     opacity: 0.03;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
-  :root:not(.dark) .grain { opacity: 0.025; mix-blend-mode: multiply; }
+  :root:not(.dark) .grain { opacity: 0.025; } /* no blend mode: a blended full-screen layer re-composites the whole page every frame */
   .graph-bg {
     position: fixed; inset: 0;
     width: 100vw; height: 100vh;
@@ -821,13 +878,10 @@
 @keyframes fx-pulse-glow { 0%,100% { opacity: .5; } 50% { opacity: 1; } }
 
 .fx-rise { animation: fx-rise .8s cubic-bezier(.2,.7,.2,1) both; }
-.fx-hero { animation: fx-hero 1.05s cubic-bezier(.16,1,.3,1) both; }
-.hero-title ~ .fx-hero { animation-delay: calc(.45s + var(--d, 0s)) !important; }
-.hero-halo { animation: fx-halo-in 1.6s ease-out both, fx-halo-drift 16s ease-in-out 1.6s infinite alternate; }
 [style*="--i"].fx-rise { animation-delay: calc(var(--i) * 60ms); }
 
 /* Scroll reveal — used only for media panels and figures. */
-.fx-scroll, .fx-scroll-soft { transition: opacity .35s cubic-bezier(.16,1,.3,1), transform .45s cubic-bezier(.16,1,.3,1); }
+.fx-scroll, .fx-scroll-soft { transition: opacity .45s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1); }
 .js .fx-scroll:not(.is-in), .js .fx-scroll-soft:not(.is-in) { opacity: 0; transform: translateY(14px); }
 .fx-scroll.is-in, .fx-scroll-soft.is-in { opacity: 1; transform: none; }
 
@@ -845,98 +899,19 @@
   .btn:hover, .btn-primary:hover { transform: none; }
 }
 
-/* ── Research: an evidence-led editorial index ───────────────────── */
+/* ── Research: one editorial row per interest, closed by a contact band ── */
 @layer components {
-  .research-journal { --rj-nav-top: 4rem; padding-top: 2.25rem; padding-bottom: 0; }
-  .rj-masthead, .rj-byline { display: flex; align-items: center; gap: 1.5rem; font-size: .75rem; color: var(--muted-foreground); }
-  .rj-masthead { justify-content: space-between; padding-bottom: 1.15rem; border-bottom: 1px solid var(--foreground); }
-  .rj-masthead > span, .rj-label { font-family: var(--font-mono); font-size: .65rem; font-weight: 400; letter-spacing: .06em; text-transform: uppercase; color: var(--muted-foreground); }
-  .rj-masthead a, .rj-byline a { display: inline-flex; align-items: center; gap: .4rem; }
-  .rj-title-row { display: grid; grid-template-columns: 1.3fr 1fr; align-items: end; gap: 3rem; padding-block: 2.7rem; }
-  .rj-title-row h1 { font-size: clamp(4rem, 9vw, 8rem); font-weight: 450; line-height: .95; letter-spacing: -.065em; }
-  .rj-title-row h1 span { color: var(--link); }
-  .rj-title-row > p { max-width: 23rem; padding-bottom: .2rem; font-size: clamp(1.1rem, 2vw, 1.5rem); line-height: 1.45; color: var(--muted-foreground); letter-spacing: -.02em; }
-  .rj-byline { padding-bottom: 2rem; font-size: .72rem; flex-wrap: wrap; gap: .5rem 1.5rem; }
-  .rj-byline > span:first-child { color: var(--foreground); }
-  .rj-byline a { margin-left: auto; }
-  .rj-nav { position: sticky; top: var(--rj-nav-top); z-index: 20; display: flex; align-items: stretch; gap: 2rem; border-block: 1px solid var(--border-strong); background: var(--background); }
-  .rj-nav > a { display: inline-flex; align-items: center; gap: .5rem; padding-block: 1.1rem; font-size: .75rem; color: var(--muted-foreground); box-shadow: inset 0 -2px transparent; white-space: nowrap; }
-  .rj-nav > a:hover, .rj-nav > a[aria-current="location"] { color: var(--foreground); box-shadow: inset 0 -2px var(--link); }
-  .rj-nav > .rj-nav-contact { margin-left: auto; color: var(--foreground); }
-  .rj-chapter { padding-block: clamp(2.75rem, 6vw, 5rem); border-bottom: 1px solid var(--border-strong); scroll-margin-top: calc(var(--rj-nav-top) + 5rem); }
-  .rj-chapter-heading { display: grid; grid-template-columns: 11rem 1.2fr 1fr; gap: 2rem; align-items: start; margin-bottom: 2.5rem; }
-  .rj-chapter-heading > .rj-label { padding-top: .6rem; }
-  .rj-chapter h2 { font-size: clamp(1.9rem, 3.2vw, 2.8rem); line-height: 1.1; letter-spacing: -.04em; }
-  .rj-chapter-heading > p { padding-top: .3rem; font-size: .85rem; color: var(--muted-foreground); line-height: 1.75; }
-  .rj-evidence { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(2rem, 5vw, 4rem); margin-left: 13rem; }
-  .rj-work { padding-block: 1.2rem; border-top: 1px solid var(--border); }
-  .rj-work-meta { display: flex; align-items: center; justify-content: space-between; gap: 1rem; color: var(--subtle); font-size: .65rem; }
-  .rj-work h3 { margin-top: .65rem; font-family: var(--font-sans); font-size: 1.25rem; font-weight: 550; letter-spacing: -.035em; line-height: 1.3; }
-  .rj-work h3 a:hover { color: var(--link); }
-  .rj-work > p { margin-top: .55rem; color: var(--muted-foreground); font-size: .8rem; line-height: 1.7; }
-  .rj-work-links { display: flex; gap: 1.2rem; flex-wrap: wrap; margin-top: .75rem; font-size: .65rem; }
-  .rj-work-links a { text-decoration: underline; text-decoration-color: var(--border-strong); text-underline-offset: 4px; }
-  .rj-work-links a:hover { color: var(--link); text-decoration-color: currentColor; }
-  .rj-demo { align-self: start; min-width: 0; }
-  .rj-demo-caption { display: flex; justify-content: space-between; gap: 1rem; padding: .8rem 0; border-top: 1px solid var(--border); font-size: .65rem; color: var(--muted-foreground); }
-  .rj-demo video { display: block; width: 100%; aspect-ratio: 16/9; background: var(--muted); }
-  .rj-demo figcaption { margin-top: .65rem; font-size: .65rem; color: var(--subtle); line-height: 1.6; }
-  .rj-related { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; margin-top: 1.75rem; padding-block: 1rem; border-block: 1px solid var(--border); }
-  .rj-related > span { flex-basis: 100%; font-size: .6rem; }
-  .rj-related a { display: inline-flex; align-items: center; gap: .5rem; font-size: .85rem; }
-  .rj-related a:hover { color: var(--link); }
-  .rj-vision { display: grid; grid-template-columns: 1.4fr 1fr; gap: 3rem; margin-left: 13rem; }
-  .rj-tactyc { display: flex; flex-direction: column; justify-content: space-between; min-height: 18rem; padding: 2rem; color: #e6eddf; background: #1b3027; }
-  .rj-tactyc-meta { display: flex; justify-content: space-between; flex-wrap: wrap; gap: .5rem; font-size: .6rem; color: #b3c8b8; }
-  .rj-tactyc-meta > span { border-bottom: 1px solid #b3c8b860; }
-  .rj-tactyc-name { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; font-size: clamp(2.5rem, 5vw, 4.6rem); font-weight: 450; letter-spacing: -.07em; line-height: 1; }
-  .rj-tactyc-name svg { flex-shrink: 0; }
-  .rj-tactyc-role { font-size: .65rem; color: #b3c8b8; }
-  .rj-tactyc:hover { background: #244032; }
-  .rj-vision-methods { display: flex; flex-direction: column; gap: 1.75rem; align-self: center; }
-  .rj-vision-methods h3 { margin-top: .4rem; font-size: 1.6rem; line-height: 1.2; }
-  .rj-vision-methods p { margin-top: .4rem; font-size: .8rem; color: var(--muted-foreground); }
-  .rj-vision-methods > a { font-size: .75rem; }
-  .rj-evidence-graphs { grid-template-columns: 1.2fr 1fr; }
-  .rj-graph-note { align-self: start; border-left: 1px solid var(--border-strong); padding-left: 2rem; }
-  .rj-graph-note > p { margin-top: 1rem; font-family: var(--font-display); font-size: 1.8rem; letter-spacing: -.03em; line-height: 1.2; }
-  .rj-graph-note > span:not(.rj-label) { display: block; margin-top: 1rem; font-size: .8rem; color: var(--muted-foreground); line-height: 1.7; }
-  .rj-graph-note > a { display: inline-flex; align-items: center; gap: .5rem; margin-top: 1.5rem; font-size: .7rem; }
-  .rj-contact { display: grid; grid-template-columns: 1.2fr 1fr; gap: 4rem; padding-block: 3.5rem; scroll-margin-top: calc(var(--rj-nav-top) + 5rem); }
-  .rj-contact h2 { margin-top: 1rem; font-size: clamp(2.5rem, 4vw, 3.75rem); line-height: 1.05; }
-  .rj-contact > div > p { max-width: 25rem; margin-top: 1.2rem; font-size: .9rem; color: var(--muted-foreground); line-height: 1.7; }
-  .rj-email { display: inline-flex; align-items: center; flex-wrap: wrap; gap: .75rem; margin-top: 1.5rem; border-bottom: 1px solid var(--foreground); padding-bottom: .3rem; font-size: clamp(.8rem, 1.5vw, 1.1rem); }
-  .rj-email:hover { color: var(--link); }
-  .rj-contact-options { align-self: center; }
-  .rj-contact-options > a { display: block; padding-block: 1.25rem; border-top: 1px solid var(--border); }
-  .rj-contact-options > a > span { display: block; color: var(--subtle); font-size: .65rem; }
-  .rj-contact-options strong { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-top: .5rem; font-size: .9rem; font-weight: 500; }
-  .rj-contact-options a:hover strong { color: var(--link); }
-  .rj-contact-options > p { font-size: .65rem !important; margin-top: .5rem !important; }
-  @media (max-width: 1100px) {
-    .rj-chapter-heading { grid-template-columns: 8rem 1fr 1fr; gap: 1.5rem; }
-    .rj-evidence, .rj-vision { margin-left: 9.5rem; gap: 2rem; }
-  }
-  @media (max-width: 767px) {
-    .rj-title-row { grid-template-columns: 1fr; gap: 1.25rem; padding-block: 2rem; }
-    .rj-title-row > p { max-width: 26rem; }
-    .rj-byline { font-size: .65rem; }
-    .rj-byline > span:nth-child(2) { flex-basis: 100%; order: 1; }
-    .rj-masthead > a { font-size: .65rem; }
-    .rj-masthead > span { font-size: .6rem; }
-    .rj-nav { gap: 0; justify-content: space-between; }
-    .rj-nav > a { font-size: .65rem; padding-block: 1rem; }
-    .rj-nav > .rj-nav-contact { display: none; }
-    .rj-chapter-heading { grid-template-columns: 1fr; gap: .9rem; margin-bottom: 1.75rem; }
-    .rj-chapter-heading > .rj-label { padding-top: 0; }
-    .rj-evidence, .rj-vision { grid-template-columns: 1fr; margin-left: 0; gap: 2rem; }
-    .rj-demo { grid-row: 1; }
-    .rj-vision-methods { gap: 1.25rem; }
-    .rj-tactyc { min-height: 16rem; }
-    .rj-tactyc-name { font-size: clamp(3rem, 12vw, 4rem); }
-    .rj-graph-note { padding-left: 1.25rem; }
-    .rj-contact { grid-template-columns: 1fr; gap: 2rem; padding-block: 2.75rem; }
-  }
+  .research-list { margin-top: clamp(2.5rem, 5vw, 4rem); }
+  .research-interest { position: relative; display: grid; gap: 1rem; padding-block: clamp(2rem, 4.5vw, 3.5rem); border-top: 1px solid var(--border-strong); scroll-margin-top: 5.5rem; }
+  .research-interest::before { content: ""; position: absolute; top: -1px; left: 0; width: 3rem; height: 2px; background: var(--field, var(--link)); }
+  .research-interest h2 { margin-top: 0.75rem; }
+  .research-interest-context { max-width: 40rem; font-size: var(--t-lead); line-height: 1.5; color: var(--foreground); text-wrap: pretty; }
+  .research-interest-text .prose-ink { margin-top: 1.1rem; max-width: 40rem; }
+  .research-interest-text .prose-ink p { color: var(--muted-foreground); }
+  .research-interest-text .prose-ink > :last-child { margin-bottom: 0; }
+  @media (min-width: 1024px) { .research-interest { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 3.5rem; } }
+  /* The footer rule closes the page, so the band keeps only its top rule. */
+  .research-band { margin-top: clamp(1rem, 2vw, 1.5rem); border-bottom: 0; padding-bottom: 0; scroll-margin-top: 5.5rem; }
 }
 
 /* ── Home: selected projects slider + research directions ─────────── */
@@ -944,6 +919,11 @@
   #practice-title { scroll-margin-top: 6rem; }
   /* One project at a time: every card is exactly the slider width, snapping never rests between cards. */
   .practice-slider { display: flex; gap: 1rem; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; padding: .25rem 0 1rem; scrollbar-width: none; }
+  /* Mouse/trackpad: the track spans the full window width while each card keeps the content width,
+     so neighbouring projects slide in from the screen edge instead of being chopped at the content column. */
+  @media (hover: hover) and (pointer: fine) {
+    .practice-slider { margin-inline: calc(50% - 50vw); padding-inline: calc(50vw - 50%); }
+  }
   .practice-slider::-webkit-scrollbar { display: none; }
   /* Mouse and trackpad: the slider is not a user scroll box, so a trackpad gesture can never latch onto it and
      vertical scrolling always reaches the page. app.js moves it (arrows, clearly sideways swipes); touch keeps native swiping. */
@@ -957,14 +937,14 @@
   /* Pinned scroll-through (html.pin-on, set by app.js on tall mouse/trackpad screens without reduced motion):
      the pin is as tall as the scroll distance; the sticky panel holds the slider in view while page scrolling
      drives --slide continuously. 75svh of scroll per project. */
-  .pin-on .practice-pin { height: calc(100svh + (var(--n, 5) - 1) * 75svh); }
+  .pin-on .practice-pin { position: relative; height: calc(100svh + (var(--n, 5) - 1) * 45svh); }
   .pin-on .practice-sticky {
     position: sticky; top: var(--topbar-h, 3.9rem);
     min-height: calc(100svh - var(--topbar-h, 3.9rem));
     display: flex; flex-direction: column; justify-content: center;
   }
   .pin-on .practice-section { padding-block: 0; }
-  .pin-on .practice-card { transition: opacity .35s cubic-bezier(.16,1,.3,1), transform .45s cubic-bezier(.16,1,.3,1); }
+  .pin-on .practice-card { transform-origin: 50% 50%; will-change: translate, scale, opacity; }
   .pin-on .practice-scroll-progress > span { transition: none; }
   .practice-card { display: grid; grid-template-columns: 1fr 1.12fr; flex: 0 0 100%; min-width: 0; overflow: hidden; border-radius: var(--radius-2xl); scroll-snap-align: start; scroll-snap-stop: always; }
   .practice-copy { display: flex; flex-direction: column; padding: clamp(1.5rem, 3vw, 2.5rem); }
@@ -1020,40 +1000,21 @@
   }
 }
 
-/* ── Motif draw-in: plate and figure parts settle in one after another when their card is revealed.
-   Keyframes have no `to`: each part animates to its own designed opacity (the SVG attribute), so shading survives.
-   Parts need no static hidden state: their container is itself hidden until revealed. ── */
-@keyframes motif-in { from { opacity: 0; transform: translateY(10px); } }
-@keyframes tile-in { from { opacity: 0; transform: scale(.5); } }
-@keyframes motif-drift { from { transform: translateY(26px); } to { transform: translateY(-6px); } }
-.js:not(.is-still) :is(.is-in, .fx-rise, .fx-hero) :is(.study-motif, .pub-figure) svg > * {
-  animation: motif-in .9s cubic-bezier(.16,1,.3,1) both;
-  animation-delay: calc(.12s + var(--k, 0) * 110ms);
-  transform-box: fill-box; transform-origin: center;
+/* ── Research stage: the figure of the row being read draws in when it becomes active (the only draw-in left).
+   No `to` keyframe, so each part settles on its own designed opacity. ── */
+@keyframes motif-in { from { opacity: 0; } }
+.js:not(.is-still) .stage-item.is-active :is(.study-motif, .pub-figure) svg > * {
+  animation: motif-in .6s cubic-bezier(.16,1,.3,1) both;
+  animation-delay: calc(var(--k, 0) * 60ms);
 }
-:is(.study-motif, .pub-figure) svg > :nth-child(2) { --k: 1; }
-:is(.study-motif, .pub-figure) svg > :nth-child(3) { --k: 2; }
-:is(.study-motif, .pub-figure) svg > :nth-child(4) { --k: 3; }
-:is(.study-motif, .pub-figure) svg > :nth-child(5) { --k: 4; }
-:is(.study-motif, .pub-figure) svg > :nth-child(6) { --k: 5; }
-:is(.study-motif, .pub-figure) svg > :nth-child(7) { --k: 6; }
-:is(.study-motif, .pub-figure) svg > :nth-child(n+8) { --k: 7; }
-/* Grid plates (LEPISZCZE): tiles twinkle in on a pseudo-random pattern instead of a left-to-right sweep. */
-.js:not(.is-still) :is(.is-in, .fx-rise) :is(.study-motif, .pub-figure) svg > rect { animation-name: tile-in; animation-duration: .7s; animation-delay: .25s; }
-:is(.study-motif, .pub-figure) svg > rect:nth-child(2n) { animation-delay: .4s !important; }
-:is(.study-motif, .pub-figure) svg > rect:nth-child(3n) { animation-delay: .55s !important; }
-:is(.study-motif, .pub-figure) svg > rect:nth-child(5n) { animation-delay: .7s !important; }
-:is(.study-motif, .pub-figure) svg > rect:nth-child(7n) { animation-delay: .85s !important; }
-/* Scroll-linked drift of the plate motif while its card crosses the viewport (browsers with scroll-driven animations). */
-@supports (animation-timeline: view()) {
-  .js:not(.is-still) .practice-preview .study-motif, .js:not(.is-still) .card-media .study-motif {
-    animation: motif-drift linear both;
-    animation-timeline: view();
-    animation-range: entry 0% cover 55%;
-  }
+.stage-item :is(.study-motif, .pub-figure) svg > :nth-child(2) { --k: 1; }
+.stage-item :is(.study-motif, .pub-figure) svg > :nth-child(3) { --k: 2; }
+.stage-item :is(.study-motif, .pub-figure) svg > :nth-child(4) { --k: 3; }
+.stage-item :is(.study-motif, .pub-figure) svg > :nth-child(n+5) { --k: 4; }
+@media (prefers-reduced-motion: reduce) {
+  :is(.study-motif, .pub-figure) svg > * { animation: none !important; }
+  .study-motif, .study-mark > span { transition: none !important; animation: none !important; transform: none !important; }
 }
-/* Hero: words rise out of soft focus one after another, then the rest of the hero follows. */
-.hw { animation: fx-hero .9s cubic-bezier(.16,1,.3,1) both; animation-delay: calc(var(--i) * 80ms); }
 .is-still .hw { animation: none !important; opacity: 1 !important; transform: none !important; filter: none !important; }
 @media (prefers-reduced-motion: reduce) {
   .hw { animation: none !important; opacity: 1 !important; transform: none !important; filter: none !important; }
@@ -1102,7 +1063,7 @@
 
 /* ── Inner-page titles: words rise out of soft focus, capped so long paper titles finish quickly. ── */
 @layer components {
-  .tw { display: inline-block; animation: fx-hero .8s cubic-bezier(.16,1,.3,1) both; animation-delay: calc(min(var(--i), 12) * 45ms); }
+  .tw { display: inline-block; animation: word-rise .7s cubic-bezier(.16,1,.3,1) both; animation-delay: calc(min(var(--i), 12) * 45ms); }
   .page-head { position: relative; isolation: isolate; }
   .page-head::before {
     content: ""; position: absolute; z-index: -1; pointer-events: none;
@@ -1113,7 +1074,6 @@
     animation: fx-halo-in 1.4s ease-out both, fx-halo-drift 18s ease-in-out 1.4s infinite alternate;
   }
 }
-.pub-head::before { animation: fx-halo-in 1.4s ease-out both, fx-halo-drift 18s ease-in-out 1.4s infinite alternate; }
 .is-still .tw, .is-still .page-head::before, .is-still .pub-head::before { animation: none !important; opacity: 1 !important; transform: none !important; filter: none !important; }
 @media (prefers-reduced-motion: reduce) {
   .tw { animation: none !important; opacity: 1 !important; transform: none !important; filter: none !important; }
@@ -1135,19 +1095,6 @@
   .scroll-cue svg { transform: rotate(90deg); animation: cue-bob 2.2s ease-in-out infinite; }
   @keyframes cue-bob { 0%, 100% { transform: rotate(90deg) translateX(-2px); } 50% { transform: rotate(90deg) translateX(3px); } }
 
-  /* Numbers band */
-  .numbers { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-block: 1px solid var(--border); }
-  .numbers > div { display: flex; flex-direction: column; gap: 0.35rem; padding: clamp(1.4rem, 3vw, 2.2rem) clamp(1rem, 2vw, 1.6rem); }
-  .numbers > div + div { border-left: 1px solid var(--border); }
-  .numbers b { font-family: var(--font-display); font-weight: 480; font-size: clamp(2.6rem, 5vw, 4.2rem); line-height: 1; letter-spacing: -0.035em; color: var(--foreground); font-variant-numeric: tabular-nums; }
-  .numbers span { font-size: 0.98rem; font-weight: 560; color: var(--foreground); }
-  .numbers small { font-size: 0.8rem; color: var(--subtle); line-height: 1.45; }
-  @media (max-width: 767px) {
-    .numbers { grid-template-columns: 1fr 1fr; }
-    .numbers > div:nth-child(odd) { border-left: 0; }
-    .numbers > div:nth-child(n+3) { border-top: 1px solid var(--border); }
-  }
-
   /* Demo video section */
   .demo-section { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.4fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: center; }
   .demo-kicker { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; font-weight: 600; color: color-mix(in oklch, var(--field) 70%, var(--foreground)); }
@@ -1158,7 +1105,7 @@
   .demo-facts li { display: flex; gap: 0.6rem; align-items: baseline; }
   .demo-facts b { min-width: 3.6rem; font-family: var(--font-display); font-weight: 520; font-size: 1.15rem; color: var(--foreground); }
   .demo-media { box-shadow: var(--surface-shadow), 0 30px 60px -32px color-mix(in oklch, var(--field) 45%, transparent); }
-  @media (max-width: 899px) { .demo-section { grid-template-columns: 1fr; } }
+  @media (max-width: 1099px) { .demo-section { grid-template-columns: 1fr; } }
 
   /* Path timeline: a rule draws across as the section reveals; dots mark each step. */
   .path { position: relative; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1.75rem; margin-top: 2.5rem; padding-top: 2.2rem; list-style: none; }
@@ -1202,3 +1149,221 @@
   .path::after { transition: none; transform: scaleX(1) !important; }
 }
 .is-still .scroll-cue svg { animation: none !important; }
+
+/* ════════════ Motion reset after the blind review (2026-10-29) ════════════ */
+@layer components {
+  /* Home hero: the site's one orchestrated entrance. The block fades up once, no blur, no per-word stagger. */
+  /* Headline words rise in one after another (no blur); lead, author line and buttons follow as one block. */
+  .hero-title .hw { animation: word-rise .8s cubic-bezier(.16,1,.3,1) both; animation-delay: calc(.1s + var(--i) * 70ms); }
+  .hero-main > :not(.hero-title):not(.hero-halo) { animation: hero-enter .8s cubic-bezier(.16,1,.3,1) .55s both; }
+  @keyframes word-rise { from { opacity: 0; transform: translateY(0.35em); } }
+  @keyframes hero-enter { from { opacity: 0; transform: translateY(10px); } }
+  /* Page-header glow removed; it was decoration with no tie to content. */
+  /* Footer: one quiet surface, no brand wash. */
+  /* Video: a clean poster with one play button; native controls appear only once playback starts. */
+  .video-shell { position: relative; display: block; }
+  .video-play {
+    position: absolute; inset: 0; z-index: 2; display: grid; place-items: center;
+    background: linear-gradient(to top, rgb(0 0 0 / 0.22), transparent 45%); border: 0; cursor: pointer;
+  }
+  .video-play span {
+    display: inline-flex; align-items: center; gap: 0.6rem; height: 3.1rem; padding: 0 1.3rem 0 1rem; border-radius: 999px;
+    background: color-mix(in oklch, var(--background) 88%, transparent); color: var(--foreground);
+    font-size: 0.92rem; font-weight: 600; box-shadow: 0 10px 30px -12px rgb(0 0 0 / 0.5);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    transition: transform .2s cubic-bezier(.16,1,.3,1), background-color .2s;
+  }
+  .video-play span svg { width: 1.3rem; height: 1.3rem; }
+  .video-play:hover span { transform: scale(1.04); background: var(--background); }
+  .video-play:focus-visible { outline: 2px solid var(--ring); outline-offset: -4px; }
+  .video-shell.is-playing .video-play { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { .hero-title .hw, .hero-main > * { animation: none !important; } }
+.is-still .hero-title .hw, .is-still .hero-main > * { animation: none !important; }
+
+/* Selected projects: pill dots (the active one stretches), clickable, shared by every slider mode. */
+@layer components {
+  /* Fixed slots; the active pill stretches with a transform, so a dot change never triggers layout. */
+  .practice-dots { display: flex; justify-content: center; align-items: center; gap: 0; margin-top: 1.4rem; }
+  .practice-dots button {
+    position: relative; width: 1.6rem; height: 1.2rem; padding: 0; border: 0; background: none; cursor: pointer;
+  }
+  .practice-dots button::before {
+    content: ""; position: absolute; left: 50%; top: 50%; width: 0.55rem; height: 0.55rem; margin: -0.275rem 0 0 -0.275rem;
+    border-radius: 999px; background: color-mix(in oklch, var(--foreground) 22%, transparent);
+    transition: transform .45s cubic-bezier(.16,1,.3,1), background-color .3s;
+  }
+  .practice-dots button:hover::before { background: color-mix(in oklch, var(--foreground) 45%, transparent); }
+  .practice-dots button[aria-current="true"]::before { transform: scaleX(2.6); background: var(--foreground); }
+  .practice-dots button:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; border-radius: 999px; }
+}
+@media (prefers-reduced-motion: reduce) { .practice-dots button::before { transition: none; } }
+
+
+/* ── About page ───────────────────────────────────────────────────
+   The bio as a linked document: phrases it already uses are highlighted and, on wide screens, joined by edges to
+   the expertise or group that names them (drawn by the script in layouts/_default/about.html). */
+@layer components {
+  .about-head { display: grid; gap: 2rem; align-items: end; }
+  @media (min-width: 900px) { .about-head { grid-template-columns: minmax(0, 1fr) 15rem; gap: 4rem; } }
+  .about-head h1 { font-size: clamp(3rem, 7.4vw, 6.6rem); line-height: .95; letter-spacing: -.035em; }
+  .about-role { margin-top: 1.1rem; font-size: var(--t-lead); color: var(--foreground); }
+  .about-facts { display: flex; flex-direction: column; gap: .25rem; max-width: 44rem; margin-top: 1rem; font-size: .9rem; line-height: 1.55; color: var(--muted-foreground); }
+  .about-facts a { color: var(--muted-foreground); font-weight: 560; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; text-decoration-color: var(--border-strong); transition: color .15s, text-decoration-color .15s; }
+  .about-facts a:hover { color: var(--foreground); text-decoration-color: var(--foreground); }
+  /* Icon buttons are 2.25rem squares around a ~1.05rem glyph: pull the row left so the first glyph sits on the text edge. */
+  .about-socials { display: flex; flex-wrap: wrap; gap: .1rem; margin: 1rem 0 0 -.6rem; }
+  .about-socials .icon-btn { border-color: transparent; background: transparent; box-shadow: none; }
+  .about-socials .icon-btn:hover { background: color-mix(in oklch, var(--foreground) 6%, transparent); }
+  /* The studio backdrop is white: crop in on the face and tone it down on the dark theme. */
+  .about-photo { width: 11rem; aspect-ratio: 1; overflow: hidden; background: #fff; }
+  @media (min-width: 900px) { .about-photo { width: 15rem; } }
+  .about-photo img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.18); transform-origin: 50% 38%; }
+  .dark .about-photo img { filter: brightness(.9); }
+
+  .about-graph { position: relative; display: grid; gap: 4rem; margin-top: clamp(4rem, 8vw, 7rem); }
+  @media (min-width: 1100px) { .about-graph { grid-template-columns: minmax(0, 40rem) minmax(0, 1fr) 21rem; gap: 0; } .about-index { grid-column: 3; } }
+  .about-edges { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+  .about-edges path { fill: none; stroke: color-mix(in oklch, var(--link) 22%, transparent); stroke-width: 1.2; transition: stroke .2s, stroke-width .2s, opacity .2s; }
+  .about-edges circle { fill: color-mix(in oklch, var(--link) 35%, var(--background)); transition: fill .2s; }
+  [data-active] .about-edges path { opacity: .35; }
+  .about-edges path.is-on { stroke: var(--link); stroke-width: 2; opacity: 1; }
+  .about-edges circle.is-on { fill: var(--link); }
+
+  .about-bio p { margin-bottom: 1.3rem; font-family: var(--font-display); font-size: clamp(1.18rem, 1.5vw, 1.35rem); font-weight: 400; line-height: 1.62; color: var(--foreground); }
+  .about-bio p:first-child { font-size: clamp(1.4rem, 2vw, 1.7rem); line-height: 1.45; }
+  .about-bio strong { font-weight: 560; }
+  .about-bio .ent { color: inherit; text-decoration: none; border-radius: 2px; background: linear-gradient(color-mix(in oklch, var(--link) 14%, transparent), color-mix(in oklch, var(--link) 14%, transparent)) 0 88% / 100% .42em no-repeat; transition: background-size .2s, color .2s; }
+  .about-bio .ent:hover, .about-bio .ent.is-on, .about-bio .ent:focus-visible { color: var(--link); background-size: 100% 100%; background-image: linear-gradient(color-mix(in oklch, var(--link) 12%, transparent), color-mix(in oklch, var(--link) 12%, transparent)); }
+  .about-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.6rem; margin-top: 2rem; }
+
+  .about-index h2 { font-family: var(--font-sans); font-size: .95rem; font-weight: 600; letter-spacing: -.01em; line-height: 1.4; color: var(--muted-foreground); }
+  .about-index section + section { margin-top: 3rem; }
+  .about-index ul { display: flex; flex-direction: column; gap: 1.15rem; margin-top: 1rem; list-style: none; }
+  .about-node { scroll-margin-top: calc(var(--topbar-h, 3.9rem) + 1.5rem); transition: opacity .2s; }
+  .about-node h3 { font-size: 1.2rem; line-height: 1.25; transition: color .2s; }
+  .about-node h3 a { text-decoration: none; }
+  .about-node p { margin-top: .2rem; font-size: .86rem; line-height: 1.5; color: var(--muted-foreground); }
+  .about-node .about-node-role { margin: 0 0 .15rem; font-weight: 560; color: var(--link); }
+  [data-active] .about-node { opacity: .45; }
+  [data-active] .about-node.is-on { opacity: 1; }
+  .about-node.is-on h3, .about-node:target h3 { color: var(--link); }
+}
+
+
+/* Paper cards: the figure box never grows past a sensible height, and the drawing keeps a readable size at any width.
+   Between 640 and 1023px (one card per row) cards lay out as rows: figure left, text right. */
+@layer components {
+  .pub-card-thumb { aspect-ratio: 16 / 7; max-height: 11rem; border-bottom: 1px solid var(--border); overflow: hidden; }
+  .pub-card-thumb .pub-figure { height: 100%; }
+  .pub-figure.is-thumb svg { max-width: 22rem; margin-inline: auto; }
+  .pub-figure svg { max-width: 44rem; margin-inline: auto; }
+}
+/* Unlayered on purpose: the card carries Tailwind's `flex-col` utility, which outranks component-layer rules. */
+@media (min-width: 640px) and (max-width: 1023px) {
+  .pub-card { flex-direction: row; }
+  .pub-card-thumb { flex: 0 0 36%; aspect-ratio: auto; max-height: none; border-bottom: 0; border-right: 1px solid var(--border); }
+}
+
+/* ── Selected projects: timed chapter transitions ──
+   On mouse/trackpad screens the track glides to the current project over 0.9s whatever the scroll speed; the outgoing
+   project eases back and fades, the incoming one comes forward, then its plate builds and its copy rises in.
+   Only compositor properties move (translate, scale, opacity). */
+@media (hover: hover) and (pointer: fine) {
+  .practice-card {
+    opacity: .3; scale: .94;
+    transition: translate .7s cubic-bezier(.16,1,.3,1), scale .7s cubic-bezier(.16,1,.3,1), opacity .4s cubic-bezier(.16,1,.3,1);
+  }
+  .practice-card.is-current { opacity: 1; scale: 1; }
+  .practice-card.is-current.is-entering .practice-copy > * { animation: chapter-rise .5s cubic-bezier(.16,1,.3,1) both; }
+  .practice-card.is-current.is-entering .practice-copy > :nth-child(1) { animation-delay: .12s; }
+  .practice-card.is-current.is-entering .practice-copy > :nth-child(2) { animation-delay: .16s; }
+  .practice-card.is-current.is-entering .practice-copy > :nth-child(3) { animation-delay: .2s; }
+  .practice-card.is-current.is-entering .practice-copy > :nth-child(4) { animation-delay: .24s; }
+  .practice-card.is-current.is-entering .practice-copy > :nth-child(5) { animation-delay: .28s; }
+  .practice-card.is-current.is-entering .study-motif svg > * { animation: motif-in .55s cubic-bezier(.16,1,.3,1) both; animation-delay: calc(.15s + var(--k, 0) * 45ms); }
+  .practice-card .study-motif svg > :nth-child(2) { --k: 1; }
+  .practice-card .study-motif svg > :nth-child(3) { --k: 2; }
+  .practice-card .study-motif svg > :nth-child(4) { --k: 3; }
+  .practice-card .study-motif svg > :nth-child(n+5) { --k: 4; }
+}
+@keyframes chapter-rise { from { opacity: 0; transform: translateY(14px); } }
+@media (prefers-reduced-motion: reduce) {
+  .practice-card { transition: none !important; }
+  .practice-card .practice-copy > *, .practice-card .study-motif svg > * { animation: none !important; }
+}
+.is-still .practice-card { transition: none !important; }
+.is-still .practice-card .practice-copy > *, .is-still .practice-card .study-motif svg > * { animation: none !important; }
+
+/* Pinned projects, native and on the compositor:
+   - html.pin-on snaps the page (proximity) to one must-stop snap point per project, so one gesture lands on one project
+     using the browser's own momentum and easing; outside the section there are no snap points, so scrolling is free;
+   - html.sda (animation-timeline supported) lets a view timeline on the pin drive the cards in the same frame as the
+     scroll. Without it (Firefox) the timed chapter transitions run from the snapped position. */
+.practice-snap { display: none; }
+html.pin-on { scroll-snap-type: y proximity; scroll-padding-top: var(--topbar-h, 62px); }
+.pin-on .practice-snap {
+  display: block; position: absolute; left: 0; width: 1px; height: 1px; pointer-events: none;
+  top: calc(var(--i) / (var(--n, 5) - 1) * (100% - 100svh + var(--topbar-h, 62px)));
+  scroll-snap-align: start; scroll-snap-stop: always;
+}
+@supports (animation-timeline: view()) {
+  .practice-pin { view-timeline: --practice block; view-timeline-inset: var(--topbar-h, 62px) 0px; }
+  .pin-on.sda .practice-card {
+    animation: var(--pk) linear both;
+    animation-timeline: --practice;
+    animation-range: contain 0% contain 100%;
+  }
+}
+
+/* On mouse/trackpad screens the slider is not a scroll box, so card snap settings (meant for touch swiping) would
+   attach to the page and add stray snap points. Only the per-project markers snap there. */
+@media (hover: hover) and (pointer: fine) { .practice-card { scroll-snap-align: none; scroll-snap-stop: normal; } }
+
+/* ── Restored ambient + reveal motion (2026-10-29), rebuilt to the gold standards in docs/motion.md ── */
+.hero-halo { animation: fx-halo-in 1.6s ease-out both, fx-halo-drift 16s ease-in-out 1.6s infinite alternate; }
+.pub-head::before { animation: fx-halo-in 1.4s ease-out both, fx-halo-drift 18s ease-in-out 1.4s infinite alternate; }
+@media (prefers-reduced-motion: reduce) { .hero-halo, .pub-head::before { animation: none !important; } }
+.is-still .hero-halo, .is-still .pub-head::before { animation: none !important; }
+/* ── Motif draw-in: plate and figure parts settle in one after another when their card is revealed.
+   Keyframes have no `to`: each part animates to its own designed opacity (the SVG attribute), so shading survives.
+   Parts need no static hidden state: their container is itself hidden until revealed. ── */
+@keyframes tile-in { from { opacity: 0; } }
+@keyframes motif-drift { from { transform: translateY(26px); } to { transform: translateY(-6px); } }
+.js:not(.is-still) :is(.is-in, .fx-rise, .fx-hero) :is(.study-motif, .pub-figure) svg > * {
+  animation: motif-in .9s cubic-bezier(.16,1,.3,1) both;
+  animation-delay: calc(.12s + var(--k, 0) * 110ms);
+}
+:is(.study-motif, .pub-figure) svg > :nth-child(2) { --k: 1; }
+:is(.study-motif, .pub-figure) svg > :nth-child(3) { --k: 2; }
+:is(.study-motif, .pub-figure) svg > :nth-child(4) { --k: 3; }
+:is(.study-motif, .pub-figure) svg > :nth-child(5) { --k: 4; }
+:is(.study-motif, .pub-figure) svg > :nth-child(6) { --k: 5; }
+:is(.study-motif, .pub-figure) svg > :nth-child(7) { --k: 6; }
+:is(.study-motif, .pub-figure) svg > :nth-child(n+8) { --k: 7; }
+/* Grid plates (LEPISZCZE): tiles twinkle in on a pseudo-random pattern instead of a left-to-right sweep. */
+.js:not(.is-still) :is(.is-in, .fx-rise) :is(.study-motif, .pub-figure) svg > rect { animation-name: tile-in; animation-duration: .7s; animation-delay: .25s; }
+:is(.study-motif, .pub-figure) svg > rect:nth-child(2n) { animation-delay: .4s !important; }
+:is(.study-motif, .pub-figure) svg > rect:nth-child(3n) { animation-delay: .55s !important; }
+:is(.study-motif, .pub-figure) svg > rect:nth-child(5n) { animation-delay: .7s !important; }
+:is(.study-motif, .pub-figure) svg > rect:nth-child(7n) { animation-delay: .85s !important; }
+/* Scroll-linked drift of the plate motif while its card crosses the viewport (browsers with scroll-driven animations). */
+@supports (animation-timeline: view()) {
+  .js:not(.is-still) .practice-preview .study-motif, .js:not(.is-still) .card-media .study-motif {
+    animation: motif-drift linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 55%;
+  }
+}
+
+/* Off-screen ambient loops are paused by app.js (initAmbientPause); they resume where they left off. */
+.ambient-off, .ambient-off::before, .ambient-off::after { animation-play-state: paused !important; }
+
+/* Draw-ins: SVG parts fade only (paint, no SVG layout per frame); the drawing rises as one compositor layer. */
+@keyframes drawing-rise { from { transform: translateY(10px); } }
+.js:not(.is-still) :is(.is-in, .fx-rise) :is(.study-motif, .pub-figure) > svg,
+.js:not(.is-still) .stage-item.is-active :is(.study-motif, .pub-figure) > svg,
+.js:not(.is-still) .practice-card.is-current.is-entering .study-motif > svg { animation: drawing-rise .8s cubic-bezier(.16,1,.3,1) both; }
+@media (prefers-reduced-motion: reduce) { :is(.study-motif, .pub-figure) > svg { animation: none !important; } }
+.is-still :is(.study-motif, .pub-figure) > svg { animation: none !important; }
+.scroll-cue.ambient-off svg { animation-play-state: paused !important; }
