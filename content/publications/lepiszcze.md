@@ -24,6 +24,6 @@ The availability of compute and data to train larger and larger language models 
 
 ## My contribution
 
-I built the benchmark repository and led the library behind it; see the [project page](/projects/lepiszcze/).
+Built the benchmark repository and led the library behind it.
 
 Published in the NeurIPS 2022 Datasets and Benchmarks track. See the [LEPISZCZE project page](/projects/lepiszcze/) for the benchmark infrastructure and the [CLARIN-PL Embeddings](/projects/embeddings/) library that powers it.

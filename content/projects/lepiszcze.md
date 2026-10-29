@@ -38,8 +38,7 @@ The repository provides reproducible experiment configurations, hyperparameter s
 
 ## My role
 
-- **Built the benchmark repository:** the experiment configurations, the DVC pipeline, and the run scripts.
-- **Wrote most of the dataset cards** for the benchmark's tasks.
+- **Built the benchmark repository** and wrote most of the dataset cards.
 - The benchmark runs on [CLARIN-PL Embeddings](/projects/embeddings/), the library I led.
 
 The work involved coordinating across 11 collaborators to establish unified evaluation protocols and baseline results across all 14 tasks.

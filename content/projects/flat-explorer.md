@@ -35,4 +35,4 @@ A Next.js + React frontend (Supabase auth) over a FastAPI backend that runs LLM 
 
 ## My contribution
 
-Sole author: product design, frontend, backend, and the research behind the scoring.
+Sole author, from product design to engineering.

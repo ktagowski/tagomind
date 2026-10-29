@@ -24,8 +24,6 @@ Before a tax authority can issue a ruling, it must receive a complete descriptio
 
 ## My contribution
 
-- **Managed the research track** from method design to the ACL SRW submission.
-- **Main writer of the paper.**
-- **Built the public release:** the benchmark package and its project page.
+Managed the research, wrote most of the paper, and built the public release.
 
 Published in the ACL 2026 Student Research Workshop in San Diego. The benchmark grew out of the AI-Tax platform work at Wrocław Tech.

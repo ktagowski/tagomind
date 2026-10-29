@@ -37,6 +37,6 @@ CLARIN-PL Embeddings wraps Hugging Face Transformers and PyTorch Lightning into 
 
 ## My contribution
 
-- **Led development** of the library from 2021, including code review for the team.
-- **Core engineering.** Designed the composable pipelines, the hyperparameter-search pipelines on Optuna, the test suite, and the tutorials.
-- **Coordination.** Planned the milestones toward the benchmark's first version and the stable release, and split them into tasks for the team.
+- **Led development** of the library from 2021.
+- **Core engineering.** Designed the pipelines, hyperparameter search, tests, and tutorials.
+- **Coordination.** Planned the roadmap to the benchmark release and organized the team's work.

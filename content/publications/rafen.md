@@ -20,6 +20,6 @@ Learning representations of nodes has been a crucial area of the graph machine l
 
 ## My contribution
 
-First author. Wrote the released code: the models, tasks, activity scoring, and the DVC experiment pipeline.
+First author. Wrote the released code.
 
 Published at the International Conference on Computational Science (ICCS) 2023. A follow-up to the [embedding alignment study](/publications/embedding-alignment-dynamic-networks/) and to [FILDNE](/publications/fildne/).

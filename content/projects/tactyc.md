@@ -20,5 +20,5 @@ The work connects vision-language models that read terrain tile by tile with gen
 
 ## My role
 
-- **Coordination.** Planned the research as tasks for the student team, from model reviews and the proof of concept to the evaluation data.
-- **Engineering.** Wrote most of the codebase: LoRA fine-tuning of diffusion models in three variants, the FastAPI backend, and the Next.js chat app.
+- **Coordination.** Planned the research and led the student team.
+- **Engineering.** Wrote most of the codebase, from model fine-tuning to the web app.
