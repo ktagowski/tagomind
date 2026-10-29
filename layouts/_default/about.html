@@ -1,65 +1,110 @@
 {{ define "main" }}
-<div class="workspace">
-  {{/* Portrait column capped at 13rem: the 460px source must never upscale on retina. */}}
-  <section class="grid items-start gap-8 lg:grid-cols-[13rem_1fr]">
-    <div class="panel overflow-hidden fx-rise">
-      <div class="relative aspect-[4/5]">
-        <span class="absolute inset-0 bg-grid opacity-50"></span>
-        {{ with site.Params.avatar }}<img src="{{ . | relURL }}" alt="{{ site.Params.author }}" class="h-full w-full object-cover">{{ end }}
+{{/* The bio is read like a document whose entities are linked: phrases it already uses point to the expertise or
+     group that names them. Words are never changed, only wrapped; a phrase that is not found is skipped. On wide
+     screens a script draws the links as edges across the gap between the bio and the index; elsewhere they are
+     plain in-page links. */}}
+{{ $links := slice
+  (dict "p" "<strong>graph representation learning</strong>" "to" "Graph Representation Learning")
+  (dict "p" "<strong>natural language processing</strong>" "to" "Natural Language Processing")
+  (dict "p" "<strong>LEPISZCZE</strong>" "to" "Benchmarks & Evaluation")
+  (dict "p" "<strong>legal and tax AI</strong>" "to" "Legal & Document AI")
+  (dict "p" "clean datasets" "to" "Datasets & Pipelines")
+  (dict "p" "honest evaluation" "to" "Benchmarks & Evaluation")
+  (dict "p" "software that does not fall over" "to" "Research Engineering")
+  (dict "p" "<strong>vision and generative models</strong>" "to" "Vision & Generative AI")
+  (dict "p" "<strong>Finance AI</strong>" "to" "Finance AI")
+  (dict "p" "a research group at Wrocław Tech" "to" "Wrocław University of Science and Technology")
+}}
+{{ $bio := .Content }}
+{{ range $links }}
+  {{ $k := .to | anchorize }}
+  {{ $bio = replace $bio .p (printf `<a class="ent" href="#e-%s" data-k="%s">%s</a>` $k $k .p) 1 }}
+{{ end }}
+
+<div class="workspace about">
+  <header class="about-head">
+    <div>
+      <h1 class="vt-title">{{ partial "title-words.html" (printf "%s, %s" site.Params.author site.Params.authorTitle) }}</h1>
+      <p class="about-role">{{ site.Params.role }}</p>
+      <div class="about-facts">
+        <p>{{ site.Params.affiliation }} · {{ site.Params.location }}</p>
+        <p>Founder &amp; Lead of <a href="{{ "/projects/finance-ai/" | relURL }}">Finance AI</a>, a research group at Wrocław Tech, within <a href="https://odysai.pl" target="_blank" rel="noopener">OdysAI</a>.</p>
       </div>
-      <div class="flex items-center gap-2 border-t border-border p-3">{{ partial "social-links.html" (dict "size" "size-[1.05rem]") }}</div>
+      <div class="about-socials">{{ partial "social-links.html" (dict "size" "size-[1.05rem]") }}</div>
     </div>
-    <div class="fx-rise">
-      <span class="eyebrow">{{ partial "icon.html" (dict "name" "user" "class" "size-3.5") }} {{ i18n "about_label" }}</span>
-      <h1 class="mt-3">{{ site.Params.author }}, {{ site.Params.authorTitle }}</h1>
-      <p class="lead mt-3">{{ site.Params.role }}</p>
-      <p class="mt-1 text-sm text-subtle">{{ site.Params.affiliation }} · {{ site.Params.location }}</p>
-      <p class="mt-1.5 text-sm text-subtle">Founder &amp; Lead of <a class="font-medium text-muted-foreground underline decoration-1 underline-offset-2 transition-colors hover:text-foreground" href="{{ "/projects/finance-ai/" | relURL }}">Finance AI</a>, a research group at Wrocław Tech, within <a class="font-medium text-muted-foreground underline decoration-1 underline-offset-2 transition-colors hover:text-foreground" href="https://odysai.pl" target="_blank" rel="noopener">OdysAI</a>.</p>
-      <div class="prose-ink mt-6">{{ .Content }}</div>
-      <div class="mt-7 flex flex-wrap gap-3">
+    {{/* 460px square source: shown at 15rem max, so it stays close to 2x. */}}
+    {{ with site.Params.avatar }}<div class="about-photo"><img src="{{ . | relURL }}" alt="{{ site.Params.author }}" width="460" height="460"></div>{{ end }}
+  </header>
+
+  <div class="about-graph" data-about-graph>
+    <svg class="about-edges" aria-hidden="true"></svg>
+    <div class="about-doc">
+      <div class="about-bio prose-ink">{{ $bio | safeHTML }}</div>
+      <div class="about-actions">
         <a class="btn btn-primary" href="mailto:{{ site.Params.email }}">{{ partial "icon.html" (dict "name" "mail" "class" "size-4") }} {{ site.Params.email }}</a>
-        <a class="btn" href="{{ "/services/" | relURL }}">{{ i18n "work_with_me" }} {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</a>
+        <a class="link-arrow" href="{{ "/services/" | relURL }}">{{ i18n "work_with_me" }} {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</a>
       </div>
     </div>
-  </section>
-
-  {{ with hugo.Data.groups }}
-  <section class="mt-14">
-    <span class="eyebrow">{{ partial "icon.html" (dict "name" "graph" "class" "size-3.5") }} Affiliations</span>
-    <h2 class="mt-2 text-2xl sm:text-3xl">Research groups</h2>
-    <div class="mt-7 grid gap-x-10 gap-y-6 sm:grid-cols-3">
-      {{ range . }}
-      <div class="border-t border-border pt-5">
-        {{ if .url }}
-        <a class="font-display text-lg font-[560] tracking-[-0.01em] transition-colors hover:text-brand" href="{{ .url }}"{{ if hasPrefix .url "http" }} target="_blank" rel="noopener"{{ end }}>{{ .org }} <span class="inline-block align-middle text-subtle">{{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-3.5") }}</span></a>
-        {{ else }}
-        <span class="font-display text-lg font-[560] tracking-[-0.01em]">{{ .org }}</span>
-        {{ end }}
-        <p class="mt-1 text-xs text-subtle">{{ .unit }}</p>
-        <p class="mt-2 text-sm font-medium text-muted-foreground">{{ .role }}</p>
-      </div>
+    <aside class="about-index">
+      {{ with .Params.expertise }}
+      <section>
+        <h2>{{ i18n "expertise" }}</h2>
+        <ul>
+          {{ range . }}{{ $k := .title | anchorize }}
+          <li class="about-node" id="e-{{ $k }}" data-k="{{ $k }}"><h3>{{ .title }}</h3><p>{{ .summary }}</p></li>
+          {{ end }}
+        </ul>
+      </section>
       {{ end }}
-    </div>
-  </section>
-  {{ end }}
-
-  {{ with .Params.expertise }}
-  <section class="mt-14">
-    <span class="eyebrow">{{ partial "icon.html" (dict "name" "spark-dot" "class" "size-3.5") }} {{ i18n "what_i_do" }}</span>
-    <h2 class="mt-2 text-2xl sm:text-3xl">{{ i18n "expertise" }}</h2>
-    <div class="mt-8 grid gap-x-14 sm:grid-cols-2">
-      {{ range $i, $e := . }}
-        <div class="exp-row fx-scroll-soft">
-          <span class="exp-num num" aria-hidden="true">{{ printf "%02d" (add $i 1) }}</span>
-          <div class="min-w-0">
-            <h3>{{ $e.title }}</h3>
-            <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">{{ $e.summary }}</p>
-          </div>
-        </div>
+      {{ with hugo.Data.groups }}
+      <section>
+        <h2>Research groups</h2>
+        <ul>
+          {{ range . }}{{ $k := .org | anchorize }}
+          <li class="about-node" id="e-{{ $k }}" data-k="{{ $k }}">
+            <p class="about-node-role">{{ .role }}</p>
+            <h3>{{ if .url }}<a href="{{ .url }}"{{ if hasPrefix .url "http" }} target="_blank" rel="noopener"{{ end }}>{{ .org }}</a>{{ else }}{{ .org }}{{ end }}</h3>
+            <p>{{ .unit }}</p>
+          </li>
+          {{ end }}
+        </ul>
+      </section>
       {{ end }}
-    </div>
-  </section>
-  {{ end }}
-
+    </aside>
+  </div>
 </div>
+
+<script>
+(function () {
+  var g = document.querySelector("[data-about-graph]");
+  if (!g) return;
+  var svg = g.querySelector(".about-edges"), doc = g.querySelector(".about-doc"), NS = "http://www.w3.org/2000/svg";
+  var ents = [].slice.call(g.querySelectorAll(".ent")), nodes = [].slice.call(g.querySelectorAll(".about-node"));
+  var wide = window.matchMedia("(min-width: 1100px)");
+  function el(name, attrs, k) { var e = document.createElementNS(NS, name); for (var a in attrs) e.setAttribute(a, attrs[a]); e.dataset.k = k; svg.appendChild(e); }
+  // Each edge leaves the bio column's right margin level with its phrase (so it never crosses words) and ends at the entry's title.
+  function draw() {
+    svg.textContent = "";
+    if (!wide.matches) return;
+    var box = g.getBoundingClientRect(), right = doc.getBoundingClientRect().right - box.left + 18;
+    svg.setAttribute("viewBox", "0 0 " + box.width + " " + box.height);
+    ents.forEach(function (e) {
+      var title = g.querySelector('.about-node[data-k="' + e.dataset.k + '"] h3');
+      if (!title) return;
+      var rs = e.getClientRects(), r = rs[rs.length - 1], t = title.getBoundingClientRect();
+      var y1 = r.top + r.height / 2 - box.top, x2 = t.left - box.left - 10, y2 = t.top + t.height / 2 - box.top, mx = (right + x2) / 2;
+      el("path", { d: "M" + right + "," + y1 + " C" + mx + "," + y1 + " " + mx + "," + y2 + " " + x2 + "," + y2 }, e.dataset.k);
+      el("circle", { cx: right, cy: y1, r: 2.5 }, e.dataset.k);
+      el("circle", { cx: x2, cy: y2, r: 3.5 }, e.dataset.k);
+    });
+  }
+  function on(k) { g.dataset.active = k; [].forEach.call(g.querySelectorAll("[data-k]"), function (x) { x.classList.toggle("is-on", x.dataset.k === k); }); }
+  function off() { delete g.dataset.active; [].forEach.call(g.querySelectorAll(".is-on"), function (x) { x.classList.remove("is-on"); }); }
+  ents.forEach(function (x) { x.addEventListener("mouseenter", function () { on(x.dataset.k); }); x.addEventListener("mouseleave", off); x.addEventListener("focus", function () { on(x.dataset.k); }); x.addEventListener("blur", off); });
+  nodes.forEach(function (x) { x.addEventListener("mouseenter", function () { on(x.dataset.k); }); x.addEventListener("mouseleave", off); });
+  draw();
+  if (document.fonts) document.fonts.ready.then(draw);
+  if ("ResizeObserver" in window) new ResizeObserver(draw).observe(g); else window.addEventListener("resize", draw);
+})();
+</script>
 {{ end }}

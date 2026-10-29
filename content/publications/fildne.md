@@ -5,6 +5,7 @@ date: 2022-01-01
 pub: "fildne"
 description: "One-page summary of FILDNE (Knowledge-Based Systems, 2022): incremental learning of dynamic network embeddings that reuses any static embedding method."
 lead: "Retraining a graph embedding from scratch every time the graph changes is slow and wasteful. FILDNE turns any static embedding method into an incremental one by aligning and convexly combining per-snapshot embeddings, cutting memory up to 6x and compute up to 50x."
+hook: "Turn any static graph embedding into an incremental one, with up to 50x less compute."
 ---
 
 ## Abstract

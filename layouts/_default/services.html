@@ -1,8 +1,7 @@
 {{ define "main" }}
 <div class="workspace">
   <div class="page-head fx-rise">
-    <span class="eyebrow">{{ partial "icon.html" (dict "name" "briefcase" "class" "size-3.5") }} {{ i18n "work_with_me" }}</span>
-    <h1>{{ .Title }}</h1>
+    <h1>{{ partial "title-words.html" .Title }}</h1>
     {{ with .Params.lead }}<p class="lead">{{ . }}</p>{{ end }}
     {{ if .IsTranslated }}
     <p class="mt-1 text-sm text-subtle">
@@ -16,7 +15,7 @@
     {{ range . }}
       <div class="panel flex flex-col p-7 fx-scroll-soft">
         <span class="grid size-11 place-items-center rounded-xl" style="background:color-mix(in oklch,var(--brand) 16%,transparent);color:var(--brand)">{{ partial "icon.html" (dict "name" (.icon | default "sparkle") "class" "size-5") }}</span>
-        <h3 class="mt-4 text-xl sm:text-2xl">{{ .title }}</h3>
+        <h3 class="mt-4">{{ .title }}</h3>
         <p class="mt-2 text-[0.95rem] leading-relaxed text-muted-foreground">{{ .summary }}</p>
         {{ with .bullets }}
         <ul class="mt-4 flex flex-col gap-1.5 text-sm">
@@ -25,7 +24,7 @@
         {{ end }}
         {{ with .story }}
         <div class="mt-6 border-t border-border pt-5">
-          <span class="font-mono text-[0.68rem] font-semibold uppercase tracking-[0.09em] text-subtle">{{ .label }}</span>
+          <span class="text-sm font-semibold text-foreground">{{ .label }}</span>
           <p class="mt-2 text-sm leading-relaxed text-muted-foreground">{{ .text }}</p>
           {{ with .link }}<a class="link-arrow mt-3" href="{{ . | relURL }}">{{ i18n "case_details" }} {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</a>{{ end }}
         </div>
@@ -38,7 +37,7 @@
   {{ with .Params.also }}
   <section class="mt-8">
     <div class="grid gap-x-10 gap-y-3 border-y border-border py-5 sm:grid-cols-2">
-      <span class="fields-band-label sm:col-span-2">{{ i18n "also_available" }}</span>
+      <span class="text-sm font-semibold text-foreground sm:col-span-2">{{ i18n "also_available" }}</span>
       {{ range . }}{{ $p := split . ":" }}<p class="text-sm text-muted-foreground"><strong class="font-semibold text-foreground">{{ index $p 0 }}:</strong>{{ delimit (after 1 $p) ":" }}</p>{{ end }}
     </div>
   </section>
@@ -48,12 +47,11 @@
 
   {{ with .Params.process }}
   <section class="mt-14">
-    <span class="eyebrow">{{ partial "icon.html" (dict "name" "graph" "class" "size-3.5") }} {{ i18n "engagement" }}</span>
-    <h2 class="mt-2 text-2xl sm:text-3xl">{{ i18n "how_we_work" }}</h2>
+    <h2>{{ i18n "how_we_work" }}</h2>
     <div class="mt-7 grid gap-x-10 gap-y-6 sm:grid-cols-3">
       {{ range . }}
-        <div class="border-t border-border pt-5">
-          <span class="num font-display text-3xl italic font-[480] text-brand">{{ .step }}</span>
+        <div class="border-t border-border pt-5 fx-scroll-soft">
+          <span class="num font-display text-3xl italic font-[480] text-link">{{ .step }}</span>
           <h3 class="mt-2.5">{{ .title }}</h3>
           <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">{{ .summary }}</p>
         </div>
@@ -63,10 +61,10 @@
   {{ end }}
 
   <section class="mt-14">
-    <div class="panel relative overflow-hidden p-8 text-center sm:p-12">
+    <div class="panel relative overflow-hidden p-8 text-center sm:p-12 fx-scroll-soft">
       <span class="absolute inset-0 bg-spotlight"></span>
       <div class="relative mx-auto max-w-2xl">
-        <h2 class="text-2xl sm:text-3xl">{{ i18n "cta_title" }}</h2>
+        <h2>{{ i18n "cta_title" }}</h2>
         <p class="lead mx-auto mt-3">{{ i18n "cta_lead" }}</p>
         <div class="mt-6 flex flex-wrap justify-center gap-3">
           {{ with site.Params.booking }}<a class="btn btn-primary" href="{{ . }}" target="_blank" rel="noopener">{{ partial "icon.html" (dict "name" "calendar" "class" "size-4") }} {{ i18n "book_consultation" }}</a>{{ end }}

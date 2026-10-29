@@ -15,6 +15,7 @@ impact: 72
 featured: true
 summary: "AI-assisted flat hunting: scores apartment listings, summarizes visits, and compares options side by side."
 hero: ""
+study: "flat-explorer"
 ---
 
 Flat Explorer is an AI-assisted app for evaluating apartment listings. It pairs structured scoring with LLM-generated insights and collaborative sharing, so everyone involved in the search weighs the same flats against the same criteria.

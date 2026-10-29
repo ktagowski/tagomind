@@ -1,0 +1,20 @@
+{{- /* Paper media: one item only. The demo video (with its caption) when the paper has one, the designed figure otherwise (no visible caption: the hook beside it says what it shows; media.caption becomes the figure's accessible label).
+     The poster PDF stays reachable from the Poster link in the hero.
+     Usage: {{ partial "pub-media.html" (dict "pub" $pubData) }} */ -}}
+{{- $pub := .pub -}}
+{{- $m := $pub.media | default dict -}}
+{{- $hasVideo := and $m.video $m.video.src -}}
+<div class="pub-media{{ if $hasVideo }} is-video{{ end }} fx-scroll-soft">
+  {{ if $hasVideo }}
+  <figure class="media-frame">
+    <video controls preload="metadata" playsinline{{ with $m.video.poster }} poster="{{ . | relURL }}"{{ end }} width="1280" height="720" aria-label="{{ $m.video.caption | default (i18n "watch_demo") }}">
+      <source src="{{ $m.video.src | relURL }}" type="video/mp4">
+    </video>
+    <figcaption class="media-caption"><span>{{ $m.video.caption | default (i18n "watch_demo") }}</span></figcaption>
+  </figure>
+  {{ else }}
+  <figure class="media-frame"{{ with $m.caption }} role="img" aria-label="{{ . }}"{{ end }}>
+    <div class="figure-wrap">{{ partial "pub-figure.html" (dict "pub" $pub "variant" "full") }}</div>
+  </figure>
+  {{ end }}
+</div>

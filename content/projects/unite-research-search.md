@@ -8,10 +8,13 @@ year: 2026
 fields: ["NLP", "Graph ML", "Applications"]
 role: "Consultant"
 status: "Live"
+links:
+  site: "https://caai-sm.com/"
 impact: 85
 featured: true
 summary: "Semantic search and visualization platform for 200k+ researcher profiles across 9 European universities."
 tech: ["FastAPI", "Next.js", "PostgreSQL pgvector", "BAAI/bge-m3", "LangChain", "Supabase", "UMAP"]
+study: "unite-research-search"
 ---
 
 A production system that powers researcher discovery across the UNITE! alliance, a network of 9 partner universities spanning Poland, Portugal, Italy, Germany, Spain, Finland, Austria, France, and Sweden. The platform indexes and searches 200k+ researcher profiles with both semantic and keyword matching.

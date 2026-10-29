@@ -5,6 +5,7 @@ date: 2017-09-11
 pub: "incremental-learning-dynamic-networks"
 description: "Incremental Learning in Dynamic Networks for Node Classification (ENIC 2017): predicting changing node states from messages spreading through a network."
 lead: "Node labels in a social network are not fixed: a person's state changes as messages arrive. This early paper treats node classification as an incremental learning problem over a non-stationary network and forecasts the next state of a node from the messages it receives."
+hook: "Forecasting a node's next state from the messages it receives."
 ---
 
 ## In brief

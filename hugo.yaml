@@ -89,8 +89,8 @@ params:
   avatar: "img/kamil-tagowski.jpg"
   avatarSmall: "img/kamil-tagowski-96.webp"
   themeColor: "#26262A"
-  tagline: "Graph representation learning & NLP, from research benchmarks to production legal-AI systems."
-  description: "Kamil Tagowski (PhD), researcher and engineer in Graph Representation Learning and NLP. Projects, publications, and AI/NLP/Legal-AI consulting."
+  tagline: "Reliable AI for complex information: information discovery, agentic extraction, and evaluation, grounded in NLP and graph learning."
+  description: "Kamil Tagowski, PhD, postdoctoral researcher at Wrocław University of Science and Technology. Research in information discovery, agentic extraction, NLP, graph learning, and evaluation, with deployed legal AI."
   socials:
     - name: "GitHub"
       icon: "github"

@@ -2,7 +2,7 @@
 {{- $projects := where hugo.Sites.Default.RegularPages "Section" "projects" -}}
 {{- $featured := first 5 (sort (where $projects "Params.featured" true) "Params.impact" "desc") -}}
 {{- if lt (len $featured) 4 }}{{ $featured = first 5 $projects }}{{ end -}}
-<footer class="site-footer mt-16">
+<footer class="site-footer mt-6">
   <div class="workspace grid gap-10 !py-12 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1fr]">
     <div class="flex max-w-xs flex-col gap-2">
       <a class="wordmark" href="{{ "/" | relURL }}">
@@ -17,11 +17,12 @@
     <nav class="footer-col" aria-label="{{ i18n "aria_footer_site" }}">
       <span class="footer-head">{{ i18n "footer_explore" }}</span>
       <a href="{{ "/" | relURL }}">{{ i18n "nav_home" }}</a>
+      <a href="{{ "/research/" | relURL }}">{{ i18n "nav_research" }}</a>
       <a href="{{ "/projects/" | relURL }}">{{ i18n "nav_projects" }}</a>
       <a href="{{ "/publications/" | relURL }}">{{ i18n "nav_publications" }}</a>
       {{ if gt (len (where hugo.Sites.Default.RegularPages "Section" "notes")) 0 }}<a href="{{ "/notes/" | relURL }}">{{ i18n "nav_notes" }}</a>{{ end }}
       <a href="{{ "/about/" | relURL }}">{{ i18n "nav_about" }}</a>
-      <a href="{{ "/services/" | relURL }}">{{ i18n "nav_services" }}</a>
+      <a href="{{ "/services/" | relLangURL }}">{{ i18n "nav_services" }}</a>
     </nav>
 
     <nav class="footer-col" aria-label="{{ i18n "nav_projects" }}">
@@ -34,8 +35,7 @@
     <nav class="footer-col" aria-label="{{ i18n "aria_footer_contact" }}">
       <span class="footer-head">{{ i18n "work_with_me" }}</span>
       {{ with site.Params.booking }}<a href="{{ . }}" target="_blank" rel="noopener">{{ i18n "book_consultation" }}</a>{{ end }}
-      <a href="{{ "/projects/finance-ai/" | relURL }}">Finance AI</a>
-      <a href="https://odysai.pl" target="_blank" rel="noopener">OdysAI</a>
+      <a href="{{ "/research/#collaborate" | relURL }}">{{ i18n "research_collaborate" }}</a>
       <a href="https://scholar.google.com/citations?user=psVLt8wAAAAJ" target="_blank" rel="noopener">Google Scholar</a>
       {{ with site.Params.orcid }}<a href="https://orcid.org/{{ . }}" target="_blank" rel="me noopener">ORCID {{ . }}</a>{{ end }}
       <a href="https://dblp.org/pid/225/0671.html" target="_blank" rel="noopener">DBLP</a>

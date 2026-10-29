@@ -1,227 +1,227 @@
 {{ define "main" }}
-{{ $projects := where site.RegularPages "Section" "projects" }}
 {{ $hero := .Params.hero }}
 
-<!-- ───────────────── Hero ───────────────── -->
-<section class="workspace relative overflow-x-clip flex min-h-[min(68vh,36rem)] flex-col items-center justify-center text-center !pt-12 !pb-8">
+<!-- ───────────────── Hero: owns the whole first view ───────────────── -->
+<section class="hero-full workspace relative overflow-x-clip">
   <span class="hero-halo" aria-hidden="true"></span>
-  {{/* The name row sits inside the H1 (spans only: h1 takes phrasing content) so the page heading
-       reads "Kamil Tagowski · PhD Connecting research and practice." while the design is unchanged. */}}
-  <h1>
-    <span class="fx-hero mb-6 flex items-center justify-center gap-3">
-      {{ with or site.Params.avatarSmall site.Params.avatar }}<img src="{{ . | relURL }}" alt="" loading="eager" width="96" height="96" class="size-12 rounded-full object-cover">{{ end }}
-      {{ with $hero.eyebrow }}<span class="eyebrow">{{ . }}</span>{{ end }}
-    </span>
-    <span class="fx-hero block text-[clamp(2.8rem,6.6vw,5.7rem)] leading-[1.02]" style="animation-delay:.05s">
-      {{ $hero.headlineA | default "Intelligence redefined." | safeHTML }}{{ with $hero.headlineB }}<br class="hidden sm:block"> {{ . | safeHTML }}{{ end }}
-    </span>
-  </h1>
-  <p class="lead fx-hero mx-auto mt-6 max-w-2xl text-balance" style="animation-delay:.12s">{{ $hero.lead | default site.Params.tagline }}</p>
-  {{ with $hero.proof }}
-  <div class="hero-proof fx-hero" style="animation-delay:.2s">
-    <span class="hero-proof-dot" aria-hidden="true"></span>
-    <span class="hero-proof-track">
-      {{ range $i, $p := . }}<span class="hero-proof-item{{ if eq $i 0 }} is-active{{ end }}">{{ $p }}</span>{{ end }}
-    </span>
-  </div>
-  {{ end }}
-  <div class="fx-hero mt-8 flex flex-wrap items-center justify-center gap-3" style="animation-delay:.2s">
-    {{ with site.Params.booking }}<a class="btn btn-primary" href="{{ . }}" target="_blank" rel="noopener">{{ partial "icon.html" (dict "name" "calendar" "class" "size-[1.05rem]") }} {{ i18n "book_consultation" }}</a>{{ end }}
-    <a class="btn btn-outline" href="{{ "/projects/" | relURL }}">{{ i18n "explore_projects" }}</a>
-  </div>
-</section>
-
-<!-- ───────────────── Affiliations (credibility band) ───────────────── -->
-{{ with hugo.Data.groups }}
-<section class="workspace !py-0">
-  <div class="affil-band fx-hero" style="animation-delay:.28s">
-    {{ range . }}
-    {{ $inner := printf `<span class="affil-org">%s</span><span class="affil-role">%s</span>` (or .short .org) (or .shortRole .role) }}
-    {{ if .url }}
-    <a class="affil-item" href="{{ .url | relURL }}"{{ if hasPrefix .url "http" }} target="_blank" rel="noopener"{{ end }}>{{ $inner | safeHTML }}</a>
-    {{ else }}
-    <div class="affil-item">{{ $inner | safeHTML }}</div>
-    {{ end }}
-    {{ end }}
-  </div>
-</section>
-{{ end }}
-
-<!-- ───────────────── Applications (featured, 2nd) ───────────────── -->
-{{ with .Params.applications }}
-<section class="workspace">
-  <div class="fx-scroll-soft flex items-end justify-between gap-4">
-    <div>
-      <span class="eyebrow">{{ partial "icon.html" (dict "name" "folder" "class" "size-3.5") }} {{ i18n "selected_work" }}</span>
-      <h2 class="mt-2 text-4xl sm:text-5xl">{{ i18n "applications_title" }}</h2>
-      <p class="mt-3 max-w-lg text-muted-foreground">{{ i18n "applications_sub" }}</p>
+  <div class="hero-main">
+    {{/* Headline words reveal one by one; <em>…</em> in the data marks the accented words. */}}
+    {{ $lines := slice ($hero.headlineA | default "Intelligence redefined.") }}
+    {{ with $hero.headlineB }}{{ $lines = $lines | append . }}{{ end }}
+    {{ $n := 0 }}{{ $inEm := false }}
+    <h1 class="hero-title text-[length:var(--t-display)] leading-[1.02]">
+      {{- range $li, $line := $lines -}}
+        {{- if gt $li 0 }}<br class="hidden sm:block"> {{ end -}}
+        {{- range $w := split $line " " -}}
+          {{- if hasPrefix $w "<em>" }}{{ $inEm = true }}{{ end -}}
+          {{- $word := $w | replaceRE "</?em>" "" -}}
+          <span class="hw{{ if $inEm }} is-em{{ end }}" style="--i:{{ $n }}">{{ $word }}</span>{{ " " }}
+          {{- if hasSuffix $w "</em>" }}{{ $inEm = false }}{{ end -}}
+          {{- $n = add $n 1 -}}
+        {{- end -}}
+      {{- end -}}
+    </h1>
+    <p class="fx-hero mx-auto mt-6 max-w-xl text-base sm:text-lg leading-relaxed text-muted-foreground text-balance" style="--d:0s">{{ $hero.lead | default site.Params.tagline }}</p>
+    <p class="hero-who fx-hero mt-6" style="--d:.1s">
+      {{ with or site.Params.avatarSmall site.Params.avatar }}<img src="{{ . | relURL }}" alt="" loading="eager" width="96" height="96">{{ end }}
+      <span><b>{{ $hero.eyebrow | default site.Params.author }}</b><span class="hero-who-sep" aria-hidden="true"> · </span><span class="hero-who-role">{{ $hero.affiliation }}</span></span>
+    </p>
+    <div class="fx-hero mt-8 flex flex-wrap items-center justify-center gap-3" style="--d:.2s">
+      <a class="btn btn-primary" href="{{ "/research/" | relURL }}">Explore research {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</a>
+      <a class="btn btn-outline" href="{{ "/research/#collaborate" | relURL }}">Discuss your project</a>
     </div>
-    <a class="link-arrow" href="{{ "/projects/" | relURL }}">{{ i18n "all_projects" }} {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</a>
   </div>
-  {{ $featuredApps := slice }}{{ $restApps := slice }}
-  {{ range . }}{{ if or .vignette .shot }}{{ $featuredApps = $featuredApps | append . }}{{ else }}{{ $restApps = $restApps | append . }}{{ end }}{{ end }}
-  <div class="mt-9 grid gap-6 lg:grid-cols-2">
-    {{ range $featuredApps }}
-    {{ $app := . }}
-    {{ $ext := and $app.url (hasPrefix $app.url "http") }}
-    {{ $detail := "" }}{{ with $app.page }}{{ $detail = printf "/projects/%s/" . | relURL }}{{ end }}
-    {{ $accents := dict "Flat Explorer" "oklch(0.6 0.13 250)" "AI-Tax" "oklch(0.56 0.19 272)" "TACTYC" "oklch(0.63 0.12 200)" "Finance AI" "oklch(0.64 0.11 158)" }}
-    {{ $accent := or (index $accents $app.title) "var(--brand)" }}
-    <article class="app-card panel fx-scroll-soft{{ if eq $app.status "Upcoming" }} is-upcoming{{ end }}{{ if $detail }} is-clickable{{ end }}" style="--app-accent: {{ $accent | safeCSS }}">
-      <span class="app-glow" aria-hidden="true"></span>
-      {{ if $detail }}<a class="app-cover" href="{{ $detail }}" aria-label="{{ $app.title }}"></a>{{ end }}
-      {{ if or $app.vignette $app.shot }}
-      <div class="app-media" aria-hidden="true">
-        <div class="app-media-bar"><i></i><i></i><i></i>{{ with $app.url }}<span class="app-media-url">{{ replaceRE `^https?://` "" . | strings.TrimSuffix "/" }}</span>{{ end }}</div>
-        {{ if $app.vignette }}
-        {{ partial "app-vignette.html" (dict "kind" $app.vignette) }}
-        {{ else }}
-        <img src="{{ $app.shot | relURL }}" alt="" loading="lazy">
-        {{ end }}
-      </div>
-      {{ end }}
-      <div class="app-head">
-        <span class="app-logo logo-tile">
-          {{ with $app.logo }}<img src="{{ . | relURL }}" alt="{{ $app.title }} logo" loading="lazy" width="56" height="56">
-          {{ else }}<span class="grid size-full place-items-center" style="background:linear-gradient(150deg,color-mix(in oklch,var(--app-accent, var(--brand)) 32%,transparent),color-mix(in oklch,var(--app-accent, var(--brand)) 9%,transparent));color:var(--app-accent, var(--brand))">{{ partial "icon.html" (dict "name" ($app.icon | default "spark-dot") "class" "size-7") }}</span>{{ end }}
-        </span>
-        <div class="min-w-0 flex-1">
-          <div class="flex flex-wrap items-center gap-2.5">
-            <h3 class="app-title">{{ $app.title }}</h3>
-            {{ if eq $app.status "Live" }}<span class="badge badge-live">{{ i18n "status_live" }}</span>
-            {{ else if eq $app.status "Ongoing" }}<span class="badge badge-ongoing">{{ i18n "status_ongoing" }}</span>
-            {{ else }}<span class="badge">{{ i18n "status_upcoming" }}</span>{{ end }}
-            {{ if and $app.ongoing (ne $app.status "Ongoing") }}<span class="badge badge-ongoing">{{ i18n "status_ongoing" }}</span>{{ end }}
-          </div>
-          {{ with $app.full }}<p class="app-tagline">{{ . }}</p>{{ end }}
+  <div class="hero-foot fx-hero" style="--d:.5s">
+    <a class="scroll-cue" href="#practice-title" aria-label="Scroll to selected projects">{{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</a>
+  </div>
+</section>
+
+<!-- ───────────────── Selected projects ───────────────── -->
+{{/* Pinned projects, compositor path: per-card keyframes on a view timeline (see main.css). Between two projects the
+     track rests for 15% of the scroll, glides for 70% (ease-in-out) and rests for 15%; native scroll snapping (one
+     must-stop snap point per project) lands every gesture on a project. Generated from the number of projects. */}}
+{{- $N := len .Params.practice -}}{{- $last := sub $N 1 -}}
+{{- if gt $last 0 -}}
+{{- $seg := div 100.0 $last -}}
+{{- $pts := slice (dict "pct" 0.0 "pos" 0) -}}
+{{- range $s := seq 0 (sub $last 1) -}}
+  {{- $start := mul $seg $s -}}
+  {{- $pts = $pts | append (dict "pct" (add $start (mul $seg 0.15)) "pos" $s) -}}
+  {{- $pts = $pts | append (dict "pct" (add $start (mul $seg 0.85)) "pos" (add $s 1)) -}}
+{{- end -}}
+{{- $pts = $pts | append (dict "pct" 100.0 "pos" $last) -}}
+{{- $css := "" -}}
+{{- range $k := seq 0 $last -}}
+  {{- $css = printf "%s@keyframes pk%d{" $css $k -}}
+  {{- range $pts -}}
+    {{- $d := cond (eq .pos $k) 0 1 -}}
+    {{- $css = printf "%s%.3f%%{translate:calc(%d * (-100%% - 1rem)) 0;opacity:%.2f;scale:%.3f;animation-timing-function:cubic-bezier(.65,0,.35,1)}" $css .pct .pos (sub 1.0 (mul $d 0.7)) (sub 1.0 (mul $d 0.06)) -}}
+  {{- end -}}
+  {{- $css = printf "%s}" $css -}}
+{{- end -}}
+<style>{{ $css | safeCSS }}</style>
+{{- end }}
+<section class="workspace practice-section" aria-labelledby="practice-title">
+  {{/* Scroll-through: on mouse/trackpad screens app.js pins .practice-sticky and page scrolling slides the projects across. */}}
+  <div class="practice-pin">
+    {{ range $i, $e := .Params.practice }}<span class="practice-snap" style="--i: {{ $i }}" aria-hidden="true"></span>{{ end }}
+    <div class="practice-sticky">
+  <div class="section-head fx-scroll-soft">
+    <div>
+      <h2 id="practice-title">Selected projects</h2>
+      <p>Research platforms, experimental systems, and independent products.</p>
+    </div>
+    <div class="flex items-center gap-2">
+      <a class="link-arrow mr-3" href="{{ "/projects/" | relURL }}">All projects {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</a>
+      <button class="icon-btn" type="button" data-practice-prev aria-label="Previous projects" aria-controls="practice-slider">{{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4 rotate-180") }}</button>
+      <button class="icon-btn" type="button" data-practice-next aria-label="Next projects" aria-controls="practice-slider">{{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</button>
+    </div>
+  </div>
+  <div id="practice-slider" class="practice-slider mt-8" role="region" aria-label="Selected projects" tabindex="0">
+    {{ range $i, $entry := .Params.practice }}
+    {{ with site.GetPage (printf "/projects/%s" .page) }}
+    <article class="practice-card" data-project="{{ $entry.page }}" style="--pk: pk{{ $i }}">
+      <div class="practice-copy">
+        <div class="practice-card-top"><span class="practice-category">{{ $entry.category }}</span><span class="practice-project-number num">{{ printf "%d of %d" (add $i 1) (len $.Params.practice) }}</span></div>
+        <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+        <p class="practice-description">{{ $entry.description }}</p>
+        <div class="practice-proof"><strong>{{ $entry.proof }}</strong><span>{{ $entry.context }}</span></div>
+        <div class="practice-card-bottom">
+          <span class="practice-role">{{ .Params.role }}{{ with .Params.links.site }} · <a class="hover:text-foreground" href="{{ . }}" target="_blank" rel="noopener">{{ $entry.host | default "Visit site" }}</a>{{ end }}</span>
+          <a class="practice-project-link" href="{{ .RelPermalink }}" aria-label="Explore {{ .Title }}">{{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-5") }}</a>
         </div>
       </div>
-      <p class="app-summary">{{ $app.summary }}</p>
-      <div class="app-cta">
-        {{ if $app.url }}
-          <a class="btn btn-primary btn-sm" href="{{ cond $ext $app.url ($app.url | relURL) }}"{{ if $ext }} target="_blank" rel="noopener"{{ end }}>{{ $app.cta | default (i18n "open_app") }} {{ partial "icon.html" (dict "name" (cond $ext "arrow-up-right" "arrow-right") "class" "size-4") }}</a>
-        {{ else }}
-          <span class="app-soon">{{ partial "icon.html" (dict "name" "spark-dot" "class" "size-3") }} {{ i18n "coming_soon" }}</span>
-        {{ end }}
-        {{ with $app.role }}<span class="app-role">{{ partial "icon.html" (dict "name" "user" "class" "size-3.5") }} {{ . }}</span>{{ end }}
-      </div>
+      {{ partial "practice-preview.html" (dict "page" .) }}
     </article>
     {{ end }}
+    {{ end }}
   </div>
+  <div class="practice-dots" aria-label="Choose a project">
+    {{ range $i, $entry := .Params.practice }}{{ with site.GetPage (printf "/projects/%s" .page) }}<button type="button" data-practice-dot="{{ $i }}" aria-label="{{ .Title }}"{{ if eq $i 0 }} aria-current="true"{{ end }}></button>{{ end }}{{ end }}
+  </div>
+  </div></div>
+</section>
 
-  {{ with $restApps }}
-  <div class="panel hero-work fx-scroll-soft mt-6">
-    <div class="hero-work-list">
-      {{ range . }}
-      {{ $accents := dict "Flat Explorer" "oklch(0.6 0.13 250)" "AI-Tax" "oklch(0.56 0.19 272)" "TACTYC" "oklch(0.63 0.12 200)" "Finance AI" "oklch(0.64 0.11 158)" }}
-      {{ $accent := or (index $accents .title) "var(--brand)" }}
-      {{ $detail := "" }}{{ with .page }}{{ $detail = printf "/projects/%s/" . | relURL }}{{ end }}
-      <a class="hero-work-row" href="{{ $detail }}">
-        <span class="hero-work-logo logo-tile">
-          {{ with .logo }}<img src="{{ . | relURL }}" alt="" loading="lazy" width="40" height="40">
-          {{ else }}<span class="grid size-full place-items-center" style="background:linear-gradient(150deg,color-mix(in oklch,{{ $accent | safeCSS }} 32%,transparent),color-mix(in oklch,{{ $accent | safeCSS }} 9%,transparent));color:{{ $accent | safeCSS }}">{{ partial "icon.html" (dict "name" (.icon | default "spark-dot") "class" "size-5") }}</span>{{ end }}
-        </span>
-        <span class="hero-work-main">
-          <span class="hero-work-titlerow">
-            <span class="hero-work-title">{{ .title }}</span>
-            {{ if eq .status "Live" }}<span class="badge badge-live">{{ i18n "status_live" }}</span>{{ else }}<span class="badge badge-ongoing">{{ i18n "status_ongoing" }}</span>{{ end }}
-          </span>
-          <span class="hero-work-sub">{{ .summary }}</span>
-        </span>
-        {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4 hero-work-arrow") }}
-      </a>
-      {{ end }}
+<!-- ───────────────── Watch it work: the paper with a real demo ───────────────── -->
+{{ $demo := dict }}
+{{ range hugo.Data.publications }}{{ if and (not $demo.slug) .media }}{{ if .media.video }}{{ $demo = . }}{{ end }}{{ end }}{{ end }}
+{{ with $demo.slug }}
+{{ $dpg := site.GetPage (printf "/publications/%s" .) }}
+<section class="workspace demo-section" aria-labelledby="demo-title" style="--field: {{ partial "pub-accent.html" $demo.type | safeCSS }}">
+  <div class="demo-copy fx-scroll-soft">
+    <p class="demo-kicker">{{ $demo.venue }} · {{ partial "pub-type-label.html" $demo.type }}</p>
+    <h2 id="demo-title">Watch an agent team design a legal extraction schema</h2>
+    {{ with $dpg }}{{ with .Params.lead }}<p class="demo-lead">{{ . }}</p>{{ end }}{{ end }}
+    {{ with $demo.facts }}
+    <ul class="demo-facts">{{ range first 3 . }}<li><b>{{ .value }}</b> {{ .label }}</li>{{ end }}</ul>
+    {{ end }}
+    <div class="mt-7 flex flex-wrap items-center gap-3">
+      {{ with $dpg }}<a class="btn btn-primary" href="{{ .RelPermalink }}">{{ i18n "read_summary" }} {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</a>{{ end }}
+      {{ with $demo.links.code }}<a class="btn btn-outline" href="{{ . }}" target="_blank" rel="noopener">{{ partial "icon.html" (dict "name" "code" "class" "size-4") }} Code</a>{{ end }}
     </div>
   </div>
-  {{ end }}
+  <figure class="media-frame demo-media fx-scroll-soft">
+    <video controls preload="none" playsinline poster="{{ $demo.media.video.poster | relURL }}" width="1280" height="720" aria-label="{{ $demo.media.video.caption }}">
+      <source src="{{ $demo.media.video.src | relURL }}" type="video/mp4">
+    </video>
+    <figcaption class="media-caption"><span>{{ $demo.media.video.caption }}</span>{{ with $demo.media.video.duration }}<span class="num">{{ . }}</span>{{ end }}</figcaption>
+  </figure>
 </section>
 {{ end }}
 
-<!-- ───────────────── Fields of interest (slim editorial band) ───────────────── -->
-<section class="workspace !py-0">
-  <div class="fields-band fx-scroll-soft">
-    <span class="fields-band-label">{{ i18n "fields_of_interest" }}</span>
-    {{ range hugo.Data.fields }}
-      {{ $count := len (where $projects "Params.fields" "intersect" (slice .label)) }}
-      {{ if gt $count 0 }}
-      <a href="{{ "/projects/" | relURL }}?fields={{ .label | urlquery }}" class="field-pill" style="--field: {{ .color | safeCSS }}">
-        <span class="dot" aria-hidden="true"></span>{{ .label }}<span class="num">{{ $count }}</span>
-      </a>
-      {{ end }}
-    {{ end }}
-  </div>
-</section>
-
-<!-- ───────────────── Publications teaser ───────────────── -->
+<!-- ───────────────── Selected research ───────────────── -->
 {{ with hugo.Data.publications }}
 <section class="workspace">
-  <div class="fx-scroll-soft flex flex-wrap items-end justify-between gap-4">
+  <div class="section-head fx-scroll-soft">
     <div>
-      <span class="eyebrow">{{ partial "icon.html" (dict "name" "paper" "class" "size-3.5") }} {{ i18n "peer_reviewed" }}</span>
-      <h2 class="mt-2 text-4xl sm:text-5xl">{{ i18n "recent_publications" }}</h2>
-      <p class="mt-3 max-w-md text-muted-foreground">{{ i18n "pubs_sub" }}</p>
+      <h2>Selected research</h2>
+      <p>{{ i18n "pubs_sub" }}</p>
     </div>
     <a class="link-arrow" href="{{ "/publications/" | relURL }}">{{ i18n "all_publications" }} {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</a>
   </div>
-  {{ $typeAccents := dict "Conference" "oklch(0.62 0.13 255)" "Workshop" "oklch(0.6 0.15 300)" "Journal" "oklch(0.6 0.1 168)" "Datasets & Benchmarks" "oklch(0.63 0.13 32)" }}
-  {{/* Featured = significance, not recency: the NeurIPS benchmark outranks a newer ICCS paper. */}}
   {{ $featured := where . "featured" true }}
-  <div class="fx-scroll mt-8 grid gap-4 lg:grid-cols-3">
-    {{ range first 3 (cond (gt (len $featured) 0) $featured .) }}{{ $pub := . }}
-      {{ $acc := or (index $typeAccents .type) "var(--brand)" }}
-      <article class="pub-card" style="--field: {{ $acc | safeCSS }}">
-        <div class="mb-3 flex items-start justify-between gap-2">
-          <div class="flex flex-wrap items-center gap-1.5">
-            {{ with .venue }}<span class="badge badge-venue">{{ . }}</span>{{ end }}
-            {{ with .type }}<span class="badge badge-type" data-type="{{ . | lower | replaceRE "[^a-z0-9]+" "-" }}">{{ . }}</span>{{ end }}
-          </div>
-          <span class="num shrink-0 pt-0.5 text-sm text-subtle">{{ .year }}</span>
+  <div class="mt-8 grid gap-4 lg:grid-cols-3">
+    {{ range first 3 (cond (gt (len $featured) 0) $featured .) }}{{ partial "pub-card.html" (dict "pub" .) }}{{ end }}
+  </div>
+  <p class="mt-6 text-muted-foreground fx-scroll-soft"><a class="link-arrow" href="{{ "/publications/rafen/" | relURL }}">RAFEN · Graph representation learning {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</a></p>
+</section>
+{{ end }}
+
+<!-- ───────────────── Research directions ───────────────── -->
+<section class="workspace home-research" aria-labelledby="home-research-title">
+  <div class="home-research-intro fx-scroll-soft">
+    <span class="eyebrow">Research directions</span>
+    <h2 id="home-research-title">Questions<br>I explore</h2>
+    <a class="link-arrow" href="{{ "/research/" | relURL }}">Research &amp; collaboration {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-4") }}</a>
+    {{/* Stage: the figure of the direction currently being read, swapped by app.js as rows cross the viewport. */}}
+    <div class="home-research-stage" aria-hidden="true">
+      {{ range $i, $d := .Params.directions }}
+        {{ $pg := site.GetPage $d.url }}
+        <div class="stage-item{{ if eq $i 0 }} is-active{{ end }}" data-stage="{{ $i }}">
+          {{ if and $pg (eq $pg.Section "publications") }}
+            {{ $pub := dict }}{{ range hugo.Data.publications }}{{ if eq .slug $pg.Params.pub }}{{ $pub = . }}{{ end }}{{ end }}
+            <div class="stage-figure" style="--field: {{ partial "pub-accent.html" $pub.type | safeCSS }}">{{ partial "pub-figure.html" (dict "pub" $pub "variant" "full") }}</div>
+          {{ else if $pg }}
+            {{ partial "project-study.html" (dict "page" $pg "variant" "thumb") }}
+          {{ end }}
         </div>
-        {{ $pg := site.GetPage (printf "/publications/%s" .slug) }}
-        <h3 class="text-lg font-semibold leading-snug">{{ with $pg }}<a class="pub-title-link" href="{{ .RelPermalink }}">{{ $pub.title }}</a>{{ else }}{{ .title }}{{ end }}</h3>
-        <p class="mt-2.5 text-sm text-muted-foreground clamp-2">{{ .authors | safeHTML }}</p>
-        {{ with .summary }}<p class="mt-2 text-sm text-subtle clamp-3">{{ . }}</p>{{ end }}
-        {{ with $pg }}<a class="link-arrow mt-auto pt-4" href="{{ .RelPermalink }}">{{ i18n "read_summary" }} {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</a>{{ else }}{{ with .links }}{{ with .pdf }}<a class="link-arrow mt-auto pt-4" href="{{ . | relURL }}" target="_blank" rel="noopener">PDF {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-4") }}</a>{{ end }}{{ end }}{{ end }}
-      </article>
+      {{ end }}
+    </div>
+  </div>
+  <div class="home-research-list">
+    {{ range .Params.directions }}
+    <a class="home-research-row fx-scroll-soft" href="{{ .url | relURL }}">
+      <div><h3>{{ .title }}</h3><p>{{ .question }}</p><span class="home-research-evidence">{{ .evidence }}</span></div>
+      <span class="home-research-arrow">{{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-5") }}</span>
+    </a>
     {{ end }}
   </div>
 </section>
-{{ end }}
 
-<!-- ───────────────── Why (mission pull-quote) ───────────────── -->
-{{ with .Params.why }}
-<section class="workspace !py-0">
-  <div class="why-band fx-scroll-soft">
-    <p class="why-quote">{{ . | safeHTML }}</p>
-  </div>
-</section>
-{{ end }}
-
-<!-- ───────────────── Services teaser ───────────────── -->
-<section class="workspace">
-  <div class="panel fx-scroll relative overflow-hidden p-7 sm:p-10">
-    <span class="absolute inset-0 bg-spotlight"></span>
-    <div class="relative">
-      <span class="eyebrow">{{ partial "icon.html" (dict "name" "briefcase" "class" "size-3.5") }} {{ i18n "work_with_me" }}</span>
-      <h2 class="mt-2 max-w-2xl text-4xl sm:text-5xl">{{ i18n "services_teaser_title" }}</h2>
-      <p class="lead mt-3">{{ i18n "services_teaser_lead" }}</p>
-      <div class="mt-7 grid gap-5 sm:grid-cols-2">
-        {{ range .Params.services }}
-          <div class="panel p-6">
-            <span class="grid size-11 place-items-center rounded-xl" style="background:color-mix(in oklch,var(--brand) 16%,transparent);color:var(--brand)">{{ partial "icon.html" (dict "name" (.icon | default "sparkle") "class" "size-5") }}</span>
-            <h3 class="mt-4 text-lg">{{ .title }}</h3>
-            <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">{{ .summary }}</p>
-            {{ with .proof }}<p class="num mt-3.5 border-t border-border pt-3 font-mono text-xs text-subtle">{{ . }}</p>{{ end }}
-          </div>
-        {{ end }}
-      </div>
-      <div class="mt-7 flex flex-wrap items-center gap-x-5 gap-y-3">
-        {{ with site.Params.booking }}<a class="btn btn-primary" href="{{ . }}" target="_blank" rel="noopener">{{ partial "icon.html" (dict "name" "calendar" "class" "size-4") }} {{ i18n "book_consultation" }}</a>{{ end }}
-        <a class="btn" href="mailto:{{ site.Params.email }}">{{ partial "icon.html" (dict "name" "mail" "class" "size-4") }} {{ i18n "start_conversation" }}</a>
-        <a class="link-arrow" href="{{ "/services/" | relURL }}">{{ i18n "see_services" }} {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</a>
-      </div>
-      <p class="num mt-3 font-mono text-xs text-subtle">{{ i18n "intro_call_note" }}</p>
+<!-- ───────────────── Path ───────────────── -->
+{{ with site.GetPage "/about" }}{{ with .Params.timeline }}
+<section class="workspace" aria-labelledby="path-title">
+  <div class="section-head fx-scroll-soft">
+    <div>
+      <h2 id="path-title">Path so far</h2>
+      <p>From language and graph research to platforms people use, and the groups that build them.</p>
     </div>
+    <a class="link-arrow" href="{{ "/about/" | relURL }}">About me {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</a>
+  </div>
+  <ol class="path fx-scroll-soft">
+    {{ range . }}
+    <li{{ if eq .year "Now" }} class="is-now"{{ end }}>
+      <span class="path-year num">{{ .year }}</span>
+      <h3>{{ .title }}</h3>
+      <p class="path-place">{{ .place }}</p>
+      <p>{{ .summary }}</p>
+    </li>
+    {{ end }}
+  </ol>
+</section>
+{{ end }}{{ end }}
+
+<!-- ───────────────── Collaborate ───────────────── -->
+<section class="workspace" aria-labelledby="collab-title">
+  <h2 id="collab-title" class="fx-scroll-soft">Work together</h2>
+  <div class="collab-grid mt-8">
+    <article class="collab-card fx-scroll-soft">
+      <span class="collab-icon">{{ partial "icon.html" (dict "name" "graph" "class" "size-5") }}</span>
+      <h3>Research collaboration</h3>
+      <p>Joint papers and datasets, or a shared problem in information discovery, extraction, or evaluation. I lead the Finance AI group at Wrocław Tech and coordinate research on AI-Tax.</p>
+      <div class="collab-actions">
+        <a class="btn btn-primary" href="{{ "/research/#collaborate" | relURL }}">Propose a collaboration {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</a>
+      </div>
+    </article>
+    <article class="collab-card fx-scroll-soft">
+      <span class="collab-icon">{{ partial "icon.html" (dict "name" "briefcase" "class" "size-5") }}</span>
+      <h3>Consulting and engineering</h3>
+      <p>Legal and tax AI, retrieval and extraction over messy documents, and LLM agents with evaluation you can trust. From a short advisory call to a production system your team owns.</p>
+      <div class="collab-actions">
+        {{ with site.Params.booking }}<a class="btn btn-primary" href="{{ . }}" target="_blank" rel="noopener">{{ partial "icon.html" (dict "name" "calendar" "class" "size-4") }} {{ i18n "book_consultation" }}</a>{{ end }}
+        <a class="btn btn-outline" href="{{ "/services/" | relURL }}">See services</a>
+      </div>
+    </article>
   </div>
 </section>
 {{ end }}

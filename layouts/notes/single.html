@@ -10,23 +10,17 @@
       <span class="num">{{ i18n "reading_time" (dict "Count" .ReadingTime) }}</span>
       {{ range .Params.tags }}<span class="tag">{{ . }}</span>{{ end }}
     </div>
-    <h1>{{ .Title }}</h1>
+    <h1 class="vt-title">{{ partial "title-words.html" .Title }}</h1>
     {{ with .Params.lead }}<p class="lead">{{ . }}</p>{{ end }}
   </div>
-  <div class="prose-ink mt-8 fx-scroll-soft">{{ .Content }}</div>
+  <div class="prose-ink mt-8">{{ .Content }}</div>
 
-  <nav class="mt-14 grid gap-3 border-t border-border pt-6 sm:grid-cols-2">
+  <nav class="pager" aria-label="{{ i18n "nav_notes" }}">
     {{ with .NextInSection }}
-      <a class="panel group flex flex-col gap-1 p-4 transition hover:border-border-strong" href="{{ .RelPermalink }}">
-        <span class="text-xs text-subtle">{{ i18n "newer_note" }}</span>
-        <span class="font-display font-medium">{{ .Title }}</span>
-      </a>
-    {{ else }}<span></span>{{ end }}
+      <a class="pager-tile" href="{{ .RelPermalink }}"><small>{{ partial "icon.html" (dict "name" "arrow-right" "class" "rotate-180") }} {{ i18n "newer_note" }}</small><strong>{{ .Title }}</strong></a>
+    {{ end }}
     {{ with .PrevInSection }}
-      <a class="panel group flex flex-col items-end gap-1 p-4 text-right transition hover:border-border-strong" href="{{ .RelPermalink }}">
-        <span class="text-xs text-subtle">{{ i18n "older_note" }}</span>
-        <span class="font-display font-medium">{{ .Title }}</span>
-      </a>
+      <a class="pager-tile is-next" href="{{ .RelPermalink }}"><small>{{ i18n "older_note" }}{{ partial "icon.html" (dict "name" "arrow-right" "class" "pager-arrow") }}</small><strong>{{ .Title }}</strong></a>
     {{ end }}
   </nav>
 </article>

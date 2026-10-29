@@ -1,0 +1,48 @@
+{{ define "main" }}
+{{ $fieldColors := dict }}
+{{ range hugo.Data.fields }}{{ $fieldColors = merge $fieldColors (dict .label .color) }}{{ end }}
+<div class="workspace research-page">
+  <div class="page-head fx-rise">
+    <h1>{{ partial "title-words.html" .Title }}</h1>
+    {{ with .Params.lead }}<p class="lead">{{ . }}</p>{{ end }}
+    {{ with .Params.intro }}<p class="max-w-3xl text-muted-foreground">{{ . }}</p>{{ end }}
+    <div class="flex flex-wrap gap-x-6 gap-y-2">
+      <a class="link-arrow" href="{{ "/publications/" | relURL }}">{{ i18n "all_publications" }} {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</a>
+      <a class="link-arrow" href="{{ "/about/" | relURL }}">About me {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</a>
+    </div>
+  </div>
+
+  {{/* One row per interest: label and question on the left, the thinking on the right. */}}
+  <div class="research-list">
+    {{ range .Params.areas }}
+    <section id="{{ .id }}" class="research-interest fx-scroll-soft" aria-labelledby="{{ .id }}-title"{{ with index $fieldColors (.field | default "") }} style="--field: {{ . | safeCSS }}"{{ end }}>
+      <div>
+        <span class="eyebrow"><span class="tag-dot" aria-hidden="true"></span>{{ .label }}</span>
+        <h2 id="{{ .id }}-title">{{ .title }}</h2>
+      </div>
+      <div class="research-interest-text">
+        {{ with .context }}<p class="research-interest-context">{{ . }}</p>{{ end }}
+        {{ with .body }}<div class="prose-ink">{{ $.RenderString (dict "display" "block") . }}</div>{{ end }}
+      </div>
+    </section>
+    {{ end }}
+  </div>
+
+  {{ with .Params.collaboration }}
+  <section id="collaborate" class="band research-band fx-scroll-soft" aria-labelledby="collab-title">
+    <div>
+      <h2 id="collab-title">{{ .title }}</h2>
+      {{ with .intro }}<p>{{ . }}</p>{{ end }}
+    </div>
+    {{ with .links }}
+    <div class="flex flex-wrap gap-3">
+      {{ range $i, $l := . }}
+      {{ $mail := hasPrefix $l.url "mailto:" }}
+      <a class="btn {{ if eq $i 0 }}btn-primary{{ else }}btn-outline{{ end }}" href="{{ if hasPrefix $l.url "/" }}{{ $l.url | relURL }}{{ else }}{{ $l.url }}{{ end }}">{{ if $mail }}{{ partial "icon.html" (dict "name" "mail" "class" "size-4") }} {{ end }}{{ $l.label }}{{ if not $mail }} {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}{{ end }}</a>
+      {{ end }}
+    </div>
+    {{ end }}
+  </section>
+  {{ end }}
+</div>
+{{ end }}

@@ -3,8 +3,6 @@
 > {{ site.Params.description }}
 
 {{ site.Params.role }} at the {{ site.Params.affiliation }}, {{ site.Params.location }}.
-{{- range hugo.Data.groups }}{{ if eq .org "Finance AI" }}
-{{ .role }} of Finance AI ({{ .unit }}).{{ end }}{{ end }}
 {{ with site.Params.tagline }}{{ . }}{{ end }}
 
 Site: {{ site.BaseURL }}
@@ -15,6 +13,11 @@ Email: {{ site.Params.email }}
 Profile: {{ . }}{{ end }}
 {{- with site.Params.booking }}
 Book an intro call: {{ . }}{{ end }}
+
+## Research and collaboration
+{{ with site.GetPage "/research" }}{{ .Description }}{{ end }}
+Explore research: {{ "research/" | absURL }}
+Collaboration inquiries: {{ "research/#collaborate" | absURL }}
 
 ## Expertise
 {{ range site.Params.knowsAbout }}- {{ . }}
@@ -27,7 +30,7 @@ Book an intro call: {{ . }}{{ end }}
 {{ range sort (where site.RegularPages "Section" "projects") "Params.impact" "desc" }}- [{{ .Title }}]({{ .Permalink }}){{ with .Params.role }} — {{ . }}{{ end }}{{ with .Params.status }}, {{ . }}{{ end }}: {{ .Params.summary }}
 {{ end }}
 ## Publications
-{{ range hugo.Data.publications }}{{ $pg := site.GetPage (printf "/publications/%s" .slug) }}- {{ .title }} ({{ .venue }}, {{ .year }}). {{ .authors | plainify }}.{{ with $pg }} Summary: {{ .Permalink }}{{ end }}{{ with .links }}{{ with .pdf }} PDF: {{ . | absURL }}{{ end }}{{ with .code }} Code: {{ . }}{{ end }}{{ end }}
+{{ range hugo.Data.publications }}{{ $pg := site.GetPage (printf "/publications/%s" .slug) }}- {{ .title }} ({{ .venue }} · {{ partial "pub-type-label.html" .type }}, {{ .year }}). {{ .authors | plainify }}.{{ with $pg }} Summary: {{ .Permalink }}{{ end }}{{ with .links }}{{ with .pdf }} PDF: {{ . | absURL }}{{ end }}{{ with .code }} Code: {{ . }}{{ end }}{{ end }}
 {{ end }}
 {{ with where site.RegularPages "Section" "notes" }}## Notes
 {{ range . }}- [{{ .Title }}]({{ .Permalink }}) ({{ .Date.Format "2006-01-02" }}): {{ .Description }}

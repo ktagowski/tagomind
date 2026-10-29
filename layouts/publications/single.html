@@ -1,87 +1,109 @@
 {{ define "main" }}
-{{ $typeAccents := dict "Conference" "oklch(0.62 0.13 255)" "Workshop" "oklch(0.6 0.15 300)" "Journal" "oklch(0.6 0.1 168)" "Datasets & Benchmarks" "oklch(0.63 0.13 32)" "Demo" "oklch(0.62 0.14 200)" }}
 {{ $pub := dict }}
 {{ range hugo.Data.publications }}{{ if eq .slug $.Params.pub }}{{ $pub = . }}{{ end }}{{ end }}
-{{ $acc := or (index $typeAccents (or $pub.type "")) "var(--brand)" }}
-<article class="workspace pub-page" style="--field: {{ $acc | safeCSS }}">
+{{ $acc := partial "pub-accent.html" $pub.type }}
+{{ $colors := $pub.colors | default dict }}
+{{ with $colors.accent }}{{ $acc = . }}{{ end }}
+{{ $plateStyle := "" }}
+  {{ with $colors.plate }}{{ $plateStyle = printf "--plate: %s; --plate-ink: %s;" . ($colors.ink | default "oklch(0.97 0.01 100)") }}{{ end }}
+<article class="workspace pub-page" style="--field: {{ $acc | safeCSS }};{{ with $plateStyle }} {{ . | safeCSS }}{{ end }}">
   <a class="link-arrow mb-6 inline-flex" href="{{ "/publications/" | relURL }}">
     <span class="rotate-180">{{ partial "icon.html" (dict "name" "arrow-right" "class" "size-4") }}</span> {{ i18n "all_publications" }}
   </a>
 
+  {{- /* Page order: hero plate (short name, hook, links, media) → paper block (official title, authors; on phones a type/venue line) → facts, problem/finding, write-up. Venue and type sit in the sidebar on desktop.
+       The headline uses the paper's short name (.Title) whenever it differs from the official title;
+       papers without a short name show the official title as the headline and skip it in the paper block.
+       Not rendered here on purpose: front-matter `lead` and data `summary` (the hook replaces them; the list and home pages use them),
+       and the designed figure when a demo video exists (pub-media.html shows one item). */ -}}
+  {{ $full := or $pub.title .Title }}
+  {{ $name := $full }}
+  {{ if ne $full .Title }}{{ $name = .Title }}{{ end }}
+  {{ $single := eq $name $full }}
+  {{- /* Hero plate: the project-page "printed plate", tinted by the paper type (or the paper's own colours).
+       It carries the name, the hook, the link buttons and the media; venue, title and authors live once, in the paper block. */ -}}
+  <header class="study is-hero pub-plate{{ if $single }} is-single{{ end }} fx-rise" data-study="generic">
+    <div class="study-text">
+      <h1 class="pub-title"><span class="pub-name">{{ partial "title-words.html" $name }}</span></h1>
+      {{ with .Params.hook }}<p class="pub-hook">{{ . }}</p>{{ end }}
+      {{ with $pub.links }}
+      <div class="pub-actions">
+        {{ partial "pub-links.html" (dict "links" . "primary" true "skipVideo" (and $pub.media $pub.media.video)) }}
+      </div>
+      {{ end }}
+    </div>
+    <div class="pub-plate-media">{{ partial "pub-media.html" (dict "pub" $pub) }}</div>
+  </header>
+
   <div class="grid gap-10 lg:grid-cols-[minmax(0,1fr)_17rem]">
     <div class="min-w-0">
-      <div class="page-head fx-rise">
-        <div class="flex flex-wrap items-center gap-2">
-          {{ with $pub.venue }}<span class="badge badge-venue">{{ . }}</span>{{ end }}
-          {{ with $pub.type }}<span class="badge badge-type" data-type="{{ . | lower | replaceRE "[^a-z0-9]+" "-" }}">{{ . }}</span>{{ end }}
-          {{ with $pub.year }}<span class="num text-sm text-subtle">{{ . }}</span>{{ end }}
-        </div>
-        <h1 class="pub-page-title">{{ or $pub.title .Title }}</h1>
-        {{ with $pub.authors }}<p class="text-base text-muted-foreground">{{ . | safeHTML }}</p>{{ end }}
-        {{ with .Params.lead }}<p class="lead">{{ . }}</p>{{ end }}
-      </div>
+      <section class="pub-paper"{{ if not $single }} aria-labelledby="paper-title"{{ end }}>
+        {{ if not $single }}
+        {{ $prefix := printf "%s: " $name }}
+        {{ $shown := $full }}{{ if hasPrefix $full $prefix }}{{ $shown = strings.TrimPrefix $prefix $full }}{{ end }}
+        <h2 id="paper-title" class="paper-title">{{ if ne $shown $full }}<span class="sr-only">{{ $prefix }}</span>{{ end }}{{ $shown | htmlEscape | replaceRE `(\S+-\S+)` `<span class="nw">$1</span>` | safeHTML }}</h2>
+        {{ end }}
+        {{ with $pub.authors }}
+        <p class="pub-authors">{{ range $i, $a := split . ", " }}{{ if $i }}, {{ end }}<span>{{ $a | safeHTML }}</span>{{ end }}</p>
+        {{ end }}
+        <p class="pub-kicker pub-kicker-mobile">
+          {{ with $pub.type }}<span class="pub-kicker-type">{{ partial "pub-type-label.html" . }}</span>{{ end }}
+          {{ with $pub.venue }}<span>{{ . }}</span>{{ end }}
+          {{ with $pub.year }}{{ if not (in (string $pub.venue) (string .)) }}<span class="num">{{ . }}</span>{{ end }}{{ end }}
+        </p>
+      </section>
 
-      <div class="mt-6 flex flex-wrap items-center gap-2.5">
-        {{ partial "pub-links.html" (dict "links" $pub.links "primary" true) }}
-        {{ with $pub.bibtex }}<button type="button" class="btn btn-sm" data-bibtex-toggle aria-expanded="false">{{ partial "icon.html" (dict "name" "quote" "class" "size-4") }} BibTeX</button>{{ end }}
-      </div>
-      {{ with $pub.bibtex }}
-      <div class="bibtex-block mt-3" hidden>
-        <button type="button" class="bibtex-copy" data-bibtex-copy>{{ partial "icon.html" (dict "name" "code" "class" "size-3.5") }} <span>Copy</span></button>
-        <pre class="bibtex-pre"><code>{{ . }}</code></pre>
+      {{ with $pub.facts }}
+      <dl class="facts fx-scroll-soft" aria-label="{{ i18n "at_a_glance" }}">
+        {{ range . }}<div><dt class="sr-only">{{ .label }}</dt><dd><b>{{ .value }}</b><span>{{ .label | htmlEscape | replaceRE `(\S+-\S+)` `<span class="nw">$1</span>` | safeHTML }}</span></dd></div>{{ end }}
+      </dl>
+      {{ end }}
+
+      {{ if or .Params.problem .Params.finding }}
+      <div class="pub-brief mt-10 fx-scroll-soft">
+        {{ with .Params.problem }}<div><h2>{{ i18n "problem_label" }}</h2><p>{{ . | markdownify }}</p></div>{{ end }}
+        {{ with .Params.finding }}<div><h2>{{ i18n "finding_label" }}</h2><p>{{ . | markdownify }}</p></div>{{ end }}
       </div>
       {{ end }}
 
-      <div class="prose-ink mt-9 fx-scroll-soft">
+      <div class="prose-ink fx-scroll-soft{{ if not (or .Params.problem .Params.finding) }} mt-10{{ end }}">
         {{ .Content }}
       </div>
     </div>
 
     <aside class="flex flex-col gap-4 lg:sticky lg:top-20 lg:self-start">
-      <div class="panel flex flex-col divide-y divide-border">
-        {{ with $pub.venue }}<div class="p-4"><div class="text-[11px] uppercase tracking-wider text-subtle">{{ i18n "venue_label" }}</div><div class="mt-1 text-sm">{{ . }}</div></div>{{ end }}
-        {{ with $pub.type }}<div class="p-4"><div class="text-[11px] uppercase tracking-wider text-subtle">{{ i18n "type_label" }}</div><div class="mt-1 text-sm">{{ . }}</div></div>{{ end }}
-        {{ with $pub.year }}<div class="p-4"><div class="text-[11px] uppercase tracking-wider text-subtle">{{ i18n "year_label" }}</div><div class="num mt-1 text-sm">{{ . }}</div></div>{{ end }}
+      <div class="panel meta-list">
+        {{ with $pub.type }}<div class="meta-paper"><div class="meta-label">{{ i18n "type_label" }}</div><div class="meta-type mt-1 text-sm">{{ partial "pub-type-label.html" . }}</div></div>{{ end }}
+        {{ with $pub.venue }}<div class="meta-paper"><div class="meta-label">{{ i18n "venue_label" }}</div><div class="mt-1 text-sm">{{ . }}</div></div>{{ end }}
+        {{ with $pub.year }}{{ if not (in (string $pub.venue) (string .)) }}<div class="meta-paper"><div class="meta-label">{{ i18n "year_label" }}</div><div class="num mt-1 text-sm">{{ . }}</div></div>{{ end }}{{ end }}
         {{ with .Params.project }}{{ with site.GetPage (printf "/projects/%s" .) }}
-        <div class="p-4">
-          <div class="text-[11px] uppercase tracking-wider text-subtle">{{ i18n "project_label" }}</div>
+        <div>
+          <div class="meta-label">{{ i18n "project_label" }}</div>
           <a class="link-arrow mt-1 text-sm" href="{{ .RelPermalink }}">{{ .Title }} {{ partial "icon.html" (dict "name" "arrow-right" "class" "size-3.5") }}</a>
           {{ with .Params.summary }}<div class="mt-1 text-xs text-subtle">{{ . }}</div>{{ end }}
         </div>
         {{ end }}{{ end }}
-        {{ with $pub.links }}
-        <div class="p-4">
-          <div class="text-[11px] uppercase tracking-wider text-subtle">{{ i18n "resources_label" }}</div>
-          <ul class="mt-2 flex flex-col gap-1.5 text-sm">
-            {{ with .pdf }}<li><a class="link-arrow" href="{{ . | relURL }}" target="_blank" rel="noopener">PDF {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-3.5") }}</a></li>{{ end }}
-            {{ with .arxiv }}<li><a class="link-arrow" href="{{ . }}" target="_blank" rel="noopener">arXiv {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-3.5") }}</a></li>{{ end }}
-            {{ with .anthology }}<li><a class="link-arrow" href="{{ . }}" target="_blank" rel="noopener">ACL Anthology {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-3.5") }}</a></li>{{ end }}
-            {{ with .doi }}<li><a class="link-arrow" href="{{ . }}" target="_blank" rel="noopener">DOI {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-3.5") }}</a></li>{{ end }}
-            {{ with .code }}<li><a class="link-arrow" href="{{ . }}" target="_blank" rel="noopener">Code {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-3.5") }}</a></li>{{ end }}
-            {{ with .docs }}<li><a class="link-arrow" href="{{ . }}" target="_blank" rel="noopener">Documentation {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-3.5") }}</a></li>{{ end }}
-            {{ with .poster }}<li><a class="link-arrow" href="{{ . | relURL }}" target="_blank" rel="noopener">Poster {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-3.5") }}</a></li>{{ end }}
-            {{ with .video }}<li><a class="link-arrow" href="{{ . | relURL }}" target="_blank" rel="noopener">Demo video {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-3.5") }}</a></li>{{ end }}
-            {{ with .dataset }}<li><a class="link-arrow" href="{{ . }}" target="_blank" rel="noopener">Dataset {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-3.5") }}</a></li>{{ end }}
-            {{ with .leaderboard }}<li><a class="link-arrow" href="{{ . }}" target="_blank" rel="noopener">Leaderboard {{ partial "icon.html" (dict "name" "arrow-up-right" "class" "size-3.5") }}</a></li>{{ end }}
-          </ul>
+        {{ with $pub.bibtex }}
+        <div>
+          <div class="meta-label">{{ i18n "cite_label" }}</div>
+          <button type="button" class="btn btn-sm mt-2" data-bibtex-toggle aria-expanded="false">{{ partial "icon.html" (dict "name" "quote" "class" "size-4") }} BibTeX</button>
+          <div class="bibtex-block mt-3" hidden>
+            <button type="button" class="bibtex-copy" data-bibtex-copy>{{ partial "icon.html" (dict "name" "code" "class" "size-3.5") }} <span>Copy</span></button>
+            <pre class="bibtex-pre"><code>{{ . }}</code></pre>
+          </div>
         </div>
         {{ end }}
       </div>
     </aside>
   </div>
 
-  <nav class="mt-14 grid gap-3 border-t border-border pt-6 sm:grid-cols-2">
+
+  <nav class="pager" aria-label="{{ i18n "nav_publications" }}">
     {{ with .NextInSection }}
-      <a class="panel group flex flex-col gap-1 p-4 transition hover:border-border-strong" href="{{ .RelPermalink }}">
-        <span class="text-xs text-subtle">{{ i18n "newer_paper" }}</span>
-        <span class="font-display font-medium">{{ .Title }}</span>
-      </a>
-    {{ else }}<span></span>{{ end }}
+      <a class="pager-tile" href="{{ .RelPermalink }}"><small>{{ partial "icon.html" (dict "name" "arrow-right" "class" "rotate-180") }} {{ i18n "newer_paper" }}</small><strong>{{ .Title }}</strong></a>
+    {{ end }}
     {{ with .PrevInSection }}
-      <a class="panel group flex flex-col items-end gap-1 p-4 text-right transition hover:border-border-strong" href="{{ .RelPermalink }}">
-        <span class="text-xs text-subtle">{{ i18n "older_paper" }}</span>
-        <span class="font-display font-medium">{{ .Title }}</span>
-      </a>
+      <a class="pager-tile is-next" href="{{ .RelPermalink }}"><small>{{ i18n "older_paper" }}{{ partial "icon.html" (dict "name" "arrow-right" "class" "pager-arrow") }}</small><strong>{{ .Title }}</strong></a>
     {{ end }}
   </nav>
 </article>

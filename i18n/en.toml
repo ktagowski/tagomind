@@ -69,8 +69,6 @@ other = "The problems I work on, and the tools I reach for."
 [pubs_sub]
 other = "Peer-reviewed work in NLP and graph representation learning."
 
-[the_explorer]
-other = "The Explorer"
 [search_placeholder]
 other = "Search projects, tech, venues…"
 [sort_featured]
@@ -196,3 +194,25 @@ other = "Site"
 other = "Contact"
 [footer_explore]
 other = "Explore"
+
+[nav_research]
+other = "Research"
+[research_collaborate]
+other = "Collaborate"
+
+[visit_site]
+other = "Visit site"
+[at_a_glance]
+other = "At a glance"
+[watch_demo]
+other = "Demo video"
+[poster_label]
+other = "Conference poster"
+[cite_label]
+other = "Cite"
+[problem_label]
+other = "Problem"
+[finding_label]
+other = "Key finding"
+[read_paper]
+other = "Read the paper"

@@ -6,6 +6,7 @@ date: 2026-05-01
 pub: "bridging-ai-and-law"
 description: "One-page summary of Bridging AI and Law (AILaw 2026): a production-scale multi-agent platform for quantitative legal analytics across millions of documents."
 lead: "Quantitative legal research needs more than a chatbot over case law. This paper describes a production platform that indexes millions of legal documents and lets agents aggregate, compare, and explain patterns across them, built with lawyers rather than for them."
+hook: "Agents that count, compare, and explain patterns across three million legal documents."
 ---
 
 ## In brief

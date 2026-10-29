@@ -146,6 +146,26 @@
     var sprNode = null, sprPulse = null, blend = "lighter", t = 0;
     var edgeSet = new Set(), nb_i = [], nb_d = [], cn_i = [], cn_d = [];
     var mouse = { x: 0, y: 0, px: -1, py: -1, on: false };
+    // Keep-out: the network frames the hero copy instead of running through it. The ellipse is
+    // measured from the real hero blocks (headline → buttons), so it follows any layout or font size.
+    var keepEls = (function () {
+      var h = document.querySelector(".hero-title");
+      if (!h || !h.parentNode) return [];
+      return Array.prototype.filter.call(h.parentNode.children, function (el) { return !el.classList.contains("hero-halo"); });
+    })();
+    var keep = null;
+    function measureKeep() {
+      if (!keepEls.length) { keep = null; return; }
+      var l = Infinity, tp = Infinity, r = -Infinity, b = -Infinity;
+      keepEls.forEach(function (el) {
+        var q = el.getBoundingClientRect();
+        if (!q.width || !q.height) return;
+        l = Math.min(l, q.left); tp = Math.min(tp, q.top); r = Math.max(r, q.right); b = Math.max(b, q.bottom);
+      });
+      if (!isFinite(l)) { keep = null; return; }
+      var sy = window.pageYOffset || 0;
+      keep = { cx: (l + r) / 2, cyDoc: (tp + b) / 2 + sy, rx: (r - l) / 2 + 70, ry: (b - tp) / 2 + 60 };
+    }
 
     function makeGlow(rgb, soft) {
       var s = 64, oc = document.createElement("canvas");
@@ -237,7 +257,7 @@
 
     var raf = null;
     function frame() {
-      raf = (!reduceMotion && !document.hidden) ? requestAnimationFrame(frame) : null;
+      raf = null; // frame() reschedules itself only while the hero is on screen and the tab is visible
       t++;
       // Self-heal: if the stylesheet landed after init (deferred CSS), the bitmap was sized
       // off the 300×150 canvas default and CSS stretches it — giant blurry nodes and a
@@ -248,6 +268,9 @@
       var ease = mouse.on ? 0.16 : 0.045;
       mouse.px += (tx - mouse.px) * ease;
       mouse.py += (ty - mouse.py) * ease;
+      var heroVisible = (window.pageYOffset || 0) < window.innerHeight;
+      // Alive while the hero is on screen; paused (zero cost) once it is scrolled away or the tab is hidden.
+      if (heroVisible && !reduceMotion && !document.hidden) raf = requestAnimationFrame(frame);
       var ox = (mouse.px - W / 2), oy = (mouse.py - H / 2);
 
       ctx.clearRect(0, 0, W, H);
@@ -387,18 +410,35 @@
         ctx.fillStyle = "rgba(" + pal.node[0] + "," + pal.node[1] + "," + pal.node[2] + "," + coreA.toFixed(3) + ")";
         ctx.beginPath(); ctx.arc(p.dx, p.dy, 0.75 + p.z * 0.55 + prox * 0.7, 0, 6.2832); ctx.fill();
       }
+
+      // ── Keep-out: erase a soft ellipse behind the hero copy ──
+      if ((t & 63) === 1) measureKeep(); // headline settles after its entrance; re-measure occasionally, never per scroll
+      var kcy = keep ? keep.cyDoc - (window.pageYOffset || 0) : 0;
+      if (keep && kcy + keep.ry > 0) {
+        ctx.save();
+        ctx.globalCompositeOperation = "destination-out";
+        ctx.translate(keep.cx, kcy);
+        ctx.scale(1, keep.ry / keep.rx);
+        var kg = ctx.createRadialGradient(0, 0, 0, 0, 0, keep.rx);
+        kg.addColorStop(0, "rgba(0,0,0,1)");
+        kg.addColorStop(0.72, "rgba(0,0,0,0.96)");
+        kg.addColorStop(1, "rgba(0,0,0,0)");
+        ctx.fillStyle = kg;
+        ctx.beginPath(); ctx.arc(0, 0, keep.rx, 0, 6.2832); ctx.fill();
+        ctx.restore();
+      }
       ctx.globalCompositeOperation = "source-over";
     }
 
-    function start() { if (raf) cancelAnimationFrame(raf); raf = requestAnimationFrame(frame); }
+    function start() { if (!raf) raf = requestAnimationFrame(frame); }
 
-    window.addEventListener("resize", function () { resize(); if (reduceMotion) requestAnimationFrame(frame); });
-    window.addEventListener("pointermove", function (e) { mouse.x = e.clientX; mouse.y = e.clientY; mouse.on = true; }, { passive: true });
+    window.addEventListener("resize", function () { resize(); measureKeep(); start(); });
+    window.addEventListener("pointermove", function (e) { mouse.x = e.clientX; mouse.y = e.clientY; mouse.on = true; if ((window.pageYOffset || 0) < window.innerHeight) start(); }, { passive: true });
     window.addEventListener("blur", function () { mouse.on = false; });
     document.addEventListener("mouseleave", function () { mouse.on = false; });
     document.addEventListener("visibilitychange", function () { if (!document.hidden && !reduceMotion) start(); });
-    window.addEventListener("tm:themechange", function () { setPalette(); scrollFade(); if (reduceMotion) requestAnimationFrame(frame); });
-    window.addEventListener("scroll", scrollFade, { passive: true });
+    window.addEventListener("tm:themechange", function () { setPalette(); scrollFade(); start(); });
+    window.addEventListener("scroll", function () { scrollFade(); if ((window.pageYOffset || 0) < window.innerHeight) start(); }, { passive: true });
 
     // Fade the canvas out as the hero scrolls away → network stays a hero-only signature.
     function scrollFade() {
@@ -406,10 +446,13 @@
       var f = Math.max(0, Math.min(1, 1 - (window.pageYOffset || 0) / (vh * 0.55)));
       var dark = document.documentElement.classList.contains("dark");
       canvas.style.opacity = ((dark ? 0.95 : 0.72) * f).toFixed(3);
+      canvas.style.visibility = f > 0 ? "visible" : "hidden";
     }
 
     resize();
+    measureKeep();
     scrollFade();
+    window.addEventListener("resize", measureKeep);
     // Re-measure the moment layout actually gives the canvas its real size (deferred CSS,
     // font swaps, orientation changes) — not just on window resize events.
     if ("ResizeObserver" in window) {
@@ -420,7 +463,7 @@
         }
       }).observe(canvas);
     }
-    if (reduceMotion) requestAnimationFrame(frame); else start();
+    start(); // runs continuously while the hero is visible; scroll, pointer, resize and visibility restart it when needed
   }
 
   /* ───────────────────────────── Explorer ───────────────────────── */
@@ -582,15 +625,6 @@
 
   /* ─────────────────── Scroll reveal + progress bar ─────────────── */
   /* Product vignettes: loop a few times, then settle on the finished state (decorative motion should end). */
-  function initVignetteSettle() {
-    var vigs = document.querySelectorAll(".vig");
-    if (!vigs.length) return;
-    var still = /[?&]still=1/.test(location.search);
-    var settle = function () { vigs.forEach(function (v) { v.classList.add("is-settled"); }); };
-    if (reduceMotion || still) { settle(); return; }
-    setTimeout(settle, 3 * 9000); // three cycles of the longest loop (9s)
-  }
-
   function initReveal() {
     var els = Array.prototype.slice.call(document.querySelectorAll(".fx-scroll, .fx-scroll-soft"));
     if (!els.length) return;
@@ -615,38 +649,313 @@
       entries.forEach(function (en) {
         if (en.isIntersecting) { en.target.classList.add("is-in"); io.unobserve(en.target); }
       });
-    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.06 });
+    }, { rootMargin: "0px 0px 12% 0px", threshold: 0 }); // start just before entering: settled by the time you read it
     els.forEach(function (e) { io.observe(e); });
+  }
+
+
+
+  function initPracticeSlider() {
+    var slider = document.getElementById("practice-slider");
+    if (!slider) return;
+    var prev = document.querySelector("[data-practice-prev]");
+    var next = document.querySelector("[data-practice-next]");
+    var cards = Array.prototype.slice.call(slider.querySelectorAll(".practice-card"));
+    if (!cards.length) return;
+    var N = cards.length, last = N - 1;
+    var progress = document.querySelector(".practice-scroll-progress > span");
+    var pin = document.querySelector(".practice-pin");
+    var topbar = document.querySelector(".topbar");
+    var still = /[?&]still=1/.test(location.search);
+    // Three modes:
+    //  pinned  – tall mouse/trackpad screens: the section sticks and page scrolling slides the projects across.
+    //  stepped – mouse/trackpad otherwise (reduced motion, short screens): arrows, keys and sideways swipes flip cards.
+    //  touch   – native horizontal scrolling with snap.
+    // In the first two the slider is overflow:clip (never a scroll box), so trackpad gestures always reach the page.
+    var fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    var tall = window.matchMedia("(min-height: 700px)");
+    var pinned = false, index = 0, geom = null;
+
+    function setMode() {
+      pinned = fine && tall.matches && !reduceMotion && !still && !!pin;
+      document.documentElement.classList.toggle("pin-on", pinned);
+      document.documentElement.classList.toggle("sda", pinned && !!(window.CSS && CSS.supports && CSS.supports("animation-timeline: view()")));
+
+      if (pin) pin.style.setProperty("--n", N);
+      if (topbar) document.documentElement.style.setProperty("--topbar-h", topbar.offsetHeight + "px");
+      geom = pin && pinned ? pinGeometry() : null; // measured once here (load, resize), never per scroll frame
+    }
+    function pinGeometry() {
+      var th = topbar ? topbar.offsetHeight : 62;
+      var top = pin.getBoundingClientRect().top + (window.pageYOffset || 0) - th;
+      return { top: top, range: Math.max(1, pin.offsetHeight - (window.innerHeight - th)) };
+    }
+    function currentIndex() {
+      if (fine) return index;
+      var origin = cards[0].offsetLeft, best = Infinity, cur = 0;
+      cards.forEach(function (c, i) { var d = Math.abs(c.offsetLeft - origin - slider.scrollLeft); if (d < best) { best = d; cur = i; } });
+      return cur;
+    }
+    function update() {
+      var i = currentIndex();
+      setDots(i);
+      if (prev) prev.disabled = i <= 0;
+      if (next) next.disabled = i >= last;
+      if (progress && !pinned) progress.style.transform = "scaleX(" + (last > 0 ? i / last : 1) + ")";
+      cards.forEach(function (c, k) { var off = fine && k !== i; c.setAttribute("aria-hidden", off ? "true" : "false"); c.inert = off; });
+    }
+    // Chapters: each project owns an equal share of the pinned scroll. Crossing into a share triggers a timed
+    // transition (CSS, 0.9s) to that project; scroll speed never scrubs the motion.
+    function show(i, entering) {
+      i = Math.max(0, Math.min(last, i));
+      var changed = i !== index;
+      index = i;
+      slider.style.setProperty("--slide", i);
+      cards.forEach(function (c, k) {
+        c.classList.toggle("is-current", k === i);
+        if (k !== i) c.classList.remove("is-entering");
+      });
+      if (changed && entering && !reduceMotion) {
+        var cur = cards[i];
+        cur.classList.remove("is-entering"); void cur.offsetWidth; cur.classList.add("is-entering"); // restart the build
+      }
+      update();
+    }
+    var frame = false;
+    function onScroll() {
+      frame = false;
+      if (!pinned || !geom) return;
+      // Cached geometry (refreshed by the ResizeObserver below): a scroll frame only does arithmetic, never a layout read.
+      var p = Math.max(0, Math.min(1, ((window.pageYOffset || 0) - geom.top) / geom.range));
+      var i = Math.round(p * last);
+      if (i !== index) show(i, true);
+    }
+    function schedule() { if (!frame) { frame = true; requestAnimationFrame(onScroll); } }
+
+    // Pinned: native scroll snapping lands each gesture on a project (main.css); this only maps position → project.
+    function restTop(g, i) { return g.top + (last > 0 ? i / last : 0) * g.range; }
+    function jump(i) {
+      var g = pinGeometry();
+      i = Math.max(0, Math.min(last, i));
+      window.scrollTo({ top: Math.round(restTop(g, i)), behavior: reduceMotion ? "instant" : "smooth" });
+    }
+
+    var dots = Array.prototype.slice.call(document.querySelectorAll("[data-practice-dot]"));
+    function setDots(i) { dots.forEach(function (d, k) { if (k === i) d.setAttribute("aria-current", "true"); else d.removeAttribute("aria-current"); }); }
+    dots.forEach(function (d, k) { d.addEventListener("click", function () { go(k); }); });
+    function go(i) {
+      i = Math.max(0, Math.min(last, i));
+      if (pinned) {
+        jump(i);
+      } else if (fine) {
+        show(i, true);
+      } else {
+        slider.scrollTo({ left: cards[i].offsetLeft - cards[0].offsetLeft, behavior: reduceMotion ? "instant" : "smooth" });
+      }
+    }
+    function step(direction) { go(currentIndex() + direction); }
+
+    if (prev) prev.addEventListener("click", function () { step(-1); });
+    if (next) next.addEventListener("click", function () { step(1); });
+    slider.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowRight") { e.preventDefault(); step(1); }
+      else if (e.key === "ArrowLeft") { e.preventDefault(); step(-1); }
+    });
+    if (fine) {
+      // A clearly sideways gesture (trackpad swipe, shift-wheel) moves one project; vertical input is never touched.
+      var acc = 0, locked = false, idle = null;
+      slider.addEventListener("wheel", function (e) {
+        var dx = e.deltaX, dy = e.deltaY;
+        if (e.shiftKey && !dx) { dx = dy; dy = 0; }
+        if (Math.abs(dx) <= Math.abs(dy) * 1.2) return;
+        e.preventDefault(); // stop the browser's back/forward swipe
+        clearTimeout(idle);
+        idle = setTimeout(function () { acc = 0; locked = false; }, 180);
+        if (locked) return;
+        acc += dx;
+        if (Math.abs(acc) > 40) { step(acc > 0 ? 1 : -1); locked = true; acc = 0; }
+      }, { passive: false });
+      window.addEventListener("scroll", schedule, { passive: true });
+    } else {
+      slider.addEventListener("scroll", update, { passive: true });
+    }
+    window.addEventListener("resize", function () { setMode(); if (fine) show(index, false); schedule(); });
+    window.addEventListener("load", function () { setMode(); schedule(); });
+    // Anything that changes the page size (images, fonts, content above the section) re-measures the pin once.
+    if ("ResizeObserver" in window) new ResizeObserver(function () { if (pinned) geom = pinGeometry(); schedule(); }).observe(document.body);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { setMode(); schedule(); });
+    setMode();
+    if (fine) show(0, false); else update();
+    onScroll();
+  }
+
+  /* Scroll-linked reading focus on the research directions, without moving text. */
+  function initScrollScenes() {
+    if (reduceMotion || /[?&]still=1/.test(location.search)) return;
+    var research = document.querySelector(".home-research");
+    var rows = Array.prototype.slice.call(document.querySelectorAll(".home-research-row"));
+    var stage = Array.prototype.slice.call(document.querySelectorAll(".home-research-stage .stage-item"));
+    if (!rows.length) return;
+    // Row positions are cached in document coordinates (load, resize, fonts); scroll frames only do arithmetic.
+    var geo = [], sec = null, framePending = false, current = -1;
+    function measure() {
+      var sy = window.pageYOffset || 0;
+      geo = rows.map(function (row) { var r = row.getBoundingClientRect(); return { top: r.top + sy, height: r.height }; });
+      if (research) { var r = research.getBoundingClientRect(); sec = { top: r.top + sy, height: r.height }; }
+    }
+    function clamp(value) { return Math.max(0, Math.min(1, value)); }
+    function update() {
+      framePending = false;
+      var height = window.innerHeight, sy = window.pageYOffset || 0;
+      if (sec && (sec.top - sy > height || sec.top + sec.height - sy < 0)) return; // section off screen: nothing to do
+      var nearest = -1, nearestDistance = Infinity;
+      geo.forEach(function (g, i) {
+        var top = g.top - sy;
+        rows[i].style.setProperty("--row-read", clamp((height * .85 - top) / Math.min(g.height + height * .25, height * .6)).toFixed(3));
+        var distance = Math.abs(top + g.height / 2 - height * .52);
+        if (top + g.height > 80 && top < height * .9 && distance < nearestDistance) { nearest = i; nearestDistance = distance; }
+      });
+      if (nearest !== current && nearest >= 0) {
+        current = nearest;
+        rows.forEach(function (row, i) { row.classList.toggle("is-reading", i === nearest); });
+        stage.forEach(function (it, j) { it.classList.toggle("is-active", j === nearest); });
+      }
+    }
+    function schedule() { if (!framePending) { framePending = true; requestAnimationFrame(update); } }
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", function () { measure(); schedule(); });
+    window.addEventListener("load", function () { measure(); schedule(); });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { measure(); schedule(); });
+    measure();
+    update();
+  }
+
+
+  /* ───────── Magnetic primary buttons ───────── */
+  function initMagnetic() {
+    if (reduceMotion || !window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+    document.querySelectorAll(".btn-primary, .practice-project-link").forEach(function (el) {
+      el.classList.add("is-magnetic");
+      el.addEventListener("pointermove", function (e) {
+        if (!e.movementX && !e.movementY) return;
+        var r = el.getBoundingClientRect();
+        var dx = (e.clientX - (r.left + r.width / 2)) / r.width, dy = (e.clientY - (r.top + r.height / 2)) / r.height;
+        el.style.transform = "translate(" + (dx * 8).toFixed(1) + "px," + (dy * 6).toFixed(1) + "px)";
+      });
+      el.addEventListener("pointerleave", function () { el.style.transform = ""; });
+    });
+  }
+
+  /* ───────── Topbar compacts once the page is scrolled ───────── */
+  function initTopbar() {
+    var bar = document.querySelector(".topbar");
+    if (!bar) return;
+    var on = false;
+    function update() { var want = window.scrollY > 24; if (want !== on) { on = want; bar.classList.toggle("is-scrolled", on); } }
+    window.addEventListener("scroll", update, { passive: true });
+    update();
+  }
+
+
+  /* ───────── Video: poster with a play button instead of native chrome (and its loading spinner) ───────── */
+  function initVideos() {
+    document.querySelectorAll("figure.media-frame video").forEach(function (v) {
+      if (v.closest(".video-shell")) return;
+      var shell = document.createElement("div");
+      shell.className = "video-shell";
+      v.parentNode.insertBefore(shell, v);
+      shell.appendChild(v);
+      v.removeAttribute("controls");
+      v.preload = "none";
+      var label = (v.getAttribute("aria-label") || "Play video");
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "video-play";
+      btn.setAttribute("aria-label", "Play: " + label);
+      btn.innerHTML = '<span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>Play demo</span>';
+      shell.appendChild(btn);
+      btn.addEventListener("click", function () {
+        shell.classList.add("is-playing");
+        v.controls = true;
+        var pr = v.play();
+        if (pr && pr.catch) pr.catch(function () {});
+        v.focus();
+      });
+    });
   }
 
   function initScrollProgress() {
     var bar = document.querySelector(".scroll-progress > span");
     if (!bar) return;
-    var ticking = false;
+    var ticking = false, max = 1;
+    // Page height is cached (re-measured only when the page size changes), so a scroll frame never reads layout.
+    function measure() { var de = document.documentElement; max = Math.max(1, de.scrollHeight - de.clientHeight); }
     function update() {
       ticking = false;
-      var de = document.documentElement;
-      var max = de.scrollHeight - de.clientHeight;
-      bar.style.transform = "scaleX(" + (max > 0 ? de.scrollTop / max : 0) + ")";
+      bar.style.transform = "scaleX(" + Math.min(1, (window.pageYOffset || 0) / max).toFixed(4) + ")";
     }
     function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
     window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
+    window.addEventListener("resize", function () { measure(); onScroll(); });
+    if ("ResizeObserver" in window) new ResizeObserver(function () { measure(); onScroll(); }).observe(document.body);
+    measure();
     update();
   }
 
-  /* ─────────────────── Publications slider nav ──────────────────── */
-  function initPubSlider() {
-    var s = document.getElementById("pub-slider");
-    if (!s) return;
-    function step(dir) {
-      var card = s.querySelector(".pub-card");
-      var w = card ? card.offsetWidth + 16 : 340;
-      s.scrollBy({ left: dir * w, behavior: "smooth" });
-    }
-    var p = document.querySelector("[data-pub-prev]"), n = document.querySelector("[data-pub-next]");
-    if (p) p.addEventListener("click", function () { step(-1); });
-    if (n) n.addEventListener("click", function () { step(1); });
+  /* ───────── Cursor spotlight on card surfaces ───────── */
+  function initSpotlight() {
+    if (reduceMotion || !window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+    var sel = ".card, .pub-card, .pub-row, .panel, .practice-card, .research-card, .media-frame, .facts, .research-collaborate, .collab-card";
+    var els = Array.prototype.slice.call(document.querySelectorAll(sel));
+    if (!els.length) return;
+    els.forEach(function (el) { el.classList.add("spot"); });
+    document.addEventListener("pointermove", function (e) {
+      if (!e.movementX && !e.movementY) return; // synthetic hover update after scrolling: no layout reads mid-scroll
+      var el = e.target.closest ? e.target.closest(".spot") : null;
+      if (!el) return;
+      var r = el.getBoundingClientRect();
+      el.style.setProperty("--mx", (e.clientX - r.left) + "px");
+      el.style.setProperty("--my", (e.clientY - r.top) + "px");
+    }, { passive: true });
+  }
+
+  /* ───────── Facts strip: numbers count up when they enter the viewport ───────── */
+  function initCountUp() {
+    var els = Array.prototype.slice.call(document.querySelectorAll(".facts b, .numbers b"));
+    if (!els.length || reduceMotion || /[?&]still=1/.test(location.search) || !("IntersectionObserver" in window)) return;
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        io.unobserve(en.target);
+        var el = en.target, text = el.textContent.trim();
+        var m = text.match(/^([^0-9]*)([0-9][0-9,.]*)(.*)$/);
+        if (!m) return;
+        if (/[a-z]/i.test(m[1]) || /^\s*of\b/i.test(m[3])) return; // ranks ("Top 2") and fractions ("4 of 7") stay static
+        var prefix = m[1], suffix = m[3], raw = m[2], decimals = (raw.split(".")[1] || "").length;
+        var target = parseFloat(raw.replace(/,/g, ""));
+        if (isNaN(target)) return;
+        var grouped = raw.indexOf(",") >= 0, start = performance.now(), dur = 900;
+        function fmt(v) { var f = v.toFixed(decimals); return grouped ? f.replace(/\B(?=(\d{3})+(?!\d))/g, ",") : f; }
+        function tick(now) {
+          var t = Math.min(1, (now - start) / dur), e = 1 - Math.pow(1 - t, 3);
+          el.textContent = prefix + fmt(target * e) + suffix;
+          if (t < 1) requestAnimationFrame(tick); else el.textContent = text;
+        }
+        requestAnimationFrame(tick);
+      });
+    }, { threshold: 0.4 });
+    els.forEach(function (e) { io.observe(e); });
+  }
+
+  /* ───────── Ambient loops (header glows, live badges) pause while off screen ───────── */
+  function initAmbientPause() {
+    if (!("IntersectionObserver" in window)) return;
+    var els = document.querySelectorAll(".hero-halo, .page-head, .pub-head, .badge-live, .scroll-cue");
+    if (!els.length) return;
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { en.target.classList.toggle("ambient-off", !en.isIntersecting); });
+    }, { rootMargin: "120px 0px" });
+    els.forEach(function (el) { io.observe(el); });
   }
 
   /* ─────────────────────────── boot ─────────────────────────────── */
@@ -659,12 +968,19 @@
     initNav();
     initGraph();
     initReveal();
-    initVignetteSettle();
-    initScrollProgress();
     initExplorer();
-    initPubSlider();
-    initHeroProof();
+    initPracticeSlider();
+    initScrollScenes();
     initBibtex();
+    initAmbientPause();
+    initCountUp();
+    initSpotlight();
+    initScrollProgress();
+    initVideos();
+    // SMIL <animate> in the paper figures is not stopped by CSS: pause it when the reader asks for reduced motion (or in still mode).
+    if (document.documentElement.classList.contains("is-still")) document.querySelectorAll("svg").forEach(function (svg) { if (svg.pauseAnimations) svg.pauseAnimations(); });
+    initMagnetic();
+    initTopbar();
   });
 
   /* ───────── BibTeX disclosure + copy ───────── */
@@ -693,24 +1009,4 @@
     });
   }
 
-  /* ───────── Hero proof line — calm crossfade through real accomplishments ───────── */
-  function initHeroProof() {
-    var track = document.querySelector(".hero-proof-track");
-    if (!track) return;
-    var items = track.querySelectorAll(".hero-proof-item");
-    if (items.length < 2) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    var i = 0, paused = false;
-    var host = track.closest(".hero-proof");
-    if (host) {
-      host.addEventListener("mouseenter", function () { paused = true; });
-      host.addEventListener("mouseleave", function () { paused = false; });
-    }
-    setInterval(function () {
-      if (paused || document.hidden) return;
-      items[i].classList.remove("is-active");
-      i = (i + 1) % items.length;
-      items[i].classList.add("is-active");
-    }, 3800);
-  }
 })();
