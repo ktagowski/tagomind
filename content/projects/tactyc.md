@@ -20,5 +20,5 @@ The work connects vision-language models that read terrain tile by tile with gen
 
 ## My role
 
-- **Coordination.** Planned the research and led the student team.
-- **Engineering.** Wrote most of the codebase, from model fine-tuning to the web app.
+- **Coordination.** Plan the research and lead the student team.
+- **Engineering.** Write most of the codebase, from model fine-tuning to the app.

@@ -37,6 +37,6 @@ AI-Tax is institutional research and engineering work at Wrocław University of 
 
 As Research Coordinator & AI Engineer, I'm one of the lead authors on AI-Tax.
 
-- **Research management.** Planned the research and led a team of PhD and graduate students from idea to paper and release.
-- **Product engineering.** Co-built the product across the whole stack, agentic search and extraction being just one part of it.
-- **Releases and evaluation.** Ran the app's releases and set up evaluation with tax experts.
+- **Research management.** Plan the research and lead a team of PhD and graduate students working on it.
+- **Product engineering.** Co-build the product across the whole stack, agentic search and extraction being just one part of it.
+- **Releases and evaluation.** Run the product's releases and evaluation with tax experts.
