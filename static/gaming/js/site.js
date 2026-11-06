@@ -95,7 +95,7 @@
     setTimeout(()=>{btn.textContent=old;btn.classList.remove('copied')},1600);
   }));
 
-  /* ── home hero: duck hunt. Ducks cross the night sky behind the headline; click to shoot.
+  /* ── home hero: ducks. Ducks cross the night sky behind the headline; click to shoot.
         The aim reticle and glow follow the pointer the same way tagomind.com's hero does,
         the headline stays readable, and the loop runs only while the hero is on screen. ── */
   function ducks(cv){
@@ -368,7 +368,7 @@
         ctx.textAlign='start';return}
       // idle: an arcade attract screen in the score's own type — best score, then a blinking "click to start"
       const x=Math.max(20,(W-1280)/2+40),y=Math.max(96,(document.querySelector('.topbar')?.getBoundingClientRect().bottom||68)+28),m=W<700;
-      const tp=matchMedia('(pointer: coarse)').matches,name=mode==='getaway'?'GETAWAY':mode==='lookout'?'LOOKOUT':'DUCK HUNT';
+      const tp=matchMedia('(pointer: coarse)').matches,name=mode==='getaway'?'GETAWAY':mode==='lookout'?'LOOKOUT':'DUCKS';
       const how=mode==='getaway'?'DODGE THE COPS · GRAB THE CASH':mode==='lookout'?'SPOT THE COPS · NOT THE NEIGHBOURS':'SHOOT THE DUCKS · 3 SHELLS';
       ctx.textBaseline='top';
       ctx.font='500 11px "JetBrains Mono",ui-monospace,monospace';ctx.fillStyle='rgba(255,255,255,.5)';ctx.fillText(name+'  ·  BEST '+String(best).padStart(5,'0'),x,y);
