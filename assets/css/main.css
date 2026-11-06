@@ -635,6 +635,7 @@
   .study[data-study="lepiszcze"], .study-scope[data-study="lepiszcze"] { --study-bg: oklch(0.25 0.04 30);  --study-bg-light: oklch(0.32 0.05 30);   --study-ink: oklch(0.88 0.09 40); }
   .study[data-study="embeddings"], .study-scope[data-study="embeddings"] { --study-bg: oklch(0.24 0.045 315); --study-bg-light: oklch(0.31 0.055 315); --study-ink: oklch(0.86 0.09 320); }
   .study[data-study="finance-ai"], .study-scope[data-study="finance-ai"] { --study-bg: oklch(0.24 0.035 165); --study-bg-light: oklch(0.31 0.045 165); --study-ink: oklch(0.86 0.1 160); }
+  .study[data-study="tagomind-gaming"], .study-scope[data-study="tagomind-gaming"] { --study-bg: oklch(0.21 0.02 280); --study-bg-light: oklch(0.28 0.03 280); --study-ink: oklch(0.74 0.16 28); }
   .study[data-study="generic"], .study-scope[data-study="generic"]  { --study-bg: color-mix(in oklch, var(--field, oklch(0.5 0.1 280)) 30%, oklch(0.2 0 0)); --study-bg-light: color-mix(in oklch, var(--field, oklch(0.5 0.1 280)) 40%, oklch(0.25 0 0)); --study-ink: color-mix(in oklch, var(--field, oklch(0.8 0.08 280)) 55%, white); }
 
   /* ── Paper media: framed video, poster thumb, designed figure ────── */
@@ -746,6 +747,7 @@
      so the drawing's ink starts where the title starts. Values measured with getBBox(). */
   .study[data-study="ai-tax"] { --mx: 28; } .study[data-study="juddges"], .study[data-study="flat-explorer"] { --mx: 24; }
   .study[data-study="flat-explorer-design"] { --mx: 36; }
+  .study[data-study="tagomind-gaming"] { --mx: 30; }
   .study[data-study="unite-research-search"] { --mx: 36; } .study[data-study="lepiszcze"] { --mx: 4; }
   .study[data-study="embeddings"], .study[data-study="finance-ai"] { --mx: 20; }
   @media (max-width: 520px) { .study.is-hero .study-motif svg { width: calc(100% * 400 / (400 - 2 * var(--mx, 0))); max-width: none; margin-left: calc(-100% * var(--mx, 0) / (400 - 2 * var(--mx, 0))); } }

@@ -40,4 +40,21 @@ items:
         url: "mailto:kamil.tagowski@tagomind.com?subject=Flat%20Explorer%20Design"
       - label: "Open workspace"
         url: "https://flat-explorer.tagomind.com/design"
+  - project: "tagomind-gaming"
+    purpose: "Play something new"
+    headline: "Games worth picking up."
+    description: "A small studio making mobile games that are easy to pick up and hard to put down, built on its own AI-assisted toolkit so new worlds are cheaper to make."
+    workflow:
+      - "Our first game is in closed testing for iPhone."
+      - "The reveal brings its name, trailer and a public TestFlight."
+      - "The pipeline behind it is becoming the TagoMind Gaming platform."
+    image: "img/products/tagomind-gaming.jpg"
+    imageAlt: "The TagoMind Gaming studio page with its playable arcade hero."
+    caption: "Studio page · playable hero"
+    access: "The first game is not public yet. Join the early access list to get a build on reveal day."
+    actions:
+      - label: "Visit the studio"
+        url: "/gaming/"
+      - label: "Get early access"
+        url: "/gaming/#early-access"
 ---
