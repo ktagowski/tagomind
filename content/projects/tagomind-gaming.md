@@ -6,6 +6,7 @@ date: 2026-11-06
 year: 2026
 fields: ["Agentic AI", "Applications"]
 context: "Independent studio · TagoMind"
+role: "Founder & CEO"
 status: "Closed testing"
 summary: "A mobile-game studio whose pipeline lets AI write the code, run builds and tests, and check the balance maths, so each new game costs less than the last."
 study: "tagomind-gaming"

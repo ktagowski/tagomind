@@ -41,6 +41,12 @@ practice:
     description: "AI-assisted flat hunting: scoring listings, summarizing visits, and comparing options against the criteria that matter to you."
     proof: "LLM agents · end-to-end product"
     context: "Early access · public demo · independent engineering and delivery"
+  - page: "tagomind-gaming"
+    host: "tagomind.com/gaming"
+    category: "TagoMind studio"
+    description: "A small mobile-game studio with its own AI-assisted pipeline: AI writes the code, runs builds and tests, and checks the balance maths, so each new game costs less to make."
+    proof: "First title · closed testing on iPhone"
+    context: "Reveal planned for November 2026 · founder and lead developer"
 directions:
   - title: "Discover missing information"
     question: "How can agents identify missing facts and ask useful follow-up questions?"
