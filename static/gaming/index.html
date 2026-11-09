@@ -4,19 +4,31 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>TagoMind Gaming · New worlds to explore</title>
-<meta name="description" content="TagoMind Gaming is a small studio with its own AI-assisted toolkit for making mobile games at a cost that makes new worlds worth building. Our first game is in closed testing for iPhone.">
-<meta name="theme-color" content="#26262A">
+<meta name="description" content="TagoMind Gaming is a small studio making mobile games worth exploring. Our first game is in closed testing for iPhone; the reveal comes in November 2026.">
 <link rel="canonical" href="https://tagomind.com/gaming/">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="author" content="Kamil Tagowski">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="TagoMind">
+<meta property="og:site_name" content="TagoMind Gaming">
+<meta property="og:title" content="TagoMind Gaming · New worlds worth exploring">
+<meta property="og:description" content="TagoMind Gaming is a small studio making mobile games worth exploring. Our first game is in closed testing for iPhone; the reveal comes in November 2026.">
 <meta property="og:url" content="https://tagomind.com/gaming/">
-<meta property="og:title" content="TagoMind Gaming · New worlds to explore">
-<meta property="og:description" content="A small studio with its own AI-assisted toolkit for making mobile games. Our first game is in closed testing for iPhone.">
+<meta property="og:image" content="https://tagomind.com/gaming/assets/og-card.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="TagoMind Gaming: New worlds worth exploring. First game in closed testing, reveal November 2026.">
+<meta property="og:locale" content="en_GB">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="TagoMind Gaming · New worlds worth exploring">
+<meta name="twitter:description" content="TagoMind Gaming is a small studio making mobile games worth exploring. Our first game is in closed testing for iPhone; the reveal comes in November 2026.">
+<meta name="twitter:image" content="https://tagomind.com/gaming/assets/og-card.jpg">
+<link rel="alternate" type="text/plain" title="LLM summary" href="llms.txt">
+<meta name="theme-color" content="#26262A">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
-<script>document.documentElement.classList.add('js');if(/[?&]still=1/.test(location.search)||matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('is-still');</script>
+<script>document.documentElement.classList.add('js');if(/[?&]still=1/.test(location.search)||localStorage.getItem('tg-motion')==='off'||matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('is-still');</script>
 <link rel="stylesheet" href="css/site.css">
 <script>/* hero = exactly one screen tall. In a normal tab that is the window; inside an auto-height preview frame
    the frame can be thousands of px tall, so use the outer window (or the device screen) instead. */
@@ -74,163 +86,24 @@
 .hero .cta{justify-content:center;margin-top:clamp(1.2rem,4vh,2.8rem)}
 .announce{display:inline-flex;align-items:center;gap:.7rem;padding:.35rem .9rem .35rem .35rem;border-radius:99px;text-decoration:none;font-size:.9rem;color:var(--foreground);background:rgb(255 255 255 / .05);box-shadow:inset 0 0 0 1px var(--border-strong);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);transition:background .2s,box-shadow .2s;animation:hero-enter .8s var(--ease-out) both}
 .announce:hover{background:rgb(255 255 255 / .09);box-shadow:inset 0 0 0 1px color-mix(in oklch,var(--red) 55%,transparent)}
-.announce .new{font:500 .66rem/1 var(--font-mono);letter-spacing:.12em;text-transform:uppercase;padding:.4rem .6rem;border-radius:99px;background:var(--red-btn);color:#fff}
+.announce .new{font:500 .7rem/1 var(--font-mono);letter-spacing:.12em;text-transform:uppercase;padding:.4rem .6rem;border-radius:99px;background:var(--red-btn);color:#fff}
 .announce svg{width:.95rem;height:.95rem;color:var(--muted-foreground);transition:transform .25s var(--ease-out)}.announce:hover svg{transform:translateX(3px)}
 .who{display:inline-flex;align-items:center;gap:.7rem;margin-top:clamp(.8rem,2.4vh,1.8rem);font-size:.9rem;color:var(--muted-foreground)}
 .who img{width:2.4rem;height:2.4rem;border-radius:99px;object-fit:cover;box-shadow:0 0 0 1px var(--border-strong)}
 
-.games{display:grid;gap:1.25rem}
-.game{position:relative;overflow:hidden;border-radius:1.75rem;border:1px solid var(--border-strong);background:radial-gradient(70% 90% at 80% 20%,oklch(.32 .1 300 / .5),transparent 70%),linear-gradient(160deg,var(--night),var(--night-2));display:grid;grid-template-columns:1fr 1.05fr;min-height:540px}
-.game .txt{padding:clamp(1.8rem,4vw,3.4rem);display:flex;flex-direction:column;justify-content:center;gap:1.1rem;position:relative;z-index:2}
-.game h2{font-size:clamp(2.4rem,5.2vw,4.6rem)}
-.game p{color:var(--muted-foreground);max-width:44ch;text-wrap:pretty}
-.pills{display:flex;gap:.5rem;flex-wrap:wrap}
-.pill{font:500 .7rem var(--font-mono);letter-spacing:.09em;text-transform:uppercase;padding:.3rem .7rem;border-radius:99px;box-shadow:inset 0 0 0 1px var(--border-strong);color:var(--muted-foreground)}
-.pill.live{color:var(--signal);box-shadow:inset 0 0 0 1px color-mix(in oklch,var(--signal) 50%,transparent)}
-.reel{margin:0;position:relative;align-self:stretch;display:flex;justify-content:center;min-height:100%;background:linear-gradient(180deg,rgb(27 16 47),rgb(9 4 22));-webkit-mask-image:linear-gradient(90deg,transparent,#000 22%);mask-image:linear-gradient(90deg,transparent,#000 22%)}
-.game{height:clamp(600px,82vh,780px)}
-.reel{height:100%;overflow:hidden}
-.reel-v{position:relative;height:100%;aspect-ratio:1080/1920;max-width:100%}
-.reel-v video{display:block;width:100%;height:100%;object-fit:cover}
-@media(max-width:980px){.reel{-webkit-mask-image:linear-gradient(180deg,transparent,#000 12%);mask-image:linear-gradient(180deg,transparent,#000 12%)}.reel-v{height:auto;width:100%;max-width:440px}.game{height:auto}.reel{height:auto}}
-.next{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:1.4rem;border:1px dashed var(--border-strong);border-radius:1.75rem;padding:1.3rem 1.8rem;color:var(--muted-foreground)}
-.next .q{width:3.4rem;height:3.4rem;border-radius:1rem;display:grid;place-items:center;font:800 1.7rem var(--font-display);color:var(--subtle);box-shadow:inset 0 0 0 1px var(--border-strong);background:repeating-linear-gradient(135deg,rgb(255 255 255 / .05) 0 6px,transparent 6px 12px)}
-.next b{display:block;font:800 1.5rem/1.1 var(--font-display);color:var(--foreground);letter-spacing:-.03em}
-.next span span{display:block;margin-top:.25rem;font-size:.95rem}
-@media(max-width:700px){.next{grid-template-columns:auto 1fr}.next .btn{grid-column:1/-1}}
-
-.status{display:inline-flex;align-items:center;gap:.5rem;font:500 .68rem/1 var(--font-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--amber)}
-.status::before{content:"";width:.45rem;height:.45rem;border-radius:99px;background:currentColor}
-
-.person{display:grid;grid-template-columns:auto 1fr;gap:clamp(1.4rem,3vw,2.4rem);align-items:center;max-width:52rem}
-.person img{width:clamp(96px,14vw,150px);aspect-ratio:1;border-radius:1.6rem;object-fit:cover;box-shadow:0 0 0 1px var(--border-strong),0 24px 50px -24px #000}
-.person h3{font-size:clamp(1.8rem,3vw,2.4rem)}
-.person .role{font:500 .74rem var(--font-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--red-text);margin:.5rem 0 1rem}
-.person p{color:var(--muted-foreground);max-width:46ch;text-wrap:pretty}
-.person .cta{margin-top:1.2rem}
-
-
-/* studio block */
-.studio{display:grid;gap:clamp(2.5rem,5vw,4rem)}
-.status.live{color:var(--signal)}
-/* the studio ─ editorial: no card, hairline rules, statement left, three numbered rules right */
-.manifesto{display:grid;gap:1.4rem;padding:clamp(1.6rem,3vw,2.4rem) 0;border-top:1px solid var(--border-strong);border-bottom:1px solid var(--hairline)}
-.big{font:800 clamp(3rem,7.2vw,6.2rem)/.92 var(--font-display);letter-spacing:-.045em;max-width:12ch}
-.big em{font-style:normal;color:var(--red-text)}
-.manifesto .lead{max-width:58ch;font-size:clamp(1.05rem,1.5vw,1.35rem);line-height:1.5;color:var(--foreground);text-wrap:pretty}
-.manifesto .lead .fn{font:600 .6em/1 var(--font-mono);vertical-align:super;margin-left:.15em;color:var(--red-text);text-decoration:none}
-.manifesto .lead .fn:hover{text-decoration:underline}
-.manifesto .sources{margin:0;padding:0 0 0 1.4rem;max-width:62ch;font-size:.78rem;line-height:1.5;color:var(--subtle)}
-.manifesto .sources li{padding-left:.2rem}
-.manifesto .sources li::marker{font:600 .72rem var(--font-mono);color:var(--red-text)}
-.manifesto .sources a{color:var(--muted-foreground);text-decoration:underline;text-underline-offset:.15em;text-decoration-color:color-mix(in oklch,var(--muted-foreground) 40%,transparent)}
-.manifesto .sources a:hover{color:var(--foreground)}
-.manifesto .lead mark{background:none;color:var(--foreground);font-weight:600;box-shadow:inset 0 -.42em 0 color-mix(in oklch,var(--red) 34%,transparent);padding:0 .08em;border-radius:2px}
-.sm{color:var(--muted-foreground);max-width:50ch;text-wrap:pretty}
-/* the platform ─ a workbench: squared panel, blueprint grid, toolbar, numbered layer stack */
-.platform{border-radius:.9rem;overflow:hidden;background:
-  linear-gradient(color-mix(in oklch,var(--signal) 7%,transparent) 1px,transparent 1px) 0 0/100% 2.6rem,
-  linear-gradient(90deg,color-mix(in oklch,var(--signal) 7%,transparent) 1px,transparent 1px) 0 0/2.6rem 100%,
-  color-mix(in oklch,var(--card) 85%,black 15%);
-  box-shadow:0 0 0 1px color-mix(in oklch,var(--signal) 28%,var(--hairline))}
-.pbar{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:.8rem 1.4rem;border-bottom:1px solid color-mix(in oklch,var(--signal) 22%,var(--hairline));background:color-mix(in oklch,var(--signal) 6%,var(--card))}
-.pfile{font:500 .68rem/1 var(--font-mono);letter-spacing:.08em;color:var(--subtle)}
-.pbody{display:grid;grid-template-columns:1.1fr 1fr;align-items:center;gap:clamp(1.5rem,4vw,3rem);padding:clamp(1.6rem,3.6vw,2.8rem) clamp(1.4rem,3vw,2.4rem)}
-.platform .txt{display:grid;gap:1rem;align-content:center}
-.platform h3{font-size:clamp(2rem,3.6vw,3rem);line-height:.98}
-.pstack{display:grid;gap:0;margin:0;padding:0;list-style:none;border:1px solid color-mix(in oklch,var(--signal) 30%,var(--hairline));background:color-mix(in oklch,var(--card) 70%,black 30%)}
-.pstack li{display:flex;align-items:center;gap:1rem;padding:.95rem 1.1rem;border-top:1px dashed color-mix(in oklch,var(--signal) 22%,var(--hairline));font:500 .76rem/1 var(--font-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted-foreground)}
-.pstack li:first-child{border-top:0}
-.pstack li i{font-style:normal;color:var(--signal);opacity:.75}
-.pstack li small{margin-left:auto;font:inherit;color:var(--subtle);letter-spacing:.06em}
-.pstack li.top{padding-block:1.2rem;color:var(--foreground);font-size:.84rem;background:color-mix(in oklch,var(--signal) 12%,transparent);box-shadow:inset 3px 0 0 var(--signal)}
-.pstack li.top i{opacity:1}
-.pstack li.top small{color:var(--foreground);opacity:.8}
-.rail{list-style:none;margin:clamp(2rem,4vw,3rem) 0 0;padding:0;display:grid;grid-template-columns:repeat(5,1fr);gap:1.25rem;position:relative}
-.rail::before{content:"";position:absolute;left:0;right:0;top:.38rem;height:1px;background:var(--border-strong)}
-.rail li{position:relative;padding-top:1.6rem;display:grid;gap:.25rem;align-content:start}
-.rail .dot{position:absolute;left:0;top:0;width:.8rem;height:.8rem;border-radius:99px;background:var(--background);box-shadow:inset 0 0 0 2px var(--border-strong)}
-.rail .now .dot{background:var(--signal);box-shadow:0 0 0 4px color-mix(in oklch,var(--signal) 25%,transparent)}
-.rail .t{font:500 .72rem var(--font-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--subtle)}
-.rail .now .t{color:var(--signal)}
-.rail b{font:700 1.2rem/1.2 var(--font-display);letter-spacing:-.02em}
-.rail li>span:last-child{color:var(--muted-foreground);font-size:.93rem;line-height:1.5}
-@media(max-width:980px){
-  .pbody{grid-template-columns:1fr}
-  .steps{grid-template-columns:1fr}.step:not(:last-child)::after{top:auto;bottom:-1.1rem;right:auto;left:2rem;transform:rotate(90deg)}
-  .rail{grid-template-columns:1fr 1fr}.rail::before{display:none}
-}
-@media(max-width:600px){.rail{grid-template-columns:1fr}}
-
-@media(max-width:980px){
-  .game{grid-template-columns:1fr}
-}
-@media(max-width:700px){
-  .person{grid-template-columns:1fr}
-}
-
-/* hero screenshot rail: every screen is the real game */
-.marquee{position:relative;overflow:hidden;padding-block:.6rem 1.8rem;mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);animation:hero-enter 1s var(--ease-out) .8s both}
-.track{display:flex;gap:1.1rem;width:max-content;animation:mq 70s linear infinite}
-.marquee:hover .track{animation-play-state:paused}
-@keyframes mq{to{transform:translateX(calc(-50% - .55rem))}}
-.shot{flex:none;width:clamp(40px,min(10.5vw,11vh),142px);aspect-ratio:520/1130;border-radius:20px;border:4px solid oklch(.07 .01 270);overflow:hidden;background:#000;box-shadow:0 26px 40px -22px #000,0 0 0 1px color-mix(in oklch,var(--amber) 22%,transparent);transition:transform .45s var(--ease-out)}
-.shot:nth-child(even){transform:translateY(1.4rem)}
-.shot:hover{transform:translateY(-.5rem) scale(1.04)}
-.shot img{width:100%;height:100%;object-fit:cover}
-.rail-cap{text-align:center;font:500 .7rem/1 var(--font-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--subtle);margin-top:-.4rem}
-
-/* feature cards */
-.feats{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
-.feat{overflow:hidden;border-radius:1.75rem;background:linear-gradient(178deg,color-mix(in oklch,var(--card) 94%,white 3%),var(--card) 60%);box-shadow:var(--surface-shadow);display:flex;flex-direction:column}
-.fimg{height:250px;overflow:hidden;display:flex;justify-content:center;background:radial-gradient(70% 90% at 50% 100%,color-mix(in oklch,var(--amber) 20%,transparent),transparent 70%),linear-gradient(180deg,var(--night),var(--night-2));box-shadow:inset 0 -1px 0 var(--hairline)}
-.fimg .shot{width:178px;margin-top:2rem;border-radius:26px;border-width:5px;transform:none}
-.feat:hover .fimg .shot{transform:translateY(-.6rem)}
-.feat.night .fimg{background:radial-gradient(70% 90% at 50% 100%,color-mix(in oklch,var(--red) 26%,transparent),transparent 70%),linear-gradient(180deg,var(--night),var(--night-2))}
-.ft{padding:1.5rem clamp(1.3rem,2.4vw,1.9rem) 1.8rem;display:grid;gap:.6rem}
-.ft h3{font-size:1.55rem}
-.ft p{color:var(--muted-foreground);font-size:.96rem;line-height:1.6;text-wrap:pretty}
-
-/* play-first band */
-.band{display:grid;grid-template-columns:1fr auto;align-items:center;gap:clamp(1.5rem,4vw,3rem);overflow:hidden;border-radius:2rem;padding:clamp(2rem,5vw,3.6rem);background:radial-gradient(60% 120% at 100% 50%,color-mix(in oklch,var(--amber) 18%,transparent),transparent 70%),radial-gradient(60% 120% at 0% 0%,color-mix(in oklch,var(--red) 30%,transparent),transparent 70%),linear-gradient(160deg,var(--night),var(--night-2));box-shadow:var(--surface-shadow)}
-.band>*{min-width:0}
-.band h2{font-size:clamp(2.4rem,5.4vw,4.6rem);line-height:.95}
-.band p{color:var(--muted-foreground);max-width:46ch;margin-top:1rem;text-wrap:pretty}
-.band .cta{margin-top:1.6rem}
-.band-shots{display:flex;align-items:flex-end;height:100%;margin-block:calc(-1 * clamp(2rem,5vw,3.6rem));padding-top:2rem}
-.band-shots .shot{width:150px;margin-bottom:-60px}
-.band-shots .shot:first-child{transform:rotate(-6deg) translate(18px,10px)}
-.band-shots .shot:last-child{transform:rotate(6deg) translate(-18px,10px)}
-.band-shots .shot:nth-child(2){width:170px;z-index:2;transform:none}
-@media(max-width:980px){.feats{grid-template-columns:1fr}.fimg{height:220px}.band{grid-template-columns:1fr}.band-shots{justify-content:center;margin-top:0}}
-@media(max-width:700px){.band-shots .shot{width:84px}.band-shots .shot:nth-child(2){width:100px}.band-shots .shot:first-child{transform:rotate(-6deg) translate(12px,8px)}.band-shots .shot:last-child{transform:rotate(6deg) translate(-12px,8px)}.hero .cta{flex-direction:column;align-items:stretch;width:100%;max-width:22rem}.hero .cta .btn{width:100%}.hero .cta .link-arrow{align-self:center}.announce{font-size:.82rem}}
 @media(max-height:760px),(max-width:640px){.hero .who,.rail-cap{display:none}}
 @media(max-width:640px){.hero .lead{font-size:1rem;line-height:1.5}.hero .cta{gap:.5rem}.hero .cta .btn-lg{height:2.75rem}.announce{margin-bottom:.2rem}.shot{width:clamp(64px,22vw,12vh)}.shot:nth-child(even){transform:translateY(.8rem)}}
 @media(max-height:640px){.hero .btn-lg{height:2.5rem;font-size:.9rem}.announce{font-size:.8rem}.hero .cta{margin-top:.8rem}}
 @media(max-height:520px),(max-width:640px) and (max-height:620px){.hero .marquee,.hero .lead{display:none}.hero{grid-template-rows:1fr}}
 .hero-copy,.hero-rail{min-width:0;max-width:100%}
-.rail-note{margin-top:1.4rem;font:500 .7rem var(--font-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--subtle)}
-/* second game */
-.game2{display:grid;grid-template-columns:1fr 1.15fr;align-items:stretch;overflow:hidden;border-radius:1.75rem;border:1px solid var(--border-strong);background:radial-gradient(70% 90% at 90% 10%,oklch(.4 .12 280 / .35),transparent 70%),linear-gradient(160deg,oklch(.21 .05 275),oklch(.15 .04 270))}
-.g2-txt{padding:clamp(1.8rem,4vw,3.2rem);display:flex;flex-direction:column;justify-content:center;gap:1rem}
-.g2-txt h2{font-size:clamp(2.2rem,4.4vw,3.8rem)}
-.g2-txt p{color:var(--muted-foreground);max-width:46ch;text-wrap:pretty}
-.g2-art{position:relative;min-height:300px;display:grid;place-items:center;overflow:hidden;background:repeating-linear-gradient(135deg,rgb(255 255 255 / .025) 0 14px,transparent 14px 28px)}
-.g2-n{font:800 clamp(9rem,20vw,16rem)/.8 var(--font-display);letter-spacing:-.06em;color:transparent;-webkit-text-stroke:1.5px color-mix(in oklch,var(--red) 55%,transparent)}
-.g2-bars{position:absolute;left:12%;right:12%;bottom:16%;display:grid;gap:.6rem}
-.g2-bars i{height:.9rem;border-radius:.3rem;background:rgb(255 255 255 / .08)}.g2-bars i:nth-child(2){width:72%}.g2-bars i:nth-child(3){width:46%}
-@media(max-width:980px){.game2{grid-template-columns:1fr}.g2-art{min-height:220px}}
-/* unannounced: title 01 is the lead card, sealed */
-.t01{min-height:clamp(420px,56vh,560px);background:radial-gradient(70% 90% at 80% 20%,oklch(.32 .1 300 / .5),transparent 70%),linear-gradient(160deg,var(--night),var(--night-2))}
-.t01 .g2-txt h2{font-size:clamp(2.6rem,5.2vw,4.6rem)}
-.t01 .pills{display:flex;flex-wrap:wrap;gap:.5rem}
-.t01 .g2-n{font-size:clamp(11rem,24vw,20rem)}
-.g2-stamp{position:absolute;top:22%;right:10%;transform:rotate(-8deg);padding:.45rem .9rem;border:2px solid color-mix(in oklch,var(--red) 75%,transparent);border-radius:.4rem;font:600 .82rem/1 var(--font-mono);letter-spacing:.24em;text-transform:uppercase;color:var(--red-text);background:rgb(0 0 0 / .25)}
 .game-switch{position:absolute;z-index:5;top:1.35rem;right:clamp(1rem,4vw,2.5rem);display:flex;align-items:baseline;gap:.15rem;font:500 .7rem/1 var(--font-mono);letter-spacing:.14em;text-transform:uppercase;transition:opacity .4s}
 .game-switch span{color:var(--subtle);padding-right:.7rem}
 .game-switch span::after{content:"▸";margin-left:.5rem;color:var(--red)}
 .game-switch button{border:0;cursor:pointer;height:2rem;padding:0 .55rem;font:inherit;letter-spacing:inherit;text-transform:inherit;color:var(--muted-foreground);background:none;border-bottom:2px solid transparent;transition:color .2s,border-color .2s}
 .game-switch button:hover{color:var(--foreground)}
+.game-switch .gs-page{display:inline-flex;align-items:center;height:2rem;margin-left:.6rem;padding:0 .6rem;color:var(--subtle);text-decoration:none;border-left:1px solid var(--hairline);transition:color .2s}
+.game-switch .gs-page:hover{color:var(--foreground)}
+.game-switch .gs-page:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
 .game-switch button[aria-pressed="true"]{color:rgb(255 236 214);border-bottom-color:var(--red)}
 .hero.playing .game-switch{opacity:0;pointer-events:none}
 .hero.playing{touch-action:none}
@@ -273,14 +146,260 @@
 .hero[data-game="lookout"] .go-stats{border-radius:0;background:none;box-shadow:none}
 .hero[data-game="lookout"] .go-stats div{box-shadow:none;border-bottom:1px dotted rgb(255 255 255 / .25);text-align:left}
 .hero[data-game="lookout"] .go-stats dd[data-st="rank"]{color:rgb(110 220 150)}
+.hero[data-game="bimmer"] .go{position:relative;overflow:hidden;padding:2.4rem 2.2rem 1.6rem;border-radius:.9rem;background:rgb(12 16 30 / .95);box-shadow:inset 0 0 0 1px rgb(255 255 255 / .12),0 30px 80px -20px #000}
+.hero[data-game="bimmer"] .go::before{content:"";position:absolute;left:0;right:0;top:0;height:6px;background:linear-gradient(90deg,rgb(110 180 240) 0 33.4%,rgb(40 70 170) 33.4% 66.7%,rgb(238 64 60) 66.7%)}
+.hero[data-game="bimmer"] .go-reason{color:rgb(150 200 250);background:rgb(110 180 240 / .1);box-shadow:inset 0 0 0 1px rgb(110 180 240 / .45)}
+.hero[data-game="bimmer"] .go-title{font-style:italic}
+.hero[data-game="bimmer"] .go-title span{color:#fff;text-shadow:.05em .05em 0 rgb(40 70 170),0 .12em .3em rgb(0 0 0 / .6)}
+.hero[data-game="bimmer"] .go-title .g2{color:rgb(130 185 255);text-shadow:.05em .05em 0 rgb(40 70 170),0 .12em .3em rgb(0 0 0 / .6)}
+.hero[data-game="bimmer"] .go-s{color:#fff;text-shadow:none;font-style:italic}
+.hero[data-game="bimmer"] .go-stats{border-radius:.5rem}
+.hero[data-game="bimmer"] .go-stats dd[data-st="rank"]{color:rgb(130 185 255)}
+.is-still .hero::before{animation:none}
+
+/* ═════ 2027 pass · flat page, hairline sections, an index column, no cards ═════ */
+:root{--background:oklch(.145 .004 285);--card:oklch(.18 .004 285);--hairline:oklch(1 0 0 / .1);--border-strong:oklch(1 0 0 / .2);--r:.375rem}
+body{font-size:1rem;line-height:1.65}
+.grain{opacity:.02}
+.topbar{background:color-mix(in oklch,var(--background) 82%,transparent)}
+.nav-row a{border-radius:var(--r)}.nav-row a:hover{background:rgb(255 255 255 / .06)}
+/* buttons: rectangular, flat; hover moves the background, never the text colour */
+.btn{height:2.75rem;border-radius:var(--r);background:transparent;box-shadow:inset 0 0 0 1px var(--border-strong);font-weight:500}
+.btn:hover{transform:none;background:rgb(255 255 255 / .07);box-shadow:inset 0 0 0 1px oklch(1 0 0 / .32)}
+.btn-primary{background:var(--red-btn);box-shadow:none}
+.btn-primary:hover{background:var(--red-btn-h);box-shadow:none}
+.btn .ar{transition:transform .25s var(--ease-out)}.btn:hover .ar{transform:translateX(3px)}
+.announce{border-radius:var(--r);-webkit-backdrop-filter:none;backdrop-filter:none;background:rgb(255 255 255 / .04)}
+.announce .new{border-radius:.25rem}
+dialog{border-radius:.6rem}.field input{border-radius:var(--r)}
+/* hero is kept; only the old gradient glow goes */
+.hero::before{background:radial-gradient(30% 34% at 50% 36%,color-mix(in oklch,var(--red) 12%,transparent),transparent 72%)}
+.hero-copy,.hero-rail{min-width:0;max-width:100%}
+
+/* section block: top hairline, sticky index label left, content right */
+.blk{border-top:1px solid var(--hairline);padding-block:clamp(3.5rem,7vw,6.5rem)}
+.blk-grid{display:grid;grid-template-columns:11rem minmax(0,1fr);column-gap:clamp(1.5rem,4vw,4rem)}
+.blk-label{position:sticky;top:5.5rem;align-self:start;display:flex;gap:.9rem;margin:0;padding-top:.5rem;font:500 .72rem/1 var(--font-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--subtle)}
+.blk-label b{font-weight:500;color:var(--foreground)}
+.blk h2{font-size:clamp(2.5rem,5.4vw,4.75rem);font-weight:700;letter-spacing:-.05em;line-height:.95}
+.blk h3{font-weight:700;letter-spacing:-.04em}
+.muted{color:var(--muted-foreground)}
+@media(max-width:900px){.blk-grid{grid-template-columns:1fr;row-gap:1.6rem}.blk-label{position:static;padding-top:0}}
+
+/* 01 · Title 01: copy + spec sheet left, one pixelated frame right */
+.t01{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:clamp(2rem,5vw,5rem);align-items:center}
+.t01-copy{display:grid;gap:1.4rem;align-content:start}
+.t01-copy>p{max-width:44ch;font-size:clamp(1.05rem,1.4vw,1.2rem);text-wrap:pretty}
+.spec{margin:.4rem 0 .6rem;max-width:34rem;border-top:1px solid var(--hairline)}
+.spec div{display:grid;grid-template-columns:8rem 1fr;align-items:center;gap:1rem;padding:.8rem 0;border-bottom:1px solid var(--hairline)}
+.spec dt{font:500 .72rem/1 var(--font-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--subtle)}
+.spec dd{margin:0;font-size:.98rem}
+.spec .live{display:inline-flex;align-items:center;gap:.55rem}
+.spec .live::before{content:"";width:.5rem;height:.5rem;border-radius:99px;background:var(--signal);box-shadow:0 0 0 3px color-mix(in oklch,var(--signal) 22%,transparent)}
+.redact{display:inline-block;width:10.5em;height:1.05em;vertical-align:-.15em;border-radius:2px;background:var(--foreground)}
+.frame{margin:0;display:grid;gap:.9rem;width:clamp(200px,19vw,250px)}
+.frame-shot{position:relative;padding:14px;background:
+  linear-gradient(var(--border-strong),var(--border-strong)) 0 0/12px 1px,linear-gradient(var(--border-strong),var(--border-strong)) 0 0/1px 12px,
+  linear-gradient(var(--border-strong),var(--border-strong)) 100% 0/12px 1px,linear-gradient(var(--border-strong),var(--border-strong)) 100% 0/1px 12px,
+  linear-gradient(var(--border-strong),var(--border-strong)) 0 100%/12px 1px,linear-gradient(var(--border-strong),var(--border-strong)) 0 100%/1px 12px,
+  linear-gradient(var(--border-strong),var(--border-strong)) 100% 100%/12px 1px,linear-gradient(var(--border-strong),var(--border-strong)) 100% 100%/1px 12px;background-repeat:no-repeat}
+.frame-shot img{display:block;width:100%;height:auto;border-radius:22px;image-rendering:pixelated;box-shadow:0 0 0 1px var(--hairline)}
+.frame figcaption{display:flex;justify-content:space-between;gap:1rem;white-space:nowrap;font:500 .7rem/1.3 var(--font-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--subtle)}
+@media(max-width:900px){.t01{grid-template-columns:1fr}.frame{justify-self:center;width:min(240px,70vw)}}
+
+/* 02 · Studio statement; sources sit in a side column on wide screens */
+.manifesto{display:grid;gap:1.6rem}
+.big{font:700 clamp(2.8rem,6.6vw,6rem)/.93 var(--font-display);letter-spacing:-.055em;max-width:13ch;margin:0}
+.big em{font-style:normal;color:var(--red-text)}
+.manifesto .lead{max-width:56ch;font-size:clamp(1.1rem,1.55vw,1.4rem);line-height:1.5;color:var(--muted-foreground);text-wrap:pretty}
+.manifesto .lead mark{background:none;color:var(--foreground);font-weight:500}
+.manifesto .lead .fn{font:500 .58em/1 var(--font-mono);vertical-align:super;margin-left:.15em;color:var(--subtle);text-decoration:none}
+.manifesto .lead .fn:hover{color:var(--foreground)}
+.sources{margin:0;padding:0;list-style:none;counter-reset:s;display:grid;gap:.9rem;max-width:62ch;font-size:.8rem;line-height:1.5;color:var(--subtle)}
+.sources li{counter-increment:s;position:relative;padding-left:1.6rem}
+.sources li::before{content:counter(s);position:absolute;left:0;top:0;font:500 .72rem/1.6 var(--font-mono);color:var(--muted-foreground)}
+.sources a{color:var(--muted-foreground);text-decoration:underline;text-underline-offset:.15em;text-decoration-color:var(--border-strong)}
+.sources a:hover{color:var(--foreground)}
+@media(min-width:1180px){.manifesto{grid-template-columns:minmax(0,1fr) 17rem;column-gap:3.5rem}.manifesto>.big{grid-column:1/-1}.sources{align-self:end;padding-left:1.4rem;border-left:1px solid var(--hairline)}}
+
+/* 03 · Platform: plain index list */
+.plat{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(2rem,5vw,4.5rem);align-items:start}
+.plat h2{font-size:clamp(2.2rem,4.2vw,3.6rem)}
+.plat p{margin-top:1.2rem;max-width:48ch;text-wrap:pretty}
+.index{list-style:none;margin:0;padding:0;border-top:1px solid var(--hairline)}
+.index li{display:grid;grid-template-columns:2.6rem 1fr auto;align-items:baseline;gap:1rem;padding:1.05rem 0;border-bottom:1px solid var(--hairline)}
+.index i{font:500 .72rem var(--font-mono);font-style:normal;color:var(--subtle)}
+.index b{font:600 1.15rem/1.25 var(--font-display);letter-spacing:-.025em}
+.index small{font:500 .72rem var(--font-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--subtle);text-align:right}
+.index .live small{color:var(--signal)}
+@media(max-width:900px){.plat{grid-template-columns:1fr}}
+
+/* 04 · Roadmap: dated rows, like a changelog */
+.road{list-style:none;margin:0;padding:0;border-top:1px solid var(--hairline)}
+.road li{display:grid;grid-template-columns:11rem minmax(0,16rem) 1fr;gap:1.5rem;align-items:baseline;padding:1.2rem 0;border-bottom:1px solid var(--hairline)}
+.road .t{font:500 .74rem var(--font-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--subtle)}
+.road b{font:600 1.2rem/1.25 var(--font-display);letter-spacing:-.025em}
+.road li>span:last-child{color:var(--muted-foreground)}
+.road .now .t{display:inline-flex;align-items:center;gap:.55rem;color:var(--signal)}
+.road .now .t::before{content:"";width:.5rem;height:.5rem;border-radius:99px;background:currentColor}
+.road-note{margin-top:1.2rem;font:500 .7rem var(--font-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--subtle)}
+.road-head{display:flex;justify-content:space-between;align-items:end;gap:1rem;margin-bottom:clamp(1.5rem,3vw,2.4rem)}
+@media(max-width:760px){.road li{grid-template-columns:1fr;gap:.35rem}}
+
+/* 05 · People */
+.person{display:grid;grid-template-columns:7.5rem minmax(0,1fr);gap:clamp(1.4rem,3vw,2.4rem);align-items:start;max-width:54rem}
+.person img{width:100%;height:auto;aspect-ratio:1;border-radius:var(--r);object-fit:cover;filter:grayscale(.15);box-shadow:0 0 0 1px var(--hairline)}
+.person h3{font-size:clamp(1.6rem,2.6vw,2.1rem)}
+.person .role{font:500 .72rem var(--font-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--subtle);margin:.6rem 0 1.1rem}
+.person p{color:var(--muted-foreground);max-width:56ch;text-wrap:pretty}
+.links{display:flex;flex-wrap:wrap;gap:.4rem 1.6rem;margin-top:1.3rem}
+.links a{display:inline-flex;align-items:center;min-height:44px;gap:.35rem;color:var(--foreground);text-decoration:underline;text-underline-offset:.25em;text-decoration-color:var(--border-strong);font-size:.95rem}
+.links a:hover{text-decoration-color:var(--foreground)}
+@media(max-width:560px){.person{grid-template-columns:1fr}.person img{width:5.5rem}}
+
+/* 06 · Contact: type, not a card */
+.reach{display:grid;gap:1.4rem}
+.reach>p{max-width:46ch;text-wrap:pretty}
+.mail{justify-self:start;font:700 clamp(1.5rem,3.8vw,3.2rem)/1.1 var(--font-display);letter-spacing:-.04em;color:var(--foreground);text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:.18em;text-decoration-color:var(--border-strong);overflow-wrap:anywhere;transition:text-decoration-color .2s}
+.mail:hover{text-decoration-color:var(--foreground)}
+.reach .cta{margin-top:.4rem}
+
+/* footer: same ground as the page */
+footer.site-foot{background:var(--background);margin-top:0}
+.fc b{color:var(--subtle)}
+.is-still .hero::before{animation:none}
+@media(prefers-reduced-motion:reduce){.hero::before{animation:none}}
+
+/* ═════ 2027 pass b ═════ */
+@view-transition{navigation:auto}
+/* hero: copy anchored bottom-left, status line on top, lead + actions on one ruled row */
+.hero{align-items:end}
+.hero .hero-copy{max-width:80rem;display:grid;justify-items:start;text-align:left;padding-bottom:clamp(1rem,4vh,2.6rem)}
+.hero h1{font-weight:700;letter-spacing:-.055em;margin:clamp(.8rem,2.4vh,1.6rem) 0 clamp(1.2rem,4vh,2.8rem);margin-left:-.04em}
+.h-status{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem 1.2rem;margin:0;font:500 .72rem/1 var(--font-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted-foreground);animation:hero-enter .8s var(--ease-out) both}
+.h-status i{width:.5rem;height:.5rem;border-radius:99px;background:var(--signal);box-shadow:0 0 0 3px color-mix(in oklch,var(--signal) 22%,transparent)}
+.h-status span+span::before{content:"/";margin-right:1.2rem;color:var(--subtle)}
+.h-status span:first-of-type{color:var(--foreground)}
+.hero-rest{width:100%;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:1.2rem 3rem;padding-top:clamp(1rem,2.6vh,1.6rem);border-top:1px solid var(--hairline)}
+.hero .lead{margin:0;max-width:40ch;font-size:clamp(1rem,min(1.45vw,2.4vh),1.25rem);line-height:1.5;color:var(--muted-foreground)}
+.hero .cta{margin:0;justify-content:flex-end}
+@media(max-width:760px){.hero-rest{grid-template-columns:1fr}.hero .cta{justify-content:flex-start}}
+@media(max-width:640px){.h-status span:last-child{display:none}.hero .cta{flex-direction:column;align-items:stretch;width:100%;max-width:none}}
+@media(max-height:520px),(max-width:640px) and (max-height:620px){.hero .lead{display:none}.hero-rest{border-top:0;padding-top:0}}
+/* nav: the section you are in is marked */
+.nav-row a[aria-current]{color:var(--foreground);box-shadow:inset 0 -1px 0 var(--foreground);border-radius:0}
+/* teaser: starts coarser and resolves to the 40×87 frame as it scrolls into view (never sharper than that) */
+.frame-shot .coarse{position:absolute;inset:14px;width:calc(100% - 28px);height:calc(100% - 28px);border-radius:22px;image-rendering:pixelated;opacity:0;pointer-events:none}
+@supports (animation-timeline:view()){.frame-shot .coarse{animation:resolve linear both;animation-timeline:view();animation-range:entry 30% cover 50%}}
+@keyframes resolve{from{opacity:1}to{opacity:0}}
+/* footer ends on the wordmark, set huge */
+.colophon{overflow:hidden;max-width:80rem;margin-inline:auto;padding-inline:clamp(1rem,4vw,2.5rem);margin-top:.5rem;padding-bottom:.06em;font:700 calc((min(100vw,80rem) - 2 * clamp(1rem,4vw,2.5rem)) / 7.3)/.92 var(--font-display);letter-spacing:-.065em;white-space:nowrap;color:oklch(.235 .005 285);user-select:none}
+.colophon b{font-weight:inherit;color:oklch(.34 .1 27)}
+
+/* ═════ 2027 pass c: native motion, spatial frame, a motion switch, container queries ═════ */
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.blk h2.big{font-size:clamp(2.8rem,6.6vw,6rem);line-height:.93;margin-bottom:.8rem}
+/* optical alignment: headings trimmed to cap height so they line up with the index label */
+@supports (text-box:trim-both cap alphabetic){.blk h2,.big,.hero h1{text-box:trim-both cap alphabetic}.blk-label{padding-top:0}}
+/* reveals run on the compositor from scroll position; JS reveal stays as the fallback */
+@supports (animation-timeline:view()){
+  .js:not(.is-still) .rv{opacity:1;transform:none;transition:none;animation:rise linear both;animation-timeline:view();animation-range:entry 5% entry 45%}
+  @keyframes rise{from{opacity:0;translate:0 28px}}
+  /* hero copy drifts up a little as it leaves; translate only, so the game's fade still owns opacity */
+  .js:not(.is-still) .hero-copy{animation:drift linear both;animation-timeline:scroll(root);animation-range:0 90vh}
+  @keyframes drift{to{translate:0 -6vh}}
+}
+/* Title 01 responds to its own width, not the viewport */
+.blk-grid>article.t01{container-type:inline-size}
+.t01{grid-template-columns:1fr}
+.t01-in{display:grid;gap:2.4rem}
+@container (min-width:640px){.t01-in{grid-template-columns:minmax(0,1fr) auto;gap:clamp(2rem,5vw,5rem);align-items:center}}
+@container (max-width:639px){.frame{justify-self:center;width:min(240px,70%)}}
+/* spatial frame: tilts toward the pointer, a light follows it; fine pointers and motion on only */
+.frame-shot{transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .5s var(--ease-out);will-change:transform}
+.frame-shot::after{content:"";position:absolute;inset:14px;border-radius:22px;pointer-events:none;opacity:var(--lo,0);transition:opacity .4s;background:radial-gradient(60% 40% at var(--lx,50%) var(--ly,30%),rgb(255 255 255 / .16),transparent 70%)}
+.is-still .frame-shot{transform:none}
+/* motion switch in the footer */
+.motion-sw{display:inline-flex;align-items:center;gap:.6rem;min-height:44px;padding:0;border:0;background:none;color:var(--subtle);font:inherit;cursor:pointer}
+.motion-sw:hover{color:var(--foreground)}
+.motion-sw b{font:500 .7rem/1 var(--font-mono);letter-spacing:.12em;text-transform:uppercase;padding:.35rem .5rem;border-radius:.25rem;box-shadow:inset 0 0 0 1px var(--border-strong);color:var(--foreground)}
+.motion-sw[aria-pressed="true"] b{background:var(--foreground);color:var(--background)}
+
+/* ═════ 2027 pass d: a visible game, a loud band ═════ */
+.blk-games{padding-bottom:clamp(2.5rem,5vw,4rem)}
+.t01-top{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:clamp(2rem,5vw,4.5rem);align-items:end}
+.t01-top .spec{margin:0;max-width:none}
+@container (max-width:700px){.t01-top{grid-template-columns:1fr}}
+.frames{display:flex;justify-content:center;align-items:flex-start;gap:clamp(.8rem,1.8vw,1.6rem);margin-top:clamp(3rem,6vw,5rem);padding:0 clamp(1rem,4vw,2.5rem) 3rem}
+.frames .frame{width:clamp(150px,15.5vw,236px);flex:none;gap:.7rem}
+.frames .frame:nth-child(even){margin-top:3.2rem}
+.frames .frame:nth-child(3){margin-top:-1.2rem}
+.frames figcaption{display:block;font:500 .7rem/1 var(--font-mono);letter-spacing:.14em;color:var(--subtle)}
+@supports (animation-timeline:view()){.js:not(.is-still) .frames{animation:slide linear both;animation-timeline:view();animation-range:entry 0% exit 100%}@keyframes slide{from{translate:6vw 0}to{translate:-6vw 0}}}
+.frames-cap{grid-column:2;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin:0;padding-top:1rem;border-top:1px solid var(--hairline);font:500 .72rem/1.4 var(--font-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--subtle)}
+@media(max-width:900px){
+  .frames-cap{grid-column:1}
+  .frames{justify-content:flex-start;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-bottom:3.4rem}
+  .frames::-webkit-scrollbar{display:none}
+  .frames .frame{width:44vw;scroll-snap-align:center}
+  .js:not(.is-still) .frames{animation:none}
+}
+.band-red{background:oklch(.48 .19 27);border-top:0}
+.band-red,.band-red .muted,.band-red .blk-label,.band-red .blk-label b{color:#fff}
+.band-red .mail{color:#fff;text-decoration-color:rgb(255 255 255 / .55)}
+.band-red .mail:hover{text-decoration-color:#fff}
+.band-red .btn-primary{background:#fff;color:oklch(.25 .06 27)}
+.band-red .btn-primary:hover{background:oklch(.9 .03 27);color:oklch(.25 .06 27)}
+.band-red :focus-visible{outline-color:#fff}
+
+/* ═════ 2027 pass e: sourced numbers, a roadmap you can read at a glance ═════ */
+.stats{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:clamp(1.5rem,3vw,2.5rem) 0 0;border-top:1px solid var(--hairline)}
+.stats div{display:flex;flex-direction:column-reverse;justify-content:flex-end;gap:.7rem;padding:1.6rem 1.5rem 0 0}
+.stats div+div{padding-left:1.5rem;border-left:1px solid var(--hairline)}
+.stats dd{margin:0;white-space:nowrap;font:700 clamp(2.4rem,4.4vw,4.4rem)/.9 var(--font-display);letter-spacing:-.05em;font-variant-numeric:tabular-nums}
+.stats dt{font:500 .74rem/1.45 var(--font-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted-foreground);max-width:24ch}
+.stats .fn{font:500 .34em/1 var(--font-mono);vertical-align:super;margin-left:.2em;color:var(--subtle);text-decoration:none;letter-spacing:0}
+.stats .fn:hover{color:var(--foreground)}
+@media(max-width:700px){.stats{grid-template-columns:1fr}.stats div+div{padding-left:0;border-left:0;border-top:1px solid var(--hairline)}.stats div{padding:1.2rem 0}}
+/* roadmap: date · milestone · a 15-month track (Oct 2026 to Dec 2027) with today marked */
+.road{--today:8.3%}
+.road li{grid-template-columns:9rem minmax(0,18rem) minmax(0,1fr);align-items:center}
+.road .what{display:grid;gap:.25rem}
+.road .what>span{color:var(--muted-foreground);font-size:.93rem;line-height:1.45}
+.road .track{position:relative;align-self:stretch;min-height:2.6rem;background:
+  linear-gradient(90deg,transparent calc(var(--today) - 1px),var(--signal) calc(var(--today) - 1px),var(--signal) calc(var(--today) + 1px),transparent calc(var(--today) + 1px)),
+  repeating-linear-gradient(90deg,var(--hairline) 0 1px,transparent 1px 6.6667%)}
+.road .bar{position:absolute;top:50%;height:.7rem;translate:0 -50%;border-radius:2px;background:oklch(.42 .005 285)}
+.road .bar.live{background:linear-gradient(90deg,transparent,var(--signal) 70%)}
+.road .bar.pin{background:var(--foreground)}
+.road li.axis{padding:0 0 .6rem;border-bottom:1px solid var(--hairline)}
+.road li.axis .track{display:grid;grid-template-columns:repeat(15,1fr);min-height:0;background:none}
+.road li.axis i{position:relative;font:500 .7rem/1 var(--font-mono);font-style:normal;color:var(--subtle);text-align:center;padding-top:1.1rem}
+.road li.axis em{position:absolute;left:0;top:0;font-style:normal;color:var(--muted-foreground);letter-spacing:.08em}
+.road li.axis i.y{border-left:1px solid var(--border-strong)}
+.road>li:nth-child(2){border-top:0}
+@media(max-width:900px){.road li{grid-template-columns:8rem minmax(0,1fr)}.road .track,.road li.axis{display:none}}
+@media(max-width:760px){.road li{grid-template-columns:1fr}}
 </style>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[
+ {"@type":"WebSite","@id":"https://tagomind.com/gaming/#website","url":"https://tagomind.com/gaming/","name":"TagoMind Gaming","inLanguage":"en","publisher":{"@id":"https://tagomind.com/gaming/#studio"},"isPartOf":{"@type":"WebSite","url":"https://tagomind.com/","name":"TagoMind"}},
+ {"@type":"WebPage","@id":"https://tagomind.com/gaming/#page","url":"https://tagomind.com/gaming/","name":"TagoMind Gaming · New worlds to explore","description":"TagoMind Gaming is a small studio making mobile games worth exploring. Our first game is in closed testing for iPhone; the reveal comes in November 2026.","isPartOf":{"@id":"https://tagomind.com/gaming/#website"},"about":{"@id":"https://tagomind.com/gaming/#studio"},"primaryImageOfPage":"https://tagomind.com/gaming/assets/og-card.jpg","inLanguage":"en"},
+ {"@type":"Organization","@id":"https://tagomind.com/gaming/#studio","name":"TagoMind Gaming","url":"https://tagomind.com/gaming/","logo":"https://tagomind.com/gaming/assets/tagomind-gaming-logo-dark.svg","description":"A small studio making mobile games. It builds its own tools to cut what a game costs to make. Its first game is in closed testing for iPhone.","email":"kamil.tagowski@tagomind.com","founder":{"@id":"https://tagomind.com/#person"},"parentOrganization":{"@type":"Organization","name":"TagoMind","url":"https://tagomind.com/"}},
+ {"@type":"Person","@id":"https://tagomind.com/#person","name":"Kamil Tagowski","honorificSuffix":"PhD","jobTitle":"Founder & CEO, TagoMind Gaming","url":"https://tagomind.com/","affiliation":{"@type":"CollegeOrUniversity","name":"Wrocław University of Science and Technology"},"sameAs":["https://www.linkedin.com/in/ktagowski/","https://github.com/ktagowski"]},
+ {"@type":"ItemList","name":"TagoMind Gaming roadmap","itemListOrder":"https://schema.org/ItemListOrderAscending","itemListElement":[
+  {"@type":"ListItem","position":1,"name":"Title 01 in closed testing"},
+  {"@type":"ListItem","position":2,"name":"Reveal: name, trailer and public TestFlight, November 2026"},
+  {"@type":"ListItem","position":3,"name":"App Store release of Title 01 on iPhone, Q4 2026"},
+  {"@type":"ListItem","position":4,"name":"The next title, Q1 2027"},
+  {"@type":"ListItem","position":5,"name":"The platform: the tools opened up beyond our own games, 2027"}]}
+]}</script>
 </head>
 <body data-page="home">
 <main id="main">
 
 <!-- ═════ HERO ═════ -->
 <section class="hero" data-od-id="hero">
-  <div class="game-switch" role="group" aria-label="Choose a game"><span>Play</span><button type="button" data-game="ducks" aria-pressed="true">Ducks</button><button type="button" data-game="getaway" aria-pressed="false">Getaway</button><button type="button" data-game="lookout" aria-pressed="false">Lookout</button></div>
+  <div class="game-switch" role="group" aria-label="Choose a game"><span>Play</span><button type="button" data-game="ducks" aria-pressed="true">Ducks</button><button type="button" data-game="getaway" aria-pressed="false">Getaway</button><button type="button" data-game="lookout" aria-pressed="false">Lookout</button><button type="button" data-game="bimmer" aria-pressed="false">Bimmer</button><a class="gs-page" href="bimmer.html" data-od-id="bimmer-page-link" title="Bimmer Service: full page with how to play">Bimmer page ↗</a></div>
   <button class="game-exit" type="button" hidden>✕ Exit game <kbd>Esc</kbd></button>
   <div class="game-over" hidden role="dialog" aria-modal="false" aria-labelledby="go-t">
     <div class="go">
@@ -298,108 +417,156 @@
     </div>
   </div>
   <div class="wrap hero-copy">
-    <span class="announce"><span class="new">Soon</span><span>First game in closed testing</span></span>
+    <p class="h-status" data-od-id="hero-status"><i></i><span>Title 01</span><span>Closed testing</span><span>Reveal November 2026</span></p>
     <h1><span class="hw" style="--i:0">New worlds</span><br><span class="hw red" style="--i:1">worth</span> <span class="hw" style="--i:2">exploring</span></h1>
     <div class="hero-rest">
       <p class="lead">We make mobile games that are easy to pick up and hard to put down. Our first is in closed testing for iPhone, and we show it when it is ready.</p>
       <div class="cta">
-        <button class="btn btn-lg btn-primary" data-open>Get early access</button>
-        <a class="btn btn-lg" href="#studio">Meet the studio</a>
+        <button class="btn btn-lg btn-primary" data-open data-od-id="hero-cta">Get early access</button>
+        <a class="btn btn-lg" href="#studio">Meet the studio <span class="ar" aria-hidden="true">↓</span></a>
       </div>
-      <p class="who"><img src="assets/kamil-tagowski-96.webp" alt="" width="96" height="96"><span><b>TagoMind Gaming</b> · by Kamil Tagowski, PhD</span></p>
     </div>
   </div>
 </section>
 
-<!-- ═════ GAMES ═════ -->
-<section class="sec" id="games" data-od-id="games" style="padding-top:1rem">
-  <div class="wrap">
-    <div class="sec-head"><div class="eyebrow">Games</div><h2>Now in <span class="red">development.</span></h2></div>
-    <div class="games">
-      <article class="game2 t01 rv" data-rv>
-        <div class="g2-txt">
-          <div class="eyebrow">Title 01 · iPhone</div>
-          <h2>Under wraps. <span class="red">Not for long.</span></h2>
-          <p>Our first game is in closed testing with a small group of players. The name, the trailer and the first look all land on reveal day.</p>
-          <div class="pills"><span class="pill live">Closed testing</span><span class="pill">Reveal · November 2026</span></div>
-          <div class="cta" style="margin-top:.4rem"><button class="btn btn-primary" data-open>Get early access</button></div>
-        </div>
-        <div class="g2-art" aria-hidden="true"><span class="g2-n">01</span><span class="g2-stamp">Classified</span><span class="g2-bars"><i></i><i></i><i></i></span></div>
-      </article>
-    </div>
+<!-- ═════ 01 · GAMES ═════ -->
+<section class="blk blk-games" id="games" data-od-id="games">
+  <div class="wrap blk-grid">
+    <p class="blk-label"><b>01</b>Games</p>
+    <article class="t01 rv" data-rv data-od-id="title-01"><div class="t01-top">
+      <div class="t01-copy">
+        <h2>Under wraps.<br><span class="red">Not for long.</span></h2>
+        <p class="muted">Our first game is in closed testing with a small group of players. The name, the trailer and the first look all land on reveal day.</p>
+        <div class="cta"><button class="btn" type="button" data-open data-od-id="title-01-cta">Get early access <span class="ar" aria-hidden="true">→</span></button></div>
+      </div>
+      <dl class="spec" data-od-id="title-01-spec">
+          <div><dt>Title</dt><dd><span class="redact" role="img" aria-label="Not announced yet"></span></dd></div>
+          <div><dt>Platform</dt><dd>iPhone</dd></div>
+          <div><dt>Status</dt><dd><span class="live">Closed testing</span></dd></div>
+          <div><dt>Reveal</dt><dd><time datetime="2026-11">November 2026</time></dd></div>
+        </dl>
+    </div></article>
   </div>
+  <div class="frames" data-od-id="title-01-frames" role="group" aria-label="Five frames from Title 01, pixelated until the reveal">
+    <figure class="frame"><div class="frame-shot"><img class="coarse" src="assets/teaser-01-coarse.png" width="9" height="20" alt=""><img src="assets/teaser-01.png" width="18" height="39" alt="Frame 1 of 5 from Title 01, pixelated until the reveal"></div><figcaption>001</figcaption></figure>
+    <figure class="frame"><div class="frame-shot"><img class="coarse" src="assets/teaser-02-coarse.png" width="9" height="20" alt=""><img src="assets/teaser-02.png" width="18" height="39" alt="Frame 2 of 5 from Title 01, pixelated until the reveal"></div><figcaption>002</figcaption></figure>
+    <figure class="frame"><div class="frame-shot"><img class="coarse" src="assets/teaser-03-coarse.png" width="9" height="20" alt=""><img src="assets/teaser-03.png" width="18" height="39" alt="Frame 3 of 5 from Title 01, pixelated until the reveal"></div><figcaption>003</figcaption></figure>
+    <figure class="frame"><div class="frame-shot"><img class="coarse" src="assets/teaser-04-coarse.png" width="9" height="20" alt=""><img src="assets/teaser-04.png" width="18" height="39" alt="Frame 4 of 5 from Title 01, pixelated until the reveal"></div><figcaption>004</figcaption></figure>
+    <figure class="frame"><div class="frame-shot"><img class="coarse" src="assets/teaser-05-coarse.png" width="9" height="20" alt=""><img src="assets/teaser-05.png" width="18" height="39" alt="Frame 5 of 5 from Title 01, pixelated until the reveal"></div><figcaption>005</figcaption></figure>
+  </div>
+  <div class="wrap blk-grid"><p class="frames-cap"><span>Five frames from Title 01</span><span>Pixelated until reveal day</span></p></div>
 </section>
 
-<!-- ═════ STUDIO · IN DEVELOPMENT ═════ -->
-<section class="sec" id="studio" data-od-id="studio">
-  <div class="wrap">
-    <div class="studio">
-      <!-- the studio: an editorial statement, no box ─ type on the page -->
-      <article class="manifesto rv" data-rv>
-        <span class="status">The studio</span>
-        <p class="big">Most new worlds never get <em>built</em>.</p>
-        <p class="lead">Even a mobile game costs <mark>thousands of dollars</mark><a class="fn" href="#src-1" id="ref-1" aria-label="Source 1">1</a> before anyone plays it, and what it earns back <mark>often doesn&rsquo;t cover that</mark><a class="fn" href="#src-2" id="ref-2" aria-label="Source 2">2</a>. So the odd, small worlds stay on paper. We want to close that gap: <mark>build our own tools</mark>, cut what a game costs to make, and spend the difference on <mark>worlds players want to explore</mark>. Our first one is nearly ready. Made by people who play, for everyone who does: the hobbyist, the marketing CEO, the lady behind the counter.</p>
-        <ol class="sources" aria-label="Sources">
+<!-- ═════ 02 · STUDIO ═════ -->
+<section class="blk" id="studio" data-od-id="studio">
+  <div class="wrap blk-grid">
+    <p class="blk-label"><b>02</b>Studio</p>
+    <article class="manifesto rv" data-rv>
+      <h2 class="big">Most new worlds never get <em>built</em>.</h2>
+      <p class="lead">Even a mobile game costs <mark>thousands of dollars</mark><a class="fn" href="#src-1" id="ref-1" aria-label="Source 1">1</a> before anyone plays it, and what it earns back <mark>often doesn&rsquo;t cover that</mark><a class="fn" href="#src-2" id="ref-2" aria-label="Source 2">2</a>. So the odd, small worlds stay on paper. We want to close that gap: <mark>build our own tools</mark>, cut what a game costs to make, and spend the difference on <mark>worlds players want to explore</mark>. Our first one is nearly ready. Made by people who play, for everyone who does: the hobbyist, the marketing CEO, the lady behind the counter.</p>
+      <ol class="sources" aria-label="Sources">
           <li id="src-1"><a href="https://kevurugames.com/blog/mobile-game-development-cost-factors-influencing-cost-and-clear-estimates/" target="_blank" rel="noopener">Kevuru Games, Mobile Game Development Cost, 2026</a>: a simple 2D game from $10,000 to $20,000, a casual game from $30,000.</li>
           <li id="src-2"><a href="https://www.gamedeveloper.com/press-release/mobile-game-development-s-high-mortality-rate-revealed-" target="_blank" rel="noopener">SuperScale, Good Games Don&rsquo;t Die, 2023</a>: of 504 UK and US developers surveyed, 43% of games were cancelled before launch and 83% of launched games failed within three years.</li>
         </ol>
-      </article>
-      <!-- the platform: a squared workbench panel on a blueprint grid ─ a tool, not a poster -->
-      <article class="platform rv" data-rv>
-        <header class="pbar"><span class="status live">The platform · in development</span><span class="pfile">tagomind-gaming / platform</span></header>
-        <div class="pbody">
-          <div class="txt">
-            <h3>Built for one game.<br>Kept for the next.</h3>
-            <p class="sm">Our first game started as a side project. The pipeline we built to ship it is becoming the TagoMind Gaming platform: AI writes the code, runs the builds and tests, and checks the balance maths, so the next game costs less than the last. The art, the story and every call stay with people.</p>
-          </div>
-          <ol class="pstack" aria-label="Platform layers">
-            <li><i>01</i>Title 01 <small>Closed testing</small></li>
-            <li><i>02</i>Next games <small>In the works</small></li>
-            <li><i>03</i>Our own tools <small>Growing</small></li>
-            <li class="top"><i>04</i>TagoMind Gaming platform <small>In development</small></li>
-          </ol>
-        </div>
-      </article>
-    </div>
-
-    <ol class="rail" aria-label="Roadmap">
-      <li class="now"><span class="dot"></span><span class="t">Now</span><b>Title 01</b><span>Closed testing with a small group of players.</span></li>
-      <li><span class="dot"></span><span class="t">November 2026</span><b>The reveal</b><span>Name, trailer and a public TestFlight for everyone on the list.</span></li>
-      <li><span class="dot"></span><span class="t">Q4 2026</span><b>App Store release</b><span>Title 01 on iPhone.</span></li>
-      <li><span class="dot"></span><span class="t">Q1 2027</span><b>More games</b><span>The next title.</span></li>
-      <li><span class="dot"></span><span class="t">2027</span><b>The platform</b><span>The tools, opened up beyond our own games.</span></li>
-    </ol>
-    <p class="rail-note">Dates are expected and may move.</p>
+      <dl class="stats" data-od-id="studio-stats" aria-label="What a mobile game costs, and how often it fails">
+        <div><dt>A simple 2D mobile game costs</dt><dd>$10–20k<a class="fn" href="#src-1" aria-label="Source 1">1</a></dd></div>
+        <div><dt>of games are cancelled before launch</dt><dd>43%<a class="fn" href="#src-2" aria-label="Source 2">2</a></dd></div>
+        <div><dt>of launched games fail within three years</dt><dd><span class="red">83%</span><a class="fn" href="#src-2" aria-label="Source 2">2</a></dd></div>
+      </dl>
+    </article>
   </div>
 </section>
 
+<!-- ═════ 03 · PLATFORM ═════ -->
+<section class="blk" id="platform" data-od-id="platform">
+  <div class="wrap blk-grid">
+    <p class="blk-label"><b>03</b>Platform</p>
+    <div class="plat rv" data-rv>
+      <div>
+        <h2>Built for one game. Kept for the next.</h2>
+        <p class="muted">Our first game started as a side project. The pipeline we built to ship it is becoming the TagoMind Gaming platform: AI writes the code, runs the builds and tests, and checks the balance maths, so the next game costs less than the last. The art, the story and every call stay with people.</p>
+      </div>
+      <ol class="index" aria-label="Platform layers" data-od-id="platform-layers">
+        <li class="live"><i>01</i><b>Title 01</b><small>Closed testing</small></li>
+        <li><i>02</i><b>Next games</b><small>In the works</small></li>
+        <li><i>03</i><b>Our own tools</b><small>Growing</small></li>
+        <li><i>04</i><b>TagoMind Gaming platform</b><small>In development</small></li>
+      </ol>
+    </div>
+  </div>
+</section>
 
-<!-- ═════ PEOPLE ═════ -->
-<section class="sec" id="people" data-od-id="people" style="padding-top:0">
-  <div class="wrap">
-    <div class="sec-head"><div class="eyebrow">People</div><h2>About <span class="red">us.</span></h2></div>
-    <div class="person rv" data-rv>
+<!-- ═════ 04 · ROADMAP ═════ -->
+<section class="blk" id="roadmap" data-od-id="roadmap">
+  <div class="wrap blk-grid">
+    <p class="blk-label"><b>04</b>Roadmap</p>
+    <div class="rv" data-rv>
+      <ol class="road" aria-label="Roadmap">
+        <li class="axis" aria-hidden="true"><span></span><span></span><span class="track"><i class=y>O<em>2026</em></i><i>N</i><i>D</i><i class=y>J<em>2027</em></i><i>F</i><i>M</i><i>A</i><i>M</i><i>J</i><i>J</i><i>A</i><i>S</i><i>O</i><i>N</i><i>D</i></span></li>
+        <li class="now"><span class="t">Now</span><span class="what"><b>Title 01</b><span>Closed testing with a small group of players.</span></span><span class="track" aria-hidden="true"><s class="bar live" style="left:0;width:var(--today)"></s></span></li>
+        <li><span class="t"><time datetime="2026-11">November 2026</time></span><span class="what"><b>The reveal</b><span>Name, trailer and a public TestFlight for everyone on the list.</span></span><span class="track" aria-hidden="true"><s class="bar pin" style="left:6.667%;width:6.667%"></s></span></li>
+        <li><span class="t"><time datetime="2026-10/2026-12">Q4 2026</time></span><span class="what"><b>App Store release</b><span>Title 01 on iPhone.</span></span><span class="track" aria-hidden="true"><s class="bar" style="left:0;width:20%"></s></span></li>
+        <li><span class="t"><time datetime="2027-01/2027-03">Q1 2027</time></span><span class="what"><b>More games</b><span>The next title.</span></span><span class="track" aria-hidden="true"><s class="bar" style="left:20%;width:20%"></s></span></li>
+        <li><span class="t"><time datetime="2027">2027</time></span><span class="what"><b>The platform</b><span>The tools, opened up beyond our own games.</span></span><span class="track" aria-hidden="true"><s class="bar" style="left:20%;width:80%"></s></span></li>
+      </ol>
+      <p class="road-note">Dates are expected and may move. The green line is today.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═════ 05 · PEOPLE ═════ -->
+<section class="blk" id="people" data-od-id="people">
+  <div class="wrap blk-grid">
+    <p class="blk-label"><b>05</b>People</p>
+    <h2 class="sr-only">People</h2>
+    <div class="person rv" data-rv data-od-id="person-kamil">
       <img src="assets/kamil-tagowski-96.webp" alt="Kamil Tagowski" width="150" height="150">
       <div>
         <h3>Kamil Tagowski, PhD</h3>
         <div class="role">Founder &amp; CEO · TagoMind Gaming</div>
         <p>Gamer first, researcher second, or the other way round depending on the day. Raised on RPGs, shooters and the kind of mobile sim you check between meetings. Postdoctoral researcher at the Department of Artificial Intelligence, Wrocław University of Science and Technology, where the same curiosity goes into AI. Builds TagoMind&rsquo;s games and the tools behind them.</p>
-        <div class="cta"><a class="btn btn-sm" href="https://tagomind.com" rel="noopener">tagomind.com</a><a class="btn btn-sm" href="https://www.linkedin.com/in/ktagowski/" rel="noopener">LinkedIn</a><a class="btn btn-sm" href="https://github.com/ktagowski" rel="noopener">GitHub</a></div>
+        <div class="links"><a href="https://tagomind.com" rel="noopener">tagomind.com <span aria-hidden="true">↗</span></a><a href="https://www.linkedin.com/in/ktagowski/" rel="noopener">LinkedIn <span aria-hidden="true">↗</span></a><a href="https://github.com/ktagowski" rel="noopener">GitHub <span aria-hidden="true">↗</span></a></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═════ CONTACT ═════ -->
-<section id="contact" data-od-id="contact">
-  <div class="wrap">
-    <div class="contact">
-      <div><h2>Press, partners, testers</h2><p>Writing about the studio, want to work with us, or want a build before the reveal? Write to us, or join the early access list.</p></div>
-      <div class="cta"><a class="btn btn-primary" href="mailto:kamil.tagowski@tagomind.com">kamil.tagowski@tagomind.com</a><button class="btn" data-open>Early access list</button></div>
+<!-- ═════ 06 · CONTACT ═════ -->
+<section class="blk band-red" id="contact" data-od-id="contact">
+  <div class="wrap blk-grid">
+    <p class="blk-label"><b>06</b>Contact</p>
+    <div class="reach rv" data-rv>
+      <h2>Press, partners, testers.</h2>
+      <p class="muted">Writing about the studio, want to work with us, or want a build before the reveal? Write to us, or join the early access list.</p>
+      <a class="mail" href="mailto:kamil.tagowski@tagomind.com" data-od-id="contact-email">kamil.tagowski@tagomind.com</a>
+      <div class="cta"><button class="btn btn-primary" type="button" data-open data-od-id="contact-cta">Join the early access list</button></div>
     </div>
   </div>
 </section>
 </main>
 <script src="js/site.js"></script>
+<script>/* page-only: footer wordmark + scroll-aware nav */
+(function(){const f=document.querySelector('footer.site-foot');if(f)f.insertAdjacentHTML('beforeend','<div class="colophon" aria-hidden="true">tagomind<b>/</b>gaming</div>');
+  const map={games:'games',studio:'studio',platform:'studio',roadmap:'studio',people:'people',contact:'contact'};
+  const links=[...document.querySelectorAll('.nav-row a')];
+  const mark=k=>links.forEach(a=>{if(k&&a.hash==='#'+k)a.setAttribute('aria-current','true');else a.removeAttribute('aria-current')});
+  /* motion switch: remembered on this device, applied on load before the games start */
+  const sub=document.querySelector('footer .sub');if(sub){const off=localStorage.getItem('tg-motion')==='off';
+    sub.insertAdjacentHTML('beforeend','<button type="button" class="motion-sw" aria-pressed="'+off+'">Reduce motion <b>'+(off?'On':'Off')+'</b></button>');
+    sub.querySelector('.motion-sw').addEventListener('click',()=>{localStorage.setItem('tg-motion',off?'on':'off');location.reload()})}
+  /* spatial frame */
+  document.querySelectorAll('.frame-shot').forEach(fr=>{
+  if(!document.documentElement.classList.contains('is-still')&&matchMedia('(pointer:fine)').matches){
+    fr.addEventListener('pointermove',e=>{const r=fr.getBoundingClientRect(),x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;
+      fr.style.setProperty('--ry',((x-.5)*14).toFixed(2)+'deg');fr.style.setProperty('--rx',((.5-y)*10).toFixed(2)+'deg');
+      fr.style.setProperty('--lx',(x*100).toFixed(1)+'%');fr.style.setProperty('--ly',(y*100).toFixed(1)+'%');fr.style.setProperty('--lo',1)});
+    fr.addEventListener('pointerleave',()=>{['--rx','--ry'].forEach(k=>fr.style.setProperty(k,'0deg'));fr.style.setProperty('--lo',0)})}});
+  /* roadmap: the green line sits at today's date on the Oct 2026 to Dec 2027 track */
+  const rd=document.querySelector('.road');if(rd){const a=Date.UTC(2026,9,1),b=Date.UTC(2028,0,1),t=Math.min(Math.max((Date.now()-a)/(b-a),0),1);rd.style.setProperty('--today',(t*100).toFixed(2)+'%')}
+  mark(null);if(!('IntersectionObserver' in window))return;
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)mark(map[e.target.id])}),{rootMargin:'-45% 0px -50% 0px'});
+  document.querySelectorAll('main section[id]').forEach(s=>io.observe(s));
+  new IntersectionObserver(es=>{if(es[0].isIntersecting)mark(null)},{rootMargin:'-45% 0px -50% 0px'}).observe(document.querySelector('.hero'));
+})();</script>
 </body>
 </html>

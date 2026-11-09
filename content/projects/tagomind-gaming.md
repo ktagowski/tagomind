@@ -1,7 +1,7 @@
 ---
 title: "TagoMind Gaming"
-description: "TagoMind Gaming: a small mobile-game studio with its own AI-assisted toolkit, cutting what a game costs to make. The first title is in closed testing for iPhone."
-seoTitle: "TagoMind Gaming · mobile games built with an AI-assisted pipeline"
+description: "TagoMind Gaming: a small studio making mobile games worth exploring, with its own tools to cut what a game costs to make. The first title is in closed testing for iPhone."
+seoTitle: "TagoMind Gaming · mobile games worth exploring"
 date: 2026-11-06
 year: 2026
 fields: ["Agentic AI", "Applications"]

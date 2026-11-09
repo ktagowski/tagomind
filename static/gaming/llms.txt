@@ -1,0 +1,25 @@
+# TagoMind Gaming
+
+> TagoMind Gaming is a small studio making mobile games worth exploring. Its first game, Title 01, is in closed testing for iPhone. The name, trailer and a public TestFlight come at the reveal in November 2026.
+
+Studio page: https://tagomind.com/gaming/
+Founder: Kamil Tagowski, PhD (https://tagomind.com/)
+Contact (press, partners, testers): kamil.tagowski@tagomind.com
+Part of: TagoMind (https://tagomind.com/)
+
+## Status
+- Title 01: iPhone, closed testing with a small group of players. Not yet announced; the name is withheld until the reveal.
+- Reveal: November 2026. Name, trailer and a public TestFlight for everyone on the early access list.
+- App Store release: Q4 2026 (expected).
+- Next title: Q1 2027 (expected).
+- The platform: 2027 (expected). The tools behind the games, opened up beyond the studio's own titles.
+Dates are expected and may move.
+
+## The studio
+Even a simple 2D mobile game costs $10,000 to $20,000 to make (Kevuru Games, 2026). Of 504 UK and US developers surveyed, 43% of games were cancelled before launch and 83% of launched games failed within three years (SuperScale, 2023). TagoMind Gaming builds its own tools to cut what a game costs to make, and spends the difference on worlds players want to explore.
+
+## The platform
+The pipeline built to ship the first game is becoming the TagoMind Gaming platform: AI writes the code, runs the builds and tests, and checks the balance maths, so the next game costs less than the last. The art, the story and every call stay with people.
+
+## People
+- Kamil Tagowski, PhD: Founder & CEO. Postdoctoral researcher at the Department of Artificial Intelligence, Wrocław University of Science and Technology. LinkedIn: https://www.linkedin.com/in/ktagowski/ · GitHub: https://github.com/ktagowski

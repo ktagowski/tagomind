@@ -1,0 +1,642 @@
+<!doctype html>
+<html lang="en" class="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bimmer Service · ★ tyres only · TagoMind Gaming</title>
+<meta name="description" content="Bimmer Service, a small browser game from TagoMind Gaming: only ★-marked tyres go on the M340i. Spot the cheap ones and take them down."><meta name="robots" content="noindex">
+<meta name="author" content="Kamil Tagowski">
+<link rel="alternate" type="text/plain" title="LLM summary" href="llms.txt">
+<meta name="theme-color" content="#26262A">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add('js');if(/[?&]still=1/.test(location.search)||localStorage.getItem('tg-motion')==='off'||matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('is-still');</script>
+<link rel="stylesheet" href="css/site.css">
+<script>/* hero = exactly one screen tall. In a normal tab that is the window; inside an auto-height preview frame
+   the frame can be thousands of px tall, so use the outer window (or the device screen) instead. */
+(function(){const d=document.documentElement;function fit(){let h=innerHeight;
+  if(self!==top){try{h=Math.min(h,top.innerHeight)}catch(_){h=Math.min(h,(screen.availHeight||h)-110)}}
+  if(h>0&&h<innerHeight-2||self!==top)d.style.setProperty('--hero-h',Math.max(420,h-68)+'px');else d.style.removeProperty('--hero-h')}
+  fit();addEventListener('resize',fit)})();</script>
+<style>
+/* index only */
+.hero{position:relative;overflow:clip;height:var(--hero-h,calc(100svh - 68px));display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:1fr;align-items:center;padding-block:clamp(1rem,3.5vh,3rem) clamp(.6rem,2vh,1.6rem)}
+.hero::before{content:"";position:absolute;inset:0 -10% auto;height:100%;pointer-events:none;z-index:-1;background:radial-gradient(38% 42% at 50% 34%,rgb(255 255 255 / .06),transparent 70%),radial-gradient(28% 30% at 50% 36%,color-mix(in oklch,var(--red) 18%,transparent),transparent 72%);animation:halo-in 1.6s ease-out both,halo-drift 16s ease-in-out 1.6s infinite alternate}
+@keyframes halo-in{from{opacity:0;transform:scale(.9)}}
+@keyframes halo-drift{to{transform:translate3d(2%,1.5%,0) scale(1.04)}}
+.hero{cursor:crosshair;-webkit-user-select:none;user-select:none}.hero a,.hero button{cursor:pointer}.is-still .hero{cursor:auto}
+.hero-copy,.hero-rail{transition:opacity .6s var(--ease-out),filter .6s var(--ease-out)}
+.hero.playing{cursor:none}
+.hero.playing .hero-copy,.hero.playing .hero-rail{opacity:0;filter:blur(6px);pointer-events:none}
+.hero::before{transition:opacity .6s var(--ease-out)}.hero.playing::before{opacity:0}
+.game-exit{position:absolute;z-index:5;top:1.2rem;right:clamp(1rem,4vw,2.5rem);display:inline-flex;align-items:center;gap:.6rem;height:2.5rem;padding-inline:1rem;border:0;border-radius:99px;cursor:pointer;font:500 .85rem var(--font-sans);color:var(--foreground);background:rgb(255 255 255 / .08);box-shadow:inset 0 0 0 1px var(--border-strong);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.game-exit[hidden]{display:none}
+.hero.over{cursor:auto}
+.game-over{position:absolute;inset:0;z-index:4;display:grid;place-items:start center;padding:clamp(5.5rem,13vh,8rem) 1rem 2rem;background:radial-gradient(70% 70% at 50% 45%,rgb(12 8 24 / .62),rgb(12 8 24 / .9));animation:go-fade .45s var(--ease-out) both}
+.game-over[hidden]{display:none}
+@keyframes go-fade{from{opacity:0}}
+.go{width:min(880px,100%);display:grid;justify-items:center;text-align:center}
+.go-reason{display:inline-flex;align-items:center;gap:.6rem;font:500 .8rem/1 var(--font-mono);letter-spacing:.22em;text-transform:uppercase;color:var(--red-text);padding:.55rem .95rem;border-radius:99px;box-shadow:inset 0 0 0 1px color-mix(in oklch,var(--red) 45%,transparent);background:color-mix(in oklch,var(--red) 12%,transparent)}
+.go-reason i{width:.5rem;height:.5rem;border-radius:99px;background:currentColor;animation:pulse 1.4s ease-out infinite;box-shadow:0 0 0 0 currentColor}
+.go-title{margin:1rem 0 .2rem;font:800 clamp(3.4rem,9.6vw,9rem)/.82 var(--font-display);white-space:nowrap;letter-spacing:-.055em;text-transform:uppercase;display:flex;gap:.18em;flex-wrap:wrap;justify-content:center}
+.go-title span{display:inline-block;text-shadow:0 .055em 0 color-mix(in oklch,var(--red-btn) 80%,black),0 .12em .3em rgb(0 0 0 / .6);animation:go-drop .7s cubic-bezier(.2,1.4,.4,1) both}
+.go-title .g2{color:var(--red-text);text-shadow:0 .055em 0 color-mix(in oklch,var(--red-btn) 55%,black),0 .12em .3em rgb(0 0 0 / .6);animation-delay:.12s}
+@keyframes go-drop{from{opacity:0;transform:translateY(-.35em) scale(1.25);filter:blur(10px)}}
+.go-score{display:grid;justify-items:center;gap:.15rem;margin-top:1rem;animation:hero-enter .6s var(--ease-out) .3s both}
+.go-l{font:500 .74rem var(--font-mono);letter-spacing:.2em;text-transform:uppercase;color:var(--subtle)}
+.go-s{font:800 clamp(3rem,6.4vw,5.4rem)/1 var(--font-display);letter-spacing:-.04em;color:var(--amber);font-variant-numeric:tabular-nums;text-shadow:0 0 40px color-mix(in oklch,var(--amber) 35%,transparent)}
+.go-b{font:500 .78rem var(--font-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--subtle);padding:.35rem .7rem;border-radius:99px}
+.go-b.nb{color:#06140c;background:var(--signal);font-weight:600}
+.go-stats{width:100%;margin:1.5rem 0 0;display:grid;grid-template-columns:repeat(4,1fr);border-radius:1.25rem;overflow:hidden;box-shadow:inset 0 0 0 1px var(--hairline);background:rgb(255 255 255 / .03);animation:hero-enter .6s var(--ease-out) .42s both}
+.go-stats div{padding:1.1rem .8rem;display:grid;gap:.35rem;box-shadow:inset 1px 0 0 var(--hairline)}
+.go-stats div:first-child{box-shadow:none}
+.go-stats dt{font:500 .68rem var(--font-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--subtle)}
+.go-stats dd{margin:0;font:800 clamp(1.5rem,2.6vw,2rem)/1 var(--font-display);letter-spacing:-.03em}
+.go-stats dd[data-st="rank"]{color:var(--red-text)}
+.go-cta{display:flex;gap:.75rem;flex-wrap:wrap;justify-content:center;margin-top:1.8rem;animation:hero-enter .6s var(--ease-out) .52s both}
+.go-cta kbd{font:500 .66rem var(--font-mono);padding:.15rem .35rem;border-radius:.3rem;box-shadow:inset 0 0 0 1px rgb(255 255 255 / .3);opacity:.75}
+.go-plug{margin-top:1.4rem;font-size:.92rem;color:var(--muted-foreground);animation:hero-enter .6s var(--ease-out) .6s both}
+.go-plug a{color:var(--foreground)}
+.go-plug button{border:0;background:none;padding:0;font:inherit;color:var(--amber);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+@media(max-width:640px){.go-title{white-space:normal;flex-direction:column;gap:0;font-size:clamp(3.2rem,17vw,4.6rem)}.game-over{padding-top:4.5rem}.go-stats{grid-template-columns:1fr 1fr}.go-stats div{padding:.8rem .6rem}.go-stats div:nth-child(3){box-shadow:inset 0 1px 0 var(--hairline)}.go-stats div:nth-child(4){box-shadow:inset 1px 0 0 var(--hairline),inset 0 1px 0 var(--hairline)}.go-cta .btn{width:100%}}.game-exit:hover{background:rgb(255 255 255 / .14)}
+.game-exit kbd{font:500 .66rem var(--font-mono);padding:.15rem .35rem;border-radius:.3rem;box-shadow:inset 0 0 0 1px var(--border-strong);color:var(--muted-foreground)}
+.hero-copy{display:flex;flex-direction:column;align-items:center;text-align:center}
+.hero h1{font-size:clamp(2.4rem,min(11.6vw,17vh),11.5rem);line-height:.92;margin:clamp(1rem,3.4vh,2.2rem) 0}
+.hero .lead{margin-inline:auto;max-width:46rem;font-size:clamp(1rem,min(1.9vw,2.9vh),1.6rem);line-height:1.45}
+.hero .cta .btn-lg{height:clamp(2.75rem,6.4vh,3.6rem);padding-inline:clamp(1.2rem,2.4vw,2rem);font-size:clamp(.95rem,min(1.3vw,2vh),1.15rem)}
+.hero .announce{font-size:clamp(.85rem,min(1.2vw,1.9vh),1.05rem)}
+.hero .cta{justify-content:center;margin-top:clamp(1.2rem,4vh,2.8rem)}
+.announce{display:inline-flex;align-items:center;gap:.7rem;padding:.35rem .9rem .35rem .35rem;border-radius:99px;text-decoration:none;font-size:.9rem;color:var(--foreground);background:rgb(255 255 255 / .05);box-shadow:inset 0 0 0 1px var(--border-strong);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);transition:background .2s,box-shadow .2s;animation:hero-enter .8s var(--ease-out) both}
+.announce:hover{background:rgb(255 255 255 / .09);box-shadow:inset 0 0 0 1px color-mix(in oklch,var(--red) 55%,transparent)}
+.announce .new{font:500 .7rem/1 var(--font-mono);letter-spacing:.12em;text-transform:uppercase;padding:.4rem .6rem;border-radius:99px;background:var(--red-btn);color:#fff}
+.announce svg{width:.95rem;height:.95rem;color:var(--muted-foreground);transition:transform .25s var(--ease-out)}.announce:hover svg{transform:translateX(3px)}
+.who{display:inline-flex;align-items:center;gap:.7rem;margin-top:clamp(.8rem,2.4vh,1.8rem);font-size:.9rem;color:var(--muted-foreground)}
+.who img{width:2.4rem;height:2.4rem;border-radius:99px;object-fit:cover;box-shadow:0 0 0 1px var(--border-strong)}
+
+@media(max-height:760px),(max-width:640px){.hero .who,.rail-cap{display:none}}
+@media(max-width:640px){.hero .lead{font-size:1rem;line-height:1.5}.hero .cta{gap:.5rem}.hero .cta .btn-lg{height:2.75rem}.announce{margin-bottom:.2rem}.shot{width:clamp(64px,22vw,12vh)}.shot:nth-child(even){transform:translateY(.8rem)}}
+@media(max-height:640px){.hero .btn-lg{height:2.5rem;font-size:.9rem}.announce{font-size:.8rem}.hero .cta{margin-top:.8rem}}
+@media(max-height:520px),(max-width:640px) and (max-height:620px){.hero .marquee,.hero .lead{display:none}.hero{grid-template-rows:1fr}}
+.hero-copy,.hero-rail{min-width:0;max-width:100%}
+.game-switch{position:absolute;z-index:5;top:1.35rem;right:clamp(1rem,4vw,2.5rem);display:flex;align-items:baseline;gap:.15rem;font:500 .7rem/1 var(--font-mono);letter-spacing:.14em;text-transform:uppercase;transition:opacity .4s}
+.game-switch span{color:var(--subtle);padding-right:.7rem}
+.game-switch span::after{content:"▸";margin-left:.5rem;color:var(--red)}
+.game-switch button{border:0;cursor:pointer;height:2rem;padding:0 .55rem;font:inherit;letter-spacing:inherit;text-transform:inherit;color:var(--muted-foreground);background:none;border-bottom:2px solid transparent;transition:color .2s,border-color .2s}
+.game-switch button:hover{color:var(--foreground)}
+.game-switch .gs-page{display:inline-flex;align-items:center;height:2rem;margin-left:.6rem;padding:0 .6rem;color:var(--subtle);text-decoration:none;border-left:1px solid var(--hairline);transition:color .2s}
+.game-switch .gs-page:hover{color:var(--foreground)}
+.game-switch .gs-page:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+.game-switch button[aria-pressed="true"]{color:rgb(255 236 214);border-bottom-color:var(--red)}
+.hero.playing .game-switch{opacity:0;pointer-events:none}
+.hero.playing{touch-action:none}
+@media(max-width:640px){.game-switch{top:auto;bottom:.9rem;right:50%;transform:translateX(50%)}.game-switch span{display:none}}
+.is-still .game-switch{display:none}
+
+/* game-over: one screen per game */
+/* Ducks — 8-bit arcade cabinet: pixel frame, scanlines, mono type */
+.hero[data-game="ducks"] .go{position:relative;padding:1.8rem 2.2rem 1.6rem;border:4px solid rgb(255 236 214);background:rgb(24 10 10 / .9);box-shadow:0 0 0 4px rgb(24 10 10),0 0 0 8px rgb(255 236 214 / .3),0 30px 80px -20px #000}
+.hero[data-game="ducks"] .go::after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgb(0 0 0 / .28) 0 2px,transparent 2px 4px)}
+.hero[data-game="ducks"] .go-reason{border-radius:0;color:rgb(255 214 130);background:none;box-shadow:inset 0 0 0 2px rgb(255 214 130 / .8)}
+.hero[data-game="ducks"] .go-title{font:500 clamp(3rem,8vw,7rem)/.9 var(--font-mono);letter-spacing:.02em}
+.hero[data-game="ducks"] .go-title span{text-shadow:.06em .06em 0 rgb(96 38 30);color:rgb(255 236 214)}
+.hero[data-game="ducks"] .go-title .g2{color:rgb(255 214 130);text-shadow:.06em .06em 0 rgb(96 38 30)}
+.hero[data-game="ducks"] .go-s{font-family:var(--font-mono);font-weight:500;color:rgb(255 210 120)}
+.hero[data-game="ducks"] .go-stats{border-radius:0;box-shadow:inset 0 0 0 2px rgb(255 236 214 / .5)}
+.hero[data-game="ducks"] .go-stats dd{font-family:var(--font-mono);font-weight:500}
+.hero[data-game="ducks"] .go-stats dd[data-st="rank"]{color:rgb(255 214 130)}
+.hero[data-game="ducks"] .go-cta .btn{border-radius:0}
+/* Getaway — police lineup: flashing light bar, mugshot height lines, slanted BUSTED */
+.hero[data-game="getaway"] .go{position:relative;overflow:hidden;padding:2.4rem 2.2rem 1.6rem;border-radius:1.4rem;background:linear-gradient(rgb(10 12 24 / .9),rgb(10 12 24 / .9)),repeating-linear-gradient(180deg,transparent 0 35px,rgb(255 255 255 / .09) 35px 36px);box-shadow:inset 0 0 0 1px rgb(255 255 255 / .12),0 30px 80px -20px #000;animation:go-siren 1s steps(1) infinite}
+.hero[data-game="getaway"] .go::before{content:"";position:absolute;left:0;right:0;top:0;height:8px;background:linear-gradient(90deg,rgb(238 84 72) 0 50%,rgb(84 140 255) 50%);background-size:200% 100%;animation:go-bar .5s steps(2) infinite}
+@keyframes go-bar{to{background-position:-200% 0}}
+@keyframes go-siren{0%{box-shadow:inset 0 0 0 1px rgb(255 255 255 / .12),0 0 70px -10px rgb(238 84 72 / .55)}50%{box-shadow:inset 0 0 0 1px rgb(255 255 255 / .12),0 0 70px -10px rgb(84 140 255 / .55)}}
+.hero[data-game="getaway"] .go-reason{color:rgb(130 170 255);background:rgb(84 140 255 / .12);box-shadow:inset 0 0 0 1px rgb(84 140 255 / .5)}
+.hero[data-game="getaway"] .go-title{transform:skewX(-8deg)}
+.hero[data-game="getaway"] .go-title span{color:#fff}
+.hero[data-game="getaway"] .go-title .g2{color:rgb(130 170 255);text-shadow:.05em .05em 0 rgb(238 84 72),0 .12em .3em rgb(0 0 0 / .6)}
+.hero[data-game="getaway"] .go-stats{border-radius:.6rem;background:none;box-shadow:none;border:2px dashed rgb(255 255 255 / .18)}
+.hero[data-game="getaway"] .go-stats dd[data-st="rank"]{color:rgb(130 170 255)}
+/* Lookout — case file: folder tab, typewriter type, a red CLOSED-style stamp as the title */
+.hero[data-game="lookout"] .go{position:relative;margin-top:1.8rem;padding:1.8rem 2.2rem 1.6rem;border-radius:0 1rem 1rem 1rem;background:rgb(20 24 36 / .95);box-shadow:inset 0 0 0 1px rgb(255 255 255 / .12),0 30px 80px -20px #000}
+.hero[data-game="lookout"] .go::before{content:"CASE FILE · LOOKOUT";position:absolute;left:0;bottom:100%;padding:.55rem 1.1rem .45rem;border-radius:.7rem .7rem 0 0;background:rgb(20 24 36 / .95);box-shadow:inset 0 1px 0 rgb(255 255 255 / .12),inset 1px 0 0 rgb(255 255 255 / .12),inset -1px 0 0 rgb(255 255 255 / .12);font:500 .66rem/1 var(--font-mono);letter-spacing:.18em;color:var(--subtle)}
+.hero[data-game="lookout"] .go-reason{background:none;box-shadow:none;color:var(--muted-foreground);font-size:.78rem}
+.hero[data-game="lookout"] .go-reason i{display:none}
+.hero[data-game="lookout"] .go-reason::before{content:"REASON:";color:var(--subtle)}
+.hero[data-game="lookout"] .go-title{margin:1.2rem 0 .4rem;padding:.08em .22em .12em;font-size:clamp(2.8rem,7.4vw,6.6rem);border:.08em solid rgb(238 84 72 / .9);border-radius:.12em;transform:rotate(-5deg);color:rgb(238 84 72);gap:.22em}
+.hero[data-game="lookout"] .go-title span,.hero[data-game="lookout"] .go-title .g2{color:rgb(238 84 72);text-shadow:none}
+.hero[data-game="lookout"] .go-s,.hero[data-game="lookout"] .go-stats dd{font-family:var(--font-mono);font-weight:500}
+.hero[data-game="lookout"] .go-stats{border-radius:0;background:none;box-shadow:none}
+.hero[data-game="lookout"] .go-stats div{box-shadow:none;border-bottom:1px dotted rgb(255 255 255 / .25);text-align:left}
+.hero[data-game="lookout"] .go-stats dd[data-st="rank"]{color:rgb(110 220 150)}
+.hero[data-game="bimmer"] .go{position:relative;overflow:hidden;padding:2.4rem 2.2rem 1.6rem;border-radius:.9rem;background:rgb(12 16 30 / .95);box-shadow:inset 0 0 0 1px rgb(255 255 255 / .12),0 30px 80px -20px #000}
+.hero[data-game="bimmer"] .go::before{content:"";position:absolute;left:0;right:0;top:0;height:6px;background:linear-gradient(90deg,rgb(110 180 240) 0 33.4%,rgb(40 70 170) 33.4% 66.7%,rgb(238 64 60) 66.7%)}
+.hero[data-game="bimmer"] .go-reason{color:rgb(150 200 250);background:rgb(110 180 240 / .1);box-shadow:inset 0 0 0 1px rgb(110 180 240 / .45)}
+.hero[data-game="bimmer"] .go-title{font-style:italic}
+.hero[data-game="bimmer"] .go-title span{color:#fff;text-shadow:.05em .05em 0 rgb(40 70 170),0 .12em .3em rgb(0 0 0 / .6)}
+.hero[data-game="bimmer"] .go-title .g2{color:rgb(130 185 255);text-shadow:.05em .05em 0 rgb(40 70 170),0 .12em .3em rgb(0 0 0 / .6)}
+.hero[data-game="bimmer"] .go-s{color:#fff;text-shadow:none;font-style:italic}
+.hero[data-game="bimmer"] .go-stats{border-radius:.5rem}
+.hero[data-game="bimmer"] .go-stats dd[data-st="rank"]{color:rgb(130 185 255)}
+.is-still .hero::before{animation:none}
+
+/* ═════ 2027 pass · flat page, hairline sections, an index column, no cards ═════ */
+:root{--background:oklch(.145 .004 285);--card:oklch(.18 .004 285);--hairline:oklch(1 0 0 / .1);--border-strong:oklch(1 0 0 / .2);--r:.375rem}
+body{font-size:1rem;line-height:1.65}
+.grain{opacity:.02}
+.topbar{background:color-mix(in oklch,var(--background) 82%,transparent)}
+.nav-row a{border-radius:var(--r)}.nav-row a:hover{background:rgb(255 255 255 / .06)}
+/* buttons: rectangular, flat; hover moves the background, never the text colour */
+.btn{height:2.75rem;border-radius:var(--r);background:transparent;box-shadow:inset 0 0 0 1px var(--border-strong);font-weight:500}
+.btn:hover{transform:none;background:rgb(255 255 255 / .07);box-shadow:inset 0 0 0 1px oklch(1 0 0 / .32)}
+.btn-primary{background:var(--red-btn);box-shadow:none}
+.btn-primary:hover{background:var(--red-btn-h);box-shadow:none}
+.btn .ar{transition:transform .25s var(--ease-out)}.btn:hover .ar{transform:translateX(3px)}
+.announce{border-radius:var(--r);-webkit-backdrop-filter:none;backdrop-filter:none;background:rgb(255 255 255 / .04)}
+.announce .new{border-radius:.25rem}
+dialog{border-radius:.6rem}.field input{border-radius:var(--r)}
+/* hero is kept; only the old gradient glow goes */
+.hero::before{background:radial-gradient(30% 34% at 50% 36%,color-mix(in oklch,var(--red) 12%,transparent),transparent 72%)}
+.hero-copy,.hero-rail{min-width:0;max-width:100%}
+
+/* section block: top hairline, sticky index label left, content right */
+.blk{border-top:1px solid var(--hairline);padding-block:clamp(3.5rem,7vw,6.5rem)}
+.blk-grid{display:grid;grid-template-columns:11rem minmax(0,1fr);column-gap:clamp(1.5rem,4vw,4rem)}
+.blk-label{position:sticky;top:5.5rem;align-self:start;display:flex;gap:.9rem;margin:0;padding-top:.5rem;font:500 .72rem/1 var(--font-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--subtle)}
+.blk-label b{font-weight:500;color:var(--foreground)}
+.blk h2{font-size:clamp(2.5rem,5.4vw,4.75rem);font-weight:700;letter-spacing:-.05em;line-height:.95}
+.blk h3{font-weight:700;letter-spacing:-.04em}
+.muted{color:var(--muted-foreground)}
+@media(max-width:900px){.blk-grid{grid-template-columns:1fr;row-gap:1.6rem}.blk-label{position:static;padding-top:0}}
+
+/* 01 · Title 01: copy + spec sheet left, one pixelated frame right */
+.t01{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:clamp(2rem,5vw,5rem);align-items:center}
+.t01-copy{display:grid;gap:1.4rem;align-content:start}
+.t01-copy>p{max-width:44ch;font-size:clamp(1.05rem,1.4vw,1.2rem);text-wrap:pretty}
+.spec{margin:.4rem 0 .6rem;max-width:34rem;border-top:1px solid var(--hairline)}
+.spec div{display:grid;grid-template-columns:8rem 1fr;align-items:center;gap:1rem;padding:.8rem 0;border-bottom:1px solid var(--hairline)}
+.spec dt{font:500 .72rem/1 var(--font-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--subtle)}
+.spec dd{margin:0;font-size:.98rem}
+.spec .live{display:inline-flex;align-items:center;gap:.55rem}
+.spec .live::before{content:"";width:.5rem;height:.5rem;border-radius:99px;background:var(--signal);box-shadow:0 0 0 3px color-mix(in oklch,var(--signal) 22%,transparent)}
+.redact{display:inline-block;width:10.5em;height:1.05em;vertical-align:-.15em;border-radius:2px;background:var(--foreground)}
+.frame{margin:0;display:grid;gap:.9rem;width:clamp(200px,19vw,250px)}
+.frame-shot{position:relative;padding:14px;background:
+  linear-gradient(var(--border-strong),var(--border-strong)) 0 0/12px 1px,linear-gradient(var(--border-strong),var(--border-strong)) 0 0/1px 12px,
+  linear-gradient(var(--border-strong),var(--border-strong)) 100% 0/12px 1px,linear-gradient(var(--border-strong),var(--border-strong)) 100% 0/1px 12px,
+  linear-gradient(var(--border-strong),var(--border-strong)) 0 100%/12px 1px,linear-gradient(var(--border-strong),var(--border-strong)) 0 100%/1px 12px,
+  linear-gradient(var(--border-strong),var(--border-strong)) 100% 100%/12px 1px,linear-gradient(var(--border-strong),var(--border-strong)) 100% 100%/1px 12px;background-repeat:no-repeat}
+.frame-shot img{display:block;width:100%;height:auto;border-radius:22px;image-rendering:pixelated;box-shadow:0 0 0 1px var(--hairline)}
+.frame figcaption{display:flex;justify-content:space-between;gap:1rem;white-space:nowrap;font:500 .7rem/1.3 var(--font-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--subtle)}
+@media(max-width:900px){.t01{grid-template-columns:1fr}.frame{justify-self:center;width:min(240px,70vw)}}
+
+/* 02 · Studio statement; sources sit in a side column on wide screens */
+.manifesto{display:grid;gap:1.6rem}
+.big{font:700 clamp(2.8rem,6.6vw,6rem)/.93 var(--font-display);letter-spacing:-.055em;max-width:13ch;margin:0}
+.big em{font-style:normal;color:var(--red-text)}
+.manifesto .lead{max-width:56ch;font-size:clamp(1.1rem,1.55vw,1.4rem);line-height:1.5;color:var(--muted-foreground);text-wrap:pretty}
+.manifesto .lead mark{background:none;color:var(--foreground);font-weight:500}
+.manifesto .lead .fn{font:500 .58em/1 var(--font-mono);vertical-align:super;margin-left:.15em;color:var(--subtle);text-decoration:none}
+.manifesto .lead .fn:hover{color:var(--foreground)}
+.sources{margin:0;padding:0;list-style:none;counter-reset:s;display:grid;gap:.9rem;max-width:62ch;font-size:.8rem;line-height:1.5;color:var(--subtle)}
+.sources li{counter-increment:s;position:relative;padding-left:1.6rem}
+.sources li::before{content:counter(s);position:absolute;left:0;top:0;font:500 .72rem/1.6 var(--font-mono);color:var(--muted-foreground)}
+.sources a{color:var(--muted-foreground);text-decoration:underline;text-underline-offset:.15em;text-decoration-color:var(--border-strong)}
+.sources a:hover{color:var(--foreground)}
+@media(min-width:1180px){.manifesto{grid-template-columns:minmax(0,1fr) 17rem;column-gap:3.5rem}.manifesto>.big{grid-column:1/-1}.sources{align-self:end;padding-left:1.4rem;border-left:1px solid var(--hairline)}}
+
+/* 03 · Platform: plain index list */
+.plat{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(2rem,5vw,4.5rem);align-items:start}
+.plat h2{font-size:clamp(2.2rem,4.2vw,3.6rem)}
+.plat p{margin-top:1.2rem;max-width:48ch;text-wrap:pretty}
+.index{list-style:none;margin:0;padding:0;border-top:1px solid var(--hairline)}
+.index li{display:grid;grid-template-columns:2.6rem 1fr auto;align-items:baseline;gap:1rem;padding:1.05rem 0;border-bottom:1px solid var(--hairline)}
+.index i{font:500 .72rem var(--font-mono);font-style:normal;color:var(--subtle)}
+.index b{font:600 1.15rem/1.25 var(--font-display);letter-spacing:-.025em}
+.index small{font:500 .72rem var(--font-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--subtle);text-align:right}
+.index .live small{color:var(--signal)}
+@media(max-width:900px){.plat{grid-template-columns:1fr}}
+
+/* 04 · Roadmap: dated rows, like a changelog */
+.road{list-style:none;margin:0;padding:0;border-top:1px solid var(--hairline)}
+.road li{display:grid;grid-template-columns:11rem minmax(0,16rem) 1fr;gap:1.5rem;align-items:baseline;padding:1.2rem 0;border-bottom:1px solid var(--hairline)}
+.road .t{font:500 .74rem var(--font-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--subtle)}
+.road b{font:600 1.2rem/1.25 var(--font-display);letter-spacing:-.025em}
+.road li>span:last-child{color:var(--muted-foreground)}
+.road .now .t{display:inline-flex;align-items:center;gap:.55rem;color:var(--signal)}
+.road .now .t::before{content:"";width:.5rem;height:.5rem;border-radius:99px;background:currentColor}
+.road-note{margin-top:1.2rem;font:500 .7rem var(--font-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--subtle)}
+.road-head{display:flex;justify-content:space-between;align-items:end;gap:1rem;margin-bottom:clamp(1.5rem,3vw,2.4rem)}
+@media(max-width:760px){.road li{grid-template-columns:1fr;gap:.35rem}}
+
+/* 05 · People */
+.person{display:grid;grid-template-columns:7.5rem minmax(0,1fr);gap:clamp(1.4rem,3vw,2.4rem);align-items:start;max-width:54rem}
+.person img{width:100%;height:auto;aspect-ratio:1;border-radius:var(--r);object-fit:cover;filter:grayscale(.15);box-shadow:0 0 0 1px var(--hairline)}
+.person h3{font-size:clamp(1.6rem,2.6vw,2.1rem)}
+.person .role{font:500 .72rem var(--font-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--subtle);margin:.6rem 0 1.1rem}
+.person p{color:var(--muted-foreground);max-width:56ch;text-wrap:pretty}
+.links{display:flex;flex-wrap:wrap;gap:.4rem 1.6rem;margin-top:1.3rem}
+.links a{display:inline-flex;align-items:center;min-height:44px;gap:.35rem;color:var(--foreground);text-decoration:underline;text-underline-offset:.25em;text-decoration-color:var(--border-strong);font-size:.95rem}
+.links a:hover{text-decoration-color:var(--foreground)}
+@media(max-width:560px){.person{grid-template-columns:1fr}.person img{width:5.5rem}}
+
+/* 06 · Contact: type, not a card */
+.reach{display:grid;gap:1.4rem}
+.reach>p{max-width:46ch;text-wrap:pretty}
+.mail{justify-self:start;font:700 clamp(1.5rem,3.8vw,3.2rem)/1.1 var(--font-display);letter-spacing:-.04em;color:var(--foreground);text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:.18em;text-decoration-color:var(--border-strong);overflow-wrap:anywhere;transition:text-decoration-color .2s}
+.mail:hover{text-decoration-color:var(--foreground)}
+.reach .cta{margin-top:.4rem}
+
+/* footer: same ground as the page */
+footer.site-foot{background:var(--background);margin-top:0}
+.fc b{color:var(--subtle)}
+.is-still .hero::before{animation:none}
+@media(prefers-reduced-motion:reduce){.hero::before{animation:none}}
+
+/* ═════ 2027 pass b ═════ */
+@view-transition{navigation:auto}
+/* hero: copy anchored bottom-left, status line on top, lead + actions on one ruled row */
+.hero{align-items:end}
+.hero .hero-copy{max-width:80rem;display:grid;justify-items:start;text-align:left;padding-bottom:clamp(1rem,4vh,2.6rem)}
+.hero h1{font-weight:700;letter-spacing:-.055em;margin:clamp(.8rem,2.4vh,1.6rem) 0 clamp(1.2rem,4vh,2.8rem);margin-left:-.04em}
+.h-status{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem 1.2rem;margin:0;font:500 .72rem/1 var(--font-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted-foreground);animation:hero-enter .8s var(--ease-out) both}
+.h-status i{width:.5rem;height:.5rem;border-radius:99px;background:var(--signal);box-shadow:0 0 0 3px color-mix(in oklch,var(--signal) 22%,transparent)}
+.h-status span+span::before{content:"/";margin-right:1.2rem;color:var(--subtle)}
+.h-status span:first-of-type{color:var(--foreground)}
+.hero-rest{width:100%;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:1.2rem 3rem;padding-top:clamp(1rem,2.6vh,1.6rem);border-top:1px solid var(--hairline)}
+.hero .lead{margin:0;max-width:40ch;font-size:clamp(1rem,min(1.45vw,2.4vh),1.25rem);line-height:1.5;color:var(--muted-foreground)}
+.hero .cta{margin:0;justify-content:flex-end}
+@media(max-width:760px){.hero-rest{grid-template-columns:1fr}.hero .cta{justify-content:flex-start}}
+@media(max-width:640px){.h-status span:last-child{display:none}.hero .cta{flex-direction:column;align-items:stretch;width:100%;max-width:none}}
+@media(max-height:520px),(max-width:640px) and (max-height:620px){.hero .lead{display:none}.hero-rest{border-top:0;padding-top:0}}
+/* nav: the section you are in is marked */
+.nav-row a[aria-current]{color:var(--foreground);box-shadow:inset 0 -1px 0 var(--foreground);border-radius:0}
+/* teaser: starts coarser and resolves to the 40×87 frame as it scrolls into view (never sharper than that) */
+.frame-shot .coarse{position:absolute;inset:14px;width:calc(100% - 28px);height:calc(100% - 28px);border-radius:22px;image-rendering:pixelated;opacity:0;pointer-events:none}
+@supports (animation-timeline:view()){.frame-shot .coarse{animation:resolve linear both;animation-timeline:view();animation-range:entry 30% cover 50%}}
+@keyframes resolve{from{opacity:1}to{opacity:0}}
+/* footer ends on the wordmark, set huge */
+.colophon{overflow:hidden;max-width:80rem;margin-inline:auto;padding-inline:clamp(1rem,4vw,2.5rem);margin-top:.5rem;padding-bottom:.06em;font:700 calc((min(100vw,80rem) - 2 * clamp(1rem,4vw,2.5rem)) / 7.3)/.92 var(--font-display);letter-spacing:-.065em;white-space:nowrap;color:oklch(.235 .005 285);user-select:none}
+.colophon b{font-weight:inherit;color:oklch(.34 .1 27)}
+
+/* ═════ 2027 pass c: native motion, spatial frame, a motion switch, container queries ═════ */
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.blk h2.big{font-size:clamp(2.8rem,6.6vw,6rem);line-height:.93;margin-bottom:.8rem}
+/* optical alignment: headings trimmed to cap height so they line up with the index label */
+@supports (text-box:trim-both cap alphabetic){.blk h2,.big,.hero h1{text-box:trim-both cap alphabetic}.blk-label{padding-top:0}}
+/* reveals run on the compositor from scroll position; JS reveal stays as the fallback */
+@supports (animation-timeline:view()){
+  .js:not(.is-still) .rv{opacity:1;transform:none;transition:none;animation:rise linear both;animation-timeline:view();animation-range:entry 5% entry 45%}
+  @keyframes rise{from{opacity:0;translate:0 28px}}
+  /* hero copy drifts up a little as it leaves; translate only, so the game's fade still owns opacity */
+  .js:not(.is-still) .hero-copy{animation:drift linear both;animation-timeline:scroll(root);animation-range:0 90vh}
+  @keyframes drift{to{translate:0 -6vh}}
+}
+/* Title 01 responds to its own width, not the viewport */
+.blk-grid>article.t01{container-type:inline-size}
+.t01{grid-template-columns:1fr}
+.t01-in{display:grid;gap:2.4rem}
+@container (min-width:640px){.t01-in{grid-template-columns:minmax(0,1fr) auto;gap:clamp(2rem,5vw,5rem);align-items:center}}
+@container (max-width:639px){.frame{justify-self:center;width:min(240px,70%)}}
+/* spatial frame: tilts toward the pointer, a light follows it; fine pointers and motion on only */
+.frame-shot{transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .5s var(--ease-out);will-change:transform}
+.frame-shot::after{content:"";position:absolute;inset:14px;border-radius:22px;pointer-events:none;opacity:var(--lo,0);transition:opacity .4s;background:radial-gradient(60% 40% at var(--lx,50%) var(--ly,30%),rgb(255 255 255 / .16),transparent 70%)}
+.is-still .frame-shot{transform:none}
+/* motion switch in the footer */
+.motion-sw{display:inline-flex;align-items:center;gap:.6rem;min-height:44px;padding:0;border:0;background:none;color:var(--subtle);font:inherit;cursor:pointer}
+.motion-sw:hover{color:var(--foreground)}
+.motion-sw b{font:500 .7rem/1 var(--font-mono);letter-spacing:.12em;text-transform:uppercase;padding:.35rem .5rem;border-radius:.25rem;box-shadow:inset 0 0 0 1px var(--border-strong);color:var(--foreground)}
+.motion-sw[aria-pressed="true"] b{background:var(--foreground);color:var(--background)}
+
+/* ═════ 2027 pass d: a visible game, a loud band ═════ */
+.blk-games{padding-bottom:clamp(2.5rem,5vw,4rem)}
+.t01-top{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:clamp(2rem,5vw,4.5rem);align-items:end}
+.t01-top .spec{margin:0;max-width:none}
+@container (max-width:700px){.t01-top{grid-template-columns:1fr}}
+.frames{display:flex;justify-content:center;align-items:flex-start;gap:clamp(.8rem,1.8vw,1.6rem);margin-top:clamp(3rem,6vw,5rem);padding:0 clamp(1rem,4vw,2.5rem) 3rem}
+.frames .frame{width:clamp(150px,15.5vw,236px);flex:none;gap:.7rem}
+.frames .frame:nth-child(even){margin-top:3.2rem}
+.frames .frame:nth-child(3){margin-top:-1.2rem}
+.frames figcaption{display:block;font:500 .7rem/1 var(--font-mono);letter-spacing:.14em;color:var(--subtle)}
+@supports (animation-timeline:view()){.js:not(.is-still) .frames{animation:slide linear both;animation-timeline:view();animation-range:entry 0% exit 100%}@keyframes slide{from{translate:6vw 0}to{translate:-6vw 0}}}
+.frames-cap{grid-column:2;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin:0;padding-top:1rem;border-top:1px solid var(--hairline);font:500 .72rem/1.4 var(--font-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--subtle)}
+@media(max-width:900px){
+  .frames-cap{grid-column:1}
+  .frames{justify-content:flex-start;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-bottom:3.4rem}
+  .frames::-webkit-scrollbar{display:none}
+  .frames .frame{width:44vw;scroll-snap-align:center}
+  .js:not(.is-still) .frames{animation:none}
+}
+.band-red{background:oklch(.48 .19 27);border-top:0}
+.band-red,.band-red .muted,.band-red .blk-label,.band-red .blk-label b{color:#fff}
+.band-red .mail{color:#fff;text-decoration-color:rgb(255 255 255 / .55)}
+.band-red .mail:hover{text-decoration-color:#fff}
+.band-red .btn-primary{background:#fff;color:oklch(.25 .06 27)}
+.band-red .btn-primary:hover{background:oklch(.9 .03 27);color:oklch(.25 .06 27)}
+.band-red :focus-visible{outline-color:#fff}
+
+/* ═════ 2027 pass e: sourced numbers, a roadmap you can read at a glance ═════ */
+.stats{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:clamp(1.5rem,3vw,2.5rem) 0 0;border-top:1px solid var(--hairline)}
+.stats div{display:flex;flex-direction:column-reverse;justify-content:flex-end;gap:.7rem;padding:1.6rem 1.5rem 0 0}
+.stats div+div{padding-left:1.5rem;border-left:1px solid var(--hairline)}
+.stats dd{margin:0;white-space:nowrap;font:700 clamp(2.4rem,4.4vw,4.4rem)/.9 var(--font-display);letter-spacing:-.05em;font-variant-numeric:tabular-nums}
+.stats dt{font:500 .74rem/1.45 var(--font-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted-foreground);max-width:24ch}
+.stats .fn{font:500 .34em/1 var(--font-mono);vertical-align:super;margin-left:.2em;color:var(--subtle);text-decoration:none;letter-spacing:0}
+.stats .fn:hover{color:var(--foreground)}
+@media(max-width:700px){.stats{grid-template-columns:1fr}.stats div+div{padding-left:0;border-left:0;border-top:1px solid var(--hairline)}.stats div{padding:1.2rem 0}}
+/* roadmap: date · milestone · a 15-month track (Oct 2026 to Dec 2027) with today marked */
+.road{--today:8.3%}
+.road li{grid-template-columns:9rem minmax(0,18rem) minmax(0,1fr);align-items:center}
+.road .what{display:grid;gap:.25rem}
+.road .what>span{color:var(--muted-foreground);font-size:.93rem;line-height:1.45}
+.road .track{position:relative;align-self:stretch;min-height:2.6rem;background:
+  linear-gradient(90deg,transparent calc(var(--today) - 1px),var(--signal) calc(var(--today) - 1px),var(--signal) calc(var(--today) + 1px),transparent calc(var(--today) + 1px)),
+  repeating-linear-gradient(90deg,var(--hairline) 0 1px,transparent 1px 6.6667%)}
+.road .bar{position:absolute;top:50%;height:.7rem;translate:0 -50%;border-radius:2px;background:oklch(.42 .005 285)}
+.road .bar.live{background:linear-gradient(90deg,transparent,var(--signal) 70%)}
+.road .bar.pin{background:var(--foreground)}
+.road li.axis{padding:0 0 .6rem;border-bottom:1px solid var(--hairline)}
+.road li.axis .track{display:grid;grid-template-columns:repeat(15,1fr);min-height:0;background:none}
+.road li.axis i{position:relative;font:500 .7rem/1 var(--font-mono);font-style:normal;color:var(--subtle);text-align:center;padding-top:1.1rem}
+.road li.axis em{position:absolute;left:0;top:0;font-style:normal;color:var(--muted-foreground);letter-spacing:.08em}
+.road li.axis i.y{border-left:1px solid var(--border-strong)}
+.road>li:nth-child(2){border-top:0}
+@media(max-width:900px){.road li{grid-template-columns:8rem minmax(0,1fr)}.road .track,.road li.axis{display:none}}
+@media(max-width:760px){.road li{grid-template-columns:1fr}}
+</style>
+
+<style>
+/* ═════ Bimmer Service page · same 2027 system as the studio page: hairline blocks, index column, no cards ═════ */
+.hero[data-solo] .scroll-cue{position:absolute;z-index:3;left:50%;bottom:.9rem;transform:translateX(-50%);display:inline-flex;align-items:center;min-height:44px;gap:.5rem;font:500 .72rem var(--font-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--subtle);text-decoration:none;padding:0 .8rem;border-radius:var(--r);transition:color .2s,background .2s}
+.hero[data-solo] .scroll-cue:hover{color:var(--foreground);background:rgb(255 255 255 / .06)}
+.hero[data-solo] .scroll-cue:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+.hero.playing .scroll-cue{opacity:0;pointer-events:none}
+@media(max-width:640px){.hero[data-solo] .game-exit{top:auto;bottom:1rem;right:50%;transform:translateX(50%)}}
+.go-plug a{color:var(--foreground)}
+
+/* language switch: top right of the bay, the same quiet mono as the game switch on the studio page */
+.lang-sw{display:inline-flex;align-items:center;gap:.15rem;font:500 .7rem/1 var(--font-mono);letter-spacing:.14em}
+.hero .lang-sw{position:absolute;z-index:5;top:1.1rem;right:clamp(1rem,4vw,2.5rem);transition:opacity .4s}
+.hero.playing .lang-sw{opacity:0;pointer-events:none}
+.lang-sw button{min-width:44px;height:2.75rem;padding:0 .55rem;border:0;cursor:pointer;font:inherit;letter-spacing:inherit;color:var(--muted-foreground);background:none;border-bottom:2px solid transparent;transition:color .2s,border-color .2s}
+.lang-sw button:hover{color:var(--foreground)}
+.lang-sw button[aria-pressed="true"]{color:rgb(255 236 214);border-bottom-color:var(--red)}
+.lang-sw button:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+.lang-foot{display:inline-flex;align-items:center;gap:.6rem;color:var(--subtle)}
+.lang-sw.in-foot button{height:44px}
+
+/* 01 · the rule: two ruled rows, a tyre at the start of each */
+.rule-rows{margin-top:clamp(2rem,4vw,3rem);border-top:1px solid var(--hairline)}
+.rule-row{display:grid;grid-template-columns:5.5rem minmax(0,12rem) minmax(0,1fr);gap:1.5rem;align-items:center;padding:1.3rem 0;border-bottom:1px solid var(--hairline)}
+.rule-row svg{width:4.5rem;height:4.5rem}
+.rule-row .tag{font:500 .72rem/1.4 var(--font-mono);letter-spacing:.14em;text-transform:uppercase}
+.rule-row.ok .tag{color:var(--signal)} .rule-row.no .tag{color:var(--red-text)}
+.rule-row h3{margin:.3rem 0 0;font:700 1.5rem/1.1 var(--font-display);letter-spacing:-.04em}
+.rule-row p{margin:0;color:var(--muted-foreground);max-width:48ch}
+.rule-row p b{color:var(--foreground);font-weight:500}
+@media(max-width:760px){.rule-row{grid-template-columns:4rem minmax(0,1fr);row-gap:.6rem}.rule-row svg{width:3.4rem;height:3.4rem}.rule-row p{grid-column:2}}
+
+/* 02 · how to play: numbered index rows */
+.steps{list-style:none;margin:clamp(2rem,4vw,3rem) 0 0;padding:0;border-top:1px solid var(--hairline)}
+.steps li{display:grid;grid-template-columns:2.6rem minmax(0,14rem) minmax(0,1fr);gap:1.5rem;align-items:baseline;padding:1.15rem 0;border-bottom:1px solid var(--hairline)}
+.steps i{font:500 .72rem var(--font-mono);font-style:normal;color:var(--subtle)}
+.steps b{font:600 1.15rem/1.25 var(--font-display);letter-spacing:-.025em}
+.steps span{color:var(--muted-foreground)}
+.steps kbd{font:500 .7rem var(--font-mono);padding:.12rem .38rem;border-radius:.25rem;box-shadow:inset 0 0 0 1px var(--border-strong);color:var(--foreground)}
+.steps .g{color:var(--signal)} .steps .r{color:var(--red-text)}
+@media(max-width:760px){.steps li{grid-template-columns:2.2rem minmax(0,1fr);row-gap:.3rem}.steps li>span{grid-column:2}}
+
+/* 03 · the move ladder: a ruled table with a streak track */
+.ladder{width:100%;margin-top:clamp(2rem,4vw,3rem);border-collapse:collapse;font-variant-numeric:tabular-nums}
+.ladder th{white-space:nowrap;text-align:left;font:500 .7rem var(--font-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--subtle);padding:0 1rem .7rem 0;border-bottom:1px solid var(--hairline)}
+.ladder td{padding:.9rem 1rem .9rem 0;border-bottom:1px solid var(--hairline);vertical-align:middle}
+.ladder td:first-child{width:2.6rem;font:500 .72rem var(--font-mono);color:var(--subtle)}
+.ladder td:nth-child(2){width:15rem;font:600 1.15rem/1.2 var(--font-display);letter-spacing:-.025em}
+.ladder td:nth-child(3){width:8.5rem;font:500 .8rem var(--font-mono);color:var(--muted-foreground);white-space:nowrap}
+.ladder tr.fin td:nth-child(2){color:var(--red-text)}
+.ladder .trk{position:relative;height:.7rem;background:repeating-linear-gradient(90deg,var(--hairline) 0 1px,transparent 1px calc(100% / 26))}
+.ladder .trk s{position:absolute;inset:0 auto 0 0;border-radius:2px;background:oklch(.42 .005 285)}
+.ladder tr.fin .trk s{background:linear-gradient(90deg,oklch(.42 .005 285),var(--red))}
+.ladder-note{margin-top:1.2rem;font:500 .7rem var(--font-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--subtle)}
+@media(max-width:760px){.ladder th:last-child,.ladder td:last-child{display:none}.ladder td:nth-child(2){width:auto}}
+
+/* 04 · scoring: the studio page's stat strip, then the ranks as an index */
+#scoring .stats dd{white-space:normal;font-size:clamp(2rem,3.4vw,3.4rem)}
+.ranks{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin-top:clamp(2rem,4vw,3rem);border-top:1px solid var(--hairline)}
+.ranks div{display:grid;gap:.45rem;padding:1.1rem 1.2rem 0 0}
+.ranks div+div{padding-left:1.2rem;border-left:1px solid var(--hairline)}
+.ranks b{font:600 1.15rem/1.2 var(--font-display);letter-spacing:-.025em}
+.ranks span{font:500 .72rem var(--font-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--subtle)}
+@media(max-width:700px){.ranks{grid-template-columns:1fr 1fr}.ranks div:nth-child(3){padding-left:0;border-left:0}.ranks div:nth-child(n+3){border-top:1px solid var(--hairline);padding-bottom:1rem}}
+
+/* 05 · leaderboard: your ten best rounds, read like the roadmap */
+.board-head{display:flex;justify-content:space-between;align-items:end;gap:1rem;flex-wrap:wrap}
+.board{width:100%;margin-top:clamp(2rem,4vw,3rem);border-collapse:collapse;font-variant-numeric:tabular-nums}
+.board th{text-align:left;font:500 .7rem var(--font-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--subtle);padding:0 1rem .7rem 0;border-bottom:1px solid var(--hairline);white-space:nowrap}
+.board td{padding:.95rem 1rem .95rem 0;border-bottom:1px solid var(--hairline);white-space:nowrap}
+.board th.n,.board td.n{text-align:right}
+.board td.pl{width:2.6rem;font:500 .72rem var(--font-mono);color:var(--subtle)}
+.board td.sc{font:700 1.5rem/1 var(--font-display);letter-spacing:-.04em}
+.board tr:first-child td.sc{color:var(--amber)}
+.board td.mv{font:600 1rem var(--font-display);letter-spacing:-.02em;text-transform:capitalize}
+.board td.rk{font:500 .72rem var(--font-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted-foreground)}
+.board td.wh{font:500 .78rem var(--font-mono);color:var(--subtle)}
+.board tr.new td{background:color-mix(in oklch,var(--signal) 7%,transparent)}
+.board tr.new td.pl{color:var(--signal)}
+.board-empty{margin-top:clamp(2rem,4vw,3rem);padding:1.4rem 0;border-top:1px solid var(--hairline);border-bottom:1px solid var(--hairline);color:var(--muted-foreground)}
+.board-foot{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;margin-top:1.2rem;font:500 .7rem var(--font-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--subtle)}
+.board-foot button{min-height:44px;padding:0 .2rem;border:0;background:none;font:inherit;letter-spacing:inherit;text-transform:inherit;color:var(--muted-foreground);cursor:pointer;text-decoration:underline;text-underline-offset:.3em;text-decoration-color:var(--border-strong)}
+.board-foot button:hover{color:var(--foreground);text-decoration-color:var(--foreground)}
+.board-foot button:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+@media(max-width:760px){.board .hd,.board .wh{display:none}.board td.sc{font-size:1.25rem}}
+
+/* 06 · Dex: the people block, with a pixel portrait */
+.dex{display:grid;grid-template-columns:7.5rem minmax(0,1fr);gap:clamp(1.4rem,3vw,2.4rem);align-items:start;max-width:58rem}
+.dex-pic{display:grid;place-items:center;aspect-ratio:1;border-radius:var(--r);background:oklch(.19 .01 260);box-shadow:0 0 0 1px var(--hairline)}
+.dex-pic canvas{width:66px;height:84px;image-rendering:pixelated}
+.dex h3{font-size:clamp(1.6rem,2.6vw,2.1rem)}
+.dex .role{font:500 .72rem var(--font-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--subtle);margin:.6rem 0 1.1rem}
+.dex p{color:var(--muted-foreground);max-width:56ch}
+.quotes{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1.4rem}
+.quotes q{quotes:none;padding:.5rem .75rem;background:rgb(250 246 240);font:italic 800 .82rem var(--font-display);box-shadow:0 0 0 2px var(--q)}
+.quotes q.r{color:rgb(150 20 20);--q:rgb(255 96 84)} .quotes q.g{color:rgb(20 90 50);--q:rgb(110 220 150)}
+@media(max-width:560px){.dex{grid-template-columns:1fr}.dex-pic{width:5.5rem}}
+
+/* last band: back to the bay */
+.reach h2{font-size:clamp(2.5rem,5.4vw,4.75rem)}
+</style>
+</head>
+<body data-page="bimmer" data-i18n>
+<main id="main">
+
+<!-- ═════ THE BAY · the game itself ═════ -->
+<section class="hero" id="top" data-solo="bimmer" data-game="bimmer" data-od-id="bimmer-bay" aria-label="Bimmer Service, a playable game">
+  <button class="game-exit" type="button" hidden>✕ Exit game <kbd>Esc</kbd></button>
+  <div class="game-over" hidden role="dialog" aria-modal="false" aria-labelledby="go-t">
+    <div class="go">
+      <p class="go-reason"><i></i><span class="go-r">Out of time</span></p>
+      <h2 class="go-title" id="go-t"><span class="g1">Out of</span><span class="g2">time</span></h2>
+      <div class="go-score"><span class="go-l">Shop score</span><b class="go-s">00000</b><span class="go-b">Best 00000</span></div>
+      <dl class="go-stats">
+        <div><dt>Taken down</dt><dd data-st="hits">0</dd></div>
+        <div><dt>Accuracy</dt><dd data-st="acc">0%</dd></div>
+        <div><dt>Best combo</dt><dd data-st="combo">×0</dd></div>
+        <div><dt>Rank</dt><dd data-st="rank">Apprentice</dd></div>
+      </dl>
+      <div class="go-cta"><button class="btn btn-lg btn-primary" type="button" data-again>Play again <kbd>R</kbd></button><button class="btn btn-lg" type="button" data-quit>Back to the bay <kbd>Esc</kbd></button></div>
+      <p class="go-plug"><span class="go-lead">Proper service.</span> <a href="#board" data-od-id="go-board-link">See your leaderboard ↓</a></p>
+    </div>
+  </div>
+  <a class="scroll-cue" href="#rule" data-od-id="scroll-to-manual">How to play ↓</a>
+  <div class="lang-sw" role="group" aria-label="Language · Język" data-od-id="lang-switch"><button type="button" data-lang="en" aria-pressed="false">EN</button><button type="button" data-lang="pl" aria-pressed="false">PL</button></div>
+</section>
+
+<!-- ═════ 01 · THE RULE ═════ -->
+<section class="blk" id="rule" data-od-id="rule">
+  <div class="wrap blk-grid">
+    <p class="blk-label"><b>01</b>The rule</p>
+    <div class="rv" data-rv>
+      <h2 class="big">★ tyres only. <em>No exceptions.</em></h2>
+      <p class="muted" style="max-width:52ch;font-size:clamp(1.05rem,1.4vw,1.2rem)">Customers walk into the bay carrying a tyre for the M340i. Only tyres with the ★ on the sidewall go on that car. Dex fits them and hits the rest. You decide who gets which.</p>
+      <div class="rule-rows" data-od-id="rule-rows">
+        <div class="rule-row ok" data-od-id="rule-star"><svg viewBox="0 0 42 42" aria-hidden="true"><circle cx="21" cy="21" r="20" fill="#0e0e12"/><circle cx="21" cy="21" r="18" fill="none" stroke="#1e1e24" stroke-width="2" stroke-dasharray="3 3"/><circle cx="21" cy="21" r="15.5" fill="#2a2a32"/><path d="M12 30a13 13 0 0 0 18 0" fill="none" stroke="#52525e" stroke-width="1.6" stroke-dasharray="2 2.5"/><circle cx="21" cy="21" r="9.5" fill="#b0b4c0"/><circle cx="21" cy="21" r="8" fill="#3a3c46"/><g stroke="#9a9eae" stroke-width="2.2"><line x1="21" y1="21" x2="21.00" y2="13.60"/><line x1="21" y1="21" x2="28.04" y2="18.71"/><line x1="21" y1="21" x2="25.35" y2="26.99"/><line x1="21" y1="21" x2="16.65" y2="26.99"/><line x1="21" y1="21" x2="13.96" y2="18.71"/></g><circle cx="21" cy="21" r="2.6" fill="#5c5e6a"/><path d="M21 3.2l1.4 2.9 3.2.4-2.3 2.2.6 3.2L21 10.4l-2.9 1.5.6-3.2-2.3-2.2 3.2-.4z" fill="#fff"/></svg><div><span class="tag">★ on the sidewall · OK</span><h3>Let them in.</h3></div><p>Leave them alone. When they reach the car Dex fits the tyre: <b>+50</b>, and the clock refills.</p></div>
+        <div class="rule-row no" data-od-id="rule-nostar"><svg viewBox="0 0 42 42" aria-hidden="true"><circle cx="21" cy="21" r="20" fill="#0e0e12"/><circle cx="21" cy="21" r="18" fill="none" stroke="#1e1e24" stroke-width="2" stroke-dasharray="3 3"/><circle cx="21" cy="21" r="15.5" fill="#2a2a32"/><path d="M12 30a13 13 0 0 0 18 0" fill="none" stroke="#52525e" stroke-width="1.6" stroke-dasharray="2 2.5"/><circle cx="21" cy="21" r="9.5" fill="#b0b4c0"/><circle cx="21" cy="21" r="8" fill="#3a3c46"/><g stroke="#9a9eae" stroke-width="2.2"><line x1="21" y1="21" x2="21.00" y2="13.60"/><line x1="21" y1="21" x2="28.04" y2="18.71"/><line x1="21" y1="21" x2="25.35" y2="26.99"/><line x1="21" y1="21" x2="16.65" y2="26.99"/><line x1="21" y1="21" x2="13.96" y2="18.71"/></g><circle cx="21" cy="21" r="2.6" fill="#5c5e6a"/></svg><div><span class="tag">No ★ · Beat</span><h3>Take them down.</h3></div><p>Click or tap them before they reach the car. Every clean hit scores and keeps your streak going.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════ 02 · HOW TO PLAY ═════ -->
+<section class="blk" id="how" data-od-id="how">
+  <div class="wrap blk-grid">
+    <p class="blk-label"><b>02</b>How to play</p>
+    <div class="rv" data-rv>
+      <h2>Four things to know.</h2>
+      <ol class="steps" data-od-id="steps">
+        <li><i>01</i><b>Click the bay</b><span>Any click or tap on the scene starts a round. <kbd>Esc</kbd> leaves, <kbd>R</kbd> plays again.</span></li>
+        <li><i>02</i><b>Read the sidewall</b><span>Point at a customer and a loupe shows the tyre up close: <span class="g">★ OK</span> or <span class="r">NO ★ · BEAT</span>.</span></li>
+        <li><i>03</i><b>Hit only the cheap ones</b><span>A click on empty forecourt breaks your streak. Hitting a ★ customer costs a life.</span></li>
+        <li><i>04</i><b>Three lives, one clock</b><span>A wrong hit or a no-★ tyre on the car costs a life. The clock pauses while nobody needs a beating.</span></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ═════ 03 · MOVES ═════ -->
+<section class="blk" id="moves" data-od-id="moves">
+  <div class="wrap blk-grid">
+    <p class="blk-label"><b>03</b>Moves</p>
+    <div class="rv" data-rv>
+      <h2>Clean hits climb the ladder.</h2>
+      <table class="ladder" data-od-id="move-ladder"><thead><tr><th>#</th><th>Move</th><th>Hits in a row</th><th aria-hidden="true"></th></tr></thead><tbody>
+        <tr><td>01</td><td>Punch</td><td>1–2</td><td><div class="trk" aria-hidden="true"><s style="width:3.8%"></s></div></td></tr>
+        <tr><td>02</td><td>Kick</td><td>3–4</td><td><div class="trk" aria-hidden="true"><s style="width:11.5%"></s></div></td></tr>
+        <tr><td>03</td><td>Uppercut</td><td>5–7</td><td><div class="trk" aria-hidden="true"><s style="width:19.2%"></s></div></td></tr>
+        <tr><td>04</td><td>Dropkick</td><td>8–10</td><td><div class="trk" aria-hidden="true"><s style="width:30.8%"></s></div></td></tr>
+        <tr><td>05</td><td>Clothesline</td><td>11–14</td><td><div class="trk" aria-hidden="true"><s style="width:42.3%"></s></div></td></tr>
+        <tr><td>06</td><td>Suplex</td><td>15–19</td><td><div class="trk" aria-hidden="true"><s style="width:57.7%"></s></div></td></tr>
+        <tr><td>07</td><td>Body slam</td><td>20–25</td><td><div class="trk" aria-hidden="true"><s style="width:76.9%"></s></div></td></tr>
+        <tr class="fin"><td>08</td><td>Bimmer Bomb</td><td>26+</td><td><div class="trk" aria-hidden="true"><s style="width:100.0%"></s></div></td></tr>
+      </tbody></table>
+      <p class="ladder-note">A miss, a wrong hit or a no-★ tyre on the car sends you back to the punch.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═════ 04 · SCORING ═════ -->
+<section class="blk" id="scoring" data-od-id="scoring">
+  <div class="wrap blk-grid">
+    <p class="blk-label"><b>04</b>Scoring</p>
+    <div class="rv" data-rv>
+      <h2>What a round pays.</h2>
+      <dl class="stats" data-od-id="score-stats">
+        <div><dt>Per no-★ customer taken down. The combo climbs to ×9.</dt><dd>100 × combo</dd></div>
+        <div><dt>Per ★ customer you let through to the car.</dt><dd>+50</dd></div>
+        <div><dt>Lives. A wrong hit or a no-★ tyre on the car costs one.</dt><dd>3</dd></div>
+      </dl>
+      <div class="ranks" aria-label="Ranks by score" data-od-id="ranks"><div><b>Apprentice</b><span>0+</span></div><div><b>Tyre fitter</b><span>500+</span></div><div><b>Master tech</b><span>1,500+</span></div><div><b>Legend</b><span>3,500+</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════ 05 · LEADERBOARD ═════ -->
+<section class="blk" id="board" data-od-id="leaderboard">
+  <div class="wrap blk-grid">
+    <p class="blk-label"><b>05</b>Leaderboard</p>
+    <div>
+      <div class="board-head"><h2>Your best runs.</h2></div>
+      <p class="muted" style="margin-top:1rem">Your ten best rounds on this device. Nothing leaves your browser.</p>
+      <div id="board-out" aria-live="polite"></div>
+      <div class="board-foot"><span id="board-count">0 runs saved</span><button type="button" id="board-clear" data-od-id="board-clear">Clear my runs</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════ 06 · DEX ═════ -->
+<section class="blk" id="dex" data-od-id="dex">
+  <div class="wrap blk-grid">
+    <p class="blk-label"><b>06</b>Your mechanic</p>
+    <article class="dex rv" data-rv>
+      <div class="dex-pic"><canvas id="dex-px" width="22" height="28" aria-hidden="true"></canvas></div>
+      <div><h3>Dex</h3><p class="role">Head of service · Bay 1</p>
+        <p>He does the hitting and has an opinion on everyone. His box sits over the bay for the whole round, and the line changes with what you just did.</p>
+        <div class="quotes"><q class="r">SIR, THIS IS A ★ ESTABLISHMENT.</q><q class="r">PUT THAT BUDGET RUBBER ON YOUR SKODA.</q><q class="g">GOOD CHOICE, SIR.</q><q class="g">FINALLY, AN ADULT.</q></div></div>
+    </article>
+  </div>
+</section>
+
+<!-- ═════ BACK TO THE BAY ═════ -->
+<section class="blk band-red" id="play" data-od-id="play-band">
+  <div class="wrap blk-grid">
+    <p class="blk-label"><b>07</b>Play</p>
+    <div class="reach">
+      <h2>The bay is open.</h2>
+      <p class="muted">Rounds take about a minute. Your best one lands on the leaderboard above.</p>
+      <div class="cta"><a class="btn btn-lg btn-primary" href="#top" data-od-id="cta-play">Back to the bay</a></div>
+    </div>
+  </div>
+</section>
+</main>
+<script src="js/site.js"></script>
+<script>/* language: Polish copy for this page, the EN/PL switch in the hero and in the footer */
+(function(){const pl=window.TG_LANG==='pl',PLP={"✕ Exit game <kbd>Esc</kbd>": "✕ Wyjdź z gry <kbd>Esc</kbd>", "Best combo": "Najlepsze kombo", "Rank": "Ranga", "Play again <kbd>R</kbd>": "Jeszcze raz <kbd>R</kbd>", "Back to the bay <kbd>Esc</kbd>": "Wróć do warsztatu <kbd>Esc</kbd>", "See your leaderboard ↓": "Zobacz swój ranking ↓", "How to play ↓": "Jak grać ↓", "<b>01</b>The rule": "<b>01</b>Zasada", "★ tyres only. <em>No exceptions.</em>": "Tylko opony z ★. <em>Bez wyjątków.</em>", "Customers walk into the bay carrying a tyre for the M340i. Only tyres with the ★ on the sidewall go on that car. Dex fits them and hits the rest. You decide who gets which.": "Klienci wchodzą do warsztatu z oponą do M340i. Na to auto trafiają tylko opony z ★ na boku. Dex je zakłada, a resztę bije. Ty decydujesz, kto dostanie co.", "★ on the sidewall · OK": "★ na boku · OK", "Let them in.": "Wpuść ich.", "Leave them alone. When they reach the car Dex fits the tyre: <b>+50</b>, and the clock refills.": "Nie ruszaj ich. Gdy dojdą do auta, Dex założy oponę: <b>+50</b>, a zegar się odnowi.", "No ★ · Beat": "Bez ★ · Bij", "Take them down.": "Powal ich.", "Click or tap them before they reach the car. Every clean hit scores and keeps your streak going.": "Kliknij albo dotknij ich, zanim dojdą do auta. Każde czyste trafienie daje punkty i podtrzymuje serię.", "<b>02</b>How to play": "<b>02</b>Jak grać", "Four things to know.": "Cztery rzeczy do zapamiętania.", "Click the bay": "Kliknij warsztat", "Any click or tap on the scene starts a round. <kbd>Esc</kbd> leaves, <kbd>R</kbd> plays again.": "Kliknięcie albo dotknięcie sceny zaczyna rundę. <kbd>Esc</kbd> kończy, <kbd>R</kbd> gra od nowa.", "Read the sidewall": "Czytaj bok opony", "Point at a customer and a loupe shows the tyre up close: <span class=\"g\">★ OK</span> or <span class=\"r\">NO ★ · BEAT</span>.": "Najedź na klienta, a lupa pokaże oponę z bliska: <span class=\"g\">★ OK</span> albo <span class=\"r\">BEZ ★ · BIJ</span>.", "Hit only the cheap ones": "Bij tylko tanie", "A click on empty forecourt breaks your streak. Hitting a ★ customer costs a life.": "Kliknięcie w pusty plac przerywa serię. Uderzenie klienta z ★ kosztuje życie.", "Three lives, one clock": "Trzy życia, jeden zegar", "A wrong hit or a no-★ tyre on the car costs a life. The clock pauses while nobody needs a beating.": "Złe trafienie albo opona bez ★ na aucie kosztuje życie. Zegar stoi, kiedy nikt nie zasługuje na lanie.", "<b>03</b>Moves": "<b>03</b>Ruchy", "Clean hits climb the ladder.": "Czyste trafienia to kolejne ruchy.", "Move": "Ruch", "Hits in a row": "Trafienia z rzędu", "Punch": "Cios", "Kick": "Kopniak", "Uppercut": "Podbródkowy", "Bimmer Bomb": "Bomba Bimmera", "A miss, a wrong hit or a no-★ tyre on the car sends you back to the punch.": "Pudło, złe trafienie albo opona bez ★ na aucie cofa cię do ciosu.", "<b>04</b>Scoring": "<b>04</b>Punktacja", "What a round pays.": "Ile płaci runda.", "Per no-★ customer taken down. The combo climbs to ×9.": "Za każdego powalonego klienta bez ★. Kombo rośnie do ×9.", "100 × combo": "100 × kombo", "Per ★ customer you let through to the car.": "Za każdego klienta z ★, którego przepuścisz do auta.", "Lives. A wrong hit or a no-★ tyre on the car costs one.": "Życia. Złe trafienie albo opona bez ★ na aucie zabiera jedno.", "Apprentice": "Praktykant", "Tyre fitter": "Wulkanizator", "Master tech": "Mistrz serwisu", "Legend": "Legenda", "1,500+": "1 500+", "3,500+": "3 500+", "<b>05</b>Leaderboard": "<b>05</b>Ranking", "Your best runs.": "Twoje najlepsze rundy.", "Your ten best rounds on this device. Nothing leaves your browser.": "Dziesięć najlepszych rund na tym urządzeniu. Nic nie wychodzi poza przeglądarkę.", "Clear my runs": "Wyczyść moje rundy", "<b>06</b>Your mechanic": "<b>06</b>Twój mechanik", "Head of service · Bay 1": "Szef serwisu · Stanowisko 1", "He does the hitting and has an opinion on everyone. His box sits over the bay for the whole round, and the line changes with what you just did.": "To on bije i ma zdanie o każdym. Jego dymek wisi nad warsztatem przez całą rundę, a kwestia zmienia się po każdym twoim ruchu.", "SIR, THIS IS A ★ ESTABLISHMENT.": "PANIE, TO JEST LOKAL Z ★.", "PUT THAT BUDGET RUBBER ON YOUR SKODA.": "ZAŁÓŻ TĘ TANIOCHĘ NA SKODĘ.", "GOOD CHOICE, SIR.": "DOBRY WYBÓR, PROSZĘ PANA.", "FINALLY, AN ADULT.": "NARESZCIE KTOŚ DOROSŁY.", "<b>07</b>Play": "<b>07</b>Graj", "The bay is open.": "Warsztat otwarty.", "Rounds take about a minute. Your best one lands on the leaderboard above.": "Runda trwa około minuty. Najlepsza trafi do rankingu powyżej.", "Back to the bay": "Wróć do warsztatu"};
+  const norm=h=>h.replace(/\s+/g,' ').trim();
+  if(pl){document.title='Serwis Bimmer · tylko opony z ★ · TagoMind Gaming';
+    const md=document.querySelector('meta[name="description"]');if(md)md.content='Serwis Bimmer, mała gra przeglądarkowa od TagoMind Gaming: na M340i trafiają tylko opony z ★. Wypatrz tanie i powal klientów.';
+    const hero=document.querySelector('.hero');if(hero)hero.setAttribute('aria-label','Serwis Bimmer, grywalna gra');
+    document.querySelectorAll('main h2,main h3,main p,main b,main span,main a,main button,main dt,main dd,main th,main td,main q').forEach(el=>{const k=norm(el.innerHTML);if(PLP[k])el.innerHTML=PLP[k]})}
+  const set=v=>{try{localStorage.setItem('tg-lang',v)}catch(_){}const u=new URL(location.href);u.searchParams.set('lang',v);location.replace(u.href)};
+  const sub=document.querySelector('footer .sub');if(sub)sub.insertAdjacentHTML('beforeend','<span class="lang-foot">'+(pl?'Język':'Language')+' <span class="lang-sw in-foot" role="group" aria-label="Language · Język"><button type="button" data-lang="en">EN</button><button type="button" data-lang="pl">PL</button></span></span>');
+  document.querySelectorAll('.lang-sw button').forEach(b=>{b.setAttribute('aria-pressed',String(b.dataset.lang===(pl?'pl':'en')));b.addEventListener('click',e=>{e.stopPropagation();if(b.getAttribute('aria-pressed')!=='true')set(b.dataset.lang)})});
+  document.querySelectorAll('.lang-sw').forEach(g=>['pointerdown','mousedown','touchstart'].forEach(t=>g.addEventListener(t,e=>e.stopPropagation(),{passive:true})))})();
+</script>
+<script>/* footer as on the studio page: the wordmark set huge, plus the motion switch */
+(function(){const f=document.querySelector('footer.site-foot');if(f)f.insertAdjacentHTML('beforeend','<div class="colophon" aria-hidden="true">tagomind<b>/</b>gaming</div>');
+  const sub=document.querySelector('footer .sub');if(sub){const off=localStorage.getItem('tg-motion')==='off';
+    sub.insertAdjacentHTML('beforeend','<button type="button" class="motion-sw" aria-pressed="'+off+'">'+(window.TG_LANG==='pl'?'Mniej ruchu':'Reduce motion')+' <b>'+(window.TG_LANG==='pl'?(off?'Wł.':'Wył.'):(off?'On':'Off'))+'</b></button>');
+    sub.querySelector('.motion-sw').addEventListener('click',()=>{localStorage.setItem('tg-motion',off?'on':'off');location.reload()})}})();
+/* Dex, drawn from the cell grid he has in the game */
+(function(){const c=document.getElementById('dex-px');if(!c)return;const g=c.getContext('2d');
+  const R=["......AAAA............",".....AAAAAAAA.........",".....SSSSSS...........",".....SSSSES...........",".....SSSSSSS..........","......SSSSS...........",".......SSS............",".....OOOOOO...........","....OOOOOOOO..........","....OOOOOOOO..........","....OSSSSSSO..........","....OOSSSSOO..........","....OOOOOOOO..........","....OOOOOOOO..........","....OOOOOOOO..........","....OOOOOOOO..........",".....OOOOOO...........",".....OOOOOO...........",".....OO..OO...........",".....OO..OO...........",".....OO..OO...........",".....OO..OO...........",".....WW..WW...........",".....OO..OO...........",".....OO..OO...........",".....OO..OO...........","....KKK..KKKK.........","....KKK..KKKK........."];
+  const M={A:'rgb(20,28,60)',S:'rgb(236,196,158)',E:'rgb(24,20,24)',O:'rgb(36,92,190)',W:'rgb(220,226,236)',K:'rgb(14,14,18)'};
+  R.forEach((r,y)=>[...r].forEach((ch,x)=>{if(M[ch]){g.fillStyle=M[ch];g.fillRect(x,y,1,1)}}))})();
+/* your leaderboard: read the runs the game saved, newest marked */
+(function(){const PL=window.TG_LANG==='pl',T=PL?{none:'Nie masz jeszcze rund. Skończ rundę w warsztacie, a pojawi się tutaj.',hd:['#','Wynik','Powaleni','Najl. kombo','Najlepszy ruch','Ranga','Kiedy'],nw:'NOWA',conf:'Wyczyścić wszystkie zapisane rundy Bimmera?',now:'przed chwilą',min:' min temu',h:' godz. temu'}:{none:'No runs yet. Finish a round in the bay and it lands here.',hd:['#','Score','Taken down','Best combo','Top move','Rank','When'],nw:'NEW',conf:'Clear all your saved Bimmer runs?',now:'just now',min:' min ago',h:' h ago'};
+  const MV={'PUNCH':'Cios','KICK':'Kopniak','UPPERCUT':'Podbródkowy','BIMMER BOMB':'Bomba Bimmera'},RK={'Apprentice':'Praktykant','Tyre fitter':'Wulkanizator','Master tech':'Mistrz serwisu','Legend':'Legenda'};
+  const runsWord=n=>PL?(n===1?'1 runda zapisana':(n%10>=2&&n%10<=4&&(n%100<10||n%100>=20))?n+' rundy zapisane':n+' rund zapisanych'):(n+(n===1?' run':' runs')+' saved');
+  const KEY='tm-gaming-bimmer-runs',out=document.getElementById('board-out'),cnt=document.getElementById('board-count'),clr=document.getElementById('board-clear');let fresh=0;
+  const load=()=>{try{return JSON.parse(localStorage.getItem(KEY)||'[]')}catch(_){return[]}};
+  const when=d=>{const m=Math.round((Date.now()-d)/60000);if(m<1)return T.now;if(m<60)return m+T.min;const h=Math.round(m/60);if(h<24)return h+T.h;return new Date(d).toLocaleDateString(PL?'pl-PL':'en-GB',{day:'numeric',month:'short'})};
+  const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  function render(){const runs=load();cnt.textContent=runsWord(runs.length);clr.hidden=!runs.length;
+    if(!runs.length){out.innerHTML='<p class="board-empty">'+T.none+'</p>';return}
+    out.innerHTML='<table class="board" data-od-id="board-table"><thead><tr><th>'+T.hd[0]+'</th><th class="n">'+T.hd[1]+'</th><th class="n hd">'+T.hd[2]+'</th><th class="n hd">'+T.hd[3]+'</th><th>'+T.hd[4]+'</th><th>'+T.hd[5]+'</th><th class="wh">'+T.hd[6]+'</th></tr></thead><tbody>'+
+      runs.map((r,i)=>'<tr'+(r.d===fresh?' class="new"':'')+'><td class="pl">'+(r.d===fresh?T.nw:String(i+1).padStart(2,'0'))+'</td><td class="sc n">'+String(r.s).padStart(5,'0')+'</td><td class="n hd">'+r.h+'</td><td class="n hd">×'+r.c+'</td><td class="mv">'+esc(PL&&MV[r.m]?MV[r.m].toLowerCase():String(r.m).toLowerCase())+'</td><td class="rk">'+esc(PL&&RK[r.r]||r.r)+'</td><td class="wh">'+when(r.d)+'</td></tr>').join('')+'</tbody></table>'}
+  addEventListener('tm:run',e=>{fresh=e.detail.run.d;render()});
+  addEventListener('storage',e=>{if(e.key===KEY)render()});
+  clr.addEventListener('click',()=>{if(!confirm(T.conf))return;try{localStorage.removeItem(KEY)}catch(_){}render()});
+  render();setInterval(render,60000)})();
+</script>
+</body>
+</html>
